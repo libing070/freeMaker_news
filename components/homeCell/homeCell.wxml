@@ -2,7 +2,16 @@
 <view class="type" catchtap="changeName">
     <!-- {{obj.name}} -->
     <view class="photo">
-        <image src="/images/common/715_2.jpg" mode="aspectFill" class="img"> </image>
+        <view class="swiper-box">
+            <swiper class="swiper" circular indicator-active-color="#FF6933" indicator-dots="{{indicatorDots}}">
+                <block wx:for="{{obj.imgList}}" wx:key="index">
+                    <swiper-item>
+                        <image class="photo" src="{{item}}" mode="aspectFill"  data-item="{{item}}" catchtap="tapBanner"></image>
+                    </swiper-item>
+                </block>
+            </swiper>
+        </view>    
+        <!-- <image src="/images/common/715_2.jpg" mode="aspectFill" class="img"> </image> -->
         <view class="tag">课程设计</view>
     </view>
     <view class="title">

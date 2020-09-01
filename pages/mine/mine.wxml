@@ -1,4 +1,18 @@
 <!--pages/mine/mine.wxml-->
-<text>pages/mine/mine.wxml</text>
+<view class="mine">
+    <view class="user">
+        <view class="avatarBox">
+            <image class="avatar" src="/images/common/default-head.png"></image>
+        </view>
+        <view>
+            <view class="name-user">波英冰</view>
+            <view  class="name-tag>">xxxx</view>
+        </view>
+        <view class="money">
+            <view class="value">5000</view>
+            <view class="unit">元</view>
+        </view>
+    </view>
+</view>
 
 <custom-tabbar active-index="1"></custom-tabbar>

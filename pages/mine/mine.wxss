@@ -2,3 +2,62 @@
 page {
     background-color: #F7F8FC;
 }
+
+.mine{
+    position: relative;
+}
+.user {
+    position: relative;
+    display: flex;
+    align-items: center;
+    margin:20rpx;
+    margin-right: 0;
+}
+
+.avatarBox {
+    width: 120rpx;
+    height: 120rpx;
+    position: relative;
+    margin-right: 10px;
+    flex-shrink: 0;
+}
+
+.avatarBox .avatar {
+    border-radius: 50%;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+}
+
+.name-user {
+    color: #7D7D7D;
+    font-size: 36rpx;
+    font-weight: 500;
+}
+
+.name-tag {
+    color: #7D7D7D;
+    font-size: 26rpx;
+    margin-top: 4px;
+}
+.money{
+    position: absolute;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    margin:auto;
+    height: 100rpx;
+    line-height: 100rpx;
+    padding-left: 40rpx;
+    padding-right: 20rpx;
+    display: flex;
+    flex-direction: row;
+    align-items: baseline ;
+    color: tomato;
+    background-color: white;
+    border-radius: 50rpx 0 0 50rpx;
+}
+.money .value{
+    font-size:45rpx;
+
+}

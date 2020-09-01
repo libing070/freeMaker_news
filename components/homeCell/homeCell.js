@@ -20,7 +20,7 @@ Component({
      * 组件的初始数据
      */
     data: {
-
+        indicatorDots: true,
     },
 
     /**
@@ -69,6 +69,27 @@ Component({
                     duration: 2000
                 });  
             }
-        }
+        },
+        // 点击图片
+        tapBanner(e) {
+            let current = 'http:' + e.currentTarget.dataset.item
+
+            let urls = []
+            for (let item of this.data.obj.imgList) {
+                urls.push('http:' + item)
+            }
+
+            wx.previewImage({
+                current,
+                urls,
+            })
+            wx.getImageInfo({
+                src: current,
+                success (res) {
+                    console.log(res)
+                    console.log(res.height)
+                }
+            })
+        },
     }
 })
