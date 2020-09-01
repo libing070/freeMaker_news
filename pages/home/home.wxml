@@ -1,0 +1,18 @@
+<!--pages/home/home.wxml-->
+<view class="home" style="padding-bottom:{{ safeBottom }}px">
+
+    <view class="menu-box">
+        <scroll-view class="menu" scroll-x="true">
+            <view class="item" wx:for="{{10}}" wx:key="index">
+                <image class="icon" src="/images/common/home.png"></image>
+                <view class="name">{{index+1}}</view>
+            </view>
+        </scroll-view>  
+    </view>
+
+    <view class="group">
+        <home-cell wx:for="{{list}}" wx:key="index" obj="{{item}}" bindchangeName="changeName"></home-cell>
+    </view>
+</view>
+
+<custom-tabbar active-index="0"></custom-tabbar>

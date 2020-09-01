@@ -1,0 +1,4 @@
+<!--pages/mine/mine.wxml-->
+<text>pages/mine/mine.wxml</text>
+
+<custom-tabbar active-index="1"></custom-tabbar>

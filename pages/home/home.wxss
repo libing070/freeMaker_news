@@ -1,0 +1,30 @@
+/* pages/home/home.wxss */
+page {
+    background-color: #F7F8FC;
+}
+.menu-box{
+    padding: 20rpx 20rpx 0 20rpx;
+}
+.menu-box .menu{
+    position: relative;
+    white-space: nowrap;
+    height: 100rpx;
+}
+.menu-box .menu .item{
+    height: 100rpx;
+    width: 100rpx;
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px 0 rgba(36, 19, 72, 0.04);
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;/*左右居中*/
+    margin: 0 10rpx;
+}
+.menu-box .item .icon{
+    width: 60rpx;
+    height: 60rpx;
+}
+.menu-box .item .name{
+    font-size: 24rpx;
+}

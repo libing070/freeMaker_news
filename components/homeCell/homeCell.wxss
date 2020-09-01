@@ -1,0 +1,132 @@
+/* components/homeCell/homeCell.wxss */
+
+.type{
+    background-color: white;
+    border-radius: 20rpx;
+    box-shadow: 0 2px 8px 0 rgba(36, 19, 72, 0.04);
+    margin: 20rpx;
+    height: 670rpx;
+}
+.type .photo{
+    position: relative;
+    height: 400rpx;
+    border-radius: 20rpx 20rpx 0 0 ;
+
+}
+.type .photo .img{
+    width: 100%;
+    height: 100%;
+    border-radius: 20rpx 20rpx 0 0 ;
+}
+.type .photo .tag{
+
+    position:absolute;
+    top: 20rpx;
+    left: 20rpx;
+    font-size: 26rpx;
+    border-radius: 5rpx;
+    color: white;
+    padding: 10rpx;
+    line-height: 30rpx;
+    height: 30rpx;
+    background-color: rgba(0, 0, 0, 0.3);
+}
+.title{
+    position: relative;
+    height: 80rpx;
+    margin:20rpx;
+}
+.title .name{
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    margin: auto;
+    font-weight: bold;
+    font-size: 36rpx;
+    line-height: 80rpx;
+
+}
+.title  .collect{
+    position: absolute;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    margin:auto;
+    height: 60rpx;
+    border:1px solid #7D7D7D;
+    border-radius: 50rpx;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 30rpx 0 25rpx;
+}
+.title  .collect.sel{
+    border-color: tomato;
+}
+.title  .collect .icon{
+    width: 40rpx;
+    height: 40rpx;
+    display:inline-flex;
+    margin-right: 5rpx;
+}
+.title  .collect .collect-name{
+    display:inline-flex;
+    line-height: 60rpx;
+    font-size: 30rpx;
+    color: #7D7D7D;
+}
+.title  .collect .collect-name.sel{
+    color: tomato;
+}
+
+.user {
+    position: relative;
+    display: flex;
+    align-items: center;
+    margin:0 20rpx
+}
+
+.avatarBox {
+    width: 120rpx;
+    height: 120rpx;
+    position: relative;
+    margin-right: 10px;
+    flex-shrink: 0;
+}
+
+.avatarBox .avatar {
+    border-radius: 50%;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+}
+
+.name-user {
+    color: #7D7D7D;
+    font-size: 36rpx;
+    font-weight: 500;
+}
+
+.name-tag {
+    color: #7D7D7D;
+    font-size: 26rpx;
+    margin-top: 4px;
+}
+.money{
+    position: absolute;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    margin:auto;
+    height: 70rpx;
+    display: flex;
+    flex-direction: row;
+    align-items: baseline ;
+    color: tomato;
+}
+.money .value{
+    font-size:45rpx;
+
+}
