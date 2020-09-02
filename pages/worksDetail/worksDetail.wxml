@@ -1,0 +1,17 @@
+<!--pages/worksDetail/worksDetail.wxml-->
+<view class="detail">
+    <view class="photo">
+        <view class="swiper-box">
+            <swiper class="swiper" bindchange="changeSwiper">
+                <block wx:for="{{obj.imgList}}" wx:key="index">
+                    <swiper-item>
+                        <image class="photo" src="{{item}}" mode="aspectFill"  data-item="{{item}}" catchtap="tapBanner"></image>
+                    </swiper-item>
+                </block>
+            </swiper>
+        </view>  
+        <view class="pagination">
+            <text style="font-size:30rpx">{{currentPhotoIndex}}</text>/<text>{{obj.imgList.length}}</text>
+        </view>  
+    </view>
+</view>

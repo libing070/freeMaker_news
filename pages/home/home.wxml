@@ -13,6 +13,9 @@
     <view class="group">
         <home-cell wx:for="{{list}}" wx:key="index" obj="{{item}}" bindchangeName="changeName"></home-cell>
     </view>
+
+
+
 </view>
 
 <custom-tabbar active-index="0"></custom-tabbar>

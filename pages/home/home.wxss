@@ -28,3 +28,4 @@ page {
 .menu-box .item .name{
     font-size: 24rpx;
 }
+

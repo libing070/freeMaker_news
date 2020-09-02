@@ -1,0 +1,24 @@
+<!--pages/homeList/homeList.wxml-->
+
+<view class="filter">
+    <view class="typeBox">
+        <scroll-view class="typeTabs" scroll-x>
+            <block wx:for="{{types}}" wx:key="index">
+                <view class="type {{selectedType == index ? 'sel' : ''}}" data-i="{{index}}" catchtap="tapTypeTab">{{item}}</view>
+            </block>
+        </scroll-view>
+    </view>
+    <view class="menu" catchtap="menuShowing">
+        <image class="icon" src="/images/common/iocn-menu.png"></image>
+    </view>
+</view>
+
+<view class="group" style="padding-bottom:{{ safeBottom }}px">
+    <home-cell wx:for="{{list}}" wx:key="index" obj="{{item}}" bindchangeName="changeName"></home-cell>
+</view>
+
+<view class="shade"  catchtouchmove="true" wx:if="{{menuShowing}}" catchtap="menuShowing">
+    <view class="main" data-id="shadeMain" catchtap="menuShowing">
+        <view style="margin:300rpx 0">11111</view>
+    </view>
+</view>

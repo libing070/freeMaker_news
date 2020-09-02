@@ -1,0 +1,105 @@
+/* pages/homeList/homeList.wxss */
+page {
+    background-color: #F7F8FC;
+}
+.filter {
+    border-top: 1px solid #F7F8FC;
+    width: 100vw;
+    position: fixed;
+    top: 0;
+    z-index: 2;
+}
+.filter .typeBox {
+    height: 100rpx;
+    margin-bottom: 8rpx;
+    padding: 0 16rpx;
+    overflow: hidden;
+    background-color: white;
+    margin-right: 100rpx;
+}
+
+.filter .typeTabs {
+    height: 100rpx;
+    white-space: nowrap;
+}
+
+.filter .typeTabs .type {
+    color: #323232;
+    font-size: 30rpx;
+    height: 64rpx;
+    margin: 0 16rpx;
+    padding-top: 16rpx;
+    display: inline-block;
+}
+
+.filter .typeTabs .type.sel {
+    color: #FA2878;
+    font-size: 34rpx;
+    font-weight: 500;
+    position: relative;
+}
+
+.filter .typeTabs .type.sel::after {
+    content: "";
+    background: linear-gradient(90deg, #ff2276, #ff46a6);
+    border-radius: 4rpx;
+    width: 64rpx;
+    height: 6rpx;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    position: absolute;
+    margin: auto;
+}
+.filter .menu{
+    position: absolute;
+    right: 0;
+    top: 0;
+    height: 100rpx;
+    width: 100rpx;
+    background-color: white;
+    box-shadow:-5px 0px 5px rgba(0,0,0,0.05);
+}
+.filter .menu .icon{
+    position: absolute;
+    width: 70rpx;
+    height: 70rpx;
+    top: 0;
+    right: 0;
+    left: 0;
+    bottom: 0;
+    margin:auto;
+
+}
+.group{
+    margin-top: 120rpx;
+}
+
+.shade {
+    background-color: rgba(0, 0, 0, 0.5);
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    position: fixed;
+    z-index: 2;
+}
+
+.main {
+    background-color: white;
+    border-radius: 0 0 10px 10px;
+    width: 100%;
+    top: 0;
+    position: absolute;
+    animation: main-show 0.25s forwards;
+}
+
+@keyframes main-show {
+    0% {
+        transform: translateY(-100%);
+    }
+
+    100% {
+        transform: translateY(0);
+    }
+}

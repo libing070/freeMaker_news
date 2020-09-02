@@ -1,0 +1,41 @@
+/* pages/worksDetail/worksDetail.wxss */
+page {
+    background-color: #F7F8FC;
+}
+.detail{
+    position: relative;
+}
+.detail .photo{
+    position: relative;
+    height: 400rpx;
+
+}
+.detail .photo .img{
+    width: 100%;
+    height: 100%;
+}
+.swiper-box{
+    width: 100%;
+    height: 100%;
+}
+.swiper-box .swiper{
+    width: 100%;
+    height: 100%;
+    margin: auto;
+}
+.swiper-box .swiper .photo{
+    width: 100%;
+    margin: auto;
+}
+.detail .photo .pagination{
+    position: absolute;
+    left: 20rpx;
+    bottom: 20rpx;
+    font-size: 22rpx;
+    border-radius: 5rpx;
+    color: white;
+    padding: 10rpx 20rpx;
+    line-height: 30rpx;
+    height: 30rpx;
+    background-color: rgba(0, 0, 0, 0.3);
+}
