@@ -137,7 +137,7 @@
     </view>
 </view>
 
-<view class="shade" catchtouchmove="true" wx:if="{{shadeShowing}}" catchtap="shadeShowing">
+<view class="shade" wx:if="{{shadeShowing}}" catchtap="shadeShowing">
     <view class="main"  data-id="shadeMain" catchtap="shadeShowing" style="padding-bottom: {{safeBottom}}px;">
         <view wx:if="{{ currShadeItem == 1}}">
             <view class="shade-user">
@@ -164,8 +164,53 @@
                 </view>
             </view>
         </view>
-        <view wx:if="{{ currShadeItem == 2}}">{{currShadeItem}}</view>
-        <view wx:if="{{ currShadeItem == 3}}">{{currShadeItem}}</view>
+        <view wx:if="{{ currShadeItem == 2}}">
+            <view class="shade-skill">
+                <view class="head">
+                    <view class="left">技能描述</view>
+                </view>
+                <view class="shade-skill-content">技能描述技能描述技能描述技能描述技能描述技能描述技能描述技能描述技能描述技能描述技能描述技能描述技能描述技能描述技能描述技能描述技能描述技能描述技能描述技能描述技能描述技能描述技能描述技能描述技能描述技能描述技能描述技能描述</view>
+            </view>
+        </view>
+        <view wx:if="{{ currShadeItem == 3}}">
+            <view class="shade-evaluate">
+                <view class="head">
+                    <view class="left">综合评价</view>
+                </view>
+                <view class="evaluate-box" wx:for="{{3}}" wx:key="index">
+                    <view class="u" style="border-top:{{ index == 0 ? 'none' : '0.1px solid #E6E6E6'}}">
+                        <view class="avatarBox">
+                            <image class="avatar" src="/images/common/default-head.png"></image>
+                        </view>
+                        <view>
+                            <view class="name-user">波英冰</view>
+                            <view  class="name-tag>">xxxx | 4.9分</view>
+                        </view>
+                        <view class="score">
+                            <view class="star-box">
+                                <view class="star">
+                                    <block wx:for="{{one_1}}" wx:key="item">
+                                        <image class="img" src='/images/common/icon-starSel.png'></image>
+                                    </block>
+                                    <block wx:for="{{two_1}}" wx:key="item">
+                                        <image class="img" src='/images/common/icon-star.png'></image>
+                                    </block>
+                                </view>
+                                <view class="val">4.0分</view>
+                            </view>
+                        </view>
+                    </view>
+                    <view class="evaluate-news">波英冰波英冰波英冰波英冰波英冰波英冰波英冰波英冰波英冰波英冰波英冰波英冰波英冰波英冰波英冰波英冰</view>
+                    <view class="evaluate-othersBox">
+                        <scroll-view class="evaluate-swiperBox" scroll-x>
+                            <block wx:for="{{10}}" wx:key="index">
+                                <image  class="evaluate-photoBox" src="/images/common/715_2.jpg" mode="aspectFill"></image>
+                            </block>
+                        </scroll-view>
+                    </view>
+                </view>
+            </view>
+        </view>
 
     </view>
 </view>
