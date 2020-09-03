@@ -7,13 +7,13 @@
     margin: 20rpx;
     height: 670rpx;
 }
-.type .photo{
+.type .top{
     position: relative;
     height: 400rpx;
     border-radius: 20rpx 20rpx 0 0 ;
 
 }
-.type .photo .img{
+.type .top .img{
     width: 100%;
     height: 100%;
     border-radius: 20rpx 20rpx 0 0 ;
@@ -35,7 +35,7 @@
     border-radius: 20rpx 20rpx 0 0 ;
 }
 
-.type .photo .tag{
+.type .top .tag{
 
     position:absolute;
     top: 20rpx;

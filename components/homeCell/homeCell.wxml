@@ -1,8 +1,8 @@
 <!--components/homeCell/homeCell.wxml-->
 <view class="type" catchtap="changeName">
     <!-- {{obj.name}} -->
-    <view class="photo">
-        <view class="swiper-box">
+    <view class="top">
+        <view class="swiper-box"  wx:if="">
             <swiper class="swiper" circular indicator-active-color="#FF6933" indicator-dots="{{indicatorDots}}">
                 <block wx:for="{{obj.imgList}}" wx:key="index">
                     <swiper-item>
@@ -11,17 +11,17 @@
                 </block>
             </swiper>
         </view>    
-        <!-- <image src="/images/common/715_2.jpg" mode="aspectFill" class="img"> </image> -->
+        <image src="/images/common/715_2.jpg" mode="aspectFill" class="img" catchtap="tapToWorksDetail"></image>
         <view class="tag">课程设计</view>
     </view>
-    <view class="title">
+    <view class="title"  catchtap="tapToWorksDetail">
         <view class="name">XXXXXX</view>
         <view class="collect {{ obj.collect ? 'sel' :''}}" catchtap="tapCollect" data-id="{{obj.id}}">
             <image src="{{obj.collect ? '/images/common/icon-collectSel.png' : '/images/common/icon-collect.png'}}" class="icon"></image>
             <text class="collect-name {{ obj.collect ? 'sel' :''}}">收藏</text>
         </view>
     </view>
-    <view class="user">
+    <view class="user" catchtap="tapToWorksDetail" data-id="{{obj.id}}">
         <view class="avatarBox">
             <image class="avatar" src="/images/common/default-head.png"></image>
         </view>

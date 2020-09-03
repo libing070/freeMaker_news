@@ -3,7 +3,7 @@
 
     <view class="menu-box">
         <scroll-view class="menu" scroll-x="true">
-            <view class="item" wx:for="{{10}}" wx:key="index">
+            <view class="item" wx:for="{{10}}" wx:key="index" data-id="{{index}}" catchtap="tapTohomeList">
                 <image class="icon" src="/images/common/home.png"></image>
                 <view class="name">{{index+1}}</view>
             </view>

@@ -12,14 +12,20 @@ Page({
             "//img14.360buyimg.com/pop/jfs/t1/111272/19/2307/93015/5ea17d3aEb521c837/7b9ac8fb948993f0.jpg",
             "//img14.360buyimg.com/pop/jfs/t1/110316/1/13554/178993/5ea17d3aE88af5e39/1e6dfb8dfb8259f6.jpg",
             "//img14.360buyimg.com/pop/jfs/t1/119502/34/1004/98273/5ea17d49Ed74b4fa5/49e7bdfc7ab97813.png"]
-        }
+        },
+        num: 4,//后端给的分数，显示的星星
+        one_1: '',//点亮的星星数
+        two_1: '',//没有点亮的星星数
     },
 
     /**
      * 生命周期函数--监听页面加载
      */
     onLoad: function (options) {
-
+        this.setData({
+            one_1: this.data.num,
+            two_1: 5 - this.data.num
+        })
     },
 
     /**

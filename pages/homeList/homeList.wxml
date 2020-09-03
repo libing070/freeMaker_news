@@ -19,6 +19,9 @@
 
 <view class="shade"  catchtouchmove="true" wx:if="{{menuShowing}}" catchtap="menuShowing">
     <view class="main" data-id="shadeMain" catchtap="menuShowing">
-        <view style="margin:300rpx 0">11111</view>
+        <view class="item" wx:for="{{2}}" wx:key="index">
+            <image class="icon" src="/images/common/715_2.jpg"></image>
+            <view>XXXXX</view>
+        </view>
     </view>
 </view>

@@ -92,6 +92,11 @@ page {
     top: 0;
     position: absolute;
     animation: main-show 0.25s forwards;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    flex-wrap: wrap;
 }
 
 @keyframes main-show {
@@ -102,4 +107,13 @@ page {
     100% {
         transform: translateY(0);
     }
+}
+.main .item{
+    margin:20rpx;
+    margin-right: 10rpx;
+    text-align: center;
+}
+.main .item .icon{
+    width: 155rpx;
+    height: 155rpx;
 }

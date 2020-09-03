@@ -67,8 +67,8 @@
 			"list": [
 				{
 					"id": 0,
-					"name": "pages/homeList/homeList",
-					"pathName": "pages/homeList/homeList",
+					"name": "pages/worksDetail/worksDetail",
+					"pathName": "pages/worksDetail/worksDetail",
 					"query": "",
 					"scene": null
 				}

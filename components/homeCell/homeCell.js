@@ -78,18 +78,17 @@ Component({
             for (let item of this.data.obj.imgList) {
                 urls.push('http:' + item)
             }
-
             wx.previewImage({
                 current,
                 urls,
             })
-            wx.getImageInfo({
-                src: current,
-                success (res) {
-                    console.log(res)
-                    console.log(res.height)
-                }
-            })
         },
+        //跳转到作品详情
+        tapToWorksDetail(e) {
+            let id = e.currentTarget.dataset.id
+            wx.navigateTo({
+                url: '/pages/worksDetail/worksDetail?id=' + id,
+            })
+        }
     }
 })
