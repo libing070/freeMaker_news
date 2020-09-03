@@ -1,10 +1,12 @@
 // pages/worksDetail/worksDetail.js
+const app = getApp()
 Page({
 
     /**
      * 页面的初始数据
      */
     data: {
+        safeBottom: app.safeBottom,
         currentPhotoIndex:1,
         obj:{
             imgList:["//img14.360buyimg.com/pop/jfs/t1/114735/33/2427/35818/5ea17d3aE7018d774/acf7950db4ef2c51.jpg",
@@ -16,6 +18,8 @@ Page({
         num: 4,//后端给的分数，显示的星星
         one_1: '',//点亮的星星数
         two_1: '',//没有点亮的星星数
+        shadeShowing:false,
+        currShadeItem:0,//当前点击弹窗的信息集合
     },
 
     /**
@@ -98,4 +102,18 @@ Page({
             urls,
         })
     },
+
+    //显示隐藏
+    shadeShowing(e) {
+        let currShadeItem = e.currentTarget.dataset.item;
+        this.setData({
+            currShadeItem
+        })
+        if (e.currentTarget.dataset.id != "shadeMain") {
+            this.setData({
+                shadeShowing: !this.data.shadeShowing
+            });
+        }
+
+    }
 })

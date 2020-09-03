@@ -343,7 +343,6 @@ page {
     height: 40rpx;
 }
 .uu .score .star-box{
-    background-color: teal;
     position: relative;
     display: flex;
     flex-direction: row;
@@ -363,4 +362,168 @@ page {
     margin-left: 10rpx;
     color: tomato;
     font-size: 28rpx;
+}
+
+.other-works{
+    position: relative;
+    padding:20rpx;
+}
+.other-works .head{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    height: 50rpx;
+    margin-bottom: 20rpx;
+}
+.other-works .head .left{
+    font-weight: bold;
+    font-size: 34rpx;
+    line-height: 50rpx;
+}
+.other-works .othersBox{
+    height: 200rpx;
+    overflow: hidden;
+    background-color: white;
+    margin-right: 10rpx;
+}
+.othersBox .swiperBox{
+    height: 200rpx;
+    white-space: nowrap;
+}
+.othersBox .swiperBox .photoBox{
+    height: 200rpx;
+    width: 300rpx;
+    padding: 16rpx;
+    display: inline-block;
+}
+.tool-bar{
+    position: fixed;
+    bottom: 0;
+    border-top: 1px solid #E6E6E6;
+    box-shadow: inset 0 1px 0 0 #F0F0F0;
+    background-color: white;
+    height: 100rpx;
+    width: 100vw;
+    display: flex;
+    flex-direction: row;
+}
+.tool-bar .money{
+    flex-grow:1;
+    height: 100rpx;
+    line-height: 100rpx;
+    color: tomato;
+    font-size: 36rpx;
+    font-weight: bold;
+    padding-left: 30rpx;
+}
+.tool-bar .btn-box{
+    flex-grow:3;
+    height: 100rpx;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+.tool-bar .btn-box .call{
+    width: 220rpx;
+    height: 80rpx;
+    line-height: 80rpx;
+    background-color: #dbdbdb;
+    font-size: 30rpx;
+    text-align: center;
+    border-top-left-radius: 5rpx;
+    border-bottom-left-radius: 5rpx;
+
+}
+.tool-bar .btn-box .buy{
+    width: 220rpx;
+    height: 80rpx;
+    line-height: 80rpx;
+    background-color: #707070;
+    color: white;
+    font-size: 30rpx;
+    text-align: center;
+    border-top-right-radius: 5rpx;
+    border-bottom-right-radius: 5rpx;
+}
+
+.shade {
+    background-color: rgba(0, 0, 0, 0.5);
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    position: fixed;
+}
+
+.main {
+    background-color: white;
+    border-radius: 10px 10px 0 0;
+    width: 100%;
+    bottom: 0;
+    position: absolute;
+    animation: main-show 0.25s forwards;
+}
+
+@keyframes main-show {
+    0% {
+        transform: translateY(100%);
+    }
+
+    100% {
+        transform: translateY(0);
+    }
+}
+
+.shade-user{
+    position: relative;
+
+}
+.shade-user .u{
+    position: relative;
+    display: flex;
+    align-items: center;
+    padding:20rpx;
+}
+
+.shade-user .u .avatarBox {
+    width: 120rpx;
+    height: 120rpx;
+    position: relative;
+    margin-right: 10px;
+    flex-shrink: 0;
+}
+
+.shade-user .u .avatarBox .avatar {
+    border-radius: 50%;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+}
+
+.shade-user .u .name-user {
+    color: #7D7D7D;
+    font-size: 36rpx;
+    font-weight: 500;
+}
+
+.shade-user .u .name-tag {
+    color: #7D7D7D;
+    font-size: 26rpx;
+    margin-top: 8rpx;
+}
+.shade-user  .cell-group{
+    display: flex;
+    flex-direction: row;
+    padding:40rpx 20rpx;
+    align-items: baseline ;
+}
+.shade-user  .cell-group .field{
+    width: 25%;
+    padding-left: 10rpx;
+    color: #E6E6E6;
+}
+.shade-user  .cell-group .message{
+    width: 75%;
 }

@@ -1,6 +1,5 @@
 <!--pages/worksDetail/worksDetail.wxml-->
 <view class="detail">
-
     <view class="top">
         <view class="swiper-box">
             <swiper class="swiper" bindchange="changeSwiper">
@@ -36,13 +35,13 @@
             <view class="name-user">波英冰</view>
             <view  class="name-tag>">xxxx | 4.9分</view>
         </view>
-       <image class="arrow" src="/images/common/icon-arrow.png"></image>
+       <image class="arrow" src="/images/common/icon-arrow.png" data-item="1" catchtap="shadeShowing"></image>
     </view>
 
     <view class="skill-desc">
         <view class="head">
             <view class="left">技能描述</view>
-            <view class="right">展开全部></view>
+            <view class="right" catchtap="shadeShowing"  data-item="2">展开全部></view>
         </view>
         <view class="content">
            超文本标记语言（英语：HyperText Markup Language，简称：HTML）是一种用于创建网页的标准标记语言。您可以使用 HTML 来建立自己的 WEB 站点，HTML 运行在浏览器上，由浏览器来解析。在本教程中，您将学习如何使用 HTML 来创建站点。HTML 很容易学习！相信您能很快学会它
@@ -52,7 +51,7 @@
     <view class="evaluation">
         <view class="head">
             <view class="left">综合评价</view>
-            <view class="right">全部评价></view>
+            <view class="right" catchtap="shadeShowing"  data-item="3">全部评价></view>
         </view>
         <view class="rate">
             <view class="grade">
@@ -84,7 +83,7 @@
             <view class="left">已结任务</view>
         </view>
         <view class="task-box">
-            <view class="item">
+            <view class="item" wx:for="{{3}}" wx:key="index">
                 <view class="title">
                     <view class="tag">百度热榜</view>
                     <view class="desc">百度热榜百度热榜百度热榜</view>
@@ -115,5 +114,58 @@
         </view>
     </view>
 
+    <view class="other-works">
+        <view class="head">
+            <view class="left">其他作品</view>
+        </view>
+        <view class="othersBox">
+            <scroll-view class="swiperBox" scroll-x>
+                <block wx:for="{{10}}" wx:key="index">
+                    <image  class="photoBox" src="/images/common/715_2.jpg" mode="aspectFill"></image>
+                </block>
+            </scroll-view>
+        </view>
+    </view>
+    <view style="height:{{ ( 50 + safeBottom ) * 2 }}rpx"></view>
+</view>
 
+<view class="tool-bar" style="padding-bottom: {{ safeBottom }}px">
+    <view class="money">5000起</view>
+    <view class="btn-box">
+        <view class="call">联系他</view>
+        <view class="buy">购买服务</view>
+    </view>
+</view>
+
+<view class="shade" catchtouchmove="true" wx:if="{{shadeShowing}}" catchtap="shadeShowing">
+    <view class="main"  data-id="shadeMain" catchtap="shadeShowing" style="padding-bottom: {{safeBottom}}px;">
+        <view wx:if="{{ currShadeItem == 1}}">
+            <view class="shade-user">
+                <view class="u">
+                    <view class="avatarBox">
+                        <image class="avatar" src="/images/common/default-head.png"></image>
+                    </view>
+                    <view>
+                        <view class="name-user">波英冰</view>
+                        <view  class="name-tag>">xxxx | 4.9分</view>
+                    </view>
+                </view>
+                <view class="cell-group">
+                    <view class="field">地域</view>
+                    <view class="message">北京市 朝阳区</view>
+                </view>
+                <view class="cell-group" style="border-top: 0.1px solid #E6E6E6;border-bottom: 0.1px solid #E6E6E6;">
+                    <view class="field">语言</view>
+                    <view class="message">普通话 雅思4分</view>
+                </view>
+                <view class="cell-group">
+                    <view class="field">个人介绍</view>
+                    <view class="message">个人介绍个人介绍个人介绍个人介绍个人介绍个人介绍个人介绍个人介绍个人介绍个人介绍个人介绍个人介绍个人介绍个人介绍个人介绍个人介绍个人介绍个人介绍个人介绍个人介绍个人介绍个人介绍个人介绍个人介绍个人介绍个人介绍个人介绍个人介绍个人介绍个人介绍个人介绍个人介绍个人介绍</view>
+                </view>
+            </view>
+        </view>
+        <view wx:if="{{ currShadeItem == 2}}">{{currShadeItem}}</view>
+        <view wx:if="{{ currShadeItem == 3}}">{{currShadeItem}}</view>
+
+    </view>
 </view>
