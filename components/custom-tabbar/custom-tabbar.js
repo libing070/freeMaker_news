@@ -51,8 +51,11 @@ Component({
             // 特定需求，中间页的样式有点特别，那个页面没有底部tabbar
             // 因此这个要用页面跳转
             if (idx === 2) {
-                wx.navigateTo({
-                    url: '/pages/task/task',
+                // wx.navigateTo({
+                //     url: '/pages/task/task',
+                // })
+                this.setData({
+                    shadeShowing:!this.data.shadeShowing
                 })
             }
             else {
@@ -61,6 +64,27 @@ Component({
                     url: pageUrl,
                 })
             }
+        },
+        //显示隐藏
+        shadeShowing(e) {
+            if (e.currentTarget.dataset.id != "shadeMain") {
+                this.setData({
+                    shadeShowing: !this.data.shadeShowing
+                });
+            }
+
+        },
+        //发布需求
+        tapToDemand(e){
+            wx.navigateTo({
+                url: '/pages/publishDemand/publishDemand',
+            })
+        },
+        //发布需求
+        tapToProduct(e){
+            wx.navigateTo({
+                url: '/pages/publishProduct/publishProduct',
+            })
         }
     }
 })

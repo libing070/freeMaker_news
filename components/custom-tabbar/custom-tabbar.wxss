@@ -69,4 +69,51 @@ view.block_bottom {
     color:#7D7D7D;
     font-size: 24rpx;
 }
- 
+
+.shade {
+    background-color: rgba(0, 0, 0, 0.5);
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    position: fixed;
+}
+
+.main {
+    background-color: white;
+    border-radius: 10px 10px 0 0;
+    width: 100%;
+    bottom: 0;
+    position: absolute;
+    animation: main-show 0.25s forwards;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+
+@keyframes main-show {
+    0% {
+        transform: translateY(100%);
+    }
+
+    100% {
+        transform: translateY(0);
+    }
+}
+
+.shade .main .box{
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin:140rpx 0;
+}
+.shade .main .box .icon{
+    width: 120rpx;
+    height: 120rpx;
+}
+.shade .main .box .name{
+    margin-top: 20rpx;
+    font-size: 30rpx;
+    color: #7D7D7D;
+}

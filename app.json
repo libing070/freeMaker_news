@@ -3,8 +3,11 @@
     "pages/home/home",
     "pages/mine/mine",
     "pages/task/task",
-    "pages/worksDetail/worksDetail",
-    "pages/homeList/homeList"
+    "pages/productDetails/productDetails",
+    "pages/homeList/homeList",
+    "pages/publishDemand/publishDemand",
+    "pages/demandDetails/demandDetails",
+    "pages/publishProduct/publishProduct"
   ],
   "tabBar": {
     "custom": true,

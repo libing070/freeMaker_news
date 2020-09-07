@@ -1,6 +1,7 @@
 const app = getApp()
 module.exports = {
     safeBottom:app.safeBottom,
+    shadeShowing:false,
     tabStyle: {
         //触发时的文字颜色
         activeColor: '#FF6933',

@@ -14,3 +14,15 @@
         </view>
     </view>
 </view>
+<view class="shade" wx:if="{{shadeShowing}}" catchtap="shadeShowing">
+    <view class="main"  data-id="shadeMain" catchtap="shadeShowing" style="padding-bottom: {{safeBottom}}px;">
+        <view class="box" catchtap="tapToDemand">
+            <image class="icon" src="/images/common/icon-edit.png"></image>
+            <text class="name">发布需求</text>
+        </view>
+        <view class="box" catchtap="tapToProduct">
+            <image class="icon" src="/images/common/icon-insert.png"></image>
+            <text class="name">发布作品</text>
+        </view>
+    </view>
+</view>

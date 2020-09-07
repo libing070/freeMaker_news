@@ -87,7 +87,7 @@ Component({
         tapToWorksDetail(e) {
             let id = e.currentTarget.dataset.id
             wx.navigateTo({
-                url: '/pages/worksDetail/worksDetail?id=' + id,
+                url: '/pages/productDetails/productDetails?id=' + id,
             })
         }
     }

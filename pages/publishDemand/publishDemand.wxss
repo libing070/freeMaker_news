@@ -1,0 +1,4 @@
+/* pages/demand/demand.wxss */
+page {
+    background-color: #F7F8FC;
+}

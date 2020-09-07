@@ -1,0 +1,21 @@
+<!--pages/product/product.wxml-->
+<view class="product">
+
+    <view class="input-wrapper">
+        <input class="input" placeholder-style='text-align:left' maxlength="100" placeholder="添加一个标题吧" bindinput="bindTitleInput" value="{{title}}" placeholder-style="color: #C8C8C8"/>
+    </view>
+    <view class="input-wrapper">
+        <editor id="editor" class="editor" placeholder="请输入"  bindinput="bindEditorInput" bindready="onEditorReady"> </editor>
+        <view class="number">{{total}}/300</view>
+    </view>
+    <view class="images-box">
+        <view class="box" wx:for="{{imagesList}}" wx:key="index">
+            <image src="/images/common/icon-delete.png" class="icon-delete" data-index="{{index}}" catchtap="deletePhotos"></image>
+            <image src="{{item}}" class="img" mode="aspectFill"  data-item="{{item}}"  catchtap="tapBanner"/>
+        </view>
+        <view class="box dotted-box" bindtap="tapUpload" wx:if="{{imagesList.length < 8}}">
+            <image src="/images/common/icon-camera.png" class="upload-icon" catchtap="tapUpload" />
+            <text class="upload-text">上传图片</text>
+        </view>
+    </view>
+</view>
