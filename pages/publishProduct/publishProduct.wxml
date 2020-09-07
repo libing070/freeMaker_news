@@ -18,4 +18,27 @@
             <text class="upload-text">上传图片</text>
         </view>
     </view>
+    <view class="skill-type">
+        <view>技能类型</view>
+        <view catchtap="shadeShowing">更多类型></view>
+    </view>
+</view>
+
+
+<view class="shade" wx:if="{{shadeShowing}}" catchtap="shadeShowing">
+    <view class="main"  data-id="shadeMain" catchtap="shadeShowing" style="padding-bottom: {{safeBottom}}px;">
+        <view class="tree-select-title">请选择技能类型</view>
+        <view class="tree-select-box">
+            <view class="tree-select-nav">
+                <view wx:for="{{20}}" wx:key="index" style="margin:20rpx">
+                    {{item}}
+                </view>
+            </view>
+            <view class="tree-select-item">
+                <view wx:for="{{100}}" wx:key="index" style="margin:20rpx">
+                    {{item}}
+                </view>
+            </view>
+        </view>
+    </view>
 </view>

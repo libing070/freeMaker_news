@@ -19,7 +19,6 @@ page {
 }
 
 .input-wrapper .editor{
-    width: 100%;
     margin: 20rpx;
     font-size: 28rpx;
     height: 400rpx;
@@ -68,4 +67,71 @@ page {
 .images-box .box.dotted-box .upload-icon{
     width: 100rpx;
     height: 100rpx;
+}
+
+.skill-type{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin: 20rpx;
+    font-size: 28rpx;
+    color: #C8C8C8;
+    padding: 20rpx 0;
+}
+
+.shade {
+    background-color: rgba(0, 0, 0, 0.5);
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    position: fixed;
+}
+
+.main {
+    background-color: white;
+    border-radius: 10px 10px 0 0;
+    width: 100%;
+    bottom: 0;
+    position: absolute;
+    display: flex;
+    animation: main-show 0.25s forwards;
+}
+
+@keyframes main-show {
+    0% {
+        transform: translateY(100%);
+    }
+
+    100% {
+        transform: translateY(0);
+    }
+}
+
+.tree-select-title{
+    margin: 20rpx;
+    font-size: 32rpx;
+}
+.tree-select-box{
+    height: 500rpx;
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+
+
+}
+.tree-select-box .tree-select-nav{
+    overflow-y: auto;
+    background-color: rebeccapurple;
+    flex-grow:1;
+
+
+}
+.tree-select-box .tree-select-item{
+
+    background-color: red;
+    flex-grow:2;
+    overflow-y: auto;
+
 }

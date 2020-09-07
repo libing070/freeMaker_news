@@ -10,7 +10,8 @@ Page({
         title:'',
         summarize:'',
         total: 0,
-        imagesList:[]//图片
+        imagesList:[],//图片
+        shadeShowing:false,
     },
 
     /**
@@ -148,4 +149,13 @@ Page({
             urls,
         })
     },
+    //显示隐藏
+    shadeShowing(e) {
+        console.log(111);
+        if (e.currentTarget.dataset.id != "shadeMain") {
+             this.setData({
+                shadeShowing: !this.data.shadeShowing
+            });
+        }
+    },    
 })
