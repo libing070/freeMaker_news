@@ -22,6 +22,18 @@
         <view>技能类型</view>
         <view catchtap="shadeShowing">更多类型></view>
     </view>
+    <view class="mark-type">
+        <scroll-view class="menu" scroll-x="true">
+            <view class="item" wx:for="{{10}}" wx:key="index" data-id="{{index}}" catchtap="tapTohomeList">
+                <image class="icon" src="/images/common/icon-tag.png"></image>
+                <text class="name">更多类型{{index+1}}</text>
+            </view>
+        </scroll-view>  
+    </view>
+    <view class="salary">
+        <view class="name">薪水(¥)</view>
+        <input class="input" placeholder-style='text-align:left' style="margin-left:30rpx" maxlength="10" placeholder="" bindinput="bindSalaryInput" value="{{salary}}" placeholder-style="color: #C8C8C8"/>
+    </view>
 </view>
 
 
@@ -30,13 +42,13 @@
         <view class="tree-select-title">请选择技能类型</view>
         <view class="tree-select-box">
             <view class="tree-select-nav">
-                <view wx:for="{{20}}" wx:key="index" style="margin:20rpx">
+                <view wx:for="{{20}}" wx:key="index" data-index="{{index}}" class="item {{index == currTreeSelectNavIndex ? 'sel' : ''}}" catchtap="tapTreeSelectNav">
                     {{item}}
                 </view>
             </view>
-            <view class="tree-select-item">
-                <view wx:for="{{100}}" wx:key="index" style="margin:20rpx">
-                    {{item}}
+            <view class="tree-select-main">
+                <view wx:for="{{100}}" class="item" wx:key="index">
+                    {{currTreeSelectNavIndex}}------{{item}}
                 </view>
             </view>
         </view>

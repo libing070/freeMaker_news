@@ -2,3 +2,106 @@
 page {
     background-color: #F7F8FC;
 }
+.demand{
+    position: relative;
+    background-color: white;
+}
+.input-wrapper{
+    position: relative;
+}
+.input-wrapper .input{
+    color: #7D7D7D;
+    height: 120rpx;
+    line-height: 120rpx;
+    margin:0 20rpx;
+    font-size: 28rpx;
+    border-bottom: 0.1px solid #E6E6E6;
+}
+
+.input-wrapper .editor{
+    padding: 20rpx;
+    font-size: 28rpx;
+    height: 400rpx;
+}
+.input-wrapper .number{
+    position: absolute;
+    bottom: 20rpx;
+    right: 20rpx;
+    font-size: 28rpx;
+    color: #C8C8C8;
+}
+.content-wrapper{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin: 20rpx;
+    font-size: 28rpx;
+    color: #C8C8C8;
+    padding: 20rpx 0;
+
+}
+
+.shade {
+    background-color: rgba(0, 0, 0, 0.5);
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    position: fixed;
+}
+
+.main {
+    background-color: white;
+    border-radius: 10px 10px 0 0;
+    width: 100%;
+    bottom: 0;
+    position: absolute;
+    animation: main-show 0.25s forwards;
+}
+
+@keyframes main-show {
+    0% {
+        transform: translateY(100%);
+    }
+
+    100% {
+        transform: translateY(0);
+    }
+}
+
+.tree-select-title{
+    margin: 20rpx;
+    font-size: 32rpx;
+}
+.tree-select-box{
+    height: 600rpx;
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    margin-top:40rpx;
+}
+.tree-select-box .tree-select-nav{
+    overflow-y: auto;
+    flex-grow:1;
+    text-align: center;
+    border-right: 0.1px solid #E6E6E6;
+    padding:20rpx;
+}
+.tree-select-box .tree-select-nav .item{
+    padding:20rpx;
+    border-radius: 10rpx;
+}
+.tree-select-box .tree-select-nav .item.sel{
+    background-color: #7D7D7D;
+}
+.tree-select-box .tree-select-main{
+    flex-grow:2;
+    overflow-y: auto;
+}
+.tree-select-box .tree-select-main .item{
+    padding:20rpx;
+    margin:10rpx;
+    margin-left: 20rpx;
+    border-bottom: 0.1px solid #E6E6E6;
+}

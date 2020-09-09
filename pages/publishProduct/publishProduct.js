@@ -12,6 +12,7 @@ Page({
         total: 0,
         imagesList:[],//图片
         shadeShowing:false,
+        currTreeSelectNavIndex:0
     },
 
     /**
@@ -158,4 +159,11 @@ Page({
             });
         }
     },    
+    //点击树形左侧菜单
+    tapTreeSelectNav(e) {
+        let currTreeSelectNavIndex=e.currentTarget.dataset.index
+        this.setData({
+            currTreeSelectNavIndex
+        })
+    }
 })

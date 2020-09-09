@@ -1,4 +1,70 @@
 <!--pages/demand/demand.wxml-->
+<wxs module="fn">
+    module.exports = {
+        formatCurrrArea: function(currrArea) {
+            return currrArea.length!=0 ? (currrArea[0]+','+currrArea[1]+","+currrArea[2]): '请选择>'
+        }
+    }
+</wxs>
 <view class="demand">
+    <view class="input-wrapper">
+        <input class="input" placeholder-style='text-align:left' maxlength="100" placeholder="添加一个标题吧" bindinput="bindTitleInput" value="{{title}}" placeholder-style="color: #C8C8C8"/>
+    </view>
+    <view class="input-wrapper">
+        <editor id="editor" class="editor" placeholder="请输入"  bindinput="bindEditorInput" bindready="onEditorReady"> </editor>
+        <view class="number">{{total}}/300</view>
+    </view>
+    <view class="content-wrapper">
+        <view>需求类型</view>
+        <view catchtap="shadeShowing" data-type="demand">请选择></view>
+    </view>
+    <view class="content-wrapper">
+        <view>期望交付时间</view>
+        <view catchtap="shadeShowing" data-type="date">{{currentDateStr}}</view>
+    </view>
+    <view class="content-wrapper">
+        <view>省份城市</view>
+        <view catchtap="shadeShowing" data-type="area">{{fn.formatCurrrArea(currrArea)}}</view>
+    </view>
+</view>
 
+<view class="shade" wx:if="{{shadeShowing}}" catchtap="shadeShowing">
+    <view class="main"  data-id="shadeMain" catchtap="shadeShowing" style="padding-bottom: {{safeBottom}}px;">
+        <view wx:if="{{ currPicker == 'demand'}}">
+            <view class="tree-select-title">请选择需求类型</view>
+            <view class="tree-select-box">
+                <view class="tree-select-nav">
+                    <view wx:for="{{20}}" wx:key="index" data-index="{{index}}" class="item {{index == currTreeSelectNavIndex ? 'sel' : ''}}" catchtap="tapTreeSelectNav">
+                        {{item}}
+                    </view>
+                </view>
+                <view class="tree-select-main">
+                    <view wx:for="{{100}}" class="item" wx:key="index">
+                        {{currTreeSelectNavIndex}}------{{item}}
+                    </view>
+                </view>
+            </view>
+        </view>
+        <view wx:elif="{{currPicker == 'date'}}">
+            <van-datetime-picker
+            title="期望交付时间"
+            type="date"
+            value="{{ currentDate }}"
+            min-date="{{ minDate }}"
+            max-date="{{ maxDate }}"
+            formatter="{{ formatter }}"
+            bind:confirm="dateTapDone"
+            bind:cancel="tapCancel"
+            />
+        </view>
+        <view wx:elif="{{currPicker == 'area'}}">
+            <van-area
+            bind:confirm="areaTapDone"
+            bind:cancel="tapCancel"
+            area-list="{{ areaList }}"
+            value="{{currrAreaCode}}"
+            title="省/市/区"
+            />
+        </view>
+    </view>
 </view>
