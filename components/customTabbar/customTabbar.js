@@ -1,4 +1,4 @@
-const config = require('./tabbar-config.js')
+const config = require('./tabbarConfig.js')
 
 Component({
     
