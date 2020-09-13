@@ -133,7 +133,7 @@
     <view class="money">5000起</view>
     <view class="btn-box">
         <view class="call">联系他</view>
-        <view class="buy">购买服务</view>
+        <view class="buy" catchtap="tapToOrderDetails">购买服务</view>
     </view>
 </view>
 

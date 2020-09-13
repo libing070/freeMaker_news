@@ -1,6 +1,5 @@
 <!--pages/home/home.wxml-->
-<view class="home" style="padding-bottom:{{ safeBottom }}px">
-
+<view class="home" style="padding-bottom:{{ 50 + safeBottom }}px">
     <view class="menu-box">
         <scroll-view class="menu" scroll-x="true">
             <view class="item" wx:for="{{10}}" wx:key="index" data-id="{{index}}" catchtap="tapTohomeList">

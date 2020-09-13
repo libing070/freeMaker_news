@@ -27,7 +27,7 @@
 			"outputPath": ""
 		},
 		"useIsolateContext": true,
-		"useCompilerModule": false,
+		"useCompilerModule": true,
 		"userConfirmedUseCompilerModuleSwitch": false,
 		"useMultiFrameRuntime": true,
 		"useApiHook": false,
@@ -36,7 +36,7 @@
 	},
 	"compileType": "miniprogram",
 	"libVersion": "2.12.2",
-	"appid": "wx5716ed1ec12f3f2a",
+	"appid": "wxebd3588df98ae1a7",
 	"projectname": "freeMaker_news",
 	"debugOptions": {
 		"hidedInDevtools": []
@@ -94,6 +94,20 @@
 					"id": -1,
 					"name": "pages/orderDetails/orderDetails",
 					"pathName": "pages/orderDetails/orderDetails",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "pages/pushUserList/pushUserList",
+					"pathName": "pages/pushUserList/pushUserList",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "pages/mine/mine",
+					"pathName": "pages/mine/mine",
 					"query": "",
 					"scene": null
 				}

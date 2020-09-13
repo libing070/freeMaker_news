@@ -115,5 +115,11 @@ Page({
             });
         }
 
+    },
+    //购买服务事件
+    tapToOrderDetails(e){
+        wx.navigateTo({
+          url: '/pages/orderDetails/orderDetails',
+        })
     }
 })

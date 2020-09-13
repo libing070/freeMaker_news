@@ -1,5 +1,5 @@
 <!--pages/mine/mine.wxml-->
-<view class="mine">
+<view class="mine" style="padding-bottom:{{ 50 + safeBottom }}px">
     <view class="user">
         <view class="avatarBox">
             <image class="avatar" src="/images/common/default-head.png"></image>
@@ -8,11 +8,123 @@
             <view class="name-user">波英冰</view>
             <view  class="name-tag>">xxxx</view>
         </view>
-        <view class="money">
-            <view class="value">5000</view>
-            <view class="unit">元</view>
+        <view class="price">
+            <view class="wallet">
+                <image class="icon" src="/images/common/icon-wallet.png"></image>
+            </view>
+            <view class="mm">
+                <view class="top">累计收入</view>
+                <view class="bottom">
+                    <text class="value">5000</text>
+                    <text class="unit">元</text>
+                </view>
+            </view>
         </view>
     </view>
+    <view class="tabs">
+        <block wx:for="{{tabs}}" wx:key="index">
+            <view class="item {{selectedTab == index ? 'sel' : ''}}" data-tab="{{index}}" catchtap="tapTab">{{item}}</view>
+        </block>
+    </view>
+    <view class="demand-container" wx:if="{{selectedTab == 0}}">
+        <view class="demand-second-level">
+            <view  catchtap="tapdemandTab" data-tab="0" class="level {{selecteddemandTab == 0 ? 'sel' : ''}}">全部·21</view>
+            <view  catchtap="tapdemandTab" data-tab="1" class="level {{selecteddemandTab == 1 ? 'sel' : ''}}">已开启·9</view>
+            <view  catchtap="tapdemandTab" data-tab="2" class="level {{selecteddemandTab == 2 ? 'sel' : ''}}">已停运·1</view>
+        </view>
+        <view class="demand-order-list" wx:for="{{20}}" wx:key="index" catchtap="tapToOrderDetails">
+            <view class="status">已开启</view>
+            <view class="title">
+                <view class="tag">课程设计</view>
+                <view class="name">k12教育培训-课程设计{{item}}</view>
+            </view>
+            <view class="item date">
+                <text class="key">交付日期：</text>
+                <text class="value">2020-09-12</text>
+            </view>
+            <view class="item remuneration">
+                <text class="key">预计酬劳：</text>
+                <text class="value">3000元</text>
+            </view>
+        </view>
+    </view>
+    <view class="order-container" wx:if="{{selectedTab == 1}}">
+        <view class="order-list" wx:if="{{1}}">
+            <view class="dropdown-menu">
+                <view class="menu">
+                    <view class="menu-item" catchtap="dropdownShowing1">
+                        <text class='name' style="color: {{options1Text != '全部订单' ? 'tomato':''}}">{{options1Text}}</text>
+                        <image class="icon" src="/images/common/icon-triangle.png"></image>
+                    </view>
+                    <view class="menu-item"  catchtap="dropdownShowing2">
+                        <text class='name' style="color: {{options2Text != '全部状态' ? 'tomato':''}}">{{options2Text}}</text>
+                        <image class="icon" src="/images/common/icon-triangle.png"></image>
+                    </view>
+                </view>
+                <view class="shade-cell" catchtouchmove="true"  wx:if="{{dropdownShowing1}}" catchtap="dropdownShowing1">
+                    <view class="shade-cell-main" data-id="shadeMain" catchtap="dropdownShowing1">
+                        <view class="shade-item-option" catchtap="tapChangedropdown1" wx:for="{{options1}}" wx:key="index" data-index="{{index}}" data-item="{{item}}">
+                            <text class="name {{ item.checked ? 'sel' : ''}}">{{ item.text }}</text>
+                            <image wx:if="{{item.checked}}"class="checked" src="/images/common/icon-ok.png"></image>
+                        </view>
+                    </view>
+                </view>
+                <view class="shade-cell" catchtouchmove="true"  wx:if="{{dropdownShowing2}}" catchtap="dropdownShowing2">
+                    <view class="shade-cell-main" data-id="shadeMain" catchtap="dropdownShowing2">
+                        <view class="shade-item-option" catchtap="tapChangedropdown2" wx:for="{{options2}}" wx:key="index" data-index="{{index}}" data-item="{{item}}">
+                            <text class="name {{ item.checked ? 'sel' : ''}}">{{ item.text }}</text>
+                            <image wx:if="{{item.checked}}"class="checked" src="/images/common/icon-ok.png"></image>
+                        </view>
+                    </view>
+                </view>
+            </view>
+            <view class="demand-order-list" wx:for="{{20}}" wx:key="index" catchtap="tapToOrderDetails">
+                <view class="status">已开启</view>
+                <view class="title">
+                    <view class="tag">课程设计</view>
+                    <view class="name">k12教育培训-课程设计{{item}}</view>
+                </view>
+                <view class="item date">
+                    <text class="key">交付日期：</text>
+                    <text class="value">2020-09-12</text>
+                </view>
+                <view class="item remuneration">
+                    <text class="key">预计酬劳：</text>
+                    <text class="value">3000元</text>
+                </view>
+                <view class="user-mobile">
+                    <image class="head" src="/images/common/default-head.png"></image>
+                    <view class="mobile">18888****121</view>
+                    <image class="call" src="/images/common/icon-call.png"></image>
+                </view>
+            </view>
+        </view>
+        <view class="no-data" wx:else>
+            <image class="icon" src="/images/common/icon-insert.png"></image>
+            <view class="desc">您当前还没有任务，只有发布作品才可以接单哦，快来发布您的第一个作品吧</view>
+        </view>
+    </view>
+    <view class="product-container" wx:if="{{selectedTab == 2}}">
+        <view class="product-list" wx:for="{{20}}" wx:key="index" catchtap="tapToProductDetails">
+            <image class="photo" src="/images/common/715_2.jpg" mode="aspectFill"></image>
+            <view class="p-u">
+                <view class="title">教辅类产品课件设计</view>
+                <view class="mark-type">
+                    <scroll-view class="menu" scroll-x="true">
+                        <view class="item" wx:for="{{6}}" wx:key="index" data-id="{{index}}" catchtap="tapTohomeList">
+                            <text class="name">更多类型{{index+1}}</text>
+                        </view>
+                    </scroll-view>  
+                </view>
+                <view class="p-u-price">
+                    <text class="unit">¥</text>
+                    <text class="value">400</text>
+                    <text class="unit">/时</text>
+                </view>
+            </view>
+        </view>
+    </view>
+
 </view>
 
 <custom-tabbar active-index="1"></custom-tabbar>

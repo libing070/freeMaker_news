@@ -1,0 +1,108 @@
+/* pages/pushUserList/pushUserList.wxss */
+page {
+    background-color: #F7F8FC;
+}
+.notice{
+    position: relative;
+    padding:20rpx;
+    background-color: #e6e6e6; 
+}
+.notice .icon{
+    width: 50rpx;
+    height: 50rpx;
+    vertical-align: middle;
+
+}
+.notice .text{
+    padding-left: 10rpx;
+    font-size: 28rpx;
+}
+.box-cell{
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    margin:20rpx;
+    padding:40rpx 0;
+    border-bottom: 0.1px solid #E6E6E6;
+}
+.box-cell .photo{
+    width: 270rpx;
+    height: 200rpx;
+    border-radius: 10rpx;
+}
+.box-cell .user-box{
+    position: relative;
+    display: flex;
+    flex-direction: column;
+}
+.box-cell .user-box .user{
+    position: relative;
+    display: flex;
+    align-items: center;
+    margin:0 20rpx
+}
+.avatarBox {
+    width: 120rpx;
+    height: 120rpx;
+    position: relative;
+    margin-right: 10px;
+    flex-shrink: 0;
+}
+
+.avatarBox .avatar {
+    border-radius: 50%;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+}
+
+.name-user {
+    color: #7D7D7D;
+    font-size: 36rpx;
+    font-weight: 500;
+}
+
+.name-tag {
+    color: #7D7D7D;
+    font-size: 26rpx;
+    margin-top: 4px;
+}
+
+.mark-type{
+    width: 280rpx;
+    margin: 20rpx;
+}
+.mark-type .menu{
+    position: relative;
+    white-space: nowrap;
+    height: 50rpx;
+
+}
+.mark-type .menu .item{
+    height: 50rpx;
+    background-color: #707070;
+    border-radius: 5px;
+    box-shadow: 0 2px 8px 0 rgba(36, 19, 72, 0.04);
+    display: inline-flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    margin: 0 10rpx;
+    padding:0 10rpx;
+}
+.mark-type .menu .item .name{
+    font-size: 24rpx;
+    color: white;
+}
+.price{
+    position: absolute;
+    bottom: 60rpx;
+    right: 0rpx;
+    color: tomato;
+}
+.price .unit{
+    font-size: 28rpx;
+} 
+.price .value{
+    font-size: 40rpx;
+} 
