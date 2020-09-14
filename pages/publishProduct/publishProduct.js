@@ -165,5 +165,12 @@ Page({
         this.setData({
             currTreeSelectNavIndex
         })
+    },
+    //跳转到我的作品列表
+    tapToMyProduct(){
+        app.globalData.selectedTab = 2
+        wx.switchTab({
+          url: '/pages/mine/mine',
+        })
     }
 })

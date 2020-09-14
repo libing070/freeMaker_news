@@ -36,6 +36,10 @@
     </view>
 </view>
 
+<view class="tool-bar" style="padding-bottom: {{ safeBottom }}px">
+    <view class="layout-1" catchtap="tapToMyProduct">发布</view>
+</view>
+
 
 <view class="shade" wx:if="{{shadeShowing}}" catchtap="shadeShowing">
     <view class="main"  data-id="shadeMain" catchtap="shadeShowing" style="padding-bottom: {{safeBottom}}px;">

@@ -13,7 +13,15 @@
         <home-cell wx:for="{{list}}" wx:key="index" obj="{{item}}" bindchangeName="changeName"></home-cell>
     </view>
 
+    <view class="recommend-navbar">
+        <view class="left">推荐</view>
+        <view class="right"  catchtap="tapTohomeList">see all></view>
+    </view>
 
+
+    <view class="group">
+        <home-cell wx:for="{{list}}" wx:key="index" obj="{{item}}" bindchangeName="changeName"></home-cell>
+    </view>
 
 </view>
 

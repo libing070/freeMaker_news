@@ -28,4 +28,19 @@ page {
 .menu-box .item .name{
     font-size: 24rpx;
 }
-
+.recommend-navbar{
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding:20rpx;
+    align-items: center;
+}
+.recommend-navbar .left{
+    font-size: 38rpx;
+    font-weight: bold;
+}
+.recommend-navbar .right{
+    font-size: 30rpx;
+    color:#7D7D7D
+}

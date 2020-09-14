@@ -123,7 +123,9 @@ App({
 
         cookie:'',
 
-        userInfo: null
+        userInfo: null,
+
+        selectedTab:0//我的页面 当前选择的菜单
         
     }
 })
