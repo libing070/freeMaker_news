@@ -34,7 +34,16 @@ Component({
     },
 
     data: config,
-
+    pageLifetimes: {
+        // 组件所在页面的生命周期函数
+        show: function () { },
+        hide: function () { 
+            this.setData({
+                shadeShowing:false
+            })
+        },
+        resize: function () { },
+    },
     methods: {
         clickTag(e) {
             let idx = e.currentTarget.dataset.index

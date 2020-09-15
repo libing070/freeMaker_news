@@ -198,4 +198,11 @@ Page({
             shadeShowing: false
         });
     },
+     //跳转到我的作品列表
+     tapToMyDemand(){
+        app.globalData.selectedTab = 0
+        wx.switchTab({
+          url: '/pages/mine/mine',
+        })
+    }
 })
