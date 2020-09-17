@@ -4,9 +4,9 @@ module.exports = {
     shadeShowing:false,
     tabStyle: {
         //触发时的文字颜色
-        activeColor: '#FF6933',
+        activeColor: '#0C2032',
         //未触发时的文字颜色
-        inactiveColor: '#7D7D7D',
+        inactiveColor: '#8B959D',
     },
 
     tabs: [
