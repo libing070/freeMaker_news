@@ -1,6 +1,8 @@
 //app.js
 App({
     onLaunch: function () {
+
+        
         //wx.clearStorage();//真机调试 清除缓存 注：正式环境删除
         let info = wx.getSystemInfoSync()
         // 屏幕宽高

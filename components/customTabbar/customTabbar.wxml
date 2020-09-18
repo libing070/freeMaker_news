@@ -2,15 +2,19 @@
 <view>
     <view class='tabbar-wrapper' style="padding-bottom:{{ safeBottom }}px">
         <view wx:for="{{ tabs }}" wx:key="{{ item.content }}" class='tabbar-item' bindtap='clickTag' data-index='{{ index }}'>      
-            <image src='{{ (activeIndex == index) ? item.activeImg : item.inactiveImg }}' wx:if="{{ item.activeImg }}"></image>
+            <view class="image-box">
+                <image src='{{ (activeIndex == index) ? item.activeImg : item.inactiveImg }}' wx:if="{{ item.activeImg }}"></image>
+
+            </view>
             <view wx:if="{{ item.content }}" style="color:{{ (activeIndex == index) ? tabStyle.activeColor : tabStyle.inactiveColor }};">
                 {{item.content}}
             </view> 
         </view>
         <!-- 下面这个是中间的大加号 -->
         <view class="publish" bindtap='clickPlus'>
-            <image src='/images/common/add_2x.png' class='plus-icon'></image>
-            <view class="name">发布</view>
+            <!-- <image src='/images/common/add_2x.png' class='plus-icon'></image> -->
+            <view class=""></view>
+            <!-- <view class="name">发布</view> -->
         </view>
     </view>
 </view>
