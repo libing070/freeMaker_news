@@ -1,32 +1,51 @@
 /* pages/home/home.wxss */
 page {
-    background-color: #F7F8FC;
+    background-color: white;
 }
 .menu-box{
-    padding: 20rpx 20rpx 0 20rpx;
+    /* padding: 20rpx 20rpx 0 20rpx; */
+    position: relative;
+    width: 672rpx;
+    height: 168rpx;
+    margin:auto;
+    background: #F7F9FB;
+    border-radius: 8rpx;
+    border-radius: 8rpx;
+    margin-top: 32rpx;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    overflow: hidden;
 }
 .menu-box .menu{
     position: relative;
     white-space: nowrap;
-    height: 100rpx;
+    height: 106rpx;
+    width: 672rpx;
 }
 .menu-box .menu .item{
-    height: 100rpx;
-    width: 100rpx;
-    background-color: white;
-    border-radius: 10px;
-    box-shadow: 0 2px 8px 0 rgba(36, 19, 72, 0.04);
+    margin-right: 112rpx;
     display: inline-flex;
     flex-direction: column;
     align-items: center;/*左右居中*/
-    margin: 0 10rpx;
+}
+.menu-box .menu .item:first-child{
+    margin-left: 40rpx;
+}
+.menu-box .menu .item:last-child{
+    margin-right: 40rpx;
 }
 .menu-box .item .icon{
-    width: 60rpx;
-    height: 60rpx;
+    width: 64rpx;
+    height: 64rpx;
 }
 .menu-box .item .name{
+    margin-top: 6.8rpx;
+    font-family: PingFangSC-Regular;
     font-size: 24rpx;
+    color: #3F5161;
+    letter-spacing: 0;
+    text-align: center;
 }
 .recommend-navbar{
     position: relative;

@@ -12,9 +12,7 @@
         </view>
         <!-- 下面这个是中间的大加号 -->
         <view class="publish" bindtap='clickPlus'>
-            <!-- <image src='/images/common/add_2x.png' class='plus-icon'></image> -->
             <view class=""></view>
-            <!-- <view class="name">发布</view> -->
         </view>
     </view>
 </view>
