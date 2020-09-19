@@ -52,7 +52,7 @@ page {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    padding:20rpx;
+    padding:0 40rpx;
     align-items: center;
 }
 .recommend-navbar .left{
@@ -62,4 +62,67 @@ page {
 .recommend-navbar .right{
     font-size: 30rpx;
     color:#7D7D7D
+}
+.recommend-navbar .right .more{
+    font-family: PingFangSC-Regular;
+    font-size: 28rpx;
+    color: #8392A0;
+    line-height: 40rpx;
+    margin-right: 4prx;
+}
+.recommend-navbar .right .triangle{
+    height: 18rpx;
+    width: 18rpx;
+}
+.album-box{
+    position: relative;
+    height: 160rpx;
+    overflow: hidden;
+    background-color: white;
+    margin-left: 40rpx;
+}
+.album-box .swiperBox{
+    height: 160rpx;
+    white-space: nowrap;
+}
+.album-box .swiperBox .itemBox{
+    height: 160rpx;
+    width: 352rpx;
+    margin-right: 24rpx;
+    display: inline-flex;
+    background: #F7F9FB;
+    border-radius: 4px;
+    border-radius: 4px;
+    align-items: center;
+    justify-content: center;
+}
+.album-box .swiperBox .itemBox .photoBox{
+    margin-left: 20rpx;
+    width: 100rpx;
+    height: 100rpx;
+}
+.album-box .swiperBox .itemBox .name{
+    display: flex;
+    flex-direction: column;
+    margin-left: 32rpx;
+    align-items: flex-start;
+}
+.album-box .swiperBox .itemBox .name .cn-name{
+    font-family: PingFangSC-Medium;
+    font-size: 32rpx;
+    color: #0C2032;
+    line-height: 40rpx;
+}
+.album-box .swiperBox .itemBox .name .en-name{
+    font-family: PingFangSC-Regular;
+    font-size: 20rpx;
+    color: #A0B7CD;
+    text-align: center;
+    line-height: 32rpx;
+}
+.album-box .swiperBox .itemBox:nth-child(1){
+    padding-left: 0;
+}
+.album-box .swiperBox .itemBox:last-child{
+    padding-right: 0;
 }

@@ -128,14 +128,15 @@ view.block_bottom {
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin:140rpx 0;
+    margin:112rpx 0;
 }
 .shade .main .box .icon{
-    width: 120rpx;
-    height: 120rpx;
+    width: 140rpx;
+    height: 140rpx;
 }
 .shade .main .box .name{
-    margin-top: 20rpx;
-    font-size: 30rpx;
-    color: #7D7D7D;
+    margin-top: 16rpx;
+    font-family: PingFangSC-Regular;
+    font-size: 28rpx;
+    color: #0C2032;
 }

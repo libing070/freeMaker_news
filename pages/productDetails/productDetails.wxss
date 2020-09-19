@@ -7,7 +7,7 @@ page {
 }
 .detail .top{
     position: relative;
-    height: 400rpx;
+    height: 562.4rpx;
 
 }
 .detail .top .img{
@@ -29,89 +29,102 @@ page {
 }
 .detail .top .pagination{
     position: absolute;
-    left: 20rpx;
-    bottom: 20rpx;
-    font-size: 22rpx;
-    border-radius: 5rpx;
-    color: white;
-    padding: 10rpx 20rpx;
-    line-height: 30rpx;
-    height: 30rpx;
+    right: 40rpx;
+    bottom: 22.4rpx;
+    border-radius: 20rpx;
+    padding: 0 14rpx;
+    line-height: 40rpx;
+    height: 40rpx;
     background-color: rgba(0, 0, 0, 0.3);
+    font-family: DINAlternate-Bold;
+    font-size: 24rpx;
+    color: #FFFFFF;
+    letter-spacing: 0.46rpx;
 }
 .tag-title{
+    margin-top:14rpx;
+    margin-right: 40rpx;
+    margin-left: 40rpx;
     position: relative;
-    padding:20rpx 0 0 20rpx;
 }
 .tag-title .tag{
     display: inline-block;
-    color: white;
-    padding: 10rpx 20rpx;
-    line-height: 30rpx;
-    height: 30rpx;
-    font-size: 22rpx;
-    border-radius: 5rpx;
-    background-color: rgba(0, 0, 0, 0.3);  
+    color: #8392A0;
+    padding: 0 14rpx;
+    line-height: 48rpx;
+    height: 48rpx;
+    font-size: 24rpx;
+    background: #F7F9FB;
+    border-radius: 8rpx;
 }
 .title{
     position: relative;
-    height: 90rpx;
+    height: 52rpx;
+    margin-top: 22rpx;
+    margin-left: 40rpx;
+    margin-right: 40rpx;
 }
 .title .name{
     position: absolute;
-    left:20rpx;
-    top: 20rpx;
+    left: 0;
+    top: 0;
     bottom: 0;
     margin: auto;
     font-weight: bold;
-    font-size: 34rpx;
-    line-height: 80rpx;
-
+    font-size: 36rpx;
+    font-family: PingFangSC-Semibold;
+    color: #0C2032;
+    line-height: 40rpx;
 }
 .title  .collect{
     position: absolute;
-    right: 20rpx;
-    top: 20rpx;
+    right: 0;
+    top: 0;
     bottom: 0;
     margin:auto;
-    height: 60rpx;
-    border:1px solid #7D7D7D;
-    border-radius: 50rpx;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-    padding: 0 30rpx 0 25rpx;
+    height: 52rpx;
+    width: 120rpx;
+    background: #EEF5FD;
+    border-radius: 32rpx;
+    text-align: center;
+    line-height: 52rpx;
+    font-size: 24rpx;
+
 }
 .title  .collect.sel{
-    border-color: tomato;
+    background: #FFBA20;
+    border-radius: 16px;
 }
 .title  .collect .icon{
-    width: 40rpx;
-    height: 40rpx;
+    width: 35rpx;
+    height: 35rpx;
     display:inline-flex;
-    margin-right: 5rpx;
+    vertical-align: middle;
+    margin-top: -5rpx;
 }
 .title  .collect .collect-name{
     display:inline-flex;
-    line-height: 60rpx;
-    font-size: 30rpx;
-    color: #7D7D7D;
+    font-family: PingFangSC-Regular;
+    font-size: 24rpx;
+    color: #7797B5;
 }
 .title  .collect .collect-name.sel{
-    color: tomato;
+    color: #FFFFFF;
+    font-size: 24rpx;
 }
 .user {
+    margin-top: 80rpx;
     position: relative;
     display: flex;
     align-items: center;
-    padding:20rpx;
+    margin:40rpx;
+    padding-bottom: 40rpx;
     border-bottom: 0.1px solid #E6E6E6;
 }
 
 .user .avatarBox {
-    width: 120rpx;
-    height: 120rpx;
+    width: 80rpx;
+    height: 80rpx;
     position: relative;
     margin-right: 10px;
     flex-shrink: 0;
@@ -125,31 +138,32 @@ page {
 }
 
 .user .name-user {
-    color: #7D7D7D;
-    font-size: 36rpx;
+    font-family: PingFangSC-Medium;
+    font-size: 28rpx;
+    color: #0C2032;
     font-weight: 500;
 }
 
 .user .name-tag {
-    color: #7D7D7D;
-    font-size: 26rpx;
-    margin-top: 8rpx;
+    font-family: PingFangSC-Regular;
+    font-size: 24rpx;
+    color: #8392A0;
+    margin-top: 2rpx;
 }
 .user .arrow{
     position: absolute;
-    right: 20rpx;
-    top: 0;
+    right: 0rpx;
+    top: -40rpx;
     bottom: 0;
     margin:auto;
-    height:40rpx;
-    width: 40rpx;
-    padding: 20rpx;
-    padding-right: 0;
+    height:64rpx;
+    width: 64rpx;
 }
 
 .skill-desc{
     position: relative;
-    padding:20rpx;
+    margin:40rpx;
+    margin-top: 80rpx;
     border-bottom: 0.1px solid #E6E6E6;
 }
 .skill-desc .head{
@@ -161,20 +175,30 @@ page {
 }
 .skill-desc .head .left{
     font-weight: bold;
-    font-size: 34rpx;
-    line-height: 50rpx;
+    font-family: PingFangSC-Medium;
+    font-size: 36rpx;
+    color: #0C2032;
 }
 .skill-desc .head .right{
-    font-size: 28rpx;
-    line-height: 50rpx;
-    color: #7D7D7D;
+    font-family: PingFangSC-Regular;
+    font-size: 24rpx;
+    color: #8392A0;
+}
+.skill-desc .head .right .more{
+    margin-right: 4prx;
+}
+.skill-desc .head .right .triangle{
+    height: 20rpx;
+    width: 20rpx;
+    vertical-align: middle;
 }
 
 .skill-desc .content{
-    margin-top:20rpx;
+    margin-top:40rpx;
     margin-bottom: 40rpx;
-    color: #7D7D7D;
+    font-family: PingFangSC-Regular;
     font-size: 28rpx;
+    color: #3F5161;
     display: -webkit-box;
     -webkit-box-orient: vertical;
     -webkit-line-clamp: 2;
@@ -184,7 +208,8 @@ page {
 
 .evaluation{
     position: relative;
-    padding:20rpx;
+    margin:40rpx;
+    margin-top: 80rpx;
     border-bottom: 0.1px solid #E6E6E6;   
 }
 .evaluation .head{
@@ -193,24 +218,32 @@ page {
     justify-content: space-between;
     align-items: center;
     height: 50rpx;
-    margin-bottom: 20rpx;
 }
 .evaluation .head .left{
     font-weight: bold;
-    font-size: 34rpx;
-    line-height: 50rpx;
+    font-family: PingFangSC-Medium;
+    font-size: 36rpx;
+    color: #0C2032;
 }
 .evaluation .head .right{
-    font-size: 28rpx;
-    line-height: 50rpx;
-    color: #7D7D7D;
+    font-family: PingFangSC-Regular;
+    font-size: 24rpx;
+    color: #8392A0;
+}
+.evaluation .head .right .more{
+    margin-right: 4prx;
+}
+.evaluation .head .right .triangle{
+    height: 20rpx;
+    width: 20rpx;
+    vertical-align: middle;
 }
 .evaluation .rate{
     display: flex;
     flex-direction: row;
     justify-content: flex-start;
     align-items: center;
-    margin-bottom: 20rpx;
+    margin: 40rpx 0;
 }
 .evaluation .rate .grade{
     display: flex;
@@ -228,35 +261,41 @@ page {
     display: flex;
     flex-direction: row;
     align-items: center;
-    font-size: 28rpx;
+    height: 40rpx;
 }
 .progress .pro-item .name{
     text-align: center;
     flex-grow:1;
+    font-family: PingFangSC-Regular;
+    font-size: 24rpx;
+    color: #3F5161;
 }
 .progress .pro-item .line{
     text-align: left;
-    width: 300rpx;
-    height: 15rpx;
-    line-height: 15rpx;
-    background-color: #F7F8FC;
+    width: 216rpx;
+    height: 8rpx;
+    line-height: 8rpx;
+    background: #E6E6E6;
     border-radius: 50rpx;
 }
 .progress .pro-item .line .l-width{
-    background-color: tomato;
-    height: 15rpx;
-    line-height: 15rpx;
+    background: #FFBA20;
+    height: 8rpx;
+    line-height: 8rpx;
     border-radius: 50rpx;
 }
 .progress .pro-item .num{
     text-align: center;
     flex-grow:1;
+    font-family: DINAlternate-Bold;
+    font-size: 24rpx;
+    color: #0C2032;
 }
 
 .task-ended{
     position: relative;
-    padding:20rpx;
-    border-bottom: 0.1px solid #E6E6E6;   
+    margin:40rpx;
+    margin-top: 80rpx;
 }
 .task-ended .head{
     display: flex;
@@ -264,19 +303,34 @@ page {
     justify-content: space-between;
     align-items: center;
     height: 50rpx;
-    margin-bottom: 20rpx;
 }
 .task-ended .head .left{
     font-weight: bold;
-    font-size: 34rpx;
-    line-height: 50rpx;
+    font-family: PingFangSC-Medium;
+    font-size: 36rpx;
+    color: #0C2032;
 }
+.task-ended .head .right{
+    font-family: PingFangSC-Regular;
+    font-size: 24rpx;
+    color: #8392A0;
+}
+.task-ended .head .right .more{
+    margin-right: 4prx;
+}
+.task-ended .head .right .triangle{
+    height: 20rpx;
+    width: 20rpx;
+    vertical-align: middle;
+}
+
 .task-ended .task-box{
     position: relative;
 }
 .task-ended .task-box .item{
     border: 0.1px solid #E6E6E6;  
-    margin:20rpx;
+    margin:40rpx 0;
+    height: 220rpx;
 }
 .task-box .item .title{
     position: relative;
@@ -286,35 +340,41 @@ page {
     align-items: center;
     height: 40rpx;
     margin-left:20rpx ;
-    margin-top: 20rpx;
+    margin-top: 32rpx;
 }
 .task-box .item .title .tag{
-    margin-right: 20rpx;
-    color: white;
+    margin-left: 12rpx;
     padding: 10rpx 20rpx;
-    line-height: 30rpx;
-    height: 30rpx;
+    line-height: 32rpx;
+    height: 32rpx;
     font-size: 22rpx;
-    border-radius: 5rpx;
-    background-color: rgba(0, 0, 0, 0.3);
+    border-radius: 8rpx;
+    font-family: PingFangSC-Regular;
+    font-size: 20rpx;
+    color: #8392A0;
+    background: #F7F9FB;
+
 }
 .task-box .item .title .desc{
+    font-family: PingFangSC-Medium;
+    font-size: 32rpx;
+    color: #3D4347;
     font-weight: bold;
-    font-size: 34rpx;
+    
 }
 .uu {
     position: relative;
     display: flex;
     align-items: center;
     padding:20rpx;
-    border-bottom: 0.1px solid #E6E6E6;
+    margin-top: 22rpx;
 }
 
 .uu .avatarBox {
-    width: 100rpx;
-    height: 100rpx;
+    width: 64rpx;
+    height: 64rpx;
     position: relative;
-    margin-right: 10px;
+    margin-right: 16rpx;
     flex-shrink: 0;
 }
 
@@ -326,15 +386,17 @@ page {
 }
 
 .uu .name-user {
-    color: #7D7D7D;
-    font-size: 32rpx;
+    font-family: PingFangSC-Medium;
+    font-size: 24rpx;
+    color: #3D4347;
     font-weight: 500;
 }
 
 .uu .name-tag {
-    color: #7D7D7D;
     font-size: 24rpx;
-    margin-top: 8rpx;
+    font-family: DINAlternate-Bold;
+    color: #8392A0;
+    margin-top: 4rpx;
 }
 .uu .score{
     position: absolute;
@@ -356,33 +418,53 @@ page {
     position: relative;
 }
 .uu .score .star-box .star .img{
-    width: 40rpx;
-    height: 40rpx;
+    width: 24rpx;
+    height: 24rpx;
+    margin-right: 12rpx;
     display: inline-block;
 }
 .uu .score .star-box .val{
-    margin-left: 10rpx;
-    color: tomato;
-    font-size: 28rpx;
+    margin-left: 25rpx;
+    font-family: DINAlternate-Bold;
+    font-weight: bold;
+    font-size: 36rpx;
+    color: #3D4347;
 }
 
 .other-works{
     position: relative;
-    padding:20rpx;
+    margin:40rpx;
+    margin-top: 80rpx;
 }
 .other-works .head{
     display: flex;
+    margin-bottom:40rpx ;
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
     height: 50rpx;
-    margin-bottom: 20rpx;
 }
 .other-works .head .left{
     font-weight: bold;
-    font-size: 34rpx;
-    line-height: 50rpx;
+    font-family: PingFangSC-Medium;
+    font-size: 36rpx;
+    color: #0C2032;
 }
+.other-works .head .right{
+    font-family: PingFangSC-Regular;
+    font-size: 24rpx;
+    color: #8392A0;
+}
+.other-works .head .right .more{
+    margin-right: 4prx;
+}
+.other-works .head .right .triangle{
+    height: 20rpx;
+    width: 20rpx;
+    vertical-align: middle;
+}
+
+/*----------暂且废弃 start----------*/
 .other-works .othersBox{
     height: 200rpx;
     overflow: hidden;
@@ -404,55 +486,114 @@ page {
 .othersBox .swiperBox .photoBox:last-child{
     padding-right: 0;
 }
+/*----------暂且废弃 end----------*/
+
+
+.product-box{
+    position: relative;
+}
+.product-box-item{
+    position: relative;
+    margin-bottom: 44rpx;
+    width: 319rpx;
+}
+.product-box-item:nth-child(odd){
+    float: left;
+}
+.product-box-item:nth-child(even){
+    float: right;
+}
+.product-box-item .photoBox{
+    width: 319rpx;
+    height: 239.2rpx;
+    border-radius: 8rpx;
+}
+.product-box-item .titles{
+    font-family: PingFangSC-Regular;
+    font-size: 28rpx;
+    color: #3D4347;
+    margin-top:24.8rpx;
+    margin-bottom:12rpx ;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 1;
+    overflow: hidden;
+    word-break: break-all;
+}
+.mark-type{
+    max-width: 300rpx;
+    margin: 8rpx 0;
+}
+.mark-type .menu{
+    position: relative;
+    white-space: nowrap;
+    height: 40rpx;
+
+}
+.mark-type .menu .item{
+    height: 40rpx;
+    background: #F4F4F4;
+    border-radius: 8rpx;
+    display: inline-flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    margin: 0 12rpx;
+    line-height: 40rpx;
+}
+.mark-type .menu .item:nth-child(1){
+    margin-left: 0;
+}
+.mark-type .menu .item:last-child{
+    margin-right: 0;
+}
+.mark-type .menu .item .name{
+    font-family: PingFangSC-Regular;
+    font-size: 20rpx;
+    color: #8392A0;
+}
+
 .tool-bar{
     position: fixed;
     bottom: 0;
     border-top: 1px solid #E6E6E6;
     box-shadow: inset 0 1px 0 0 #F0F0F0;
     background-color: white;
-    height: 100rpx;
+    height: 112rpx;
     width: 100vw;
     display: flex;
     flex-direction: row;
 }
 .tool-bar .money{
     flex-grow:1;
-    height: 100rpx;
-    line-height: 100rpx;
-    color: tomato;
-    font-size: 36rpx;
+    height: 112rpx;
+    line-height: 112rpx;
+    font-family: DINAlternate-Bold;
+    color: #3D4347;
+    font-size: 38rpx;
     font-weight: bold;
-    padding-left: 30rpx;
+    padding-left: 40rpx;
 }
 .tool-bar .btn-box{
     flex-grow:3;
-    height: 100rpx;
+    height: 112rpx;
     display: flex;
     flex-direction: row;
-    justify-content: center;
+    margin-right: 40rpx;
+    justify-content: flex-end;
     align-items: center;
 }
-.tool-bar .btn-box .call{
-    width: 220rpx;
-    height: 80rpx;
-    line-height: 80rpx;
-    background-color: #dbdbdb;
-    font-size: 30rpx;
-    text-align: center;
-    border-top-left-radius: 5rpx;
-    border-bottom-left-radius: 5rpx;
 
-}
 .tool-bar .btn-box .buy{
-    width: 220rpx;
-    height: 80rpx;
-    line-height: 80rpx;
-    background-color: #707070;
-    color: white;
-    font-size: 30rpx;
+    width: 432rpx;
+    height: 88rpx;
+    line-height: 88rpx;
+    background: #FFBA20;
+    border-radius: 8rpx;
     text-align: center;
-    border-top-right-radius: 5rpx;
-    border-bottom-right-radius: 5rpx;
+    font-family: PingFangSC-Medium;
+    font-size: 28rpx;
+    color: #FFFFFF;
 }
 
 .shade {
@@ -483,6 +624,46 @@ page {
     }
 }
 
+.call-user{
+    position: relative; 
+}
+.call-user .head{
+    margin:40rpx;
+    margin-top: 112rpx;
+    font-family: PingFangSC-Medium;
+    font-size: 36rpx;
+    color: #0D1335;
+}
+.call-user .copy{
+    position: relative;
+    height: 88rpx;
+    line-height: 88rpx;
+    background: #F4F4F4;
+    border-radius: 8px 0 0 8px;
+    font-family: PingFangSC-Regular;
+    font-size: 28rpx;
+    color: #3F5161;
+    margin-left: 40rpx;
+    padding-left: 24rpx;
+    margin-right: 40rpx;
+    margin-bottom: 156rpx;
+}
+.call-user .copy .btn{
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    height: 88rpx;
+    width: 230rpx;
+    line-height: 88rpx;
+    background-color: #FFBA20;
+    font-family: PingFangSC-Medium;
+    font-size: 28rpx;
+    color: #FFFFFF;
+    text-align: center;
+    border-radius: 8rpx;
+}
+
 .shade-user{
     position: relative;
 
@@ -491,12 +672,13 @@ page {
     position: relative;
     display: flex;
     align-items: center;
-    padding:20rpx;
+    margin:40rpx;
+    margin-top: 112rpx;
 }
 
 .shade-user .u .avatarBox {
-    width: 120rpx;
-    height: 120rpx;
+    width: 130rpx;
+    height: 130rpx;
     position: relative;
     margin-right: 10px;
     flex-shrink: 0;
@@ -510,8 +692,9 @@ page {
 }
 
 .shade-user .u .name-user {
-    color: #7D7D7D;
-    font-size: 36rpx;
+    font-family: PingFangSC-Medium;
+    font-size: 32rpx;
+    color: #0C2032;
     font-weight: 500;
 }
 
@@ -523,28 +706,35 @@ page {
 .shade-user  .cell-group{
     display: flex;
     flex-direction: row;
-    padding:40rpx 20rpx;
+    margin:0 40rpx;
+    padding:40rpx 0;
     align-items: baseline ;
 }
 .shade-user  .cell-group .field{
-    width: 25%;
-    padding-left: 10rpx;
-    color: #7D7D7D;
+    width: 130rpx;
+    text-align: right;
+    font-size: 28rpx;
+    color: #8392A0;
 }
 .shade-user  .cell-group .message{
-    width: 75%;
+    width: calc(100% - 130rpx);
+    padding-left: 56rpx;
+    font-size: 28rpx;
+    color: #3F5161;
 }
 .shade-skill{
     position: relative;
-    padding:20rpx;
-    border-bottom: 0.1px solid #E6E6E6;
+    margin:40rpx;
 }
 .shade-skill .head{
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-    height: 50rpx;
+    font-size: 36rpx;
+    margin-top: 112rpx;
+    margin-bottom: 56rpx;
+    color: #0C2032;
 }
 .shade-skill .head .left{
     font-weight: bold;
@@ -552,13 +742,13 @@ page {
     line-height: 50rpx;
 }
 .shade-skill .shade-skill-content{
-    padding:20rpx 0;
-    color: #7D7D7D;
+    color: #3F5161;
     font-size: 28rpx;
+    margin-bottom: 180rpx;
 }
 .shade-evaluate{
     position: relative;
-    padding:20rpx;
+    margin:40rpx;
     max-height: 1000rpx;
     overflow-y: auto;
 }
@@ -568,10 +758,13 @@ page {
     justify-content: space-between;
     align-items: center;
     height: 50rpx;
+    margin-top: 112rpx;
 }
 .shade-evaluate .head .left{
     font-weight: bold;
-    font-size: 34rpx;
+    font-family: PingFangSC-Medium;
+    font-size: 36rpx;
+    color: #0C2032;
     line-height: 50rpx;
 }
 
@@ -584,11 +777,12 @@ page {
     display: flex;
     align-items: center;
     padding:20rpx 0;
+    padding-top: 40rpx;
     margin-top: 40rpx;
 }
 .evaluate-box .u .avatarBox {
-    width: 100rpx;
-    height: 100rpx;
+    width: 64rpx;
+    height: 64rpx;
     position: relative;
     margin-right: 10px;
     flex-shrink: 0;
@@ -602,15 +796,17 @@ page {
 }
 
 .evaluate-box .u .name-user {
-    color: #7D7D7D;
-    font-size: 36rpx;
+    font-family: DINAlternate-Bold;
+    font-size: 28rpx;
+    color: #3D4347;
     font-weight: 500;
 }
 
 .evaluate-box .u .name-tag {
-    color: #7D7D7D;
-    font-size: 26rpx;
-    margin-top: 8rpx;
+    font-family: DINAlternate-Bold;
+    font-size: 24rpx;
+    color: #8392A0;
+    margin-top: 4rpx;
 }
 
 .evaluate-box .u .score{
@@ -633,14 +829,16 @@ page {
     position: relative;
 }
 .evaluate-box .u .score .star-box .star .img{
-    width: 40rpx;
-    height: 40rpx;
+    width: 24rpx;
+    height: 24rpx;
+    margin-right: 12rpx;
     display: inline-block;
 }
 .evaluate-box .u .score .star-box .val{
     margin-left: 10rpx;
-    color: tomato;
-    font-size: 28rpx;
+    font-family: DINAlternate-Bold;
+    font-size: 48rpx;
+    color: #0C2032;
 }
 .evaluate-box .evaluate-news{
     padding-bottom:20rpx;
@@ -659,7 +857,7 @@ page {
 }
 .evaluate-othersBox .evaluate-swiperBox .evaluate-photoBox{
     height: 200rpx;
-    width: 300rpx;
+    width: 200rpx;
     padding: 8rpx;
     display: inline-block;
 }

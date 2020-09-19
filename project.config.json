@@ -117,6 +117,19 @@
 					"pathName": "pages/task/task",
 					"query": "",
 					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "pages/homeList/homeList",
+					"pathName": "pages/homeList/homeList",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "pages/productDetails/productDetails",
+					"pathName": "pages/productDetails/productDetails",
+					"scene": null
 				}
 			]
 		}

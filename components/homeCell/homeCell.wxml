@@ -17,8 +17,8 @@
     <view class="title"  catchtap="tapToWorksDetail">
         <view class="name">XXXXXX</view>
         <view class="collect {{ obj.collect ? 'sel' :''}}" catchtap="tapCollect" data-id="{{obj.id}}">
-            <image src="{{obj.collect ? '/images/common/icon-collectSel.png' : '/images/common/icon-collect.png'}}" class="icon"></image>
-            <text class="collect-name {{ obj.collect ? 'sel' :''}}">收藏</text>
+            <image wx:if="{{!obj.collect}}"src=" /images/common/icon-collect.png" class="icon"></image>
+            <text class="collect-name {{ obj.collect ? 'sel' :''}}">{{obj.collect ? '已收藏':'收藏'}}</text>
         </view>
     </view>
     <view class="user" catchtap="tapToWorksDetail" data-id="{{obj.id}}">
@@ -30,9 +30,9 @@
             <view  class="name-tag>">xxxx | 4.9分</view>
         </view>
         <view class="money">
-            <view class="unit">¥</view>
+            <view class="unit" style="font-weight: bold;font-size: 33.6rpx;color: #0C2032;">¥</view>
             <view class="value">5000</view>
-            <view class="unit">起</view>
+            <view class="unit" style="font-family: PingFangSC-Regular;font-size: 33.6rpx;color: #0C2032;">/时</view>
         </view>
     </view>
 </view>

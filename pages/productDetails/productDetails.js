@@ -7,6 +7,7 @@ Page({
      */
     data: {
         safeBottom: app.safeBottom,
+        collect:false,
         currentPhotoIndex:1,
         obj:{
             imgList:["//img14.360buyimg.com/pop/jfs/t1/114735/33/2427/35818/5ea17d3aE7018d774/acf7950db4ef2c51.jpg",
@@ -80,6 +81,25 @@ Page({
     onShareAppMessage: function () {
 
     },
+    tapCollect(e){
+        this.setData({
+            collect:!this.data.collect
+        })
+
+        if(this.data.collect){
+            wx.showToast({
+                title: '收藏成功',
+                icon: 'none',
+                duration: 2000
+            });
+        }else{
+            wx.showToast({
+                title: '已取消收藏',
+                icon: 'none',
+                duration: 2000
+            });  
+        }
+    },
     //切换图片
     changeSwiper(e) {
         let currentPhotoIndex = e.detail.current + 1
@@ -121,5 +141,16 @@ Page({
         wx.navigateTo({
           url: '/pages/orderDetails/orderDetails',
         })
+    },
+    //一键复制
+    tapCopy(e){
+        let content = e.currentTarget.dataset.content;
+        wx.setClipboardData({
+            data: content,
+            success (res) {
+                console.log(res);
+            }
+        })
     }
+
 })

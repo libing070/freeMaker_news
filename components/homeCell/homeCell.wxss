@@ -2,56 +2,61 @@
 
 .type{
     background-color: white;
-    border-radius: 20rpx;
-    box-shadow: 0 2px 8px 0 rgba(36, 19, 72, 0.04);
-    margin: 20rpx;
-    height: 670rpx;
+    border-radius: 5rpx;
+    margin: 0 40rpx 56rpx 40rpx;
+    height: 738rpx;
+    background: #FFFFFF;
+    box-shadow: 0 2px 18px 0 rgba(227,229,231,0.71);
 }
 .type .top{
     position: relative;
-    height: 400rpx;
-    border-radius: 20rpx 20rpx 0 0 ;
+    height: 504rpx;
+    border-radius: 5rpx 5rpx 0 0 ;
 
 }
 .type .top .img{
     width: 100%;
     height: 100%;
-    border-radius: 20rpx 20rpx 0 0 ;
+    border-radius: 5rpx 5rpx 0 0 ;
 }
 .swiper-box{
     width: 100%;
     height: 100%;
-    border-radius: 20rpx 20rpx 0 0 ;
+    border-radius: 5rpx 5rpx 0 0 ;
 }
 .swiper-box .swiper{
     width: 100%;
     height: 100%;
     margin: auto;
-    border-radius: 20rpx 20rpx 0 0 ;
+    border-radius: 5rpx 5rpx 0 0 ;
 }
 .swiper-box .swiper .photo{
     width: 100%;
     margin: auto;
-    border-radius: 20rpx 20rpx 0 0 ;
+    border-radius: 5rpx 5rpx 0 0 ;
 }
 
 .type .top .tag{
 
     position:absolute;
-    top: 20rpx;
-    left: 20rpx;
-    font-size: 26rpx;
-    border-radius: 5rpx;
-    color: white;
-    padding: 10rpx;
-    line-height: 30rpx;
-    height: 30rpx;
-    background-color: rgba(0, 0, 0, 0.3);
+    top: 24rpx;
+    left: 24rpx;
+    padding: 0 20rpx;
+    line-height: 48rpx;
+    height: 48rpx;
+    background: rgba(0,0,0,0.5);
+    border-radius: 8rpx;
+    font-family: PingFangSC-Regular;
+    font-size: 24rpx;
+    color: #FFFFFF;
+    text-align: center;
 }
 .title{
     position: relative;
-    height: 80rpx;
-    margin:20rpx;
+    height: 52rpx;
+    margin-top: 22rpx;
+    margin-left: 24rpx;
+    margin-right: 24rpx;
 }
 .title .name{
     position: absolute;
@@ -61,7 +66,9 @@
     margin: auto;
     font-weight: bold;
     font-size: 36rpx;
-    line-height: 80rpx;
+    font-family: PingFangSC-Semibold;
+    color: #0C2032;
+    line-height: 40rpx;
 
 }
 .title  .collect{
@@ -70,44 +77,50 @@
     top: 0;
     bottom: 0;
     margin:auto;
-    height: 60rpx;
-    border:1px solid #7D7D7D;
-    border-radius: 50rpx;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-    padding: 0 30rpx 0 25rpx;
+    height: 52rpx;
+    width: 120rpx;
+    background: #EEF5FD;
+    border-radius: 32rpx;
+    text-align: center;
+    line-height: 52rpx;
+    font-size: 24rpx;
+
 }
 .title  .collect.sel{
-    border-color: tomato;
+    background: #FFBA20;
+    border-radius: 16px;
 }
 .title  .collect .icon{
-    width: 40rpx;
-    height: 40rpx;
+    width: 35rpx;
+    height: 35rpx;
     display:inline-flex;
-    margin-right: 5rpx;
+    vertical-align: middle;
+    margin-top: -5rpx;
 }
 .title  .collect .collect-name{
     display:inline-flex;
-    line-height: 60rpx;
-    font-size: 30rpx;
-    color: #7D7D7D;
+    font-family: PingFangSC-Regular;
+    font-size: 24rpx;
+    color: #7797B5;
 }
 .title  .collect .collect-name.sel{
-    color: tomato;
+    color: #FFFFFF;
+    font-size: 24rpx;
 }
 
 .user {
     position: relative;
     display: flex;
     align-items: center;
-    margin:0 20rpx
+    margin-top: 40rpx;
+    margin-left:20rpx;
+    margin-right:20rpx;
+
 }
 
 .avatarBox {
-    width: 120rpx;
-    height: 120rpx;
+    width: 72rpx;
+    height: 72rpx;
     position: relative;
     margin-right: 10px;
     flex-shrink: 0;
@@ -121,29 +134,26 @@
 }
 
 .name-user {
-    color: #7D7D7D;
-    font-size: 36rpx;
-    font-weight: 500;
+    font-family: PingFangSC-Medium;
+    font-size: 24rpx;
+    color: #0C2032;
 }
 
 .name-tag {
-    color: #7D7D7D;
-    font-size: 26rpx;
-    margin-top: 4px;
+    font-family: PingFangSC-Regular;
+    font-size: 24rpx;
+    color: #8392A0;
 }
 .money{
     position: absolute;
     right: 0;
-    top: 0;
-    bottom: 0;
-    margin:auto;
-    height: 70rpx;
     display: flex;
     flex-direction: row;
     align-items: baseline ;
-    color: tomato;
+    color: #0C2032;
 }
 .money .value{
-    font-size:45rpx;
-
+    font-size:68rpx;
+    font-family: DINAlternate-Bold;
+    font-weight: bold;
 }

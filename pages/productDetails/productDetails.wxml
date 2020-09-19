@@ -11,37 +11,42 @@
             </swiper>
         </view>  
         <view class="pagination">
-            <text style="font-size:30rpx">{{currentPhotoIndex}}</text>/<text>{{obj.imgList.length}}</text>
+            <text>{{currentPhotoIndex}}</text>/<text>{{obj.imgList.length}}</text>
         </view>  
+    </view>
+
+
+
+    <view class="title"  catchtap="tapToWorksDetail">
+        <view class="name">XXXXXX</view>
+        <view class="collect {{ collect ? 'sel' :''}}" catchtap="tapCollect" data-id="{{obj.id}}">
+            <image wx:if="{{!collect}}"src=" /images/common/icon-collect.png" class="icon"></image>
+            <text class="collect-name {{ collect ? 'sel' :''}}">{{collect ? '已收藏':'收藏'}}</text>
+        </view>
     </view>
 
     <view class="tag-title">
         <text class="tag">百度热榜</text>
     </view>
 
-    <view class="title" >
-        <view class="name">请问在小程序中</view>
-        <view class="collect {{ obj.collect ? 'sel' :''}}" catchtap="tapCollect" data-id="{{obj.id}}">
-            <image src="{{obj.collect ? '/images/common/icon-collectSel.png' : '/images/common/icon-collect.png'}}" class="icon"></image>
-            <text class="collect-name {{ obj.collect ? 'sel' :''}}">收藏</text>
-        </view>
-    </view>
-
     <view class="user" data-id="{{obj.id}}">
-        <view class="avatarBox">
+        <view class="avatarBox" data-item="1" catchtap="shadeShowing">
             <image class="avatar" src="/images/common/default-head.png"></image>
         </view>
         <view>
             <view class="name-user">波英冰</view>
             <view  class="name-tag>">xxxx | 4.9分</view>
         </view>
-       <image class="arrow" src="/images/common/icon-arrow.png" data-item="1" catchtap="shadeShowing"></image>
+       <image class="arrow" src="/images/common/icon_wechat.png" data-item="0" catchtap="shadeShowing"></image>
     </view>
 
     <view class="skill-desc">
         <view class="head">
             <view class="left">技能描述</view>
-            <view class="right" catchtap="shadeShowing"  data-item="2">展开全部></view>
+            <view class="right" catchtap="shadeShowing"  data-item="2">
+                <text class="more">展开全部</text>
+                <image class="triangle" src="/images/common/icon-triangle2.png"></image> 
+            </view>
         </view>
         <view class="content">
             超文本标记语言（英语：HyperText Markup Language，简称：HTML）是一种用于创建网页的标准标记语言。您可以使用 HTML 来建立自己的 WEB 站点，HTML 运行在浏览器上，由浏览器来解析。在本教程中，您将学习如何使用 HTML 来创建站点。HTML 很容易学习！相信您能很快学会它
@@ -51,12 +56,15 @@
     <view class="evaluation">
         <view class="head">
             <view class="left">综合评价</view>
-            <view class="right" catchtap="shadeShowing"  data-item="3">全部评价></view>
+            <view class="right" catchtap="shadeShowing"  data-item="3">
+                 <text class="more">全部评价</text>
+                <image class="triangle" src="/images/common/icon-triangle2.png"></image> 
+            </view>
         </view>
         <view class="rate">
             <view class="grade">
-                <view class="number"><text style="font-size:38rpx;color:tomato">4.9</text><text style="font-size:28rpx;color:tomato">分</text></view>
-                <view class="desc" style="font-size:28rpx">超级赞</view>
+                <view class="number"><text style="font-size:60rpx;color: #0C2032;">4.9</text><text style="font-size:28rpx;color:#0C2032">分</text></view>
+                <view class="desc" style="font-size: 28rpx;color: #3F5161;">超级赞</view>
             </view>
             <view class="progress">
                 <view class="pro-item">
@@ -81,20 +89,24 @@
     <view class="task-ended">
         <view class="head">
             <view class="left">已结任务</view>
+            <view class="right" catchtap="shadeShowing"  data-item="3">
+                 <text class="more">查看全部</text>
+                <image class="triangle" src="/images/common/icon-triangle2.png"></image> 
+            </view>
         </view>
         <view class="task-box">
             <view class="item" wx:for="{{3}}" wx:key="index">
                 <view class="title">
-                    <view class="tag">百度热榜</view>
                     <view class="desc">百度热榜百度热榜百度热榜</view>
+                    <view class="tag">百度热榜</view>
                 </view>
                 <view class="uu">
                     <view class="avatarBox">
                         <image class="avatar" src="/images/common/default-head.png"></image>
                     </view>
                     <view>
-                        <view class="name-user">波英冰</view>
-                        <view  class="name-tag>">xxxx | 4.9分</view>
+                        <view class="name-user">雇主昵称</view>
+                        <view  class="name-tag>">2020-07-23</view>
                     </view>
                     <view class="score">
                         <view class="star-box">
@@ -106,7 +118,7 @@
                                     <image class="img" src='/images/common/icon-star.png'></image>
                                 </block>
                             </view>
-                            <view class="val">4.0分</view>
+                            <view class="val">4.0<text style="font-size:24rpx;color: #3D4347;">分</text></view>
                         </view>
                     </view>
                 </view>
@@ -117,28 +129,57 @@
     <view class="other-works">
         <view class="head">
             <view class="left">其他作品</view>
+            <view class="right" catchtap="shadeShowing"  data-item="3">
+                 <text class="more">查看全部</text>
+                <image class="triangle" src="/images/common/icon-triangle2.png"></image> 
+            </view>
         </view>
-        <view class="othersBox">
+        <view class="othersBox" wx:if="">
             <scroll-view class="swiperBox" scroll-x>
                 <block wx:for="{{10}}" wx:key="index">
                     <image  class="photoBox" src="/images/common/715_2.jpg" mode="aspectFill"></image>
                 </block>
             </scroll-view>
         </view>
+        <view class="product-box">
+            <view class="product-box-item" wx:for="{{5}}" wx:key="index">
+                 <image src="/images/common/715_2.jpg" mode="aspectFill" class="photoBox"></image>
+                 <view class="titles">{{index}}教辅类产品课件设计合集教辅类产品课件设计合集</view>
+                 <view class="mark-type">
+                    <scroll-view class="menu" scroll-x="true">
+                        <view class="item" wx:for="{{6}}" wx:key="index" data-id="{{index}}" catchtap="tapTohomeList">
+                            <text class="name">更多类型{{index+1}}</text>
+                        </view>
+                    </scroll-view>  
+                </view>
+            </view>
+            <view style="clear:both"></view>
+        </view>
     </view>
     <view style="height:{{ ( 50 + safeBottom ) * 2 }}rpx"></view>
 </view>
 
 <view class="tool-bar" style="padding-bottom: {{ safeBottom }}px">
-    <view class="money">5000起</view>
+    <view class="money"><text class="unit" style="font-size: 32rpx;color: #3D4347;">¥</text>5000<text class="unit" style="font-size: 12px;color: #3D4347;">/时</text></view>
     <view class="btn-box">
-        <view class="call">联系他</view>
         <view class="buy" catchtap="tapToOrderDetails">购买服务</view>
     </view>
 </view>
 
 <view class="shade" wx:if="{{shadeShowing}}" catchtap="shadeShowing">
     <view class="main"  data-id="shadeMain" catchtap="shadeShowing" style="padding-bottom: {{safeBottom}}px;">
+        <view wx:if="{{ currShadeItem == 0}}"><!--联系TA-->
+            <view class="call-user">
+                <view class="head">
+                     <view class="left">联系TA</view>
+                </view>
+                <view class="copy">
+                    xxx设计师微信号
+                    <view class="btn" data-content="xxx设计师微信号" catchtap="tapCopy">一键复制</view>
+                </view>
+            </view>
+
+        </view>
         <view wx:if="{{ currShadeItem == 1}}">
             <view class="shade-user">
                 <view class="u">
@@ -147,7 +188,7 @@
                     </view>
                     <view>
                         <view class="name-user">波英冰</view>
-                        <view  class="name-tag>">xxxx | 4.9分</view>
+                        <view  class="name-tag>">品牌设计师·平面设计师</view>
                     </view>
                 </view>
                 <view class="cell-group">
@@ -160,7 +201,7 @@
                 </view>
                 <view class="cell-group">
                     <view class="field">个人介绍</view>
-                    <view class="message">个人介绍个人介绍个人介绍个人介绍个人介绍个人介绍个人介绍个人介绍个人介绍个人介绍个人介绍个人介绍个人介绍个人介绍个人介绍个人介绍个人介绍个人介绍个人介绍个人介绍个人介绍个人介绍个人介绍个人介绍个人介绍个人介绍个人介绍个人介绍个人介绍个人介绍个人介绍个人介绍个人介绍</view>
+                    <view class="message">大家好！我是一名资深平面设计师，专注于品牌视觉形象设计，原创插画手绘达人。曾服务：南极人，王品台塑牛排，浦银大学，苏罗品牌，lwang印刷，等公司。个人原创手绘：《一日一草木系列》等作品。</view>
                 </view>
             </view>
         </view>
@@ -169,7 +210,7 @@
                 <view class="head">
                     <view class="left">技能描述</view>
                 </view>
-                <view class="shade-skill-content">技能描述技能描述技能描述技能描述技能描述技能描述技能描述技能描述技能描述技能描述技能描述技能描述技能描述技能描述技能描述技能描述技能描述技能描述技能描述技能描述技能描述技能描述技能描述技能描述技能描述技能描述技能描述技能描述</view>
+                <view class="shade-skill-content">新锐平面设计师，很强的创新策划与实操能力，擅长标志设计、海报设计、品牌设计、周边设计等。</view>
             </view>
         </view>
         <view wx:if="{{ currShadeItem == 3}}">
@@ -183,8 +224,8 @@
                             <image class="avatar" src="/images/common/default-head.png"></image>
                         </view>
                         <view>
-                            <view class="name-user">波英冰</view>
-                            <view  class="name-tag>">xxxx | 4.9分</view>
+                            <view class="name-user">186****6315</view>
+                            <view  class="name-tag>">2020-03-23</view>
                         </view>
                         <view class="score">
                             <view class="star-box">
@@ -196,11 +237,11 @@
                                         <image class="img" src='/images/common/icon-star.png'></image>
                                     </block>
                                 </view>
-                                <view class="val">4.0分</view>
+                                <view class="val">4.0<text style="font-size: 24rpx;color: #0C2032;">分</text></view>
                             </view>
                         </view>
                     </view>
-                    <view class="evaluate-news">波英冰波英冰波英冰波英冰波英冰波英冰波英冰波英冰波英冰波英冰波英冰波英冰波英冰波英冰波英冰波英冰</view>
+                    <view class="evaluate-news">第一次合作非常愉快，设计师人很nice，出稿速度也很快。希望有机会再次合作！</view>
                     <view class="evaluate-othersBox">
                         <scroll-view class="evaluate-swiperBox" scroll-x>
                             <block wx:for="{{10}}" wx:key="index">

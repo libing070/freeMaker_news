@@ -1,6 +1,6 @@
 /* pages/demand/demand.wxss */
 page {
-    background-color: #F7F8FC;
+    background-color: white;
 }
 .demand{
     position: relative;
@@ -10,37 +10,80 @@ page {
     position: relative;
 }
 .input-wrapper .input{
-    color: #7D7D7D;
-    height: 120rpx;
-    line-height: 120rpx;
-    margin:0 20rpx;
-    font-size: 28rpx;
+    height: 112rpx;
+    line-height: 112rpx;
+    margin:0 40rpx;
+    font-family: PingFangSC-Regular;
+    font-size: 32rpx;
+    color: #0C2032;
     border-bottom: 0.1px solid #E6E6E6;
 }
 
 .input-wrapper .editor{
-    padding: 20rpx;
-    font-size: 28rpx;
-    height: 400rpx;
+    padding: 40rpx;
+    height: 440rpx;
+    opacity: 0.8;
+    font-family: PingFangSC-Regular;
+    font-size: 32rpx;
+    color: #0C2032;
 }
 .input-wrapper .number{
     position: absolute;
-    bottom: 20rpx;
-    right: 20rpx;
-    font-size: 28rpx;
-    color: #C8C8C8;
+    bottom: 0rpx;
+    right: 40rpx;
+    font-family: PingFangSC-Regular;
+    font-size: 24rpx;
+    color: #8392A0;
+}
+.input-budget{
+    margin:0 40rpx;
+    height: 120rpx;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    border-bottom: 0.1px solid #E6E6E6;
+}
+.input-budget .names{
+    display: inline-flex;
+    height: 120rpx;
+    line-height: 120rpx;
+    font-size: 32rpx;
+    color: #0C2032;
+}
+.input-budget  .budget {
+    display: inline-flex;
+    height: 120rpx;
+    line-height: 120rpx;
+    font-size:28rpx;
+    text-align: right;
 }
 .content-wrapper{
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    margin: 20rpx;
-    font-size: 28rpx;
-    color: #C8C8C8;
-    padding: 20rpx 0;
-
+    margin:0 40rpx;
+    height: 120rpx;
+    border-bottom: 0.1px solid #E6E6E6;
 }
-
+.content-wrapper .names{
+    height: 120rpx;
+    line-height: 120rpx;
+    font-size: 32rpx;
+    color: #0C2032;
+}
+.content-wrapper .choose-val{
+    height: 120rpx;
+    line-height: 120rpx;
+    font-size: 28rpx;
+    color: #0C2032;
+}
+.content-wrapper .choose-val .arrow{
+    width: 18rpx;
+    height: 18rpx;
+    vertical-align: middle;
+    margin-top: -5rpx;
+    padding-left: 20rpx;
+}
 .shade {
     background-color: rgba(0, 0, 0, 0.5);
     top: 0;
@@ -48,6 +91,7 @@ page {
     right: 0;
     bottom: 0;
     position: fixed;
+    z-index: 2;
 }
 
 .main {
@@ -108,10 +152,9 @@ page {
 .tool-bar{
     position: fixed;
     bottom: 0;
-    border-top: 1px solid #E6E6E6;
     box-shadow: inset 0 1px 0 0 #F0F0F0;
     background-color: white;
-    height: 100rpx;
+    height: 112rpx;
     width: 100vw;
     left: 0;
     right: 0;
@@ -120,13 +163,15 @@ page {
     flex-direction: row;
 }
 .tool-bar .layout-1{
-    height: 80rpx;
-    line-height: 80rpx;
-    background-color: #707070;
-    color: white;
-    font-size: 30rpx;
+    height: 88rpx;
+    line-height: 88rpx;
+    background: #F4F4F4;
+    border-radius: 8rpx;
     text-align: center;
-    border-radius: 5rpx;
     flex-grow: 1;
-    margin:auto 20rpx;
+    margin:auto 40rpx;
+    font-family: PingFangSC-Medium;
+    font-size: 28rpx;
+    color: rgba(12,32,50, 0.2);
+    text-align: center;
 }

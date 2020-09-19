@@ -3,47 +3,46 @@ page {
     background-color: #F7F8FC;
 }
 .filter {
-    border-top: 1px solid #F7F8FC;
     width: 100vw;
     position: fixed;
     top: 0;
     z-index: 2;
 }
 .filter .typeBox {
-    height: 100rpx;
+    height: 80rpx;
     margin-bottom: 8rpx;
-    padding: 0 16rpx;
+    padding: 0 20rpx;
     overflow: hidden;
     background-color: white;
-    margin-right: 100rpx;
+    margin-right: 80rpx;
 }
 
 .filter .typeTabs {
-    height: 100rpx;
+    height: 80rpx;
     white-space: nowrap;
 }
 
 .filter .typeTabs .type {
-    color: #323232;
+    color: #8392A0;
     font-size: 30rpx;
     height: 64rpx;
-    margin: 0 16rpx;
+    margin: 0 35rpx;
     padding-top: 16rpx;
     display: inline-block;
 }
 
 .filter .typeTabs .type.sel {
-    color: #FA2878;
-    font-size: 34rpx;
-    font-weight: 500;
+    font-family: PingFangSC-Medium;
+    color: #0C2032;
+    font-weight: bold;
     position: relative;
 }
 
 .filter .typeTabs .type.sel::after {
     content: "";
-    background: linear-gradient(90deg, #ff2276, #ff46a6);
+    background: #0C2032;
     border-radius: 4rpx;
-    width: 64rpx;
+    width: 60rpx;
     height: 6rpx;
     left: 0;
     right: 0;
@@ -55,15 +54,15 @@ page {
     position: absolute;
     right: 0;
     top: 0;
-    height: 100rpx;
-    width: 100rpx;
+    height: 80rpx;
+    width: 80rpx;
     background-color: white;
-    box-shadow:-5px 0px 5px rgba(0,0,0,0.05);
+    box-shadow:-5rpx 0px 5rpx rgba(0,0,0,0.05);
 }
 .filter .menu .icon{
     position: absolute;
-    width: 70rpx;
-    height: 70rpx;
+    width: 32rpx;
+    height: 32rpx;
     top: 0;
     right: 0;
     left: 0;
@@ -87,16 +86,12 @@ page {
 
 .main {
     background-color: white;
-    border-radius: 0 0 10px 10px;
+    border-radius: 0 0 16rpx 16rpx;
     width: 100%;
     top: 0;
     position: absolute;
     animation: main-show 0.25s forwards;
-    display: flex;
-    flex-direction: row;
-    justify-content: flex-start;
-    align-items: center;
-    flex-wrap: wrap;
+
 }
 
 @keyframes main-show {
@@ -108,12 +103,34 @@ page {
         transform: translateY(0);
     }
 }
-.main .item{
-    margin:20rpx;
-    margin-right: 10rpx;
-    text-align: center;
+.main .title{
+    font-family: PingFangSC-Medium;
+    font-size: 32rpx;
+    color: #0C2032;
+    font-weight: bold;
+    line-height: 40rpx;
+    margin:40rpx;
 }
-.main .item .icon{
-    width: 155rpx;
-    height: 155rpx;
+.main .box{
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    flex-wrap: wrap;
+    margin:40rpx
+}
+.main .box .item{
+    margin-right:10rpx;
+    margin-top: 10rpx;
+    margin-bottom: 10rpx;
+    max-width: 152rpx;
+    background: #F7F9FB;
+    padding: 0 30rpx;
+    border-radius: 8rpx;
+    height: 72rpx;
+    font-family: PingFangSC-Regular;
+    font-size: 24rpx;
+    color: #8392A0;
+    text-align: center;
+    line-height: 72rpx;
 }

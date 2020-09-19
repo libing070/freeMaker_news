@@ -2,29 +2,33 @@
 <wxs module="fn">
     module.exports = {
         formatCurrrArea: function(currrArea) {
-            return currrArea.length!=0 ? (currrArea[0]+','+currrArea[1]+","+currrArea[2]): '请选择>'
+            return currrArea.length!=0 ? (currrArea[0]+','+currrArea[1]+","+currrArea[2]): '请选择'
         }
     }
 </wxs>
 <view class="demand">
     <view class="input-wrapper">
-        <input class="input" placeholder-style='text-align:left' maxlength="100" placeholder="添加一个标题吧" bindinput="bindTitleInput" value="{{title}}" placeholder-style="color: #C8C8C8"/>
+        <input class="input" placeholder-style='text-align:left' maxlength="100" placeholder="添加一个标题吧" bindinput="bindTitleInput" value="{{title}}" placeholder-style="color: #8392A0"/>
     </view>
     <view class="input-wrapper">
         <editor id="editor" class="editor" placeholder="请输入"  bindinput="bindEditorInput" bindready="onEditorReady"> </editor>
         <view class="number">{{total}}/300</view>
     </view>
     <view class="content-wrapper">
-        <view>需求类型</view>
-        <view catchtap="shadeShowing" data-type="demand">请选择></view>
+        <view class="names"><text style="vertical-align: middle;color:#FF6363;;padding-right:12rpx">*</text>需求类型</view>
+        <view class="choose-val" catchtap="shadeShowing" data-type="demand" style="color:{{ demandType == '请选择' ? '#8392A0' : ' #0C2032'}}">{{demandType}}<image class="arrow" wx:if="{{demandType == '请选择'}}" src="/images/common/icon-arrow.png"></image></view>
     </view>
     <view class="content-wrapper">
-        <view>期望交付时间</view>
-        <view catchtap="shadeShowing" data-type="date">{{currentDateStr}}</view>
+        <view class="names"><text style="vertical-align: middle;color:#FF6363;;padding-right:12rpx">*</text>期望交付时间</view>
+        <view class="choose-val" catchtap="shadeShowing" data-type="date" style="color:{{ currentDateStr == '请选择' ? '#8392A0' : ' #0C2032'}}">{{currentDateStr}}<image class="arrow" wx:if="{{currentDateStr == '请选择'}}" src="/images/common/icon-arrow.png"></image></view>
+    </view>
+    <view class="input-budget">
+        <view class="names"><text style="vertical-align: middle;color:#FF6363;;padding-right:12rpx">*</text>预算(¥)</view>
+        <input class="budget"  placeholder-style='text-align:right' maxlength="100" placeholder="请输入您的预算" bindinput="bindbudgetInput" value="{{budget}}" placeholder-style="color: #8392A0"></input>
     </view>
     <view class="content-wrapper">
-        <view>省份城市</view>
-        <view catchtap="shadeShowing" data-type="area">{{fn.formatCurrrArea(currrArea)}}</view>
+        <view class="names"><text style="vertical-align: middle;color:#FF6363;padding-right:12rpx">*</text>省份城市</view>
+        <view class="choose-val" catchtap="shadeShowing" data-type="area" style="color:{{ fn.formatCurrrArea(currrArea) == '请选择' ? '#8392A0' : ' #0C2032'}}" >{{fn.formatCurrrArea(currrArea)}}<image class="arrow" wx:if="{{fn.formatCurrrArea(currrArea) == '请选择'}}" src="/images/common/icon-arrow.png"></image></view>
     </view>
 </view>
 
@@ -35,7 +39,7 @@
 <view class="shade" wx:if="{{shadeShowing}}" catchtap="shadeShowing">
     <view class="main"  data-id="shadeMain" catchtap="shadeShowing" style="padding-bottom: {{safeBottom}}px;">
         <view wx:if="{{ currPicker == 'demand'}}">
-            <view class="tree-select-title">请选择需求类型</view>
+            <!-- <view class="tree-select-title">请选择需求类型</view>
             <view class="tree-select-box">
                 <view class="tree-select-nav">
                     <view wx:for="{{20}}" wx:key="index" data-index="{{index}}" class="item {{index == currTreeSelectNavIndex ? 'sel' : ''}}" catchtap="tapTreeSelectNav">
@@ -47,7 +51,15 @@
                         {{currTreeSelectNavIndex}}------{{item}}
                     </view>
                 </view>
-            </view>
+            </view> -->
+
+            <van-picker   
+                show-toolbar
+                title="请选择需求类型"
+                columns="{{ demandColumns }}"
+                bind:cancel="onCancel"
+                bind:confirm="onDemandChange"
+             />
         </view>
         <view wx:elif="{{currPicker == 'date'}}">
             <van-datetime-picker

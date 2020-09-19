@@ -2,6 +2,10 @@
 const util = require("../../utils/util");
 const area = require("../../utils/area");
 const app = getApp()
+const citys = {
+    浙江: ['杭州', '宁波', '温州', '嘉兴', '湖州'],
+    福建: ['福州', '厦门', '莆田', '三明', '泉州'],
+  };
 
 Page({
 
@@ -19,7 +23,7 @@ Page({
         minDate: new Date().getTime(),
         maxDate: new Date().getTime() +(86400000 * 365 * 10),
         currentDate: new Date().getTime(),
-        currentDateStr:'请选择>',//交付时间
+        currentDateStr:'请选择',//交付时间
         formatter(type, value) {
             if (type === 'year') {
               return `${value}年`;
@@ -33,6 +37,19 @@ Page({
 
         currrArea:[],//省市区
         currrAreaCode:'',
+        
+        demandType:'请选择',
+        demandColumns: [
+            {
+              values: Object.keys(citys),
+              className: 'column1',
+            },
+            {
+              values: citys['浙江'],
+              className: 'column2',
+              defaultIndex: 2,
+            },
+          ],
     },
 
     /**
@@ -137,6 +154,19 @@ Page({
             });
         }
     },    
+    onDemandChange(event) {
+        const { picker, value, index } = event.detail;
+        console.log(`当前值：${value}, 当前索引：${index}`);
+        this.setData({
+            shadeShowing:false,
+            demandType:`${value}`
+        });
+      },
+    onCancel(){
+        this.setData({
+            shadeShowing:false,
+        });
+    },
     //点击树形左侧菜单
     tapTreeSelectNav(e) {
         let currTreeSelectNavIndex=e.currentTarget.dataset.index
