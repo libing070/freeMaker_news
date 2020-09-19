@@ -27,7 +27,7 @@
         </view>
         <view>
             <view class="name-user">波英冰</view>
-            <view  class="name-tag>">xxxx | 4.9分</view>
+            <view  class="name-tag>">品牌设计 | 4.9分</view>
         </view>
         <view class="money">
             <view class="unit" style="font-weight: bold;font-size: 33.6rpx;color: #0C2032;">¥</view>
@@ -36,3 +36,4 @@
         </view>
     </view>
 </view>
+<auth-modal show="{{showAuthModal}}"></auth-modal>

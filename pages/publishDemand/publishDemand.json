@@ -1,5 +1,5 @@
 {
-    "navigationBarTitleText": "发布需求",
+    "navigationBarTitleText": "",
 
     "usingComponents": {
         "van-datetime-picker": "/miniprogram_npm/@vant/weapp/datetime-picker/index",

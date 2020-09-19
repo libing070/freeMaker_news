@@ -1,0 +1,15 @@
+<!--pages/loginPages/authModal/authModal.wxml-->
+
+<view class="shade" wx:if="{{show}}">
+    <view class="back">
+        <view class="title">完成授权登录</view>
+        <view class="content">更多信息可查看</view>
+
+        <view class="buttons">
+            <view class="cancel" catchtap="tapCancel">取消</view>
+            <view class="cancel confirm">
+                <auth-button bindcallback="authDone"></auth-button>授权登录
+            </view>
+        </view>
+    </view>
+</view>

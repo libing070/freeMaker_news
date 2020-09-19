@@ -1,4 +1,5 @@
 // components/homeCell/homeCell.js
+const app = getApp()
 Component({
     /**
      * 组件的属性列表
@@ -51,6 +52,14 @@ Component({
             })
         },
         tapCollect(e){
+            // 未登录
+            if (!app.user) {
+                this.setData({
+                    showAuthModal: true
+                })
+                return
+            }
+
             let id = e.currentTarget.dataset.id
             this.setData({
                 [`obj.collect`]:!this.data.obj.collect

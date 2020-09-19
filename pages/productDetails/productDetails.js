@@ -44,7 +44,7 @@ Page({
      * 生命周期函数--监听页面显示
      */
     onShow: function () {
-
+        this.loginSuccess()
     },
 
     /**
@@ -81,7 +81,23 @@ Page({
     onShareAppMessage: function () {
 
     },
+        // mark: 登录成功
+    loginSuccess(login) {
+        this.setData({
+            user: app.user,  
+        })
+        if(login){
+               //do something.....
+        }
+    },
     tapCollect(e){
+        // 未登录
+        if (!app.user) {
+            this.setData({
+                showAuthModal: true
+            })
+            return
+        }
         this.setData({
             collect:!this.data.collect
         })
@@ -136,10 +152,17 @@ Page({
         }
 
     },
-    //购买服务事件
-    tapToOrderDetails(e){
+    //购买服务事件(发布需求)
+    tapToPublishDemand(e){
+        // 未登录
+        if (!app.user) {
+            this.setData({
+                showAuthModal: true
+            })
+            return
+        }
         wx.navigateTo({
-          url: '/pages/orderDetails/orderDetails',
+          url: '/pages/publishDemand/publishDemand?type=1',
         })
     },
     //一键复制

@@ -124,17 +124,23 @@ view.block_bottom {
 }
 
 .shade .main .box{
+    position: relative;
     width: 50%;
+
+}
+.shade .main .box .b{
+    position: relative;
+    width: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
     margin:112rpx 0;
 }
-.shade .main .box .icon{
+.shade .main .box .b .icon{
     width: 140rpx;
     height: 140rpx;
 }
-.shade .main .box .name{
+.shade .main .box .b .name{
     margin-top: 16rpx;
     font-family: PingFangSC-Regular;
     font-size: 28rpx;

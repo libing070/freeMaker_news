@@ -1,0 +1,20 @@
+/* pages/loginPages/authButton/authButton.wxss */
+
+:host {
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    position: absolute;
+    z-index: 999;
+}
+
+.auth {
+    opacity: 0 !important;
+    width: 100% !important;
+    height: 100% !important;
+    min-height: unset !important;
+    position: absolute !important;
+    margin: unset !important;
+    padding: unset !important;
+}

@@ -6,12 +6,26 @@
         }
     }
 </wxs>
-<view class="demand">
+<view class="demand" style="padding-bottom: {{ 56 + safeBottom }}px">
+    <view class="user" wx:if="{{type == 1}}">
+        <view class="avatarBox" data-item="1">
+            <image class="avatar" src="/images/common/default-head.png"></image>
+        </view>
+        <view>
+            <view class="name-user">波英冰</view>
+            <view  class="name-tag>">品牌设计师·平面设计师</view>
+        </view>
+        <view class="collect {{ collect ? 'sel' :''}}" catchtap="tapCollect" data-id="{{obj.id}}">
+            <image wx:if="{{!collect}}"src=" /images/common/icon-collect.png" class="icon"></image>
+            <text class="collect-name {{ collect ? 'sel' :''}}">{{collect ? '已收藏':'收藏'}}</text>
+        </view>
+    </view>
+
     <view class="input-wrapper">
         <input class="input" placeholder-style='text-align:left' maxlength="100" placeholder="添加一个标题吧" bindinput="bindTitleInput" value="{{title}}" placeholder-style="color: #8392A0"/>
     </view>
     <view class="input-wrapper">
-        <editor id="editor" class="editor" placeholder="请输入"  bindinput="bindEditorInput" bindready="onEditorReady"> </editor>
+        <editor id="editor" class="editor" placeholder="简单描述下您的需求吧"  bindinput="bindEditorInput" bindready="onEditorReady"> </editor>
         <view class="number">{{total}}/300</view>
     </view>
     <view class="content-wrapper">
@@ -24,7 +38,7 @@
     </view>
     <view class="input-budget">
         <view class="names"><text style="vertical-align: middle;color:#FF6363;;padding-right:12rpx">*</text>预算(¥)</view>
-        <input class="budget"  placeholder-style='text-align:right' maxlength="100" placeholder="请输入您的预算" bindinput="bindbudgetInput" value="{{budget}}" placeholder-style="color: #8392A0"></input>
+        <input class="budget" type="number"  placeholder-style='text-align:right' maxlength="100" placeholder="请输入您的预算" bindinput="bindbudgetInput" value="{{budget}}" placeholder-style="color: #8392A0"></input>
     </view>
     <view class="content-wrapper">
         <view class="names"><text style="vertical-align: middle;color:#FF6363;padding-right:12rpx">*</text>省份城市</view>
@@ -33,7 +47,7 @@
 </view>
 
 <view class="tool-bar" style="padding-bottom: {{ safeBottom }}px">
-    <view class="layout-1" catchtap="tapToMyDemand">提交</view>
+    <view class="layout-1 {{isClickbtn ? 'ok' : ''}}" catchtap="tapToMyDemand">提交</view>
 </view>
 
 <view class="shade" wx:if="{{shadeShowing}}" catchtap="shadeShowing">

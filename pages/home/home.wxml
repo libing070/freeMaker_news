@@ -46,4 +46,4 @@
 
 </view>
 
-<custom-tabbar active-index="0"></custom-tabbar>
+<custom-tabbar active-index="0" id="customtabbarComponent" bindpageType="pageType" ></custom-tabbar>

@@ -6,6 +6,7 @@ Page({
      */
     data: {
         selectedTab: 0,
+        pageType:'',
         tabs: ['我的需求', '我的订单', '我的作品'],
         safeBottom: app.safeBottom,
         selecteddemandTab:0,
@@ -45,6 +46,7 @@ Page({
      * 生命周期函数--监听页面显示
      */
     onShow: function () {
+        this.loginSuccess()
         console.log(app.globalData.selectedTab);
         this.setData({
             selectedTab:app.globalData.selectedTab || 0
@@ -84,6 +86,26 @@ Page({
      */
     onShareAppMessage: function () {
 
+    },
+    // mark: 登录成功
+    loginSuccess(login) {
+        this.setData({
+            user: app.user,  
+        })
+        if(login){
+            let customtabbarComponent = this.selectComponent('#customtabbarComponent'); // 页面获取自定义组件实例
+            if(this.data.pageType=='demand'){
+                customtabbarComponent.tapToDemand(); // 通过实例调用组件事件 跳转到发布需求
+            }else if(this.data.pageType=='product'){
+                customtabbarComponent.tapToProduct(); // 通过实例调用组件事件 跳转到发布作品
+            }
+        }
+    },
+    pageType(e){
+        console.log(e.detail.pageType);
+        this.setData({
+            pageType: e.detail.pageType
+        })
     },
     //tab切换
     tapTab(e) {

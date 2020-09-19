@@ -20,26 +20,7 @@ App({
             this.safeBottom = 0
         }
       
-        // 获取用户信息
-        wx.getSetting({
-            success: res => {
-                if (res.authSetting['scope.userInfo']) {
-                    // 已经授权，可以直接调用 getUserInfo 获取头像昵称，不会弹框
-                    wx.getUserInfo({
-                        success: res => {
-                            // 可以将 res 发送给后台解码出 unionId
-                            this.globalData.userInfo = res.userInfo
-
-                            // 由于 getUserInfo 是网络请求，可能会在 Page.onLoad 之后才返回
-                            // 所以此处加入 callback 以防止这种情况
-                            if (this.userInfoReadyCallback) {
-                                this.userInfoReadyCallback(res)
-                            }
-                        }
-                    })
-                }
-            }
-        })
+        this.user = wx.getStorageSync('user') || '' 
     },
      /**
      * 当小程序启动，或从后台进入前台显示，会触发 onShow
@@ -49,12 +30,52 @@ App({
     },
     //登录
     login() {
+        wx.showLoading({
+            title: '正在登录',
+            mask: true,
+        })
+
         wx.login({
             success: res => {
-                console.log(res);
-                // 发送 res.code 到后台换取 openId, sessionKey, unionId
+                getUserInfo(res.code)
+            },
+            fail: res => {
+                fail()
             }
         })
+
+        let getUserInfo = code => {
+            wx.getUserInfo({
+                withCredentials: true,
+                success: res => {
+                    console.log(res)
+                    this.user = res.userInfo
+                    wx.setStorageSync('user', this.user)
+                    // 登录成功 通知当前页面
+                    let currentPage = this.currentPage()
+                    if (currentPage.loginSuccess) {
+                        currentPage.loginSuccess(true)
+                    }
+                    //request(code, res.encryptedData, res.iv)
+                    wx.hideLoading()
+
+                },
+                fail: res => {
+                    fail()
+                }
+            })
+        }
+        let fail = () => {
+            wx.showToast({
+                title: '登录失败，请重试',
+                icon: 'none',
+            })
+        }
+    },
+    // 当前显示的页面实例
+    currentPage() {
+        let page = getCurrentPages().pop()
+        return page || {}
     },
     //强制用户更新
     checkForUpdate() {

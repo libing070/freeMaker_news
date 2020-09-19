@@ -6,14 +6,16 @@ const citys = {
     浙江: ['杭州', '宁波', '温州', '嘉兴', '湖州'],
     福建: ['福州', '厦门', '莆田', '三明', '泉州'],
   };
-
+const watch = require("../../utils/watch.js");
 Page({
 
     /**
      * 页面的初始数据
      */
     data: {
+        type:0,//type: 0 发布需求 ,1 购买服务
         safeBottom:app.safeBottom,
+        collect:false,
         title:'',
         summarize:'',
         total: 0,
@@ -49,16 +51,23 @@ Page({
               className: 'column2',
               defaultIndex: 2,
             },
-          ],
+        ],
+        budget:'',
+        isClickbtn:false,
     },
 
     /**
      * 生命周期函数--监听页面加载
      */
     onLoad: function (options) {
+         watch.setWatcher(this); // 设置监听器，建议在onLoad下调用
         this.setData({
-            areaList:area.default
+            areaList:area.default,
+            type: options.type || 0
         });
+        wx.setNavigationBarTitle({
+            title: this.data.type == 0 ? '发布需求' : '购买服务'
+          })
     },
 
     /**
@@ -109,11 +118,83 @@ Page({
     onShareAppMessage: function () {
 
     },
+    watch:{
+        'title':function(value, oldValue){
+            if(value ==''){
+                this.setData({
+                  //  isClickbtn:false
+                })
+            }
+
+        },
+    },
+    tapCollect(e){
+        this.setData({
+            collect:!this.data.collect
+        })
+
+        if(this.data.collect){
+            wx.showToast({
+                title: '收藏成功',
+                icon: 'none',
+                duration: 2000
+            });
+        }else{
+            wx.showToast({
+                title: '已取消收藏',
+                icon: 'none',
+                duration: 2000
+            });  
+        }
+    },
+    //去除首尾空格
+    trimStr(str){
+        return str.replace(/(^\s*)|(\s*$)/g,"");
+    },
+    //对输入金额进行校验
+    clearNoNum(value){
+        value = value.replace(/[^\d.]/g,"");//清除"数字"和"."以外的字符
+        value = value.replace(/^\./g,"");//验证第一个字符是数字而不是字符
+        value = value.replace(/\.{2,}/g,".");//只保留第一个.清除多余的
+        value = value.replace(".","$#$").replace(/\./g,"").replace("$#$",".");
+        value = value.replace(/^(\-)*(\d+)\.(\d\d).*$/,'$1$2.$3');//只能输入两个小数
+        return value
+    },
+    //监听输入框，选择框 状态
+    watchInputSelectStatus(){
+        console.log(this.data.demandType)
+        console.log(this.data.currentDateStr)
+        console.log(this.data.budget)
+        console.log(this.data.currrArea)
+        if( this.trimStr(this.data.title) == '' 
+        || this.data.total <= 0 
+        || this.data.demandType=='请选择' 
+        || this.data.currentDateStr=='请选择'
+        || this.data.budget==''
+        || this.data.currrArea.length <=0 ){
+            this.setData({
+                isClickbtn:false
+            })
+        }else{
+            this.setData({
+                isClickbtn:true
+            })
+        }
+
+    },
     bindTitleInput(e) {
         let title=e.detail.value;
         this.setData({
-            title
+            title,
         });
+        this.watchInputSelectStatus();
+    },
+    bindbudgetInput(e){
+        let budget = this.clearNoNum(e.detail.value)
+        this.setData({
+            budget,
+        });
+        this.watchInputSelectStatus();
     },
     //初始化富文本编辑器
     onEditorReady() {
@@ -135,8 +216,10 @@ Page({
         }
         this.setData({
             total: summarize.length,
-            summarize: e.detail.html
+            summarize: e.detail.html,
         });
+        console.log(this.data.summarize)
+        this.watchInputSelectStatus();
     },
     //删除html标签
     deleteHtmlTag(html) {
@@ -161,6 +244,7 @@ Page({
             shadeShowing:false,
             demandType:`${value}`
         });
+        this.watchInputSelectStatus();
       },
     onCancel(){
         this.setData({
@@ -181,8 +265,9 @@ Page({
         this.setData({
             shadeShowing: false,
             currentDate:currentDate,
-            currentDateStr:currentDateStr
+            currentDateStr:currentDateStr,
         });
+        this.watchInputSelectStatus();
     },
     //省份下拉确认按钮事件
     areaTapDone(e) {
@@ -217,9 +302,9 @@ Page({
         this.setData({
             shadeShowing: false,
             currrArea: [currrArea[0].name,currrArea[1].name,currrArea[2].name],
-            currrAreaCode: currrArea[2].code
+            currrAreaCode: currrArea[2].code,
         });
-        
+        this.watchInputSelectStatus();
     },
     //取消按钮事件
     // 点击遮罩层
@@ -230,6 +315,54 @@ Page({
     },
      //跳转到我的作品列表
      tapToMyDemand(){
+        if( this.trimStr(this.data.title) == '' ){
+            wx.showToast({
+                title: '请填写标题',
+                icon: 'none',
+                duration: 2000
+            });
+            return
+        }
+        if( this.data.total <= 0){
+            wx.showToast({
+                title: '请填写需求描述',
+                icon: 'none',
+                duration: 2000
+            });
+            return
+        }
+        if(this.data.demandType=='请选择'){
+            wx.showToast({
+                title: '请选择需求类型',
+                icon: 'none',
+                duration: 2000
+            });
+            return
+        }
+        if( this.data.currentDateStr=='请选择'){
+            wx.showToast({
+                title: '请选择期望交付时间',
+                icon: 'none',
+                duration: 2000
+            });
+            return
+        }
+        if(this.data.budget==''){
+            wx.showToast({
+                title: '请填写您的预算',
+                icon: 'none',
+                duration: 2000
+            });
+            return
+        }
+        if(this.data.currrArea.length <=0){
+            wx.showToast({
+                title: '请选择省份城市',
+                icon: 'none',
+                duration: 2000
+            });
+            return
+        }
         app.globalData.selectedTab = 0
         wx.switchTab({
           url: '/pages/mine/mine',

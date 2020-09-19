@@ -27,7 +27,8 @@ Page({
             "//img14.360buyimg.com/pop/jfs/t1/111272/19/2307/93015/5ea17d3aEb521c837/7b9ac8fb948993f0.jpg",
             "//img14.360buyimg.com/pop/jfs/t1/110316/1/13554/178993/5ea17d3aE88af5e39/1e6dfb8dfb8259f6.jpg",
             "//img14.360buyimg.com/pop/jfs/t1/119502/34/1004/98273/5ea17d49Ed74b4fa5/49e7bdfc7ab97813.png"]},
-        ]
+        ],
+        pageType:''
     },
 
     /**
@@ -48,7 +49,7 @@ Page({
     * 生命周期函数--监听页面显示
     */
     onShow: function () {
-
+        this.loginSuccess()
     },
 
     /**
@@ -84,6 +85,26 @@ Page({
     */
     onShareAppMessage: function () {
 
+    },
+    // mark: 登录成功
+    loginSuccess(login) {
+        this.setData({
+            user: app.user,  
+        })
+        if(login){
+            let customtabbarComponent = this.selectComponent('#customtabbarComponent'); // 页面获取自定义组件实例
+            if(this.data.pageType=='demand'){
+                customtabbarComponent.tapToDemand(); // 通过实例调用组件事件 跳转到发布需求
+            }else if(this.data.pageType=='product'){
+                customtabbarComponent.tapToProduct(); // 通过实例调用组件事件 跳转到发布作品
+            }
+        }
+    },
+    pageType(e){
+        console.log(e.detail.pageType);
+        this.setData({
+            pageType: e.detail.pageType
+        })
     },
     changeName(event) {
         

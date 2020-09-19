@@ -1,6 +1,6 @@
 /* pages/homeList/homeList.wxss */
 page {
-    background-color: #F7F8FC;
+    background-color: white;
 }
 .filter {
     width: 100vw;

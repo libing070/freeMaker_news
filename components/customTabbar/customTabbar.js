@@ -1,5 +1,5 @@
 const config = require('./tabbarConfig.js')
-
+const app = getApp()
 Component({
     
     properties: {
@@ -36,7 +36,9 @@ Component({
     data: config,
     pageLifetimes: {
         // 组件所在页面的生命周期函数
-        show: function () { },
+        show: function () { 
+
+        },
         hide: function () { 
             this.setData({
                 shadeShowing:false
@@ -60,12 +62,14 @@ Component({
             // 特定需求，中间页的样式有点特别，那个页面没有底部tabbar
             // 因此这个要用页面跳转
             if (idx === 2) {
-                // wx.navigateTo({
-                //     url: '/pages/task/task',
-                // })
                 this.setData({
                     shadeShowing:!this.data.shadeShowing
                 })
+                if(this.data.shadeShowing){
+                    this.setData({
+                        user: app.user
+                    })
+                }
             }
             else {
                 let pageUrl = this.data.tabs[idx].data
@@ -76,17 +80,24 @@ Component({
         },
         //显示隐藏
         shadeShowing(e) {
+
             if (e.currentTarget.dataset.id != "shadeMain") {
                 this.setData({
                     shadeShowing: !this.data.shadeShowing
                 });
             }
-
+        },
+        //子父传值
+        valChildToParent(e){
+            let pageType=e.currentTarget.dataset.pagetype
+            this.triggerEvent('pageType', {
+                pageType:pageType
+            })
         },
         //发布需求
         tapToDemand(e){
             wx.navigateTo({
-                url: '/pages/publishDemand/publishDemand',
+                url: '/pages/publishDemand/publishDemand?type=0', //type: 0 发布需求 ,1 购买服务
             })
         },
         //发布需求

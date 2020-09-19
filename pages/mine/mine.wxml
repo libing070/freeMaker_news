@@ -1,12 +1,13 @@
 <!--pages/mine/mine.wxml-->
 <view class="mine" style="padding-bottom:{{ 50 + safeBottom }}px">
     <view class="user">
+        <auth-button wx:if="{{!user}}"></auth-button>
         <view class="avatarBox">
-            <image class="avatar" src="/images/common/default-head.png"></image>
+            <image class="avatar" src="{{ user ? user.avatarUrl:'/images/common/default-head.png'}}"></image>
         </view>
         <view>
-            <view class="name-user">波英冰</view>
-            <view  class="name-tag>">xxxx</view>
+            <view class="name-user">{{user ? user.nickName : '一键登录'}}</view>
+            <view class="name-tag" wx:if="{{user}}">xxxx</view>
         </view>
         <view class="price">
             <view class="wallet">
@@ -127,4 +128,4 @@
 
 </view>
 
-<custom-tabbar active-index="1"></custom-tabbar>
+<custom-tabbar active-index="1"  id="customtabbarComponent" bindpageType="pageType" ></custom-tabbar>

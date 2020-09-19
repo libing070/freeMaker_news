@@ -1,0 +1,6 @@
+<!--pages/loginPages/authButton/authButton.wxml-->
+
+<button   class="auth" open-type="getUserInfo" bindgetuserinfo="getUserInfo"></button>
+
+
+

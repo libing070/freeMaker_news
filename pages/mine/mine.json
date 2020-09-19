@@ -1,6 +1,7 @@
 {
     "navigationBarTitleText": "我的",
     "usingComponents": {
-        "custom-tabbar": "/components/customTabbar/customTabbar"
+        "custom-tabbar": "/components/customTabbar/customTabbar",
+        "auth-button": "/components/authButton/authButton"
     }
 }
