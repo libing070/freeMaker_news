@@ -1,4 +1,5 @@
 {
+    "navigationStyle":"custom",
     "usingComponents": {
         "custom-tabbar": "/components/customTabbar/customTabbar",
         "home-cell": "/components/homeCell/homeCell"

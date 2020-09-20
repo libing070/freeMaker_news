@@ -6,6 +6,7 @@ Page({
     */
     data: {
         safeBottom:app.safeBottom,
+        safeTop:app.safeTop,
         list:[
             { id: 1, name: '11111' ,collect:true,imgList:["//img14.360buyimg.com/pop/jfs/t1/114735/33/2427/35818/5ea17d3aE7018d774/acf7950db4ef2c51.jpg",
             "//img14.360buyimg.com/pop/jfs/t1/88961/36/19902/34141/5ea17d3aEf82710e9/6465b378faf4ea0b.jpg",

@@ -2,6 +2,13 @@
 page {
     background-color: white;
 }
+.logo{
+    width: 220rpx;
+    height: 44rpx;
+    display: block;
+    margin-left: 40rpx;
+    margin-bottom: 40rpx;
+}
 .menu-box{
     /* padding: 20rpx 20rpx 0 20rpx; */
     position: relative;

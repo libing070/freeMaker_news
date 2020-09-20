@@ -15,7 +15,7 @@
         <view class="tag">课程设计</view>
     </view>
     <view class="title"  catchtap="tapToWorksDetail">
-        <view class="name">XXXXXX</view>
+        <view class="name">GINGER品牌10周年展览设计</view>
         <view class="collect {{ obj.collect ? 'sel' :''}}" catchtap="tapCollect" data-id="{{obj.id}}">
             <image wx:if="{{!obj.collect}}"src=" /images/common/icon-collect.png" class="icon"></image>
             <text class="collect-name {{ obj.collect ? 'sel' :''}}">{{obj.collect ? '已收藏':'收藏'}}</text>

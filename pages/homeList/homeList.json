@@ -1,4 +1,5 @@
 {
+    "navigationBarTitleText": "HowWork",
     "usingComponents": {
         "home-cell": "/components/homeCell/homeCell"
     }
