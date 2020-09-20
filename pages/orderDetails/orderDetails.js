@@ -10,13 +10,22 @@ Page({
         imagesList:[],//图片
         shadeShowing:false,
         total:0,
-        summarize:''
+        summarize:'',
+        userType:0,//0 雇佣者 ，2自由职业者
+        currentStep:1,//当前步骤
+        isreject:false,//是否验收不通过
+        steps:[{text:'下单'},{text:'接单'},{text:'支付'},{text:'制作'},{text:'验收'},{text:'完成'},{text:'评价'}],
+        canClick:false
     },
 
     /**
      * 生命周期函数--监听页面加载
      */
     onLoad: function (options) {
+
+        this.setData({
+            currentStep:options.currentStep || 1
+        })
 
     },
 
@@ -106,6 +115,7 @@ Page({
             total: summarize.length,
             summarize: e.detail.html
         });
+        this.watchOperation()
     },
     //删除html标签
     deleteHtmlTag(html) {
@@ -130,6 +140,7 @@ Page({
                 this.setData({
                     imagesList: this.data.imagesList.concat(res.tempFilePaths)
                 });
+                this.watchOperation()
             }
         });
     },
@@ -141,6 +152,7 @@ Page({
         this.setData({
             imagesList: this.data.imagesList,
         })
+        this.watchOperation()
     },
     // 点击图片
     tapBanner(e) {
@@ -158,4 +170,73 @@ Page({
             urls,
         })
     },
+    //一键复制
+    tapCopy(e){
+        let content = e.currentTarget.dataset.content;
+        wx.setClipboardData({
+            data: content,
+            success (res) {
+                console.log(res);
+            }
+        })
+    },
+    watchOperation(){
+        if(this.data.total==0 || this.data.imagesList.length==0){
+            this.setData({
+                canClick:false
+            })
+        }else{
+            this.setData({
+                canClick:true
+            })
+        }
+    },
+    //验收不通过提交时间
+    tapshadeNopass(){
+        if(this.data.total==0 ){
+            wx.showToast({
+                title: '请填写验收不通过理由',
+                icon: 'none',
+                duration: 2000
+            });
+            return
+        }
+        if(this.data.imagesList.length==0){
+            wx.showToast({
+                title: '至少上传一张图片',
+                icon: 'none',
+                duration: 2000
+            });
+            return
+        }
+        this.setData({
+            shadeShowing:false,
+            isreject:true
+        })
+    },
+    //确认验收
+    confirmAgree(){
+        this.setData({
+            shadeShowing:false,
+            isreject:false,
+            currentStep:5
+        }) 
+    },
+    //取消订单
+    tapCancleOrder(){
+        wx.showModal({
+            title: '提示信息',
+            content: '确认取消订单？',
+            showCancel: true,
+            confirmColor: '#FFBA20',
+            confirmText: '确定',
+            success: res => {
+                if (res.confirm) {
+                    wx.navigateBack({
+                        delta: 1
+                    })
+                }
+            },
+        })
+    }
 })

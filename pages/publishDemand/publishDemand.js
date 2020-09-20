@@ -53,14 +53,16 @@ Page({
             },
         ],
         budget:'',
+        hourlywage:'¥400/时',
         isClickbtn:false,
+        buysum:1,
     },
 
     /**
      * 生命周期函数--监听页面加载
      */
     onLoad: function (options) {
-         watch.setWatcher(this); // 设置监听器，建议在onLoad下调用
+        watch.setWatcher(this); // 设置监听器，建议在onLoad下调用
         this.setData({
             areaList:area.default,
             type: options.type || 0
@@ -166,20 +168,37 @@ Page({
         console.log(this.data.currentDateStr)
         console.log(this.data.budget)
         console.log(this.data.currrArea)
-        if( this.trimStr(this.data.title) == '' 
-        || this.data.total <= 0 
-        || this.data.demandType=='请选择' 
-        || this.data.currentDateStr=='请选择'
-        || this.data.budget==''
-        || this.data.currrArea.length <=0 ){
-            this.setData({
-                isClickbtn:false
-            })
-        }else{
-            this.setData({
-                isClickbtn:true
-            })
+        if(this.data.type == 0){ //发布需求
+            if( this.trimStr(this.data.title) == '' 
+            || this.data.total <= 0 
+            || this.data.demandType=='请选择' 
+            || this.data.currentDateStr=='请选择'
+            || this.data.budget==''
+            || this.data.currrArea.length <=0 ){
+                this.setData({
+                    isClickbtn:false
+                })
+            }else{
+                this.setData({
+                    isClickbtn:true
+                })
+            }
+        }else if(this.data.type == 1){//购买服务
+            if( this.trimStr(this.data.title) == '' 
+            || this.data.total <= 0 
+            || this.data.demandType=='请选择' 
+            || this.data.currentDateStr=='请选择'
+            || this.data.currrArea.length <=0 ){
+                this.setData({
+                    isClickbtn:false
+                })
+            }else{
+                this.setData({
+                    isClickbtn:true
+                })
+            }
         }
+
 
     },
     bindTitleInput(e) {
@@ -189,12 +208,48 @@ Page({
         });
         this.watchInputSelectStatus();
     },
+    //预算
     bindbudgetInput(e){
         let budget = this.clearNoNum(e.detail.value)
         this.setData({
             budget,
         });
         this.watchInputSelectStatus();
+    },
+    //时薪
+    bindhourlywageInput(e){
+        let hourlywage = this.clearNoNum(e.detail.value)
+        this.setData({
+            hourlywage,
+        });
+        this.watchInputSelectStatus();
+    },
+    //计算购买数量
+    calcQuantity(e){
+        let type =  e.currentTarget.dataset.type
+        let buysum=this.data.buysum
+        if(type == 'plussign'){
+            buysum++
+        }
+        else{
+            if(buysum >1){
+                buysum--
+            }else{
+                wx.showToast({
+                    title: '至少购买一份，不能再减啦',
+                    icon: 'none',
+                    duration: 2000
+                });
+                return
+            }
+
+        }
+   
+        this.setData({
+            buysum
+        })
+
+
     },
     //初始化富文本编辑器
     onEditorReady() {
@@ -347,7 +402,7 @@ Page({
             });
             return
         }
-        if(this.data.budget==''){
+        if(this.data.type==0 && this.data.budget==''){
             wx.showToast({
                 title: '请填写您的预算',
                 icon: 'none',
@@ -363,9 +418,16 @@ Page({
             });
             return
         }
-        app.globalData.selectedTab = 0
-        wx.switchTab({
-          url: '/pages/mine/mine',
-        })
+        if(this.data.type==0){
+            app.globalData.selectedTab = 0
+            wx.switchTab({
+              url: '/pages/mine/mine',
+            })
+        }else{
+            wx.navigateTo({
+                url: '/pages/orderDetails/orderDetails?currentStep=1&buysum='+this.data.buysum,
+            })
+        }
+
     }
 })

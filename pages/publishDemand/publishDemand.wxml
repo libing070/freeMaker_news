@@ -29,19 +29,36 @@
         <view class="number">{{total}}/300</view>
     </view>
     <view class="content-wrapper">
-        <view class="names"><text style="vertical-align: middle;color:#FF6363;;padding-right:12rpx">*</text>需求类型</view>
+        <view class="names"><image class="icon-important" src="/images/common/icon-important.png"></image><text class="t">需求类型</text></view>
         <view class="choose-val" catchtap="shadeShowing" data-type="demand" style="color:{{ demandType == '请选择' ? '#8392A0' : ' #0C2032'}}">{{demandType}}<image class="arrow" wx:if="{{demandType == '请选择'}}" src="/images/common/icon-arrow.png"></image></view>
     </view>
     <view class="content-wrapper">
-        <view class="names"><text style="vertical-align: middle;color:#FF6363;;padding-right:12rpx">*</text>期望交付时间</view>
+        <view class="names"><image class="icon-important" src="/images/common/icon-important.png"></image><text class="t">期望交付时间</text></view>
         <view class="choose-val" catchtap="shadeShowing" data-type="date" style="color:{{ currentDateStr == '请选择' ? '#8392A0' : ' #0C2032'}}">{{currentDateStr}}<image class="arrow" wx:if="{{currentDateStr == '请选择'}}" src="/images/common/icon-arrow.png"></image></view>
     </view>
-    <view class="input-budget">
-        <view class="names"><text style="vertical-align: middle;color:#FF6363;;padding-right:12rpx">*</text>预算(¥)</view>
-        <input class="budget" type="number"  placeholder-style='text-align:right' maxlength="100" placeholder="请输入您的预算" bindinput="bindbudgetInput" value="{{budget}}" placeholder-style="color: #8392A0"></input>
-    </view>
+    <block  wx:if="{{type == 0}}">
+        <view class="input-budget">
+            <view class="names"><image class="icon-important" src="/images/common/icon-important.png"></image><text class="t">预算(¥)</text></view>
+            <input class="budget" type="number"  placeholder-style='text-align:right' maxlength="100" placeholder="请输入您的预算" bindinput="bindbudgetInput" value="{{budget}}" placeholder-style="color: #8392A0"></input>
+        </view>
+    </block>
+    <block wx:else>
+        <view class="input-budget">
+            <view class="names"><image class="icon-important" src="/images/common/icon-important.png"></image><text class="t">时薪(¥)</text></view>
+            <view style="height:120rpx;line-height:120rpx;font-size: 32rpx;color: #0C2032;">{{hourlywage}}</view>
+            <!-- <input class="budget" type="number"  placeholder-style='text-align:right' maxlength="100" placeholder="请输入您的时薪" bindinput="bindhourlywageInput" value="{{hourlywage}}" placeholder-style="color: #8392A0"></input> -->
+        </view>
+        <view class="content-wrapper">
+            <view class="names"><image class="icon-important" src="/images/common/icon-important.png"></image><text class="t">购买数量</text></view>
+            <view class="stepper">
+                <image class="icon"src="/images/common/icon-minussign.png" catchtap="calcQuantity" data-type="minussign"></image>
+                <view class="value">{{buysum}}</view>
+                <image class="icon" src="/images/common/icon-plussign.png" catchtap="calcQuantity" data-type="plussign"></image>
+            </view>
+        </view>
+    </block>
     <view class="content-wrapper">
-        <view class="names"><text style="vertical-align: middle;color:#FF6363;padding-right:12rpx">*</text>省份城市</view>
+        <view class="names"><image class="icon-important" src="/images/common/icon-important.png"></image><text class="t">省份城市</text></view>
         <view class="choose-val" catchtap="shadeShowing" data-type="area" style="color:{{ fn.formatCurrrArea(currrArea) == '请选择' ? '#8392A0' : ' #0C2032'}}" >{{fn.formatCurrrArea(currrArea)}}<image class="arrow" wx:if="{{fn.formatCurrrArea(currrArea) == '请选择'}}" src="/images/common/icon-arrow.png"></image></view>
     </view>
 </view>

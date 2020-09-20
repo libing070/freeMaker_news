@@ -1,12 +1,18 @@
 <!--pages/orderDetails/orderDetails.wxml-->
 <view class="order-steps">
     <view class="steps">
-        <view class="step-line"></view>
-        <view class="step" wx:for="{{7}}" wx:key="index">
+        <view class="step-default-line"></view>
+
+        <!-- 计算方式：总共7步,  每一步大约：14% ，width=当前步*14-->
+        <view class="step-finish-line" style="width:{{(currentStep)*14}}%"></view>
+        <view class="step" wx:for="{{steps}}" wx:key="index">
             <view class="step-item">
-                <image class="status-icon" src="{{ index == 5 ? '/images/common/icon-step-fail.png' : '/images/common/icon-step-success.png'}}"></image> 
+                <image class="status-icon" wx:if="{{index < currentStep}}"src="/images/common/icon-step-success.png"></image> 
+                <image class="status-icon" wx:elif="{{index == currentStep}}" src="/images/common/icon--step-current.png"></image> 
+                <image class="status-icon" wx:elif="{{index > currentStep}}"src="/images/common/icon-step-default.png"></image> 
+                <image class="status-icon" wx:if="{{index ==4 && isreject && currentStep == 4}}"src="/images/common/icon-step-fail.png"></image> 
             </view>
-            <view class="step-title">波英冰</view>
+            <view class="step-title {{index==currentStep ? 'curr':''}}">{{index ==4 && isreject && currentStep == 4? '验收不通过':item.text}}</view>
         </view>
     </view>
 </view>
@@ -17,31 +23,68 @@
         <image class="earth" src="/images/common/icon-earth.png"></image>
     </view>
 </view>
-<view class="titles">波英冰波英冰波英冰</view>
-<view class="price"><text class="unit">¥</text><text class="value">800</text></view>
-<view class="user">
-    <view class="tag">Employer</view>
-    <view class="user-box">
-        <image src="/images/common/default-head.png" class="head"></image>
-        <view class="phone">1857857555</view>
-        <view class="concat">联系TA</view>
-    </view>
-</view>
-<view class="task">
-    <view class="title">任务描述</view>
+
+
+
+<view class="wrap">
+    <view class="titles">教辅类产品课件设计合集</view>
     <view class="tag">品牌设计</view>
-    <view class="content">任务描述任务描述任务描述任务描述任务描述任务描述任务描述任务描述任务描述任务描述任务描述任务描述任务描述任务描述任务描述任务描述任务描述任务描述任务描述任务描述任务描述任务描述任务描述任务描述任务描述任务描述任务描述任务描述任务描述任务描述任务描述任务描述任务描述任务描述任务描述任务描述任务描述任务描述任务描述任务描述任务描述任务描述任务描述任务描述任务描述任务描述</view>
+    <view class="title-name">订单描述</view>
+    <view class="order-desc">这里是订单描述，这里是订单描述，这里是订单描述，这里是订单描述，这里是订单描述，这里是订单描述。</view>
+    <view class="user-title">Freelancer</view>
+    <view class="user" catchtap="shadeShowing" data-type="userinfo">
+        <view class="avatarBox" data-item="1" catchtap="shadeShowing">
+            <image class="avatar" src="/images/common/default-head.png"></image>
+        </view>
+        <view>
+            <view class="name-user">波英冰</view>
+            <view  class="name-tag>">品牌设计师·平面设计师</view>
+        </view>
+       <image class="arrow" src="/images/common/icon_wechat.png" catchtap="shadeShowing" data-type="call"></image>
+    </view>
+    <view class="dates-title">期望交付时间</view>
+    <view class="dates-value">2020年8月15日</view>
 </view>
-<view class="dates">
-    <view class="title">期望交付日期</view> 
-    <view class="date">
-        <view class="date-left">2020年09月20日</view>
-        <view class="date-right">剩14天14小时</view>
+<view class="budget" >
+    <view class="title">订单预算</view>
+    <view class="calc">
+        <view class="compute-mode">计算方式：400/时*2</view>
+        <view clss="total-price"><text style="font-family: PingFangSC-Regular;font-size: 32rpx;color: #0C2032;">¥</text><text style="font-family: DINAlternate-Bold;font-size: 52rpx;color: #0C2032;">800</text></view>
     </view>
 </view>
-<view class="no"></view>
+
+<view class="no" style="padding-bottom: {{ 70 + safeBottom }}px"></view>
 <view class="tool-bar" style="padding-bottom: {{ safeBottom }}px">
-     <view class="layout-1-1" wx:if="">
+   
+   <!--雇佣者-->
+
+    <block wx:if="{{userType == 0}}">
+        <!--接单-->
+        <view class="layout-1-2" wx:if="{{currentStep == 1}}">
+            <view class="left cancle" catchtap="tapCancleOrder">取消订单</view>
+            <view class="right pay">立即支付</view>
+        </view>
+        <!--支付-->
+        <view class="layout-1-2" wx:elif="{{currentStep == 2}}">
+            <view class="left cancle">取消订单</view>
+            <view class="right pay ok">立即支付</view>
+        </view>
+        <!--制作-->
+        <view class="layout-1" wx:elif="{{currentStep == 3}}">取消接单</view>
+        <!--验收-->
+        <view class="layout-1-2" wx:elif="{{currentStep == 4}}">
+            <view class="left cancle" catchtap="shadeShowing" data-type="nopass">不通过</view>
+            <view class="right pay ok" catchtap="shadeShowing" data-type="checked">验收通过</view>
+        </view>
+        <!--完成-->
+        <view class="layout-1 ok" wx:elif="{{currentStep == 5}}">评价</view>
+  
+    </block>
+
+
+
+   <!--自由职业者-->
+     <!-- <view class="layout-1-1" wx:if="">
           <view class="left close">关闭需求</view>
           <view class="right edit">编辑</view>
      </view>
@@ -51,7 +94,7 @@
      </view>
      <view class="layout-1 cancel-receiving " wx:if="">取消接单</view>
      <view class="layout-1 made"  catchtap="shadeShowing" data-type="made" wx:if="">已制作完成</view>
-     <view class="layout-1 made"  catchtap="tapToPushUserList">查看需求推送人列表</view>
+     <view class="layout-1 made"  wx:if="" catchtap="tapToPushUserList">查看需求推送人列表</view>
      <view class="layout-1-1" wx:if="">
           <view class="left cancle">取消</view>
           <view class="right submit">提交</view>
@@ -67,11 +110,45 @@
      <view class="layout-1-1"  wx:if="">
           <view class="left cancle">取消</view>
           <view class="right checked" catchtap="shadeShowing" data-type="checked">确认验收</view>
-     </view>
+     </view> -->
 </view>
 
 <view class="shade" wx:if="{{shadeShowing}}" catchtap="shadeShowing">
     <view class="main"  data-id="shadeMain" catchtap="shadeShowing" style="padding-bottom: {{safeBottom}}px;">
+        <!--联系TA-->
+        <view class="call-user" wx:if="{{ currPicker == 'call'}}">
+            <view class="head">
+                <view class="left">联系TA</view>
+            </view>
+            <view class="copy">
+                xxx设计师微信号
+                <view class="btn" data-content="xxx设计师微信号" catchtap="tapCopy">一键复制</view>
+            </view>
+        </view>
+        <!--Freelancer 信息-->
+        <view class="shade-user"  wx:if="{{ currPicker == 'userinfo'}}">
+            <view class="u">
+                <view class="avatarBox">
+                    <image class="avatar" src="/images/common/default-head.png"></image>
+                </view>
+                <view>
+                    <view class="name-user">波英冰</view>
+                    <view  class="name-tag>">品牌设计师·平面设计师</view>
+                </view>
+            </view>
+            <view class="cell-group">
+                <view class="field">地域</view>
+                <view class="message">北京市 朝阳区</view>
+            </view>
+            <view class="cell-group" style="border-top: 0.1px solid #E6E6E6;border-bottom: 0.1px solid #E6E6E6;">
+                <view class="field">语言</view>
+                <view class="message">普通话 雅思4分</view>
+            </view>
+            <view class="cell-group">
+                <view class="field">个人介绍</view>
+                <view class="message">大家好！我是一名资深平面设计师，专注于品牌视觉形象设计，原创插画手绘达人。曾服务：南极人，王品台塑牛排，浦银大学，苏罗品牌，lwang印刷，等公司。个人原创手绘：《一日一草木系列》等作品。</view>
+            </view>
+        </view>
         <!--已制作完成-->
         <view class="shade-made" wx:if="{{ currPicker == 'made'}}">
             <view class="upload-title">上传凭证</view>
@@ -99,37 +176,42 @@
         <!--不通过-->
         <view class="shade-nopass" wx:if="{{ currPicker == 'nopass'}}">
             <view class="nopass-title">
-                <image class="warning" src="/images/common/icon-warning.png"></image>
+                <!-- <image class="warning" src="/images/common/icon-warning.png"></image> -->
                 <view class="name">验收不通过</view>
             </view>
+            <view class="description">
+                <text class="l">*</text>
+                <text class="r">原因说明</text>
+            </view>
             <view class="input-wrapper">
-                <editor id="editor" class="editor" placeholder="请输入不通过理由"  bindinput="bindEditorInput" bindready="onEditorReady"> </editor>
+                <editor id="editor" class="editor" placeholder="请输入验收不通过理由"  bindinput="bindEditorInput" bindready="onEditorReady"> </editor>
                 <view class="number">{{total}}/300</view>
             </view>
-            <view class="images-box" style="margin-bottom: 100rpx;">
+            <view class="image-titile">上传图片凭证</view>
+            <view class="images-box" style="padding-bottom: 112rpx;">
                 <view class="box" wx:for="{{imagesList}}" wx:key="index">
                     <image src="/images/common/icon-delete.png" class="icon-delete" data-index="{{index}}" catchtap="deletePhotos"></image>
                     <image src="{{item}}" class="img" mode="aspectFill"  data-item="{{item}}"  catchtap="tapBanner"/>
                 </view>
                 <view class="box dotted-box" bindtap="tapUpload" wx:if="{{imagesList.length < 8}}">
                     <image src="/images/common/icon-camera.png" class="upload-icon" catchtap="tapUpload" />
-                    <text class="upload-text">上传图片</text>
+                    <!-- <text class="upload-text">上传图片</text> -->
                 </view>
             </view>
             <view class="tool-bar" style="padding-bottom: {{ safeBottom }}px;border:none;">
                 <view class="layout-1-1">
-                      <view class="left cancel">取消</view>
-                      <view class="right submit">提交</view>
+                      <view class="left cancel"  catchtap="shadeShowing">关闭</view>
+                      <view class="right submit {{ canClick ? 'ok':''}}" catchtap="tapshadeNopass">提交</view>
                 </view>
             </view>
         </view>
         <!--确认验收-->
         <view class="shade-checked" wx:if="{{ currPicker == 'checked'}}">
-            <view class="" style="margin-top:40rpx;margin-bottom: 140rpx;text-align:center;font-size:38rpx;font-weight: bold;">确认验收后，平台将给Freelancer打款</view>
+            <view class="" style="margin-top:112rpx;padding-bottom: 200rpx;text-align:center;font-size:36rpx;font-weight: bold;color: #0D1335;">确认验收后，平台将给Freelancer打款</view>
             <view class="tool-bar" style="padding-bottom: {{ safeBottom }}px;border:none;">
                 <view class="layout-1-1">
-                      <view class="left cancel">取消</view>
-                      <view class="right checked">确认验收</view>
+                      <view class="left cancel"  catchtap="shadeShowing">取消</view>
+                      <view class="right checked ok" catchtap="confirmAgree">确认验收</view>
                 </view>
             </view>
         </view>

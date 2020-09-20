@@ -29,8 +29,8 @@
         <text class="tag">百度热榜</text>
     </view>
 
-    <view class="user" data-id="{{obj.id}}">
-        <view class="avatarBox" data-item="1" catchtap="shadeShowing">
+    <view class="user" data-item="1" catchtap="shadeShowing">
+        <view class="avatarBox" >
             <image class="avatar" src="/images/common/default-head.png"></image>
         </view>
         <view>

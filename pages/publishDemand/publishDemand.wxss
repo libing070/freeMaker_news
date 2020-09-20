@@ -117,11 +117,23 @@ page {
     border-bottom: 0.1px solid #E6E6E6;
 }
 .input-budget .names{
+    position: relative;
     display: inline-flex;
     height: 120rpx;
     line-height: 120rpx;
     font-size: 32rpx;
     color: #0C2032;
+}
+.input-budget .names .icon-important{
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    margin:auto;
+    width:30rpx;
+    height:30rpx;
+}
+.input-budget .names .t{
+    margin-left:35rpx;
 }
 .input-budget  .budget {
     display: inline-flex;
@@ -143,7 +155,20 @@ page {
     line-height: 120rpx;
     font-size: 32rpx;
     color: #0C2032;
+    position: relative;
 }
+.content-wrapper .names .icon-important{
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    margin:auto;
+    width:30rpx;
+    height:30rpx;
+}
+.content-wrapper .names .t{
+    margin-left:35rpx;
+}
+
 .content-wrapper .choose-val{
     height: 120rpx;
     line-height: 120rpx;
@@ -156,6 +181,23 @@ page {
     vertical-align: middle;
     margin-top: -5rpx;
     padding-left: 20rpx;
+}
+.content-wrapper .stepper{
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+}
+.content-wrapper .stepper .icon{
+    width: 32rpx;
+    height: 32rpx;
+}
+.content-wrapper .stepper .value{
+    font-family: PingFangSC-Regular;
+    font-size: 28rpx;
+    color: #3D4347;
+    margin:0 8rpx;
 }
 .shade {
     background-color: rgba(0, 0, 0, 0.5);
