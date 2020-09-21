@@ -1,0 +1,9 @@
+<!--pages/uploadTest/index.wxml-->
+
+<view class="btn" catchtap="upload">上传</view>
+
+<view class="img-box"> 
+    <image src="{{item}}" wx:for="{{imageList}}" wx:key="index" style="width:100%;margin-bottom:20rpx" mode="widthFix" ></image>
+</view>
+<view>-----------------------------------------------------------------------------------------------</view>
+<canvas wx:if="{{canvasShowing}}" canvas-id='attendCanvasId' class='myCanvas'  style="{{canvasSize}}"></canvas>

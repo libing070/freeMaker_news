@@ -9,7 +9,8 @@
     "pages/demandDetails/demandDetails",
     "pages/publishProduct/publishProduct",
     "pages/orderDetails/orderDetails",
-    "pages/pushUserList/pushUserList"
+    "pages/pushUserList/pushUserList",
+    "pages/uploadTest/index"
   ],
   "tabBar": {
     "custom": true,

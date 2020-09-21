@@ -1,0 +1,26 @@
+/* pages/uploadTest/index.wxss */
+
+.btn{
+  position: relative;
+  height: 88rpx;
+  width: 400rpx;
+  line-height: 88rpx;
+  font-size: 28rpx;
+  text-align: center;
+  border-radius: 16rpx;
+  color: white;
+  background-color: rgba(255,186,32,1);
+  margin: auto;
+  margin-top: 20rpx;
+}
+.img-box{
+  padding: 20rpx 0;
+  /* margin: 40rpx;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start; */
+}
+.myCanvas{
+
+}
