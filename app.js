@@ -1,5 +1,9 @@
 //app.js
+
+let Api = require("./utils/api.js")
+
 App({
+    Api,
     onLaunch: function () {
 
         
@@ -142,7 +146,7 @@ App({
         })
     },
     globalData: {
-        domain: 'https://www.xxx.com', //域名
+        domain: 'http://localhost:8002', //域名
 
         cookie:'',
 
