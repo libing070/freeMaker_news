@@ -12,7 +12,8 @@
         </view>
         <!-- 下面这个是中间的大加号 -->
         <view class="publish" bindtap='clickPlus'>
-            <view class=""></view>
+            <!-- <view class=""></view> -->
+            <image class="add" src="/images/common/icon-add.png"></image>
         </view>
     </view>
 </view>

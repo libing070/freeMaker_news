@@ -1,5 +1,10 @@
 <!--pages/mine/mine.wxml-->
-<view class="mine" style="padding-bottom:{{ 50 + safeBottom }}px">
+
+<!-- 导航栏 -->
+<view class="navigationBar {{whiteNavigationBar ? '' : 'clear'}}" style="padding-top: {{safeTop}}px;">HowWork</view>
+<view class="mine" style="padding-top:{{ 64+ safeTop}}px;padding-bottom:{{ 50 + safeBottom }}px">
+
+    <image class="head-img" src="/images/mine/head-img.png" mode="widthFix"></image>
     <view class="user">
         <auth-button wx:if="{{!user}}"></auth-button>
         <view class="avatarBox">
@@ -22,13 +27,13 @@
             </view>
         </view>
     </view>
-    <view class="tabs">
+    <view class="tabs tabs-sticky" style="top:{{44 + safeTop}}px">
         <block wx:for="{{tabs}}" wx:key="index">
             <view class="item {{selectedTab == index ? 'sel' : ''}}" data-tab="{{index}}" catchtap="tapTab">{{item}}</view>
         </block>
     </view>
     <view class="demand-container" wx:if="{{selectedTab == 0}}">
-        <view class="demand-second-level">
+        <view class="demand-second-level sticky" style="top:{{44 + 44 + safeTop}}px">
             <view  catchtap="tapdemandTab" data-tab="0" class="level {{selecteddemandTab == 0 ? 'sel' : ''}}">全部·21</view>
             <view  catchtap="tapdemandTab" data-tab="1" class="level {{selecteddemandTab == 1 ? 'sel' : ''}}">已开启·9</view>
             <view  catchtap="tapdemandTab" data-tab="2" class="level {{selecteddemandTab == 2 ? 'sel' : ''}}">已停运·1</view>
@@ -51,7 +56,7 @@
     </view>
     <view class="order-container" wx:if="{{selectedTab == 1}}">
         <view class="order-list" wx:if="{{1}}">
-            <view class="dropdown-menu">
+            <view class="dropdown-menu sticky" style="top:{{44 + 44 + safeTop}}px">
                 <view class="menu">
                     <view class="menu-item" catchtap="dropdownShowing1">
                         <text class='name' style="color: {{options1Text != '全部订单' ? 'tomato':''}}">{{options1Text}}</text>

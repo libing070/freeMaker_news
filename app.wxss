@@ -8,3 +8,55 @@
   padding: 200rpx 0;
   box-sizing: border-box;
 } 
+
+/* mark: 自定义导航栏 */
+.navigationBar {
+  background-color: white;
+  font-size: 36rpx;
+  color: #0C2032;
+  font-weight: 500;
+  text-align: center;
+  line-height: 44px;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  height: 44px;
+  top: 0;
+  left: 0;
+  right: 0;
+  position: fixed;
+  padding: 0 105px;
+  overflow: hidden;
+  z-index: 1;
+}
+
+.navigationBar.clear {
+  background-color: transparent;
+  color: #0C2032;
+}
+
+.navigationBar navigator {
+  background-repeat: no-repeat;
+  background-size: 20px;
+  background-position: center;
+  width: 40px;
+  height: 40px;
+  left: 2px;
+  bottom: 2px;
+  position: absolute;
+}
+
+.navigationBar navigator.white {
+  background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACgAAAAoCAYAAACM/rhtAAAAAXNSR0IArs4c6QAAAERlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAA6ABAAMAAAABAAEAAKACAAQAAAABAAAAKKADAAQAAAABAAAAKAAAAAB65masAAABOElEQVRYCe2YzQnCQBCFo5XYhcco2ocV+AM2ZAGevFmGXfhTgkJ8D3ZhGDaroGSfkoEhS3LIt29mJ5Opqt7EFWiaZgzfw3fwkRQugGbwKzzaAYuBBCRAPBwhT/BhccAAdyORsTvWCwW4OUBsWMlIuLUC3AQgKeVWKnBnymWMyvVw2ehAIYb1YlTjUl65ZXZXXTyESlTO59wD9yRybgoQH1bCbbsQJ/sOQKRyTgouFVYZ5WThaoRWFo79nCYcTwvgjnBrLMKb7En64sPyvdmnm4Fa2iHmBgFZw3XzMEC2fdrK18CYJlDxZyA1v8NGSd1mwUC2hbt8u/UCkoW8fMPqIH1OarT8DtLXyR4yCvT2NdRJzR/3uAtA6o4+DCQnWyklyw+PHKQfImmM3zKQOgNMA6k7Ao6Qf319Ar8kd0+uhJ5vAAAAAElFTkSuQmCC);
+}
+
+.navigationBar navigator.black {
+  background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACgAAAAoCAYAAACM/rhtAAAAAXNSR0IArs4c6QAAAERlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAA6ABAAMAAAABAAEAAKACAAQAAAABAAAAKKADAAQAAAABAAAAKAAAAAB65masAAADD0lEQVRYCe2YP2/TQBjGHacTsIBo/kt8hURJxEhRm6GoiJUPwCcoVFkjdiQEn4CJVkyImYUFQZo/nZFKQCKJxFIQ3ZqE57HuXMcK8p3vriw96ezX9nt3Pz/ve+eTPe+ymCmQMWue3Lper9/OZDJ7i8Xiz2w26wyHw1Fyq3OPtXPTvtVsNjfn8/lr9Lzu+74HyBuwH6AuVEfzVR11/Wq1WggHSI8V5Van09GKmpazKqRQbh/+N6GahxCznsF+1Ov1Xqn2Qz/rCkK5LRHWEA7jEO6JLhwBrSrYaDQ2APIG/YZwQrnHgHvBAXWLNQUJh8FXhTU1HF/GioISDurlUYOcQ99nqEZwBDReZkRYD9BXjnAspmENOhGHbPRC15bKoV2gHNsTDqdd5NxLXpuW1CGWcDKsBAHcDCfCpZoQq14mlYL4fN1FZwxrqBy+FIRrA+75qoHS3tMGFMot5RzhoCThnqUF+Vc7rWVGhhWdhRPCJRyhlQGr1eoG/PfjOedKOcKxKE0SfFvvAOQgDof2TsIakIlDIqDYz72NwjGsKO3BYGA956JwtFUW6qfwC2cr1zlsBvYAZ3W2xsHktXIOygYXfU5cZkql0heodh9g1wQcIuy38vn86XQ6/egaOBFwMpn8KJfLXYBsS0jkIyE3AX+K504hEwGp0Hg8/pbL5Q6z2WwIids+lHUOqQRISIRzBMUOAbUESSWLxaIzJZUBCQklA0iY9wB6lfdkuF1BagESSED2YG5fBKQ2ICExMUaYOEvhppIiJ0/w/BP9bJRUgBxYhjuek7huIVcJ+fm/AkYhYYc5CZtLUAs5+cuGkqkVlOpQyXi4CYlKJY0hjQEJGg838pHbf+aksZJWAKOQsHcAdoWQKMaQ1gAlZKFQGAAwWIIkJJ4x3L/T5KRVQELii3NcqVT6gOPECZTEmUpuYeJ8B+QR/VSLk+1Wt9t9jz3jQ0D8BBi/NqxrqLv4/aY1ZuKOWvVNV/nJH5iAXCcoduHv+v2+1g9M6yGOgmJ2f0XufQDcdajXhaptpMBJ1OfSdq3AXx1itXEol9anAAAAAElFTkSuQmCC);
+}
+
+/* 使用方法
+<!-- 导航栏 -->
+<view class="navigationBar /clear" style="padding-top: {{safeTop}}px;">
+  <navigator class="white/black" open-type="navigateBack"></navigator>
+  'Title'
+</view>
+*/

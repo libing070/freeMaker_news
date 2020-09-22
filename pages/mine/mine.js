@@ -5,6 +5,7 @@ Page({
      * 页面的初始数据
      */
     data: {
+        safeTop: 0,
         selectedTab: 0,
         pageType:'',
         tabs: ['我的需求', '我的订单', '我的作品'],
@@ -31,7 +32,9 @@ Page({
      * 生命周期函数--监听页面加载
      */
     onLoad: function (options) {
-
+        this.setData({
+            safeTop:app.safeTop
+        });
 
     },
 
@@ -51,6 +54,8 @@ Page({
         this.setData({
             selectedTab:app.globalData.selectedTab || 0
         })
+        // 监听屏幕滚动 关键位置
+        this.scrollChangeNavigationBar = 44
     },
 
     /**
@@ -87,6 +92,33 @@ Page({
     onShareAppMessage: function () {
 
     },
+    onPageScroll(e) {
+        // 导航栏 变白色
+          if (e.scrollTop >= this.scrollChangeNavigationBar) {
+              if (!this.data.whiteNavigationBar) {
+                  this.setData({
+                      whiteNavigationBar: true
+                  })
+  
+                  wx.setNavigationBarColor({
+                      backgroundColor: '#ffffff',
+                      frontColor: '#000000',
+                  })
+              }
+  
+          } else {
+              if (this.data.whiteNavigationBar) {
+                  this.setData({
+                      whiteNavigationBar: false
+                  })
+  
+                  wx.setNavigationBarColor({
+                      backgroundColor: '#ffffff',
+                      frontColor: '#000000',
+                  })
+              }
+          }
+      },
     // mark: 登录成功
     loginSuccess(login) {
         this.setData({

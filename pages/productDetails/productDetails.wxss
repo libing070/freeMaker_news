@@ -84,7 +84,7 @@ page {
     margin:auto;
     height: 52rpx;
     width: 120rpx;
-    background: #EEF5FD;
+    background: #EBF5FF;
     border-radius: 32rpx;
     text-align: center;
     line-height: 52rpx;
@@ -106,7 +106,7 @@ page {
     display:inline-flex;
     font-family: PingFangSC-Regular;
     font-size: 24rpx;
-    color: #7797B5;
+    color: #6F96BA;
 }
 .title  .collect .collect-name.sel{
     color: #FFFFFF;
@@ -135,6 +135,7 @@ page {
     width: 100%;
     height: 100%;
     position: absolute;
+    border: 4rpx solid #FFBA20;
 }
 
 .user .name-user {
@@ -383,6 +384,7 @@ page {
     width: 100%;
     height: 100%;
     position: absolute;
+    border: 4rpx solid #FFBA20;
 }
 
 .uu .name-user {
@@ -688,6 +690,7 @@ page {
     width: 100%;
     height: 100%;
     position: absolute;
+    border: 4rpx solid #FFBA20;
 }
 
 .shade-user .u .name-user {
@@ -792,6 +795,7 @@ page {
     width: 100%;
     height: 100%;
     position: absolute;
+    border: 4rpx solid #FFBA20;
 }
 
 .evaluate-box .u .name-user {
