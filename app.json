@@ -1,6 +1,5 @@
 {
   "pages": [
-    "pages/login/login",
     "pages/home/home",
     "pages/mine/mine",
     "pages/task/task",
@@ -11,7 +10,8 @@
     "pages/publishProduct/publishProduct",
     "pages/orderDetails/orderDetails",
     "pages/pushUserList/pushUserList",
-    "pages/uploadTest/index"
+    "pages/uploadTest/index",
+    "pages/login/login"
   ],
   "tabBar": {
     "custom": true,

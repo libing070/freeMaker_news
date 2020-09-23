@@ -28,7 +28,7 @@ page {
     position: relative;
     margin-left: 44rpx;
     flex-shrink: 0;
-    margin-right: 16rpx;
+    margin-right: 20rpx;
 }
 
 .avatarBox .avatar {
@@ -38,17 +38,24 @@ page {
     position: absolute;
     border: 4rpx solid #FFBA20;
 }
+.name-box{
+    position: relative;
+    display: flex;
+    flex-direction: column;
 
+}
 .name-user {
-    color: #7D7D7D;
+    font-family: PingFangSC-Medium;
     font-size: 36rpx;
-    font-weight: 500;
+    color: #262626;
+    font-weight: bold;
 }
 
 .name-tag {
-    color: #7D7D7D;
-    font-size: 26rpx;
-    margin-top: 4px;
+    font-family: PingFangSC-Regular;
+    font-size: 24rpx;
+    color: #8392A0;
+    margin-top: 8rpx;
 }
 .price{
     position: absolute;
@@ -56,21 +63,20 @@ page {
     top: 0;
     margin:auto;
     height: 96rpx;
-    padding-left: 20rpx;
+    padding-left: 18rpx;
     padding-right: 20rpx;
     display: flex;
     flex-direction: row;
     align-items: center;
-    background-color: white;
+    background-color: #FFBA20;
     border-radius: 50rpx 0 0 50rpx;
 }
 .price .wallet{
-    border-radius: 100%;
-    background-color: #7D7D7D;
-    width: 60rpx;
-    height: 60rpx;
+    width: 56rpx;
+    height: 56rpx;
     position: relative;
     margin-right: 10rpx;
+    background-color: rgba(255,0,0,0.3)
 }
 .price .wallet .icon{
     position: absolute;
@@ -90,86 +96,105 @@ page {
 
 }
 .price .mm .top{
-    margin-top: 5rpx;
+    margin-top: 6rpx;
     font-size: 20rpx;
+    font-family: PingFangSC-Regular;
+    color: #FFFFFF;
 }
 .price .mm .bottom{
-    margin-top: 5rpx;
+    margin-bottom: 4rpx;
 }
 .price .mm .bottom .value{
-    color: tomato;
-    font-size: 34rpx;
+    font-family: DINAlternate-Bold;
     font-weight: bold;
+    font-size: 50rpx;
+    color: #FFFFFF;
 }
 .price .mm .bottom .unit{
-    font-size: 20rpx;
+    font-size: 24rpx;
+    font-family: PingFangSC-Regular;
+    color: #FFFFFF;
 }
 
 .tabs {
     position: relative;
-    background-color: white;
-    border-top: 1px solid #F0F0F0;
-    box-shadow: inset 0 -1px 0 0 #F0F0F0;
+    border-top: 1px solid #e6e6e6;
+    background: #FFFFFF;
+    box-shadow: 0 1px 0 0 rgba(0,0,0,0.03);
+    border-radius: 8px 8px 0 0;
     width: 100vw;
     height: 44px;
     display: flex;
     justify-content: space-around;
     z-index: 1;
+    border-bottom: 1px solid #e6e6e6;
 }
 .tabs.tabs-sticky{
     position: sticky;
 }
 .tabs .item {
-    color: #323232;
-    font-size: 15px;
+    font-family: PingFangSC-Regular;
+    font-size: 28rpx;
+    color: #8392A0;
+    text-align: center;
     box-sizing: border-box;
-    height: 100%;
-    padding-top: 8px;
+    height: 44px;
+    line-height: 44px;
+ 
 }
 
 .tabs .item.sel {
-    color: tomato;
-    font-size: 17px;
+    font-family: PingFangSC-Medium;
+    font-size: 28rpx;
+    color: #4F4F4F;
     font-weight: 500;
     position: relative;
 }
 
 .tabs .item.sel::after {
     content: "";
-    background: linear-gradient(90deg, tomato, tomato);
-    border-radius: 2px;
-    width: 32px;
-    height: 3px;
+    background: linear-gradient(90deg, #4F4F4F, #4F4F4F);
+    border-radius: 4rpx;
+    width: 40rpx;
+    height: 4rpx;
     left: 0;
     right: 0;
-    bottom: 4px;
+    bottom: 0px;
     position: absolute;
     margin: auto;
 }
 .demand-second-level{
-    margin-top: 20rpx;
-    margin-left: 20rpx;
+    height: 44px;
     position: relative;
     display: flex;
     flex-direction: row;
     justify-content: flex-start;
+    align-items: center;
     z-index: 1;
-    background-color: #F7F8FC;
+    background-color: #ffffff;
+    padding-left: 40rpx;
+    box-shadow: 0 1px 0 0 rgba(0,0,0,0.03);
 }
 
 .demand-second-level.sticky{
     position: sticky;
-    padding: 20rpx 0;
 }
 .demand-second-level .level{
-    padding: 10rpx 40rpx;
-    height: 40rpx;
-    line-height: 40rpx;
-    font-size: 28rpx;
+    padding: 0 34rpx;
+    margin-right: 20rpx;
+    height: 56rpx;
+    line-height: 56rpx;
+    font-family: PingFangSC-Regular;
+    font-size: 24rpx;
+    color: #8392A0;
 }
 .demand-second-level .level.sel{
-     background-color: #e6e6e6;
-     border-radius: 40rpx;
+    background: #EEF5FD;
+    border-radius: 34rpx;
+    font-family: PingFangSC-Medium;
+    font-size: 24rpx;
+    color: #6F96BA;
+
 }
 .demand-order-list{
     position: relative;
@@ -263,6 +288,7 @@ page {
 }
 .dropdown-menu{
     position: relative;
+    border-bottom: 1px solid #E6E6E6;
 }
 .dropdown-menu.sticky{
     position: sticky;
@@ -273,37 +299,43 @@ page {
     z-index: 999;
     background-color: white;
     position: relative;
-    height: 88rpx;
+    height: 44px;
+    line-height: 44px;
+    padding-left: 40rpx;
     display: flex;
     flex-direction: row;
-    justify-content:flex-end;
+    justify-content:flex-start;
 }
 .dropdown-menu .menu .menu-item{
-    width: 200rpx;
-    font-size: 28rpx;
-    height: 88rpx;
+    width: 160rpx;
+    height: 44rpx;
+    line-height: 44px;
+    margin-right: 20rpx;
+    font-family: PingFangSC-Regular;
+    font-size: 24rpx;
+
 }
 .dropdown-menu .menu .menu-item .name{
-    height: 88rpx;
-    line-height: 88rpx;
+    height: 44rpx;
+    line-height: 44rpx;
 }
 .dropdown-menu .menu .menu-item .icon{
     vertical-align: middle;
-    margin-top: -8rpx;
-    width: 40rpx;
-    height: 40rpx;
+    margin-top: -4rpx;
+    width: 20rpx;
+    height: 20rpx;
 }
 
 .dropdown-menu .shade-cell {
     background-color: rgba(0, 0, 0, 0.5);
-    top: 365rpx;
+    top: 44px;
     left: 0;
     right: 0;
+    height: 1000px;
     bottom: 0;
-    position: fixed;
+    position: absolute;
     z-index: 2;
 }
-
  .shade-cell .shade-cell-main {
     background-color: white;
     border-radius: 0 0 10px 10px;
@@ -319,10 +351,12 @@ page {
 
 @keyframes main-shows {
     0% {
-        transform: translateY(-100%);
+        transform: translateY(-20%);
+        opacity: 0;
     }
     100% {
         transform: translateY(0);
+        opacity: 1;
     }
 }
 .shade-cell-main .shade-item-option{
@@ -330,19 +364,19 @@ page {
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-    font-size: 28rpx;
-    margin-left: 40rpx;
-    margin-right: 40rpx;
-    height: 88rpx;
-    line-height: 88rpx;
-    border-bottom: 1px solid #E6E6E6;
+    font-size: 24rpx;
+    padding-left: 40rpx;
+    padding-right: 40rpx;
+    height: 96rpx;
+    line-height: 96rpx;
+    box-shadow: 0 1px 0 0 #E6E6E6;
 }
 .shade-cell-main .shade-item-option .sel{
-    color: tomato;
+    color: #FFBA20;
 }
 .shade-cell-main .shade-item-option .checked{
-    width: 40rpx;
-    height: 40rpx;
+    width: 30rpx;
+    height: 30rpx;
 }
 
 .product-list{

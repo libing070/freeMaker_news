@@ -10,13 +10,13 @@
         <view class="avatarBox">
             <image class="avatar" src="{{ user ? user.avatarUrl:'/images/common/default-head.png'}}"></image>
         </view>
-        <view>
+        <view class="name-box">
             <view class="name-user">{{user ? user.nickName : '一键登录'}}</view>
-            <view class="name-tag" wx:if="{{user}}">xxxx</view>
+            <view class="name-tag" wx:if="{{user}}">平面设计师</view>
         </view>
         <view class="price">
             <view class="wallet">
-                <image class="icon" src="/images/common/icon-wallet.png"></image>
+                <image class="icon" src="/images/mine/icon-wallet.png"></image>
             </view>
             <view class="mm">
                 <view class="top">累计收入</view>
@@ -33,7 +33,7 @@
         </block>
     </view>
     <view class="demand-container" wx:if="{{selectedTab == 0}}">
-        <view class="demand-second-level sticky" style="top:{{44 + 44 + safeTop}}px">
+        <view class="demand-second-level sticky" style="top:{{44 + 44 + 2 + safeTop}}px">
             <view  catchtap="tapdemandTab" data-tab="0" class="level {{selecteddemandTab == 0 ? 'sel' : ''}}">全部·21</view>
             <view  catchtap="tapdemandTab" data-tab="1" class="level {{selecteddemandTab == 1 ? 'sel' : ''}}">已开启·9</view>
             <view  catchtap="tapdemandTab" data-tab="2" class="level {{selecteddemandTab == 2 ? 'sel' : ''}}">已停运·1</view>
@@ -56,22 +56,22 @@
     </view>
     <view class="order-container" wx:if="{{selectedTab == 1}}">
         <view class="order-list" wx:if="{{1}}">
-            <view class="dropdown-menu sticky" style="top:{{44 + 44 + safeTop}}px">
+            <view class="dropdown-menu sticky" style="top:{{44 + 44 + 2 + safeTop}}px">
                 <view class="menu">
                     <view class="menu-item" catchtap="dropdownShowing1">
-                        <text class='name' style="color: {{options1Text != '全部订单' ? 'tomato':''}}">{{options1Text}}</text>
-                        <image class="icon" src="/images/common/icon-triangle.png"></image>
+                        <text class='name' style="color: {{options1Text != '全部订单' ? '#FFBA20':'#8392A0'}}">{{options1Text}}</text>
+                        <image class="icon" src="{{options1Text == '全部订单' ? '/images/mine/icon_unfold_gray@2x.png':dropdownShowing1?'/images/mine/icon_away_yellow@2x.png':'/images/mine/icon_unfold_yellow@2x.png'}}"></image>
                     </view>
                     <view class="menu-item"  catchtap="dropdownShowing2">
-                        <text class='name' style="color: {{options2Text != '全部状态' ? 'tomato':''}}">{{options2Text}}</text>
-                        <image class="icon" src="/images/common/icon-triangle.png"></image>
+                        <text class='name' style="color: {{options2Text != '全部状态' ? '#FFBA20':'#8392A0'}}">{{options2Text}}</text>
+                        <image class="icon" src="{{options2Text == '全部状态' ? '/images/mine/icon_unfold_gray@2x.png':dropdownShowing2?'/images/mine/icon_away_yellow@2x.png':'/images/mine/icon_unfold_yellow@2x.png'}}"></image>
                     </view>
                 </view>
                 <view class="shade-cell" catchtouchmove="true"  wx:if="{{dropdownShowing1}}" catchtap="dropdownShowing1">
                     <view class="shade-cell-main" data-id="shadeMain" catchtap="dropdownShowing1">
                         <view class="shade-item-option" catchtap="tapChangedropdown1" wx:for="{{options1}}" wx:key="index" data-index="{{index}}" data-item="{{item}}">
                             <text class="name {{ item.checked ? 'sel' : ''}}">{{ item.text }}</text>
-                            <image wx:if="{{item.checked}}"class="checked" src="/images/common/icon-ok.png"></image>
+                            <image wx:if="{{item.checked}}"class="checked" src="/images/mine/icon_status_Selected@2x.png"></image>
                         </view>
                     </view>
                 </view>
@@ -79,7 +79,7 @@
                     <view class="shade-cell-main" data-id="shadeMain" catchtap="dropdownShowing2">
                         <view class="shade-item-option" catchtap="tapChangedropdown2" wx:for="{{options2}}" wx:key="index" data-index="{{index}}" data-item="{{item}}">
                             <text class="name {{ item.checked ? 'sel' : ''}}">{{ item.text }}</text>
-                            <image wx:if="{{item.checked}}"class="checked" src="/images/common/icon-ok.png"></image>
+                            <image wx:if="{{item.checked}}"class="checked" src="/images/mine/icon_status_Selected@2x.png"></image>
                         </view>
                     </view>
                 </view>
