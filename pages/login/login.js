@@ -1,6 +1,6 @@
 // pages/login/login.js
 const app = getApp()
-let API = app.Api;
+let API = app.API;
 
 
 Page({
@@ -9,7 +9,9 @@ Page({
    * 页面的初始数据
    */
   data: {
-
+    userInfo: {},
+    hasUserInfo: false,
+    canIUse: wx.canIUse('button.open-type.getUserInfo')
   },
 
   /**
@@ -23,10 +25,11 @@ Page({
     wx.login({
       success: res => {
           if (res.code) {
-              app.request({
+              let resp = app.request({
                   url: API.userlogin,
                   data: {code: res.code}
               })
+              console.log(resp)
           }
         }
       })

@@ -1,4 +1,3 @@
 module.exports = {
-    userlogin: "/miniApp/login",
-    phoneLogin: "/miniApp/phoneLogin",
+    syncUserInfo: "/miniApp/syncUserInfo"
 }

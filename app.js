@@ -1,12 +1,12 @@
 //app.js
 
-let Api = require("./utils/api.js")
+let API = require("./utils/api.js")
 
 App({
-    Api,
+    API,
     onLaunch: function () {
 
-        
+
         //wx.clearStorage();//真机调试 清除缓存 注：正式环境删除
         let info = wx.getSystemInfoSync()
         // 屏幕宽高
@@ -23,10 +23,10 @@ App({
             this.safeTop = info.statusBarHeight
             this.safeBottom = 0
         }
-      
-        this.user = wx.getStorageSync('user') || '' 
+
+        this.user = wx.getStorageSync('user') || ''
     },
-     /**
+    /**
      * 当小程序启动，或从后台进入前台显示，会触发 onShow
      */
     onShow(options) {
@@ -48,21 +48,39 @@ App({
             }
         })
 
+
         let getUserInfo = code => {
+
             wx.getUserInfo({
                 withCredentials: true,
                 success: res => {
                     console.log(res)
-                    this.user = res.userInfo
-                    wx.setStorageSync('user', this.user)
-                    // 登录成功 通知当前页面
-                    let currentPage = this.currentPage()
-                    if (currentPage.loginSuccess) {
-                        currentPage.loginSuccess(true)
-                    }
-                    //request(code, res.encryptedData, res.iv)
-                    wx.hideLoading()
+                    this.globalData.userInfo = res.userInfo
 
+                    //向后台同步用户信息
+                    this.request({
+                        url: API.syncUserInfo,
+                        data: {
+                            code: code
+                        },
+                        sucess: (resp) => {
+                            this.setData({
+                                [`globalData.userInfo.openId`]: resp.data.openId
+                            })
+                            wx.setStorageSync('user', this.globalData.userInfo)
+
+                            // 登录成功 通知当前页面
+                            let currentPage = this.currentPage()
+                            if (currentPage.loginSuccess) {
+                                currentPage.loginSuccess(true)
+                            }
+
+                            wx.hideLoading()
+                        },
+                        failed: (resp) => {
+                            console.log('同步用户信息失败', resp)
+                        }
+                    })
                 },
                 fail: res => {
                     fail()
@@ -84,23 +102,23 @@ App({
     //强制用户更新
     checkForUpdate() {
         const updateManager = wx.getUpdateManager();
-        updateManager.onCheckForUpdate(function(res) {
+        updateManager.onCheckForUpdate(function (res) {
             if (res.hasUpdate) { // 请求完新版本信息的回调
-                updateManager.onUpdateReady(function() {
+                updateManager.onUpdateReady(function () {
                     wx.showModal({
                         title: '更新提示',
                         content: '新版本已经准备好，是否重启应用？',
                         confirmColor: '#FA2878',
-                        success: function(res) {
-                            if (res.confirm) {// 新的版本已经下载好，调用 applyUpdate 应用新版本并重启
-                                wx.clearStorage();//清除本地缓存
+                        success: function (res) {
+                            if (res.confirm) { // 新的版本已经下载好，调用 applyUpdate 应用新版本并重启
+                                wx.clearStorage(); //清除本地缓存
                                 updateManager.applyUpdate()
                             }
                         }
                     })
                 });
-                updateManager.onUpdateFailed(function() {
-                    wx.showModal({// 新的版本下载失败
+                updateManager.onUpdateFailed(function () {
+                    wx.showModal({ // 新的版本下载失败
                         title: '已经有新版本了哟~',
                         content: '新版本已经上线啦~，请您删除当前小程序，重新搜索进入哟~',
                     })
@@ -118,7 +136,7 @@ App({
      * @param complete Function [可选] 完成
      */
     request(object) {
-        wx.request({ 
+        wx.request({
             url: this.globalData.domain + object.url,
             data: object.data,
             header: {
@@ -148,11 +166,11 @@ App({
     globalData: {
         domain: 'http://localhost:8002', //域名
 
-        cookie:'',
+        cookie: '',
 
         userInfo: null,
 
-        selectedTab:0//我的页面 当前选择的菜单
-        
+        selectedTab: 0 //我的页面 当前选择的菜单
+
     }
 })
