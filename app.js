@@ -3,6 +3,18 @@
 let API = require("./utils/api.js")
 
 App({
+    globalData: {
+        //domain: 'http://localhost:8004', //本地
+        domain:'https://api.haohuoer.cn/', //预发
+        cookie: '',
+
+        userInfo: null,
+
+        selectedTab: 0 ,//我的页面 当前选择的菜单
+
+        userToken:''
+
+    },
     API,
     onLaunch: function () {
 
@@ -82,6 +94,10 @@ App({
                             if (currentPage.loginSuccess) {
                                 currentPage.loginSuccess(true)
                             }
+                            wx.showToast({
+                                title:'登录成功',
+                                duration:1000
+                            })
                             wx.hideLoading()
                         },
                         failed: (resp) => {
@@ -180,16 +196,4 @@ App({
             }
         })
     },
-    globalData: {
-        domain: 'http://localhost:8004', //域名
-
-        cookie: '',
-
-        userInfo: null,
-
-        selectedTab: 0 ,//我的页面 当前选择的菜单
-
-        userToken:''
-
-    }
 })
