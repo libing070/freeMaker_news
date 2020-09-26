@@ -2,5 +2,10 @@
 
 <button   class="auth" open-type="getUserInfo" bindgetuserinfo="getUserInfo"></button>
 
+<!-- <view class="phone" wx:if="">
+  <phone-button  bindphonecallback="getPhoneDone" ></phone-button>
+</view> -->
+
+
 
 

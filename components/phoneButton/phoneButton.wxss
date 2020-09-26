@@ -1,6 +1,6 @@
 /* pages/loginPages/authButton/authButton.wxss */
 
-:host {
+/* :host {
     top: 0;
     left: 0;
     right: 0;
@@ -10,15 +10,6 @@
 }
 
 .auth {
-    opacity: 0 !important;
-    width: 100% !important;
-    height: 100% !important;
-    min-height: unset !important;
-    position: absolute !important;
-    margin: unset !important;
-    padding: unset !important;
-}
-/* .phone{
     opacity: 0 !important;
     width: 100% !important;
     height: 100% !important;

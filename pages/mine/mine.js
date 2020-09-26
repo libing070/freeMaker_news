@@ -155,11 +155,20 @@ Page({
             selecteddemandTab: tab,
         })
     },
-    //跳转到我的需求详情
+    //跳转到需求详情
+    tapToDemandDetails(){
+        app.globalData.selectedTab=this.data.selectedTab
+        wx.navigateTo({
+            url: '/pages/demandDetails/demandDetails',
+        })
+    },
+    //跳转到订单详情
     tapToOrderDetails(e){
+        app.globalData.selectedTab=this.data.selectedTab
         wx.navigateTo({
             url: '/pages/orderDetails/orderDetails',
         })
+
     },
     //我的订单 下拉菜单显示隐藏1
     dropdownShowing1(e) {
@@ -219,10 +228,11 @@ Page({
             options2Text: options2Text
         })
     },
-    //跳转到作品详情
+    //跳转到我的作品详情
     tapToProductDetails(){
+        app.globalData.selectedTab=this.data.selectedTab
         wx.navigateTo({
-            url: '/pages/productDetails/productDetails',
+            url: '/pages/myproductDetails/myproductDetails',
         })
     }
 })

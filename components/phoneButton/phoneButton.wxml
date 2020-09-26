@@ -1,0 +1,6 @@
+<!--pages/loginPages/authButton/authButton.wxml-->
+
+<button open-type="getPhoneNumber" bindgetphonenumber="onGetPhoneNumber"></button>
+
+
+

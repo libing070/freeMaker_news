@@ -1,4 +1,6 @@
 {
     "component": true,
-    "usingComponents": {}
+    "usingComponents": {
+        "phone-button": "/components/phoneButton/phoneButton"
+    }
 }

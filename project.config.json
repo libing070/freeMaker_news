@@ -143,6 +143,20 @@
           "id": -1,
           "name": "pages/home/home",
           "pathName": "pages/home/home",
+          "query": "",
+          "scene": null
+        },
+        {
+          "id": -1,
+          "name": "pages/demandDetails/demandDetails",
+          "pathName": "pages/demandDetails/demandDetails",
+          "query": "",
+          "scene": null
+        },
+        {
+          "id": -1,
+          "name": "pages/myproductDetails/myproductDetails",
+          "pathName": "pages/myproductDetails/myproductDetails",
           "scene": null
         }
       ]

@@ -42,9 +42,12 @@ Component({
                 app.login()
             }
         },
-    },
-    //触发获取手机号事件
-    getPhoneDone(){
-        console.log(111)
+        onGetPhoneNumber (e) {
+            this.triggerEvent('phonecallback', e)
+            console.log(e.detail.errMsg)
+            console.log(e.detail.iv)
+            console.log(e.detail.encryptedData)
+            // app.getPhone(e.detail.encryptedData,e.detail.iv)
+        }
     }
 })

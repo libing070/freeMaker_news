@@ -11,7 +11,8 @@
     "pages/orderDetails/orderDetails",
     "pages/pushUserList/pushUserList",
     "pages/uploadTest/index",
-    "pages/login/login"
+    "pages/login/login",
+    "pages/myproductDetails/myproductDetails"
   ],
   "tabBar": {
     "custom": true,

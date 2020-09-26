@@ -2,7 +2,7 @@
 
 <!-- 导航栏 -->
 <view class="navigationBar {{whiteNavigationBar ? '' : 'clear'}}" style="padding-top: {{safeTop}}px;">HowWork</view>
-<view class="mine" style="padding-top:{{ 64+ safeTop}}px;padding-bottom:{{ 50 + safeBottom }}px">
+<view class="mine" style="padding-top:{{ 64+ safeTop}}px;padding-bottom:{{ 60 + safeBottom }}px">
 
     <image class="head-img" src="/images/mine/head-img.png" mode="widthFix"></image>
     <view class="user">
@@ -13,7 +13,9 @@
         <view class="name-box">
             <view class="name-user">{{user ? user.nickName : '一键登录'}}</view>
             <view class="name-tag" wx:if="{{user}}">平面设计师</view>
-        </view>
+        </view>      
+        <!-- <phone-button class="name-tag" wx:if="{{user && !user.phoneNumber}}">绑定微信手机号</phone-button> -->
+
         <view class="price">
             <view class="wallet">
                 <image class="icon" src="/images/mine/icon-wallet.png"></image>
@@ -38,19 +40,27 @@
             <view  catchtap="tapdemandTab" data-tab="1" class="level {{selecteddemandTab == 1 ? 'sel' : ''}}">已开启·9</view>
             <view  catchtap="tapdemandTab" data-tab="2" class="level {{selecteddemandTab == 2 ? 'sel' : ''}}">已停运·1</view>
         </view>
-        <view class="demand-order-list" wx:for="{{20}}" wx:key="index" catchtap="tapToOrderDetails">
-            <view class="status">已开启</view>
+        <view class="demand-order-list" wx:for="{{20}}" wx:key="index" catchtap="tapToDemandDetails">
             <view class="title">
+                <view class="name">k12教育培训-课程设计</view>
                 <view class="tag">课程设计</view>
-                <view class="name">k12教育培训-课程设计{{item}}</view>
             </view>
             <view class="item date">
                 <text class="key">交付日期：</text>
                 <text class="value">2020-09-12</text>
             </view>
             <view class="item remuneration">
-                <text class="key">预计酬劳：</text>
+                <text class="key">需求预算：</text>
                 <text class="value">3000元</text>
+            </view>
+            <view class="border-line"></view>
+            <view class="btn-box">
+                <view class="reset">重新启用</view>
+                <view class="edit">编辑</view>
+                <view class="status">
+                    <view class="name {{index%2==0?'yellow':''}}">{{index%2==0?'启用中':'已停运'}}</view>
+                    <image class="allow-icon" src="{{index%2==0?'/images/mine/icon_mine_enter_yellow@2x.png':'/images/mine/icon_mine_enter_gray@2x.png'}}"></image>
+                </view>
             </view>
         </view>
     </view>
@@ -85,10 +95,10 @@
                 </view>
             </view>
             <view class="demand-order-list" wx:for="{{20}}" wx:key="index" catchtap="tapToOrderDetails">
-                <view class="status">已开启</view>
                 <view class="title">
-                    <view class="tag">课程设计</view>
                     <view class="name">k12教育培训-课程设计{{item}}</view>
+                    <view class="tag">课程设计</view>
+
                 </view>
                 <view class="item date">
                     <text class="key">交付日期：</text>
@@ -98,10 +108,16 @@
                     <text class="key">预计酬劳：</text>
                     <text class="value">3000元</text>
                 </view>
-                <view class="user-mobile">
-                    <image class="head" src="/images/common/default-head.png"></image>
-                    <view class="mobile">18888****121</view>
-                    <image class="call" src="/images/common/icon-call.png"></image>
+                <view class="border-line"></view>
+                <view class="btn-box">
+                    <view class="contact">
+                        <image class="wechart-icon" src="/images/mine/icon_contact_wechat@2x.png"></image>
+                        <view class="name">联系对方</view>
+                    </view>
+                    <view class="status">
+                        <view class="name {{index%2==0?'yellow':''}}">{{index%2==0?'待接单':'已取消'}}</view>
+                        <image class="allow-icon" src="{{index%2==0?'/images/mine/icon_mine_enter_yellow@2x.png':'/images/mine/icon_mine_enter_gray@2x.png'}}"></image>
+                    </view>
                 </view>
             </view>
         </view>
@@ -112,20 +128,30 @@
     </view>
     <view class="product-container" wx:if="{{selectedTab == 2}}">
         <view class="product-list" wx:for="{{20}}" wx:key="index" catchtap="tapToProductDetails">
-            <image class="photo" src="/images/common/715_2.jpg" mode="aspectFill"></image>
-            <view class="p-u">
-                <view class="title">教辅类产品课件设计</view>
-                <view class="mark-type">
-                    <scroll-view class="menu" scroll-x="true">
-                        <view class="item" wx:for="{{6}}" wx:key="index" data-id="{{index}}" catchtap="tapTohomeList">
-                            <text class="name">更多类型{{index+1}}</text>
-                        </view>
-                    </scroll-view>  
+            <view class="top">
+                <image class="photo" src="/images/common/715_2.jpg" mode="aspectFill"></image>
+                <view class="p-u">
+                    <view class="title">教辅类产品课件设计</view>
+                    <view class="mark-type">
+                        <scroll-view class="menu" scroll-x="true">
+                            <view class="item" wx:for="{{6}}" wx:key="index" data-id="{{index}}" catchtap="tapTohomeList">
+                                <text class="name">品牌设计</text>
+                            </view>
+                        </scroll-view>  
+                    </view>
+                    <view class="p-u-price">
+                        <text class="unit">¥</text>
+                        <text class="value">400</text>
+                        <text class="unit">/时</text>
+                    </view>
                 </view>
-                <view class="p-u-price">
-                    <text class="unit">¥</text>
-                    <text class="value">400</text>
-                    <text class="unit">/时</text>
+            </view>
+            <view class="border-line"></view>
+            <view class="btn-box">
+                <view class="edit">编辑</view>
+                <view class="status">
+                    <view class="name {{index%2==0?'yellow':''}}">{{index%2==0?'审核中':'已发布'}}</view>
+                    <image class="allow-icon" src="{{index%2==0?'/images/mine/icon_mine_enter_yellow@2x.png':'/images/mine/icon_mine_enter_gray@2x.png'}}"></image>
                 </view>
             </view>
         </view>

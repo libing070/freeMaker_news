@@ -3,6 +3,7 @@
     "navigationStyle":"custom",
     "usingComponents": {
         "custom-tabbar": "/components/customTabbar/customTabbar",
-        "auth-button": "/components/authButton/authButton"
+        "auth-button": "/components/authButton/authButton",
+        "phone-button": "/components/phoneButton/phoneButton"
     }
 }

@@ -1,0 +1,50 @@
+<!--pages/myproductDetails/myproductDetails.wxml-->
+<view class="detail">
+    <view class="top">
+        <view class="swiper-box">
+            <swiper class="swiper" bindchange="changeSwiper">
+                <block wx:for="{{obj.imgList}}" wx:key="index">
+                    <swiper-item>
+                        <image class="photo" src="{{item}}" mode="aspectFill"  data-item="{{item}}" catchtap="tapBanner"></image>
+                    </swiper-item>
+                </block>
+            </swiper>
+        </view>  
+        <view class="pagination">
+            <text>{{currentPhotoIndex}}</text>/<text>{{obj.imgList.length}}</text>
+        </view>  
+    </view>
+
+    <view class="status">9月12日发布</view>
+    <view class="title"  catchtap="tapToWorksDetail">
+        <view class="name">GINGER品牌10周年展览设计</view>
+        <view class="price">
+            <text class="unit">¥</text>
+            <text class="value">400</text>
+            <text class="unit">/时</text>
+        </view>
+    </view>
+
+    <view class="tag-title">
+        <text class="tag">百度热榜</text>
+    </view>
+
+
+
+    <view class="skill-desc">
+        <view class="head">
+            <view class="left">技能描述</view>
+        </view>
+        <view class="content">
+            超文本标记语言（英语：HyperText Markup Language，简称：HTML）是一种用于创建网页的标准标记语言。您可以使用 HTML 来建立自己的 WEB 站点，HTML 运行在浏览器上，由浏览器来解析。在本教程中，您将学习如何使用 HTML 来创建站点。HTML 很容易学习！相信您能很快学会它
+        </view>
+    </view>
+    <view style="height:{{ ( 50 + safeBottom ) * 2 }}rpx"></view>
+</view>
+
+<view class="tool-bar" style="padding-bottom: {{ safeBottom }}px">
+  <view class="layout-1-1" >
+        <view class="left del" catchtap="tapDeleteProduct">删除作品</view>
+        <view class="right ok" catchtap="tapEditProduct">编辑作品</view>
+    </view>
+</view>

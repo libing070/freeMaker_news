@@ -4,36 +4,48 @@ page {
 }
 .notice{
     position: relative;
-    padding:20rpx;
-    background-color: #e6e6e6; 
+    background: #EBF5FF;
+    height: 40rpx;
+    padding: 20rpx 0;
 }
 .notice .icon{
-    width: 50rpx;
-    height: 50rpx;
+    padding-left: 40rpx;
+    width: 32rpx;
+    height: 32rpx;
     vertical-align: middle;
 
 }
 .notice .text{
-    padding-left: 10rpx;
     font-size: 28rpx;
+    padding-left: 10rpx;
+    font-family: PingFangSC-Regular;
+    font-size: 24rpx;
+    color: #6F96BA;
 }
 .box-cell{
     position: relative;
     display: flex;
     flex-direction: row;
-    margin:20rpx;
-    padding:40rpx 0;
-    border-bottom: 0.1px solid #E6E6E6;
+    margin: 24rpx 40rpx;
+    padding:16rpx;
+    height:200rpx;
+    box-shadow: 0 2px 8px 0 rgba(36, 19, 72, 0.04);
+    background-color: white;
+
+}
+.box-cell:nth-child(1){
+    margin-top: 0;
 }
 .box-cell .photo{
-    width: 270rpx;
+    width: 260rpx;
     height: 200rpx;
-    border-radius: 10rpx;
+    border-radius: 8rpx;
 }
 .box-cell .user-box{
     position: relative;
     display: flex;
     flex-direction: column;
+    width: calc( 100% - 150px);
 }
 .box-cell .user-box .user{
     position: relative;
@@ -42,8 +54,8 @@ page {
     margin:0 20rpx
 }
 .avatarBox {
-    width: 120rpx;
-    height: 120rpx;
+    width: 72rpx;
+    height: 72rpx;
     position: relative;
     margin-right: 10px;
     flex-shrink: 0;
@@ -58,52 +70,56 @@ page {
 }
 
 .name-user {
-    color: #7D7D7D;
-    font-size: 36rpx;
-    font-weight: 500;
+    font-family: PingFangSC-Regular;
+    font-size: 24rpx;
+    color: #262626;
+    font-weight: bold
 }
 
 .name-tag {
-    color: #7D7D7D;
-    font-size: 26rpx;
-    margin-top: 4px;
+    font-family: PingFangSC-Regular;
+    font-size: 24rpx;
+    color: #8392A0;
 }
 
 .mark-type{
-    width: 280rpx;
-    margin: 20rpx;
+    margin-left: 20rpx;
+    margin-top: 16rpx;
+    margin-bottom: 16rpx;
 }
 .mark-type .menu{
     position: relative;
     white-space: nowrap;
-    height: 50rpx;
+    height: 40rpx;
 
 }
 .mark-type .menu .item{
-    height: 50rpx;
-    background-color: #707070;
-    border-radius: 5px;
-    box-shadow: 0 2px 8px 0 rgba(36, 19, 72, 0.04);
+    background: #F7F9FB;
+    border-radius: 8rpx;
     display: inline-flex;
     flex-direction: row;
     justify-content: flex-start;
     align-items: center;
-    margin: 0 10rpx;
-    padding:0 10rpx;
+    margin-right: 12rpx;
+    padding:8rpx;
+    line-height: 20rpx;
 }
 .mark-type .menu .item .name{
-    font-size: 24rpx;
-    color: white;
+    font-family: PingFangSC-Regular;
+    font-size: 20rpx;
+    color: #8392A0;
 }
 .price{
     position: absolute;
-    bottom: 60rpx;
-    right: 0rpx;
-    color: tomato;
+    bottom: 8rpx;
+    left: 298.6rpx;
+    font-family: DINAlternate-Bold;
+    color: #0C2032;
 }
 .price .unit{
-    font-size: 28rpx;
+    font-size: 20rpx;
 } 
 .price .value{
-    font-size: 40rpx;
+    margin-left: 4rpx;
+    font-size: 48rpx;
 } 
