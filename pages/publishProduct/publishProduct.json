@@ -1,6 +1,6 @@
 {
     "navigationBarTitleText": "发布作品",
     "usingComponents": {
-      
+        "van-picker": "/miniprogram_npm/@vant/weapp/picker/index"
     }
 }

@@ -157,6 +157,20 @@
           "id": -1,
           "name": "pages/myproductDetails/myproductDetails",
           "pathName": "pages/myproductDetails/myproductDetails",
+          "query": "",
+          "scene": null
+        },
+        {
+          "id": -1,
+          "name": "pages/publishProduct/publishProduct",
+          "pathName": "pages/publishProduct/publishProduct",
+          "query": "",
+          "scene": null
+        },
+        {
+          "id": -1,
+          "name": "pages/publishDemand/publishDemand",
+          "pathName": "pages/publishDemand/publishDemand",
           "scene": null
         }
       ]

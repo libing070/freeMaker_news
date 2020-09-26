@@ -55,18 +55,26 @@ App({
                 withCredentials: true,
                 success: res => {
                     console.log(res)
-                    this.globalData.userInfo = res.userInfo
+                    this.user = res.userInfo
 
                     //向后台同步用户信息
                     this.request({
                         url: API.syncUserInfo,
                         data: {
-                            code: code
+                            code: code,
+                            nickName:this.user.nickName,
+                            language:this.user.language,
+                            province:this.user.province,
+                            city:this.user.city,
+                            avatarUrl:this.user.avatarUrl,
+                            gender:this.user.gender
+                            // ,
+                            // encryptedData:,
+                            // iv:iv
                         },
-                        sucess: (resp) => {
-                            this.setData({
-                                [`globalData.userInfo.openId`]: resp.data.openId
-                            })
+                        success: (data) => {
+                            this.userToken = data
+                            this.globalData.userInfo = this.user
                             wx.setStorageSync('user', this.globalData.userInfo)
 
                             // 登录成功 通知当前页面
@@ -74,10 +82,16 @@ App({
                             if (currentPage.loginSuccess) {
                                 currentPage.loginSuccess(true)
                             }
-
                             wx.hideLoading()
                         },
                         failed: (resp) => {
+                            wx.hideLoading()
+                            wx.showToast({
+                                title:'请重新登录',
+                                icon:'loading',
+                                duration:1000
+                              })
+
                             console.log('同步用户信息失败', resp)
                         }
                     })
@@ -141,19 +155,22 @@ App({
             data: object.data,
             header: {
                 cookie: this.globalData.cookie,
-                'content-type': object.contentType || 'application/json'
+                'content-type': object.contentType || 'application/json',
+                'userToken':this.userToken
             },
             method: object.method || 'POST',
             success: res => {
                 let body = res.data
-
-                if (object.success) {
-                    object.success(res)
+                if (body.code === 1) {
+                    object.success(body.data)
+                }else if (body.code != 1) {
+                    object.failed(body.data)
                 }
             },
             fail: res => {
-                if (object.fail) {
-                    object.fail(res)
+                let body = res.data
+                if (body.code != 1) {
+                    object.failed(body.data)
                 }
             },
             complete: res => {
@@ -164,13 +181,15 @@ App({
         })
     },
     globalData: {
-        domain: 'http://localhost:8002', //域名
+        domain: 'http://localhost:8004', //域名
 
         cookie: '',
 
         userInfo: null,
 
-        selectedTab: 0 //我的页面 当前选择的菜单
+        selectedTab: 0 ,//我的页面 当前选择的菜单
+
+        userToken:''
 
     }
 })

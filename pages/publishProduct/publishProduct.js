@@ -1,5 +1,9 @@
 // pages/product/product.js
 const app = getApp()
+const skillsList = {
+    浙江: ['杭州', '宁波', '温州', '嘉兴', '湖州'],
+    福建: ['福州', '厦门', '莆田', '三明', '泉州'],
+  };
 Page({
 
     /**
@@ -12,7 +16,33 @@ Page({
         total: 0,
         imagesList:[],//图片
         shadeShowing:false,
-        currTreeSelectNavIndex:0
+        currTreeSelectNavIndex:0,
+        skillType:'全部类型',
+        skillsColumns: [
+            {
+              values: Object.keys(skillsList),
+              className: 'column1',
+            },
+            {
+              values: skillsList['浙江'],
+              className: 'column2',
+              defaultIndex: 2,
+            },
+        ],
+        markList:[
+            { val: 'UI设计', select: false },
+            { val: '品牌设计', select: false},
+            { val: 'UI设计', select: false },
+            { val: '品牌设计', select: false},
+            { val: 'UI设计', select: false },
+            { val: '品牌设计', select: false},
+            { val: 'UI设计', select: false },
+            { val: '品牌设计', select: false},
+            { val: 'UI设计', select: false },
+            { val: '品牌设计', select: false},
+        ],
+        chooseMarkList:[],
+        salary:''
     },
 
     /**
@@ -96,7 +126,7 @@ Page({
         }
         this.setData({
             total: summarize.length,
-            summarize: e.detail.html
+            summarize: e.detail.html,
         });
     },
     //删除html标签
@@ -159,18 +189,112 @@ Page({
             });
         }
     },    
-    //点击树形左侧菜单
-    tapTreeSelectNav(e) {
-        let currTreeSelectNavIndex=e.currentTarget.dataset.index
+    // //点击树形左侧菜单
+    // tapTreeSelectNav(e) {
+    //     let currTreeSelectNavIndex=e.currentTarget.dataset.index
+    //     this.setData({
+    //         currTreeSelectNavIndex
+    //     })
+    // },
+    //选择技能
+    onSkillsChange(event) {
+        const { picker, value, index } = event.detail;
+        console.log(`当前值：${value}, 当前索引：${index}`);
         this.setData({
-            currTreeSelectNavIndex
-        })
+            shadeShowing:false,
+            skillType:`${value}`
+        });
+    },
+    //去除首尾空格
+    trimStr(str){
+        return str.replace(/(^\s*)|(\s*$)/g,"");
+    },
+    //对输入金额进行校验
+    clearNoNum(value){
+        value = value.replace(/[^\d.]/g,"");//清除"数字"和"."以外的字符
+        value = value.replace(/^\./g,"");//验证第一个字符是数字而不是字符
+        value = value.replace(/\.{2,}/g,".");//只保留第一个.清除多余的
+        value = value.replace(".","$#$").replace(/\./g,"").replace("$#$",".");
+        value = value.replace(/^(\-)*(\d+)\.(\d\d).*$/,'$1$2.$3');//只能输入两个小数
+        return value
+    },
+    //时薪
+    bindhourlywageInput(e){
+        let salary = this.clearNoNum(e.detail.value)
+        this.setData({
+            salary,
+        });
     },
     //跳转到我的作品列表
     tapToMyProduct(){
+        if( this.trimStr(this.data.title) == '' ){
+            wx.showToast({
+                title: '请填写标题',
+                icon: 'none',
+                duration: 2000
+            });
+            return
+        }
+        if( this.data.total <= 0){
+            wx.showToast({
+                title: '请描述您的技能，尽可能清晰具体哦～',
+                icon: 'none',
+                duration: 2000
+            });
+            return
+        }
+        if( this.data.imagesList.length <= 0){
+            wx.showToast({
+                title: '至少上传一张作品图片哦',
+                icon: 'none',
+                duration: 2000
+            });
+            return
+        }
+        if(this.data.skillType=='全部类型'){
+            wx.showToast({
+                title: '请选择技能类型',
+                icon: 'none',
+                duration: 2000
+            });
+            return
+        }
+        let chooseMarkList=[]
+        for(var i = 0; i < this.data.markList.length; i++){
+            if(this.data.markList[i].select){
+                chooseMarkList.push(this.data.markList[i]);
+            }
+        }
+        this.setData({
+            chooseMarkList 
+        })
+
+        if(this.data.chooseMarkList.length <= 0){
+            wx.showToast({
+                title: '请选择技能标签',
+                icon: 'none',
+                duration: 2000
+            });
+            return
+        }
+        if(this.data.salary <= 0){
+            wx.showToast({
+                title: '请输入您的时薪',
+                icon: 'none',
+                duration: 2000
+            });
+            return
+        }
         app.globalData.selectedTab = 2
         wx.switchTab({
           url: '/pages/mine/mine',
+        })
+    },
+    //点击标签事件
+    tapChooseMarks(e){
+        let id = e.currentTarget.dataset.id
+        this.setData({
+            [`markList[${id}].select`]:!this.data.markList[id].select,
         })
     }
 })
