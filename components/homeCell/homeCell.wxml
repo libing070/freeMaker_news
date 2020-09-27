@@ -12,11 +12,11 @@
             </swiper>
         </view>    
         <image src="/images/common/715_2.jpg" mode="aspectFill" class="img" catchtap="tapToWorksDetail"></image>
-        <view class="tag">课程设计</view>
+        <view class="tag" wx:if="{{obj.bdJobCate.cateName}}">{{obj.bdJobCate.cateName}}</view>
     </view>
     <view class="title"  catchtap="tapToWorksDetail">
-        <view class="name">GINGER品牌10周年展览设计</view>
-        <view class="collect {{ obj.collect ? 'sel' :''}}" catchtap="tapCollect" data-id="{{obj.id}}">
+        <view class="name">{{obj.title}}</view>
+        <view wx:if="" class="collect {{ obj.collect ? 'sel' :''}}" catchtap="tapCollect" data-id="{{obj.id}}">
             <image wx:if="{{!obj.collect}}"src=" /images/common/icon-collect.png" class="icon"></image>
             <text class="collect-name {{ obj.collect ? 'sel' :''}}">{{obj.collect ? '已收藏':'收藏'}}</text>
         </view>
@@ -26,12 +26,12 @@
             <image class="avatar" src="/images/common/default-head.png"></image>
         </view>
         <view>
-            <view class="name-user">波英冰</view>
-            <view  class="name-tag>">品牌设计 | 4.9分</view>
+            <view class="name-user">{{obj.freelancerInfo.name}}</view>
+            <view  class="name-tag>">{{obj.freelancerInfo.jobCateId}} | 4.9分</view>
         </view>
         <view class="money">
             <view class="unit" style="font-weight: bold;font-size: 33.6rpx;color: #0C2032;">¥</view>
-            <view class="value">5000</view>
+            <view class="value">{{obj.hourlyWage}}</view>
             <view class="unit" style="font-family: PingFangSC-Regular;font-size: 33.6rpx;color: #0C2032;">/时</view>
         </view>
     </view>

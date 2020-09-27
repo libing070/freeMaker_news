@@ -28,19 +28,19 @@ Component({
      * 在组件实例刚刚被创建时执行，注意此时不能调用 setData
      */
     created(){
-        console.log("****created****");
+        //console.log("****created****");
     },
     /**
     * 在组件实例进入页面节点树时执行
     */
     attached(){
-        console.log("****attached****");
+        //console.log("****attached****");
     },
     /**
     * 在组件布局完成后执行
     */
     ready(){
-        console.log("****ready****");
+        //console.log("****ready****");
     },
     /**
      * 组件的方法列表

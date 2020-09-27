@@ -42,15 +42,15 @@ Page({
         
         demandType:'请选择',
         demandColumns: [
-            {
-              values: Object.keys(citys),
-              className: 'column1',
-            },
-            {
-              values: citys['浙江'],
-              className: 'column2',
-              defaultIndex: 2,
-            },
+            // {
+            //   values: Object.keys(citys),
+            //   className: 'column1',
+            // },
+            // {
+            //   values: citys['浙江'],
+            //   className: 'column2',
+            //   defaultIndex: 2,
+            // },
         ],
         budget:'',
         hourlywage:'¥400/时',
@@ -69,7 +69,9 @@ Page({
         });
         wx.setNavigationBarTitle({
             title: this.data.type == 0 ? '发布需求' : '购买服务'
-          })
+        })
+        this.loadjobTree()
+        
     },
 
     /**
@@ -119,6 +121,63 @@ Page({
      */
     onShareAppMessage: function () {
 
+    },
+    //获取技能数据
+    loadjobTree(){
+        app.request({
+            url: '/v1/jobTree/treeData',
+            method: 'GET',
+            success: res => {
+                console.log(res);
+                this.filterTreeData(res);
+            },
+            fail: res => {
+                wx.showToast({
+                    title: '获取失败',
+                    icon: 'none',
+                    duration: 2000
+                });
+            },
+        })
+    },
+    filterTreeData(data){
+        let selectFromatArray=[],compareFromatList=[],selectFromatObject={}
+        if(data.length > 0){
+            let level1=[]
+            for(let i in data){
+                 level1=data[i].value.cateName
+                 let level2=[]
+                 let childs=data[i].childs
+                for(let child of childs){
+                     level2.push(child.value.cateName)
+                }
+                //暂且废弃
+                // selectFromatArray.push({
+                //     [level1]:level2
+                // });
+
+                
+                selectFromatObject[level1]=level2
+            }
+        }
+        console.log(selectFromatObject)
+
+        let demandColumns=[
+            {
+              values: Object.keys(selectFromatObject),
+              className: 'column1',
+            },
+            {
+              values:selectFromatObject[Object.keys(selectFromatObject)[0]],
+              className: 'column2',
+              defaultIndex: 0,
+            },
+        ]
+        this.setData({
+            demandColumns,
+            selectFromatObject
+        })
+     
     },
     watch:{
         'title':function(value, oldValue){
@@ -292,15 +351,49 @@ Page({
             });
         }
     },    
-    onDemandChange(event) {
+    onDemandConfirm(event) {
         const { picker, value, index } = event.detail;
         console.log(`当前值：${value}, 当前索引：${index}`);
+        console.log(index)
         this.setData({
             shadeShowing:false,
             demandType:`${value}`
         });
+        // let demandColumns=[
+        //     {
+        //       values: Object.keys(this.data.selectFromatObject),
+        //       className: 'column1',
+        //     },
+        //     {
+        //       values:this.data.selectFromatObject[Object.keys(this.data.selectFromatObject)[index[0]]],
+        //       className: 'column2',
+        //       defaultIndex: index[1],
+        //     },
+        // ]
+        // this.setData({
+        //     demandColumns,
+        // })
         this.watchInputSelectStatus();
-      },
+    },
+    onDemandChange(event) {
+        const { picker, value, index } = event.detail;
+        picker.setColumnValues(1, this.data.selectFromatObject[value[0]]);
+        // let demandColumns=[
+        //     {
+        //       values: Object.keys(this.data.selectFromatObject),
+        //       className: 'column1',
+        //     },
+        //     {
+        //       values:this.data.selectFromatObject[Object.keys(this.data.selectFromatObject)[index[0]]],
+        //       className: 'column2',
+        //       defaultIndex: index[1],
+        //     },
+        // ]
+        // this.setData({
+        //     demandColumns,
+        // })
+
+    },
     onCancel(){
         this.setData({
             shadeShowing:false,

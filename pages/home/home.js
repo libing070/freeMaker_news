@@ -29,7 +29,10 @@ Page({
             "//img14.360buyimg.com/pop/jfs/t1/110316/1/13554/178993/5ea17d3aE88af5e39/1e6dfb8dfb8259f6.jpg",
             "//img14.360buyimg.com/pop/jfs/t1/119502/34/1004/98273/5ea17d49Ed74b4fa5/49e7bdfc7ab97813.png"]},
         ],
-        pageType:''
+        pageType:'',
+        firstLevelJobs:[],//一级标签
+        secondLevelJobs:[],//二级标签
+        recommendProductInfos:[]//为你推荐
     },
 
     /**
@@ -37,6 +40,7 @@ Page({
     */
     onLoad: function (options) {
 
+        this.loadFirstLevelJobs()
     },
 
     /**
@@ -118,6 +122,28 @@ Page({
 
         wx.navigateTo({
             url: '/pages/homeList/homeList?id=' + id,
+        })
+    },
+    //获取一级领域接口
+    loadFirstLevelJobs(){
+        app.request({
+            url: '/v1/display/configs',
+            method: 'GET',
+            success: res => {
+                this.setData({
+                    firstLevelJobs:res.firstLevelJobs,
+                    secondLevelJobs:res.secondLevelJobs,
+                    recommendProductInfos:res.recommendProductInfos
+                });
+                console.log(res.recommendProductInfos);
+            },
+            fail: res => {
+                wx.showToast({
+                    title: '获取失败',
+                    icon: 'none',
+                    duration: 2000
+                });
+            },
         })
     }
 })

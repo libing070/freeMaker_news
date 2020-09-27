@@ -89,7 +89,8 @@
                 title="请选择需求类型"
                 columns="{{ demandColumns }}"
                 bind:cancel="onCancel"
-                bind:confirm="onDemandChange"
+                bind:confirm="onDemandConfirm"
+                bind:change="onDemandChange"
              />
         </view>
         <view wx:elif="{{currPicker == 'date'}}">
