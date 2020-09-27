@@ -130,6 +130,9 @@ Page({
             success: res => {
                 console.log(res);
                 this.filterTreeData(res);
+                this.setData({
+                    treeData:res
+                })
             },
             fail: res => {
                 wx.showToast({
@@ -343,7 +346,6 @@ Page({
     },
     //显示隐藏
     shadeShowing(e) {
-        console.log(111);
         if (e.currentTarget.dataset.id != "shadeMain") {
              this.setData({
                 shadeShowing: !this.data.shadeShowing,
@@ -357,7 +359,7 @@ Page({
         console.log(index)
         this.setData({
             shadeShowing:false,
-            demandType:`${value}`
+            demandType:value[0]+"-"+value[1]
         });
         // let demandColumns=[
         //     {
@@ -461,8 +463,40 @@ Page({
             shadeShowing: false
         });
     },
-     //跳转到我的作品列表
-     tapToMyDemand(){
+
+    //根据选择的需求类型查找cateTreeCode编码
+    findCateTreeCode(){
+        let treeData = this.data.treeData
+        let filterCateCode=(treeData,cateName)=>{
+            for (var i=0; i < treeData.length; i++){
+                let childs=treeData[i].childs
+                if(childs.length > 0){
+                    for(var n=0; n < childs.length;n++){
+                        if(childs[n].value.cateName == cateName){
+                            let cateCode = childs[n].value.cateCode
+                            this.setData({
+                                cateCode
+                            })
+                            break
+                        }
+                    }
+                    filterCateCode(treeData[i],cateName)
+                }
+            }
+
+        }
+
+        let cateName=this.data.demandType.split('-')[1]
+        if(cateName){
+            filterCateCode(treeData,cateName)
+        }
+
+
+    },
+    //跳转到我的作品列表
+    tapPublishDemand(){
+        this.findCateTreeCode()
+
         if( this.trimStr(this.data.title) == '' ){
             wx.showToast({
                 title: '请填写标题',
@@ -511,16 +545,45 @@ Page({
             });
             return
         }
-        if(this.data.type==0){
-            app.globalData.selectedTab = 0
-            wx.switchTab({
-              url: '/pages/mine/mine',
-            })
-        }else{
-            wx.navigateTo({
-                url: '/pages/orderDetails/orderDetails?currentStep=1&buysum='+this.data.buysum,
-            })
+
+
+        let data={
+            summarize:this.data.title,//标题
+            description:this.data.summarize,//描述
+            budget:this.data.budget,//预算
+            cateTreeCode:this.data.cateCode,//需求类型岗位编码
+            expectDeliveryTime:this.data.currentDateStr,//期望交付时间
+            provinceCode:this.data.currrArea[0],//省份
+            cityCode:this.data.currrArea[1],//城市
+            districtCode:this.data.currrArea[2],//区
         }
+        console.log(data);
+        app.request({
+            url: '/v1/demandApi/publish',
+            method: 'POST',
+            data:data,
+            success: res => {
+                console.log(res);
+                if(this.data.type==0){
+                    app.globalData.selectedTab = 0
+                    wx.switchTab({
+                      url: '/pages/mine/mine',
+                    })
+                }else{
+                    wx.navigateTo({
+                        url: '/pages/orderDetails/orderDetails?currentStep=1&buysum='+this.data.buysum,
+                    })
+                }
+            },
+            failed: res => {
+                wx.showToast({
+                    title: '提交失败',
+                    icon: 'none',
+                    duration: 2000
+                });
+            },
+        })
+
 
     }
 })

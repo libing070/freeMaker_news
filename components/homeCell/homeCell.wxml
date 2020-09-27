@@ -1,21 +1,21 @@
 <!--components/homeCell/homeCell.wxml-->
-<view class="type" catchtap="changeName">
+<view class="type" catchtap="tapToWorksDetail">
     <!-- {{obj.name}} -->
     <view class="top">
-        <view class="swiper-box"  wx:if="">
-            <swiper class="swiper" circular indicator-active-color="#FF6933" indicator-dots="{{indicatorDots}}">
-                <block wx:for="{{obj.imgList}}" wx:key="index">
+        <view class="swiper-box" >
+            <swiper class="swiper" circular indicator-active-color="#FFBA20" indicator-dots="{{indicatorDots}}">
+                <block wx:for="{{obj.images}}" wx:key="index">
                     <swiper-item>
-                        <image class="photo" src="{{item}}" mode="aspectFill"  data-item="{{item}}" catchtap="tapBanner"></image>
+                        <image class="photo" src="{{item.path}}" mode="aspectFill"  data-path="{{item.path}}" catchtap="tapBanner"></image>
                     </swiper-item>
                 </block>
             </swiper>
         </view>    
-        <image src="/images/common/715_2.jpg" mode="aspectFill" class="img" catchtap="tapToWorksDetail"></image>
-        <view class="tag" wx:if="{{obj.bdJobCate.cateName}}">{{obj.bdJobCate.cateName}}</view>
+        <image  wx:if="" src="/images/common/715_2.jpg" mode="aspectFill" class="img" catchtap="tapToWorksDetail"></image>
+        <view class="tag" wx:if="{{obj.domainCate.cateName}}">{{obj.domainCate.cateName}}</view>
     </view>
     <view class="title"  catchtap="tapToWorksDetail">
-        <view class="name">{{obj.title}}</view>
+        <view class="name">{{obj.name}}</view>
         <view wx:if="" class="collect {{ obj.collect ? 'sel' :''}}" catchtap="tapCollect" data-id="{{obj.id}}">
             <image wx:if="{{!obj.collect}}"src=" /images/common/icon-collect.png" class="icon"></image>
             <text class="collect-name {{ obj.collect ? 'sel' :''}}">{{obj.collect ? '已收藏':'收藏'}}</text>
@@ -27,7 +27,7 @@
         </view>
         <view>
             <view class="name-user">{{obj.freelancerInfo.name}}</view>
-            <view  class="name-tag>">{{obj.freelancerInfo.jobCateId}} | 4.9分</view>
+            <view  class="name-tag>">{{obj.postCate.cateName}} | 4.9分</view>
         </view>
         <view class="money">
             <view class="unit" style="font-weight: bold;font-size: 33.6rpx;color: #0C2032;">¥</view>

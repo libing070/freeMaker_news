@@ -81,11 +81,11 @@ Component({
         },
         // 点击图片
         tapBanner(e) {
-            let current = 'http:' + e.currentTarget.dataset.item
+            let current =  e.currentTarget.dataset.path
 
             let urls = []
-            for (let item of this.data.obj.imgList) {
-                urls.push('http:' + item)
+            for (let item of this.data.obj.images) {
+                urls.push(item.path)
             }
             wx.previewImage({
                 current,

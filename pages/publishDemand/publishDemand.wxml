@@ -30,11 +30,11 @@
     </view>
     <view class="content-wrapper">
         <view class="names"><image class="icon-important" src="/images/common/icon-important.png"></image><text class="t">需求类型</text></view>
-        <view class="choose-val" catchtap="shadeShowing" data-type="demand" style="color:{{ demandType == '请选择' ? '#8392A0' : ' #0C2032'}}">{{demandType}}<image class="arrow" wx:if="{{demandType == '请选择'}}" src="/images/common/icon-arrow.png"></image></view>
+        <view class="choose-val" catchtap="shadeShowing" data-type="demand" style="color:{{ demandType == '请选择' ? '#8392A0' : ' #0C2032'}}">{{demandType}}<image class="arrow"  src="/images/common/icon-arrow.png"></image></view>
     </view>
     <view class="content-wrapper">
         <view class="names"><image class="icon-important" src="/images/common/icon-important.png"></image><text class="t">期望交付时间</text></view>
-        <view class="choose-val" catchtap="shadeShowing" data-type="date" style="color:{{ currentDateStr == '请选择' ? '#8392A0' : ' #0C2032'}}">{{currentDateStr}}<image class="arrow" wx:if="{{currentDateStr == '请选择'}}" src="/images/common/icon-arrow.png"></image></view>
+        <view class="choose-val" catchtap="shadeShowing" data-type="date" style="color:{{ currentDateStr == '请选择' ? '#8392A0' : ' #0C2032'}}">{{currentDateStr}}<image class="arrow" src="/images/common/icon-arrow.png"></image></view>
     </view>
     <block  wx:if="{{type == 0}}">
         <view class="input-budget">
@@ -59,12 +59,12 @@
     </block>
     <view class="content-wrapper">
         <view class="names"><image class="icon-important" src="/images/common/icon-important.png"></image><text class="t">省份城市</text></view>
-        <view class="choose-val" catchtap="shadeShowing" data-type="area" style="color:{{ fn.formatCurrrArea(currrArea) == '请选择' ? '#8392A0' : ' #0C2032'}}" >{{fn.formatCurrrArea(currrArea)}}<image class="arrow" wx:if="{{fn.formatCurrrArea(currrArea) == '请选择'}}" src="/images/common/icon-arrow.png"></image></view>
+        <view class="choose-val" catchtap="shadeShowing" data-type="area" style="color:{{ fn.formatCurrrArea(currrArea) == '请选择' ? '#8392A0' : ' #0C2032'}}" >{{fn.formatCurrrArea(currrArea)}}<image class="arrow"  src="/images/common/icon-arrow.png"></image></view>
     </view>
 </view>
 
 <view class="tool-bar" style="padding-bottom: {{ safeBottom }}px">
-    <view class="layout-1 {{isClickbtn ? 'ok' : ''}}" catchtap="tapToMyDemand">提交</view>
+    <view class="layout-1 {{isClickbtn ? 'ok' : ''}}" catchtap="tapPublishDemand">提交</view>
 </view>
 
 <view class="shade" wx:if="{{shadeShowing}}" catchtap="shadeShowing">

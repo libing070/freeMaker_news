@@ -1,10 +1,17 @@
 <!--pages/home/home.wxml-->
+<wxs module="fn">
+    module.exports = {
+        randomIcon: function(staticIcon) {
+            return staticIcon[Math.floor((Math.random()*staticIcon.length))]
+        }
+    }
+</wxs>
 <view class="home" style="padding-bottom:{{ 50 + safeBottom }}px">
     <image src="/images/common/logo.png" class="logo" style="margin-top:{{ 20 + safeTop }}px"></image>
     <view class="menu-box">
         <scroll-view class="menu" scroll-x="true">
-            <view class="item" wx:for="{{firstLevelJobs}}" wx:key="index" data-id="{{index}}" catchtap="tapTohomeList">
-                <image class="icon" src="/images/common/715_2.jpg"></image>
+            <view class="item" wx:for="{{firstLevelJobs}}" wx:key="index" data-id="{{index}}" data-catename="{{item.cateName}}"  catchtap="tapTohomeList">
+                <image class="icon" src="{{fn.randomIcon(staticIcon)}}"></image>
                 <view class="name">{{item.cateName}}</view>
             </view>
         </scroll-view>  
@@ -22,10 +29,10 @@
         <scroll-view class="swiperBox" scroll-x>
             <block wx:for="{{secondLevelJobs}}" wx:key="index">
                 <view class="itemBox">
-                    <image  class="photoBox" src="/images/common/715_2.jpg" mode="aspectFill"></image>
+                    <image  class="photoBox" src="{{fn.randomIcon(staticIcon)}}" mode="aspectFill"></image>
                     <view class="name">
                         <view class="cn-name">{{item.cateName}}</view>
-                        <view class="en-name">Process Design</view>
+                        <view class="en-name">{{item.englishName}}</view>
                     </view>
                 </view>
             </block>

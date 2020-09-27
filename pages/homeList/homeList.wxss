@@ -7,6 +7,7 @@ page {
     position: fixed;
     top: 0;
     z-index: 2;
+
 }
 .filter .typeBox {
     height: 80rpx;
@@ -15,6 +16,7 @@ page {
     overflow: hidden;
     background-color: white;
     margin-right: 80rpx;
+    border-bottom: 1px solid #e6e6e6;
 }
 
 .filter .typeTabs {
@@ -58,6 +60,7 @@ page {
     width: 80rpx;
     background-color: white;
     box-shadow:-5rpx 0px 5rpx rgba(0,0,0,0.05);
+    border-bottom: 1px solid #e6e6e6;
 }
 .filter .menu .icon{
     position: absolute;

@@ -10,8 +10,8 @@ Page({
 
         menuShowing:false,
 
-        types: ['设计', '研发', '运营', '运营运营运营', '运营运营', '运营运营运营运营运营运营'],
-
+        types: [],
+        cateName:'',
         list:[
           { id: 1, name: '11111' ,collect:true,imgList:["//img14.360buyimg.com/pop/jfs/t1/114735/33/2427/35818/5ea17d3aE7018d774/acf7950db4ef2c51.jpg",
           "//img14.360buyimg.com/pop/jfs/t1/88961/36/19902/34141/5ea17d3aEf82710e9/6465b378faf4ea0b.jpg",
@@ -72,7 +72,9 @@ Page({
     onLoad: function (options) {
         this.setData({
             selectedType:  0,
+            cateName:options.cateName
         })
+        this.loadjobTree()
     },
 
     /**
@@ -122,6 +124,33 @@ Page({
      */
     onShareAppMessage: function () {
 
+    },
+    loadjobTree(){
+        app.request({
+            url: '/v1/jobTree/treeData',
+            method: 'GET',
+            success: res => {
+                console.log(res);
+
+                for(let i=0 ;i<res.length; i++){
+                   if(res[i].value.cateName == this.data.cateName){
+                        this.setData({
+                            types:res[i].childs
+                        })
+                   }
+                }
+                this.setData({
+                    treeData:res
+                })
+            },
+            fail: res => {
+                wx.showToast({
+                    title: '获取失败',
+                    icon: 'none',
+                    duration: 2000
+                });
+            },
+        })
     },
     // 切换tab
     tapTypeTab(e) {
