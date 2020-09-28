@@ -1,4 +1,6 @@
 const app = getApp()
+const REST = require("../../utils/restful.js")
+
 Page({
 
     /**
@@ -96,15 +98,15 @@ Page({
     //跳转到homelist
     tapTohomeList(e) {
 
-        let id=e.currentTarget.dataset.id
+        let type=e.currentTarget.dataset.type
         let cateName=e.currentTarget.dataset.catename
         wx.navigateTo({
-            url: '/pages/homeList/homeList?cateName=' + cateName,
+            url: '/pages/homeList/homeList?cateName=' + cateName + "&domaintype=" + type,
         })
     },
     //获取一级领域接口
     loadFirstLevelJobs(){
-        app.request({
+        REST.request({
             url: '/v1/display/configs',
             method: 'GET',
             success: res => {

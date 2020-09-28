@@ -1,5 +1,7 @@
 // pages/homeList/homeList.js
 const app = getApp()
+const REST = require("../../utils/restful.js")
+
 Page({
 
     /**
@@ -72,7 +74,8 @@ Page({
     onLoad: function (options) {
         this.setData({
             selectedType:  0,
-            cateName:options.cateName
+            cateName:options.cateName,
+            domaintype:options.domaintype
         })
         this.loadjobTree()
     },
@@ -126,18 +129,34 @@ Page({
 
     },
     loadjobTree(){
-        app.request({
+        REST.request({
             url: '/v1/jobTree/treeData',
             method: 'GET',
             success: res => {
                 console.log(res);
+                if(this.data.domaintype == 'allchilds'){//为你推荐 所有岗位
 
-                for(let i=0 ;i<res.length; i++){
-                   if(res[i].value.cateName == this.data.cateName){
-                        this.setData({
-                            types:res[i].childs
-                        })
-                   }
+                    let childs=[]
+                    for( var i = 0; i<res.length; i++){
+                        childs = childs.concat(res[i].childs)
+                    }
+                    this.setData({
+                        types:childs
+                    })
+
+                }else if(this.data.domaintype == 'currchilds'){//专辑推荐 当前岗位下所有同级岗位
+                    let cateName=this.data.cateName
+                    if(cateName){
+                        this.filterSiblings(res,cateName)
+                    }
+                }else{//当前领域下岗位
+                    for(let i=0 ;i<res.length; i++){
+                        if(res[i].value.cateName == this.data.cateName){
+                             this.setData({
+                                 types:res[i].childs
+                             })
+                        }
+                    }
                 }
                 this.setData({
                     treeData:res
@@ -151,6 +170,30 @@ Page({
                 });
             },
         })
+    },
+    //根据cateName 查找同类
+    filterSiblings(treeData,cateName){
+        let filterCateCode=(treeData,cateName)=>{
+            for (var i=0; i < treeData.length; i++){
+                let childs=treeData[i].childs
+                if(childs.length > 0){
+                    for(var n=0; n < childs.length;n++){
+                        if(childs[n].value.cateName == cateName){
+                            console.log(childs);
+                            this.setData({
+                                types:childs
+                            })
+                            break
+                        }
+                    }
+                    filterCateCode(treeData[i],cateName)
+                }
+            }
+
+        }
+        if(cateName){
+            filterCateCode(treeData,cateName)
+        }
     },
     // 切换tab
     tapTypeTab(e) {
@@ -168,5 +211,18 @@ Page({
             });
         }
 
+    },
+    //查找当前领域下的岗位
+    tapFindChilds(e){
+        let cateName = e.currentTarget.dataset.catename
+        for (var i=0; i < this.data.treeData.length; i++){
+            if(cateName == this.data.treeData[i].value.cateName){
+                let childs= this.data.treeData[i].childs
+                this.setData({
+                    types:childs,
+                    menuShowing:false
+                })
+            }
+        }
     }
 })

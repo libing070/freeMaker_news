@@ -1,18 +1,21 @@
 //app.js
 
-let API = require("./utils/api.js")
+const API = require("./utils/api.js")
+const ENV = require("./utils/env.js")
+const REST = require("./utils/restful.js")
 
 App({
     globalData: {
-        //domain: 'http://localhost:8004', //本地
-        domain:'https://api.haohuoer.cn/', //预发
+        //domain: ENV.Dev, //本地
+         domain: ENV.Test, //测试
+        // domain: ENV.Prod, //正式
         cookie: '',
 
         userInfo: null,
 
-        selectedTab: 0 ,//我的页面 当前选择的菜单
+        selectedTab: 0, //我的页面 当前选择的菜单
 
-        userToken:''
+        userToken: ''
 
     },
     API,
@@ -70,19 +73,16 @@ App({
                     this.user = res.userInfo
 
                     //向后台同步用户信息
-                    this.request({
+                    REST.post({
                         url: API.syncUserInfo,
                         data: {
                             code: code,
-                            nickName:this.user.nickName,
-                            language:this.user.language,
-                            province:this.user.province,
-                            city:this.user.city,
-                            avatarUrl:this.user.avatarUrl,
-                            gender:this.user.gender
-                            // ,
-                            // encryptedData:,
-                            // iv:iv
+                            nickName: this.user.nickName,
+                            language: this.user.language,
+                            province: this.user.province,
+                            city: this.user.city,
+                            avatarUrl: this.user.avatarUrl,
+                            gender: this.user.gender
                         },
                         success: (data) => {
                             this.userToken = data
@@ -95,32 +95,29 @@ App({
                                 currentPage.loginSuccess(true)
                             }
                             wx.showToast({
-                                title:'登录成功',
-                                duration:1000
+                                title: '登录成功',
+                                duration: 1000
                             })
                             wx.hideLoading()
                         },
                         failed: (resp) => {
                             wx.hideLoading()
                             wx.showToast({
-                                title:'请重新登录',
-                                icon:'loading',
-                                duration:1000
-                              })
+                                title: '请重新登录',
+                                icon: 'loading',
+                                duration: 1000
+                            })
 
                             console.log('同步用户信息失败', resp)
                         }
                     })
                 },
                 fail: res => {
-                    fail()
+                    wx.showToast({
+                        title: '登录失败，请重试',
+                        icon: 'none',
+                    })
                 }
-            })
-        }
-        let fail = () => {
-            wx.showToast({
-                title: '登录失败，请重试',
-                icon: 'none',
             })
         }
     },
@@ -155,45 +152,5 @@ App({
                 })
             }
         })
-    },
-    /**
-     * 网络请求 携带用户身份
-     * @param url String PathName无需域名前缀
-     * @param data Object [可选] request.body
-     * @param method String [可选] 默认POST
-     * @param success Function [可选] 成功
-     * @param fail Function [可选] 失败
-     * @param complete Function [可选] 完成
-     */
-    request(object) {
-        wx.request({
-            url: this.globalData.domain + object.url,
-            data: object.data,
-            header: {
-                cookie: this.globalData.cookie,
-                'content-type': object.contentType || 'application/json',
-                'userToken':this.userToken
-            },
-            method: object.method || 'POST',
-            success: res => {
-                let body = res.data
-                if (body.code === 1) {
-                    object.success(body.data)
-                }else if (body.code != 1) {
-                    object.failed(body.data)
-                }
-            },
-            fail: res => {
-                let body = res.data
-                if (body.code != 1) {
-                    object.failed(body.data)
-                }
-            },
-            complete: res => {
-                if (object.complete) {
-                    object.complete(res)
-                }
-            }
-        })
-    },
+    }
 })

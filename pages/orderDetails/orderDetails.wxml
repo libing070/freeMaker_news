@@ -67,7 +67,7 @@
         <!--支付-->
         <view class="layout-1-2" wx:elif="{{currentStep == 2}}">
             <view class="left cancle">取消订单</view>
-            <view class="right pay ok">立即支付</view>
+            <view class="right pay ok" data-status="40" catchtap="payOrder">立即支付</view>
         </view>
         <!--制作-->
         <view class="layout-1" wx:elif="{{currentStep == 3}}">取消接单</view>

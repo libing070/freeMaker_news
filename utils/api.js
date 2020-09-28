@@ -1,3 +1,4 @@
 module.exports = {
-    syncUserInfo: "/miniApp/syncUserInfo"
+    syncUserInfo: "/v1/miniApp/syncUserInfo",
+    updateOrderStatus: "/v1/orderApi/updateOrderStatus"
 }

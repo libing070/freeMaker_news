@@ -21,7 +21,7 @@
     <view class="main" data-id="shadeMain" catchtap="menuShowing">
         <view class="title">全部设计服务</view>
         <view class="box">
-            <view class="item" wx:for="{{9}}" wx:key="index">品牌设计</view>
+            <view class="item" wx:for="{{treeData}}" data-catename="{{item.value.cateName}}" wx:key="index" catchtap="tapFindChilds">{{item.value.cateName}}</view>
         </view>
 
     </view>

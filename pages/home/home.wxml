@@ -10,7 +10,7 @@
     <image src="/images/common/logo.png" class="logo" style="margin-top:{{ 20 + safeTop }}px"></image>
     <view class="menu-box">
         <scroll-view class="menu" scroll-x="true">
-            <view class="item" wx:for="{{firstLevelJobs}}" wx:key="index" data-id="{{index}}" data-catename="{{item.cateName}}"  catchtap="tapTohomeList">
+            <view class="item" wx:for="{{firstLevelJobs}}" wx:key="index" data-id="{{index}}" data-catename="{{item.cateName}}"  data-type=""  catchtap="tapTohomeList">
                 <image class="icon" src="{{fn.randomIcon(staticIcon)}}"></image>
                 <view class="name">{{item.cateName}}</view>
             </view>
@@ -19,7 +19,7 @@
 
     <view class="recommend-navbar" style="margin-top:64rpx;margin-bottom:40rpx">
         <view class="left">专辑推荐</view>
-        <view class="right"  catchtap="tapTohomeList">
+        <view class="right" data-catename="{{secondLevelJobs[0].cateName}}" data-type="currchilds"   catchtap="tapTohomeList">
             <text class="more">see all</text>
             <image class="triangle" src="/images/common/icon-triangle2.png"></image> 
         </view>
@@ -41,7 +41,7 @@
 
     <view class="recommend-navbar" style="margin-top:82rpx;margin-bottom:24rpx">
         <view class="left">为你推荐</view>
-        <view class="right"  catchtap="tapTohomeList">
+        <view class="right" data-catename="" data-type="allchilds"  catchtap="tapTohomeList">
             <text class="more">see all</text>
             <image class="triangle" src="/images/common/icon-triangle2.png"></image> 
         </view>

@@ -1,3 +1,6 @@
+const API = require("../../utils/api.js")
+const REST = require("../../utils/restful.js")
+
 // pages/orderDetails/orderDetails.js
 const app = getApp()
 Page({
@@ -6,16 +9,31 @@ Page({
      * 页面的初始数据
      */
     data: {
-        safeBottom:app.safeBottom,
-        imagesList:[],//图片
-        shadeShowing:false,
-        total:0,
-        summarize:'',
-        userType:0,//0 雇佣者 ，2自由职业者
-        currentStep:1,//当前步骤
-        isreject:false,//是否验收不通过
-        steps:[{text:'下单'},{text:'接单'},{text:'支付'},{text:'制作'},{text:'验收'},{text:'完成'},{text:'评价'}],
-        canClick:false
+        safeBottom: app.safeBottom,
+        imagesList: [], //图片
+        shadeShowing: false,
+        total: 0,
+        summarize: '',
+        userType: 0, //0 雇佣者 ，2自由职业者
+        currentStep: 2, //当前步骤
+        isreject: false, //是否验收不通过
+        steps: [{
+            text: '下单'
+        }, {
+            text: '接单'
+        }, {
+            text: '支付'
+        }, {
+            text: '制作'
+        }, {
+            text: '验收'
+        }, {
+            text: '完成'
+        }, {
+            text: '评价'
+        }],
+        canClick: false,
+        orderId: 10000 //订单ID
     },
 
     /**
@@ -23,9 +41,7 @@ Page({
      */
     onLoad: function (options) {
 
-        this.setData({
-            currentStep:options.currentStep || 1
-        })
+        //todo 调用订单查询接口
 
     },
 
@@ -78,7 +94,7 @@ Page({
 
     },
     //跳转到需求推送人列表
-    tapToPushUserList(){
+    tapToPushUserList() {
         wx.navigateTo({
             url: '/pages/pushUserList/pushUserList',
         })
@@ -87,12 +103,12 @@ Page({
     shadeShowing(e) {
         console.log(111);
         if (e.currentTarget.dataset.id != "shadeMain") {
-             this.setData({
+            this.setData({
                 shadeShowing: !this.data.shadeShowing,
                 currPicker: e.currentTarget.dataset.type
             });
         }
-    }, 
+    },
     //初始化富文本编辑器
     onEditorReady() {
         const that = this
@@ -102,8 +118,8 @@ Page({
     },
     //编辑器内容改变时触发
     bindEditorInput(e) {
-        let summarize=this.deleteHtmlTag(e.detail.html);
-        if(summarize.length > 300){
+        let summarize = this.deleteHtmlTag(e.detail.html);
+        if (summarize.length > 300) {
             wx.showToast({
                 title: '请输入300字以内',
                 icon: 'none',
@@ -119,13 +135,13 @@ Page({
     },
     //删除html标签
     deleteHtmlTag(html) {
-        var dd=html.replace(/<[^>]+>/g,"");//截取html标签
-        var dds=dd.replace(/&nbsp;/ig,"");//截取空格等特殊标签
+        var dd = html.replace(/<[^>]+>/g, ""); //截取html标签
+        var dds = dd.replace(/&nbsp;/ig, ""); //截取空格等特殊标签
         return dds
     },
     //上传作品
     tapUpload(e) {
-        if(this.data.imagesList.length >= 8){
+        if (this.data.imagesList.length >= 8) {
             wx.showToast({
                 title: '最多上传8张哦',
                 icon: 'none',
@@ -134,7 +150,7 @@ Page({
             return
         }
         wx.chooseImage({
-            count: 8-this.data.imagesList.length,
+            count: 8 - this.data.imagesList.length,
             sizeType: ['compressed'],
             success: (res) => {
                 this.setData({
@@ -171,29 +187,60 @@ Page({
         })
     },
     //一键复制
-    tapCopy(e){
+    tapCopy(e) {
         let content = e.currentTarget.dataset.content;
         wx.setClipboardData({
             data: content,
-            success (res) {
+            success(res) {
                 console.log(res);
             }
         })
     },
-    watchOperation(){
-        if(this.data.total==0 || this.data.imagesList.length==0){
+    watchOperation() {
+        if (this.data.total == 0 || this.data.imagesList.length == 0) {
             this.setData({
-                canClick:false
+                canClick: false
             })
-        }else{
+        } else {
             this.setData({
-                canClick:true
+                canClick: true
             })
         }
     },
+    //支付
+    payOrder(event) {
+        //todo zyc mock订单数据
+        let that=this
+        wx.requestPayment({
+            timeStamp: '123456',
+            nonceStr: 'test',
+            package: 'test',
+            signType: 'test',
+            paySign: 'test',
+            success(res) {},
+            fail(res) {},
+            complete(res) {
+                console.log("支付完成，调用订单状态改变接口")
+                that.updateOrderStatus(event.currentTarget.dataset.status)
+            }
+        })
+    },
+    updateOrderStatus(status) {
+        REST.put({
+            url: API.updateOrderStatus,
+            data: {
+                id: this.data.orderId,
+                status: status
+            },
+            success: (data) => {
+                console.log('同步订单状态成功')
+            },
+            failed: (resp) => {}
+        })
+    },
     //验收不通过提交时间
-    tapshadeNopass(){
-        if(this.data.total==0 ){
+    tapshadeNopass() {
+        if (this.data.total == 0) {
             wx.showToast({
                 title: '请填写验收不通过理由',
                 icon: 'none',
@@ -201,7 +248,7 @@ Page({
             });
             return
         }
-        if(this.data.imagesList.length==0){
+        if (this.data.imagesList.length == 0) {
             wx.showToast({
                 title: '至少上传一张图片',
                 icon: 'none',
@@ -210,20 +257,20 @@ Page({
             return
         }
         this.setData({
-            shadeShowing:false,
-            isreject:true
+            shadeShowing: false,
+            isreject: true
         })
     },
     //确认验收
-    confirmAgree(){
+    confirmAgree() {
         this.setData({
-            shadeShowing:false,
-            isreject:false,
-            currentStep:5
-        }) 
+            shadeShowing: false,
+            isreject: false,
+            currentStep: 5
+        })
     },
     //取消订单
-    tapCancleOrder(){
+    tapCancleOrder() {
         wx.showModal({
             title: '提示信息',
             content: '确认取消订单？',

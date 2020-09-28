@@ -1,6 +1,8 @@
 // pages/demand/demand.js
 const util = require("../../utils/util");
 const area = require("../../utils/area");
+const REST = require("../../utils/restful.js")
+
 const app = getApp()
 const citys = {
     浙江: ['杭州', '宁波', '温州', '嘉兴', '湖州'],
@@ -124,7 +126,7 @@ Page({
     },
     //获取技能数据
     loadjobTree(){
-        app.request({
+        REST.request({
             url: '/v1/jobTree/treeData',
             method: 'GET',
             success: res => {
@@ -558,7 +560,7 @@ Page({
             districtCode:this.data.currrArea[2],//区
         }
         console.log(data);
-        app.request({
+        REST.request({
             url: '/v1/demandApi/publish',
             method: 'POST',
             data:data,

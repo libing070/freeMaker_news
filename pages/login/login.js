@@ -1,6 +1,7 @@
 // pages/login/login.js
 const app = getApp()
 let API = app.API;
+const REST = require("../../utils/restful.js")
 
 
 Page({
@@ -25,7 +26,7 @@ Page({
     wx.login({
       success: res => {
           if (res.code) {
-              let resp = app.request({
+              let resp = REST.request({
                   url: API.userlogin,
                   data: {code: res.code}
               })
