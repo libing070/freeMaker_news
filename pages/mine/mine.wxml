@@ -6,7 +6,7 @@
 
     <image class="head-img" src="/images/mine/head-img.png" mode="widthFix"></image>
     <view class="user">
-        <auth-button wx:if="{{!user}}"></auth-button>
+        <auth-button wx:if="{{!user}}" bindloginCallbackEvent="loginCallback"></auth-button>
         <view class="avatarBox">
             <image class="avatar" src="{{ user ? user.avatarUrl:'/images/common/default-head.png'}}"></image>
         </view>
@@ -23,7 +23,7 @@
             <view class="mm">
                 <view class="top">累计收入</view>
                 <view class="bottom">
-                    <text class="value">5000</text>
+                    <text class="value">{{totalIncome}}</text>
                     <text class="unit">元</text>
                 </view>
             </view>
@@ -94,19 +94,19 @@
                     </view>
                 </view>
             </view>
-            <view class="demand-order-list" wx:for="{{20}}" wx:key="index" catchtap="tapToOrderDetails">
+            <view class="demand-order-list" wx:for="{{orderList}}" wx:key="index" catchtap="tapToOrderDetails">
                 <view class="title">
-                    <view class="name">k12教育培训-课程设计{{item}}</view>
+                    <view class="name">{{'订单名称没有'}}</view>
                     <view class="tag">课程设计</view>
 
                 </view>
                 <view class="item date">
                     <text class="key">交付日期：</text>
-                    <text class="value">2020-09-12</text>
+                    <text class="value">{{item.expectDeliveryTime}}</text>
                 </view>
                 <view class="item remuneration">
                     <text class="key">预计酬劳：</text>
-                    <text class="value">3000元</text>
+                    <text class="value">{{item.orderMny}}元</text>
                 </view>
                 <view class="border-line"></view>
                 <view class="btn-box">
@@ -115,7 +115,7 @@
                         <view class="name">联系对方</view>
                     </view>
                     <view class="status">
-                        <view class="name {{index%2==0?'yellow':''}}">{{index%2==0?'待接单':'已取消'}}</view>
+                        <view class="name {{index%2==0?'yellow':''}}">{{item.statusName}}</view>
                         <image class="allow-icon" src="{{index%2==0?'/images/mine/icon_mine_enter_yellow@2x.png':'/images/mine/icon_mine_enter_gray@2x.png'}}"></image>
                     </view>
                 </view>

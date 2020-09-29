@@ -26,25 +26,26 @@ Component({
     /**
      * 组件的方法列表
      */
-        /**
+    /**
      * 组件的属性列表
      */
-    properties: {
-    },
+    properties: {},
 
     methods: {
         getUserInfo(e) {
             let allow = e.detail.errMsg == 'getUserInfo:ok'
-            
-            this.triggerEvent('callback', allow)
 
             if (allow) {
-                app.login()
+                app.login(() => {
+                    var myEventDetail = {} // detail对象，提供给事件监听函数
+                    var myEventOption = {} // 触发事件的选项
+                    this.triggerEvent('loginCallbackEvent', myEventDetail, myEventOption)
+                })
             }
-        },
+        }
     },
     //触发获取手机号事件
-    getPhoneDone(){
+    getPhoneDone() {
         console.log(111)
     }
 })

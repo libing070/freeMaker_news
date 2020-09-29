@@ -1,8 +1,7 @@
 const API = require("../../utils/api.js")
 const REST = require("../../utils/restful.js")
-
-// pages/orderDetails/orderDetails.js
 const app = getApp()
+
 Page({
 
     /**

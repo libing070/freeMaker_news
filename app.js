@@ -48,7 +48,7 @@ App({
         this.checkForUpdate();
     },
     //登录
-    login() {
+    login(afterEvent) {
         wx.showLoading({
             title: '正在登录',
             mask: true,
@@ -88,6 +88,10 @@ App({
                             this.userToken = data
                             this.globalData.userInfo = this.user
                             wx.setStorageSync('user', this.globalData.userInfo)
+                            //如果定义了，执行登录后回调
+                            if(afterEvent){
+                                afterEvent()
+                            }
 
                             // 登录成功 通知当前页面
                             let currentPage = this.currentPage()

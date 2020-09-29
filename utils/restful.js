@@ -25,14 +25,16 @@ module.exports = {
                 if (body.code === 1) {
                     object.success(body.data)
                 } else if (body.code != 1) {
-                    object.failed(body.data)
+                    object.failed(body.message)
                 }
             },
             fail: res => {
-                let body = res.data
-                if (body.code != 1) {
-                    object.failed(body.data)
-                }
+                error.log(res)
+                object.failed(res)
+                // let body = res.data
+                // if (body.code != 1) {
+                //     object.failed(body.data)
+                // }
             },
             complete: res => {
                 if (object.complete) {
