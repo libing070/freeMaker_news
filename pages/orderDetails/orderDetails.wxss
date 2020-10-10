@@ -262,6 +262,127 @@ page {
     font-size: 28rpx;
     color: #8392A0;
 }
+
+.evaluate{
+    position: relative;
+    margin-left: 40rpx;
+    margin-right: 40rpx;
+    margin-top: 24rpx;
+    margin-bottom: 24rpx;
+    border-radius: 8rpx;
+    background-color: white;
+    box-shadow: 0 2px 18px 0 rgba(227,229,231,0.71);  
+    padding-bottom: 20rpx;
+}
+.evaluate .head{
+    font-family: PingFangSC-Medium;
+    font-size: 32rpx;
+    color: #0C2032;
+    padding-top: 40rpx;
+    margin-left: 32rpx;
+    margin-right: 32rpx;
+    padding-bottom: 24rpx;
+    border-bottom: 0.1px solid #E6E6E6;
+}
+.evaluate-box{
+    position: relative;
+    margin: 36rpx;
+}
+.evaluate-box .u{
+    position: relative;
+    display: flex;
+    align-items: center;
+    margin-bottom: 16rpx;
+}
+.evaluate-box .u .avatarBox {
+    width: 64rpx;
+    height: 64rpx;
+    position: relative;
+    margin-right: 10px;
+    flex-shrink: 0;
+}
+
+.evaluate-box .u .avatarBox .avatar {
+    border-radius: 50%;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    border: 4rpx solid #FFBA20;
+}
+
+.evaluate-box .u .name-user {
+    font-family: DINAlternate-Bold;
+    font-size: 28rpx;
+    color: #3D4347;
+    font-weight: 500;
+}
+
+.evaluate-box .u .name-tag {
+    font-family: DINAlternate-Bold;
+    font-size: 24rpx;
+    color: #8392A0;
+    margin-top: 4rpx;
+}
+
+.evaluate-box .u .score{
+    position: absolute;
+    right: 20rpx;
+    top: 0;
+    bottom: 0;
+    margin:auto;
+    height: 40rpx;
+}
+.evaluate-box .u .score .star-box{
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+
+}
+.evaluate-box .u .score .star-box .star{
+    position: relative;
+}
+.evaluate-box .u .score .star-box .star .img{
+    width: 24rpx;
+    height: 24rpx;
+    margin-right: 12rpx;
+    display: inline-block;
+}
+.evaluate-box .u .score .star-box .val{
+    margin-left: 10rpx;
+    font-family: DINAlternate-Bold;
+    font-size: 48rpx;
+    color: #0C2032;
+}
+.evaluate-box .evaluate-news{
+    padding-bottom:20rpx;
+    color: #7D7D7D;
+    font-size: 28rpx;
+}
+.evaluate-box .evaluate-othersBox{
+    width: 100%;
+    height: 200rpx;
+    overflow: hidden;
+    background-color: white;
+}
+.evaluate-othersBox .evaluate-swiperBox{
+    height: 200rpx;
+    white-space: nowrap;
+}
+.evaluate-othersBox .evaluate-swiperBox .evaluate-photoBox{
+    height: 200rpx;
+    width: 200rpx;
+    padding: 8rpx;
+    display: inline-block;
+}
+.evaluate-othersBox .evaluate-swiperBox .evaluate-photoBox:nth-child(1){
+    padding-left: 0;
+}
+.evaluate-othersBox .evaluate-swiperBox .evaluate-photoBox:last-child{
+    padding-right: 0;
+}
+
 .tool-bar{
     position: fixed;
     bottom: 0;
@@ -274,6 +395,7 @@ page {
     margin:auto;
     display: flex;
     flex-direction: row;
+    z-index: 2;
 }
 .tool-bar .layout-1-2{
     position: relative;
@@ -565,6 +687,493 @@ page {
     margin-bottom: 16rpx;
     color: #0C2032;
 }
+
+/*支付*/
+.main .shade-pay{
+     position: relative; 
+}
+.main .shade-pay .title{
+    margin-top:114rpx;
+    margin-left: 40rpx;
+    font-family: PingFangSC-Medium;
+    font-size: 36rpx;
+    color: #0D1335;
+}
+.main .shade-pay .notice{
+    position: relative;
+    background: #EBF5FF;
+    height: 40rpx;
+    line-height: 40rpx;
+    margin:16rpx 40rpx;
+    border-radius: 40rpx;
+}
+.main .shade-pay .notice .icon{
+    padding-left: 4rpx;
+
+    width: 32rpx;
+    height: 32rpx;
+    vertical-align: middle;
+    margin-bottom: 4rpx;
+
+}
+.main .shade-pay .notice .text{
+    padding-left: 4rpx;
+    font-family: PingFangSC-Regular;
+    font-size: 24rpx;
+    margin-bottom: 4rpx;
+    color: #6F96BA;
+}
+.main .shade-pay .payment{
+    position: relative;
+    margin-top: 68rpx;
+}
+.main .shade-pay .payment .ti{
+    margin-left: 40rpx;
+    margin-right: 40rpx;
+    font-family: PingFangSC-Medium;
+    font-size: 28rpx;
+    color: #0C2032;
+    margin-bottom: 24rpx;
+}
+.main .shade-pay .payment .box{
+    margin: 0 40rpx;
+    background-color: #ffffff;
+    box-shadow: 0 -2rpx 16rpx 0 rgba(227,229,231,0.80);
+    border-radius: 8rpx;
+    border-left: 7rpx solid #6F96BA;
+    position: relative;
+}
+.main .shade-pay .payment .box .b1{
+    display: flex;
+    flex-direction: row;
+    padding-top: 32rpx;
+    padding-left: 32rpx;
+    height: 40rpx;
+    padding-bottom: 32rpx;
+    align-items: center;
+}
+.main .shade-pay .payment .box .b1 .key{
+    margin-right: 24rpx;
+    font-family: PingFangSC-Regular;
+    font-size: 24rpx;
+    color: #8392A0;
+}
+.main .shade-pay .payment .box .b1 .value{
+    font-family: PingFangSC-Regular;
+    font-size: 28rpx;
+    color: #0C2032;
+}
+.main .shade-pay .payment .box .b2 {
+    display: flex;
+    flex-direction: row;
+    padding-top: 32rpx;
+    padding-left: 32rpx;
+    padding-bottom: 32rpx;
+}
+.main .shade-pay .payment .box .b2 .key{
+    margin-right: 24rpx;
+    font-family: PingFangSC-Regular;
+    font-size: 24rpx;
+    color: #8392A0;
+}
+.main .shade-pay .payment .box .b2 .value{
+    font-family: PingFangSC-Regular;
+    font-size: 28rpx;
+    color: #0C2032;
+}
+.main .shade-pay .payment .box .b2 .value.v1{
+    display: flex;
+    flex-direction: column;
+}
+.main .shade-pay .payment .box .b2 .value.v1 .img{
+    width: 176rpx;
+    height: 56rpx;
+}
+.main .shade-pay .payment .box .b2 .value.v1 .tex{
+    padding-top: 16rpx;
+    font-family: PingFangSC-Regular;
+    font-size: 28rpx;
+    color: #0C2032;
+}
+
+.main .shade-pay .payment .box .b3 {
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    padding-top: 32rpx;
+    padding-left: 32rpx;
+    padding-bottom: 32rpx;
+    align-items: center;
+}
+.main .shade-pay .payment .box .b3 .key{
+    margin-right: 24rpx;
+    font-family: PingFangSC-Regular;
+    font-size: 24rpx;
+    color: #8392A0;
+}
+.main .shade-pay .payment .box .b3 .value{
+    font-family: PingFangSC-Regular;
+    font-size: 28rpx;
+    margin-right: 44rpx;
+    color: #0C2032;
+}
+.main .shade-pay .payment .box .b3 .btn{
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: 32rpx;
+    margin: auto;
+    width: 188rpx;
+    height: 56rpx;
+    line-height: 56rpx;
+    text-align: center;
+    background: #FFBA20;
+    border-radius: 8rpx;
+    font-family: PingFangSC-Semibold;
+    font-size: 24rpx;
+    color: #FFFFFF;
+}
+.main .shade-pay .payment .grow{
+    position: relative;
+    margin: 24rpx 40rpx;
+    background-color: #ffffff;
+    box-shadow: 0 -2rpx 16rpx 0 rgba(227,229,231,0.80);
+    border-radius: 8rpx;
+    border-left: 7rpx solid #6F96BA;
+    display: flex;
+    flex-direction: row;
+    padding: 40rpx 0;
+
+}
+.main .shade-pay .payment .grow .p1{
+    width: 80rpx;
+    height: 80rpx;
+    margin-left: 32rpx;
+}
+.main .shade-pay .payment .grow .p2{
+    display: flex;
+    flex-direction: column;
+    margin-left: 16rpx;
+}
+.main .shade-pay .payment .grow .p2 .key{
+    font-family: PingFangSC-Medium;
+    font-size: 28rpx;
+    color: #0C2032;
+}
+.main .shade-pay .payment .grow .p2 .value{
+    font-family: PingFangSC-Medium;
+    font-size: 28rpx;
+    color: #6F96BA;
+}
+.main .shade-pay .payment .grow .p3 .btn{
+    position: absolute;
+    right: 32rpx;
+    top: 0;
+    bottom: 0;
+    margin: auto;
+    width: 188rpx;
+    height: 56rpx;
+    line-height: 56rpx;
+    text-align: center;
+    background: #07C160;
+    border-radius: 8rpx;
+    font-family: PingFangSC-Semibold;
+    font-size: 24rpx;
+    color: #ffffff;
+}
+/*评价*/
+.main .shade-appraise{
+    position: relative;
+}
+.main .shade-appraise .title{
+    margin-top:114rpx;
+    margin-left: 40rpx;
+    font-family: PingFangSC-Medium;
+    font-size: 36rpx;
+    color: #0C2032;
+}
+
+.main .shade-appraise .appraise{
+    margin-top: 56rpx;
+    margin-left: 40rpx;
+    margin-bottom: 40rpx;
+    display: flex;
+    flex-direction: row;
+    height: 56rpx;
+    align-items: center;
+    justify-content: flex-start;
+}
+.main .shade-appraise .appraise .name{
+    font-family: PingFangSC-Regular;
+    font-size: 28rpx;
+    color: #0C2032;
+    margin-right: 32rpx;
+}
+.main .shade-appraise .appraise .star{
+    position: relative;
+    width: 360rpx;
+}
+.main .shade-appraise .appraise .star .star-default{
+    position: absolute;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    height: 56rpx;
+    z-index: 1;
+}
+.main .shade-appraise .appraise .star .star-sel{
+    pointer-events: none;
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    height: 56rpx;
+    z-index: 2;
+}
+
+.main .shade-appraise .appraise .star .star-default .img,
+.main .shade-appraise .appraise .star .star-sel .img{
+    height: 56rpx;
+    width: 56rpx;
+    margin-right: 16rpx;
+}
+.main .shade-appraise .appraise .msg{
+    margin-left: 40rpx;
+    font-family: PingFangSC-Regular;
+    font-size: 24rpx;
+    color: #8392A0;
+}
+
+
+
+.main .shade-appraise .appraise-childs{
+    margin-top: 16rpx;
+    margin-left: 40rpx;
+    margin-bottom: 16rpx;
+    display: flex;
+    flex-direction: row;
+    height: 40rpx;
+    align-items: center;
+    justify-content: flex-start;
+}
+.main .shade-appraise .appraise-childs .name{
+    font-family: PingFangSC-Regular;
+    font-size: 28rpx;
+    color: #0C2032;
+    margin-right: 32rpx;
+}
+.main .shade-appraise .appraise-childs .star{
+    position: relative;
+    width: 360rpx;
+}
+.main .shade-appraise .appraise-childs .star .star-default{
+    position: absolute;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    height: 40rpx;
+    z-index: 1;
+}
+.main .shade-appraise .appraise-childs .star .star-sel{
+    pointer-events: none;
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    height: 40rpx;
+    z-index: 2;
+}
+
+.main .shade-appraise .appraise-childs .star .star-default .img,
+.main .shade-appraise .appraise-childs .star .star-sel .img{
+    height: 32rpx;
+    width: 32rpx;
+    margin-right: 16rpx;
+}
+
+.main .shade-appraise .appraise-tags-box{
+    position: relative;
+    margin: 40rpx;
+    margin-right: 0;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    flex-wrap:wrap;
+
+
+}
+
+.main .shade-appraise .appraise-tags-box .tag-box{
+    width: 152rpx;
+    height: 56rpx;
+    text-align: center;
+    line-height: 56rpx;
+    font-family: PingFangSC-Regular;
+    font-size: 24rpx;
+    color: #7797B5;
+    background: #EEF5FD;
+    border-radius: 8rpx;
+    margin-right: 16rpx;
+    margin-bottom: 24rpx;
+}
+.main .shade-appraise .appraise-tags-box .tag-box.yellow{
+    color: #ffffff;
+    background-color: #FFBA20 ;
+}
+
+/*修改验收状态*/
+.main .shade-checkstatus{
+    position: relative;
+}
+.main .shade-checkstatus .body{
+    position: relative;
+}
+.main .shade-checkstatus .body .title{
+    font-family: PingFangSC-Medium;
+    font-size: 36rpx;
+    color: #0D1335;
+    margin-top: 114rpx;
+    margin-left: 40rpx;
+}
+.main .shade-checkstatus .body .notice{
+    position: relative;
+    background: #EBF5FF;
+    height: 40rpx;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    margin-top: 16rpx;
+    margin-left: 40rpx;
+    margin-right: 40rpx;
+    border-radius: 40rpx;
+    margin-bottom: 60rpx;
+    padding: 4rpx 0;
+}
+.main .shade-checkstatus .body .notice  .icon{
+    width: 32rpx;
+    height: 32rpx;
+    margin-left: 10rpx;
+    margin-right: 10rpx;
+}
+.main .shade-checkstatus .body .notice  .text{
+    display: inline-block;
+    font-family: PingFangSC-Regular;
+    font-size: 24rpx;
+    color: #6F96BA;
+}
+.main .shade-checkstatus .body .radio-box{
+    margin-left: 40rpx;
+    position: relative;
+    margin-bottom: 8rpx;
+
+}
+.main .shade-checkstatus .body .radio-box .item{
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    height: 82rpx;
+    align-items: center;
+    margin-bottom: 40rpx;
+}
+.main .shade-checkstatus .body .radio-box .item .icon{
+    margin-right: 24rpx;
+    width: 36rpx;
+    height: 36rpx;
+}
+.main .shade-checkstatus .body .radio-box .item .name{
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    height: 82rpx;
+}
+.main .shade-checkstatus .body .radio-box .item .name .n1{
+    font-family: PingFangSC-Regular;
+    font-size: 32rpx;
+    color: #0D1335;
+    font-weight: bold;
+}
+.main .shade-checkstatus .body .radio-box .item .name .n2{
+    font-family: PingFangSC-Regular;
+    font-size: 24rpx;
+    color: #8392A0;
+}
+
+/*验收不通过原因*/
+
+.main .shade-noreason{
+    position: relative;
+}
+.main .shade-noreason .body{
+    position: relative;
+}
+.main .shade-noreason .body .title{
+    font-family: PingFangSC-Medium;
+    font-size: 36rpx;
+    color: #0D1335;
+    margin-top: 114rpx;
+    margin-left: 40rpx;
+}
+.main .shade-noreason .body .notice{
+    position: relative;
+    background: #EBF5FF;
+    height: 40rpx;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    margin-top: 16rpx;
+    margin-left: 40rpx;
+    margin-right: 40rpx;
+    border-radius: 40rpx;
+    margin-bottom: 60rpx;
+    padding: 4rpx 0;
+}
+.main .shade-noreason .body .notice  .icon{
+    width: 32rpx;
+    height: 32rpx;
+    margin-left: 10rpx;
+    margin-right: 10rpx;
+}
+.main .shade-noreason .body .notice  .text{
+    display: inline-block;
+    font-family: PingFangSC-Regular;
+    font-size: 24rpx;
+    color: #6F96BA;
+}
+.main .shade-noreason .body .content{
+    font-family: PingFangSC-Regular;
+    font-size: 28rpx;
+    color: #3F5161;
+    margin-top: 44rpx;
+    margin-left: 40rpx;
+    margin-right: 40rpx;
+
+}
+.main .shade-noreason .body .imagesBox{
+    margin: 40rpx;
+    height: 200rpx;
+    overflow: hidden;
+    background-color: white;
+}
+.main .shade-noreason .body .imagesBox .swiperBox{
+    height: 200rpx;
+    white-space: nowrap;
+}
+.main .shade-noreason .body .imagesBox .swiperBox .photoBox{
+    height: 200rpx;
+    width: 200rpx;
+    padding: 8rpx;
+    display: inline-block;
+}
+.main .shade-noreason .body .imagesBox .swiperBox .photoBox:nth-child(1){
+    padding-left: 0;
+}
+.main .shade-noreason .body .imagesBox .swiperBox .photoBox:last-child{
+    padding-right: 0;
+}
+
 .images-box{
     border-bottom: 0.1px solid #E6E6E6;
     display: flex;

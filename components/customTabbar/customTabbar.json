@@ -1,6 +1,7 @@
 {
     "component": true,
     "usingComponents": {
+        "auth-modal": "/components/authModal/authModal",
         "auth-button": "/components/authButton/authButton"
     }
 }

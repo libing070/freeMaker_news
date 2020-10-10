@@ -31,7 +31,7 @@ Component({
             this.dismiss()
         },
 
-        authDone(e) {
+        authDones(e) {
             // e.detail
             this.dismiss()
         },

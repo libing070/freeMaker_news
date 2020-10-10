@@ -1,31 +1,31 @@
 <!--pages/product/product.wxml-->
 <view class="product"  style="padding-bottom: {{ 65 + safeBottom }}px">
     <view class="input-wrapper">
-        <input class="input" placeholder-style='text-align:left' maxlength="100" placeholder="添加一个标题吧" bindinput="bindTitleInput" value="{{title}}" placeholder-style="color: #8392A0"/>
+        <input class="input" placeholder-style='text-align:left' maxlength="100" placeholder="添加一个标题吧" bindinput="bindTitleInput" value="{{prod.title}}" placeholder-style="color: #8392A0"/>
     </view>
     <view class="input-wrapper">
         <editor id="editor" class="editor" placeholder="请描述您的技能，尽可能清晰具体哦～"  bindinput="bindEditorInput" bindready="onEditorReady"> </editor>
         <view class="number">{{total}}/300</view>
     </view>
     <view class="images-box">
-        <view class="box" wx:for="{{imagesList}}" wx:key="index">
+        <view class="box" wx:for="{{prod.attachmentInfos}}" wx:key="index">
             <image src="/images/common/icon-delete.png" class="icon-delete" data-index="{{index}}" catchtap="deletePhotos"></image>
-            <image src="{{item}}" class="img" mode="aspectFill"  data-item="{{item}}"  catchtap="tapBanner"/>
+            <image src="{{item.path}}" class="img" mode="aspectFill"  data-item="{{item}}"  catchtap="tapBanner"/>
             <view wx:if="{{index == 0}}" class="cover">封面</view>
         </view>
-        <view class="box dotted-box" bindtap="tapUpload" wx:if="{{imagesList.length < 8}}">
+        <view class="box dotted-box" bindtap="tapUpload" wx:if="{{prod.attachmentInfos.length < 8}}">
             <image src="/images/common/icon_upload_works@2x.png" class="upload-icon" catchtap="tapUpload" />
             <text class="upload-text">添加作品图片</text>
         </view>
     </view>
     <view class="content-wrapper">
         <view class="names"><image class="icon-important" src="/images/common/icon-important.png"></image><text class="t">技能类型</text></view>
-        <view class="choose-val" catchtap="shadeShowing" data-type="demand" style="color:{{ skillType == '全部类型' ? '#8392A0' : ' #0C2032'}}">{{skillType}}<image class="arrow" wx:if="{{skillType == '全部类型'}}" src="/images/common/icon-arrow.png"></image></view>
+        <view class="choose-val" catchtap="shadeShowing" data-type="demand" style="color:{{ demandType == '全部类型' ? '#8392A0' : ' #0C2032'}}">{{demandType}}<image class="arrow" wx:if="{{skillType == '全部类型'}}" src="/images/common/icon-arrow.png"></image></view>
     </view>
 
     <view class="mark-type">
         <scroll-view class="menu" scroll-x="true">
-            <view class="item {{item.select ?'yellow':''}}" wx:for="{{markList}}" wx:key="index" data-id="{{index}}" catchtap="tapChooseMarks">
+            <view class="item {{item.select ?'yellow':''}}" wx:for="{{prod.markList}}" wx:key="index" data-id="{{index}}" catchtap="tapChooseMarks">
                 <text class="name">{{item.val}}</text>
             </view>
         </scroll-view>  
@@ -34,13 +34,13 @@
             <view class="names">
                 <image class="icon-important" src="/images/common/icon-important.png"></image><text class="t">时薪</text>
             </view>
-            <input class="input" type="number" placeholder-style='text-align:right'maxlength="10" placeholder="" bindinput="bindhourlywageInput" value="{{salary}}" placeholder-style="color: rgba(131,146,160,0.5)"/>
+            <input class="input" type="number" placeholder-style='text-align:right'maxlength="10" placeholder="" bindinput="bindhourlywageInput" value="{{prod.hourlyWage}}" placeholder-style="color: rgba(131,146,160,0.5)"/>
             <view class="unit">元/时</view>
     </view>
 </view>
 
 <view class="tool-bar" style="padding-bottom: {{ safeBottom }}px">
-    <view class="layout-1 ok" catchtap="tapToMyProduct">发布</view>
+    <view class="layout-1 ok" catchtap="tapCreateProd">发布</view>
 </view>
 
 
@@ -59,13 +59,22 @@
                 </view>
             </view>
         </view> -->
-        <van-picker   
+        <!-- <van-picker   
             show-toolbar
             title="请选择技能类型"
             columns="{{ skillsColumns }}"
             bind:cancel="onCancel"
             bind:confirm="onSkillsChange"
-         />
+         /> -->
+        <van-picker   
+            show-toolbar
+            title="请选择技能类型"
+            columns="{{ demandColumns }}"
+            value-key="jobCateName"
+            bind:cancel="onCancel"
+            bind:confirm="onDemandConfirm"
+            bind:change="onDemandChange"
+        />
 
     </view>
 </view>

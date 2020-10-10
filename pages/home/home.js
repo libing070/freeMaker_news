@@ -1,5 +1,6 @@
 const app = getApp()
 const REST = require("../../utils/restful.js")
+const API = require("../../utils/api.js")
 
 Page({
 
@@ -56,6 +57,15 @@ Page({
     */
     onPullDownRefresh: function () {
 
+        this.loadFirstLevelJobs()
+        wx.stopPullDownRefresh({
+            success:(e)=>{
+            },
+            fail:(e)=>{
+            },
+            complete:(e)=>{
+            },
+        }) 
     },
 
     /**
@@ -71,20 +81,47 @@ Page({
     onShareAppMessage: function () {
 
     },
-    // mark: 登录成功
-    loginSuccess(login) {
-        this.setData({
-            user: app.user,  
-        })
+
+    // mark: 授权成功
+    authSuccess(login) {
         if(login){
+            this.setData({
+                showAuthPhone:true //打开获取手机号自定义弹窗
+            })
+        }
+    },
+    // mark: 登录成功 （获取手机号成功）
+    loginSuccess(login){
+        this.setData({
+            user: app.user,
+        })
+        if (login) {
+            this.setData({
+                showAuthModal:false
+            })
             let customtabbarComponent = this.selectComponent('#customtabbarComponent'); // 页面获取自定义组件实例
             if(this.data.pageType=='demand'){
-                customtabbarComponent.tapToDemand(); // 通过实例调用组件事件 跳转到发布需求
+                let e={
+                    currentTarget:{
+                        dataset:{
+                            pagetype:'demand'
+                        }
+                    }
+                }
+                customtabbarComponent.tapToDemand(e); // 通过实例调用组件事件 跳转到发布需求
             }else if(this.data.pageType=='product'){
-                customtabbarComponent.tapToProduct(); // 通过实例调用组件事件 跳转到发布作品
+                let e={
+                    currentTarget:{
+                        dataset:{
+                            pagetype:'product'
+                        }
+                    }
+                }
+                customtabbarComponent.tapToProduct(e); // 通过实例调用组件事件 跳转到发布作品
             }
         }
     },
+
     pageType(e){
         console.log(e.detail.pageType);
         this.setData({
@@ -106,9 +143,8 @@ Page({
     },
     //获取一级领域接口
     loadFirstLevelJobs(){
-        REST.request({
-            url: '/v1/display/configs',
-            method: 'GET',
+        REST.noVerfiyget({
+            url: API.configs,
             success: res => {
                 this.setData({
                     firstLevelJobs:res.firstLevelJobs,

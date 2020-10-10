@@ -8,7 +8,7 @@
         <view class="buttons">
             <view class="cancel" catchtap="tapCancel">取消</view>
             <view class="cancel confirm">
-                <auth-button bindcallback="authDone"></auth-button>授权登录
+                <auth-button bindcallbacks="authDones"></auth-button>授权登录
             </view>
         </view>
     </view>

@@ -1,7 +1,19 @@
 // pages/homeList/homeList.js
 const app = getApp()
 const REST = require("../../utils/restful.js")
-
+const API = require("../../utils/api.js")
+const allTag=[{
+    parentNode:'',
+    value:{
+        id:'',
+        ts:'',
+        cateName:'全部',
+        cateCode:'',
+        cateType:''
+    },
+    childs:[],
+    leaf:true,
+}]
 Page({
 
     /**
@@ -9,11 +21,12 @@ Page({
      */
     data: {
         safeBottom: app.safeBottom,
-
+        parentCateName:"",
         menuShowing:false,
-
+        selectedType:  '全部',
         types: [],
         cateName:'',
+        currentPage:1,
     },
 
     /**
@@ -21,7 +34,7 @@ Page({
      */
     onLoad: function (options) {
         this.setData({
-            selectedType:  0,
+
             cateName:options.cateName,
             domaintype:options.domaintype
         })
@@ -60,14 +73,34 @@ Page({
      * 页面相关事件处理函数--监听用户下拉动作
      */
     onPullDownRefresh: function () {
+        this.loadProducts()
+
+        wx.stopPullDownRefresh({
+            success:(e)=>{
+            },
+            fail:(e)=>{
+            },
+            complete:(e)=>{
+            },
+        }) 
+        
+    },
+    onPageScroll(e) {
 
     },
-
     /**
      * 页面上拉触底事件的处理函数
      */
     onReachBottom: function () {
+        if (this.noMoreProduct) {
+            return
+        }
 
+        this.data.currentPage += 1
+
+        this.loadProducts()
+
+        
     },
 
     /**
@@ -77,9 +110,8 @@ Page({
 
     },
     loadjobTree(){
-        REST.request({
+        REST.noVerfiyget({
             url: '/v1/jobTree/treeData',
-            method: 'GET',
             success: res => {
                 console.log(res);
                 if(this.data.domaintype == 'allchilds'){//为你推荐 所有岗位
@@ -100,9 +132,16 @@ Page({
                 }else{//当前领域下岗位
                     for(let i=0 ;i<res.length; i++){
                         if(res[i].value.cateName == this.data.cateName){
+
                              this.setData({
-                                 types:res[i].childs
+                                selectedType:'全部',
+                                catePost:'',
+                                types:allTag.concat(res[i].childs),
+                                parentCateName:res[i].value.cateName,
+                                cateDomain:res[i].value.id 
                              })
+                             this.loadProducts()
+                             console.log(this.data.types);
                         }
                     }
                 }
@@ -110,7 +149,7 @@ Page({
                     treeData:res
                 })
             },
-            fail: res => {
+            failed: res => {
                 wx.showToast({
                     title: '获取失败',
                     icon: 'none',
@@ -129,8 +168,16 @@ Page({
                         if(childs[n].value.cateName == cateName){
                             console.log(childs);
                             this.setData({
-                                types:childs
+                                selectedType:cateName || '全部',
+                                catePost:cateName?childs[n].value.id : '' ,
+                                types:allTag.concat(childs),
+                                parentCateName:treeData[i].value.cateName,
+                                cateDomain:treeData[i].value.id 
                             })
+                            console.log(this.data.types);
+
+                            this.loadProducts()
+
                             break
                         }
                     }
@@ -146,9 +193,18 @@ Page({
     // 切换tab
     tapTypeTab(e) {
         let i = e.currentTarget.dataset.i
+        let catePost = e.currentTarget.dataset.catepost
+        
         this.setData({
             selectedType: i,
+            catePost: catePost || '',
+            currentPage: 1,
+            pageSize:10
         })
+
+         this.loadProducts()
+        
+
     },
 
     //菜单显示隐藏
@@ -167,10 +223,69 @@ Page({
             if(cateName == this.data.treeData[i].value.cateName){
                 let childs= this.data.treeData[i].childs
                 this.setData({
-                    types:childs,
-                    menuShowing:false
+                    selectedType: '全部',
+                    types:allTag.concat(childs),
+                    menuShowing:false,
+                    parentCateName:cateName,
+                    products:[],
+                    cateDomain:this.data.treeData[i].value.id
                 })
+                this.loadProducts()
             }
         }
+    },
+    //根据岗位获取作品
+    loadProducts(){
+        let url='',data={}
+        if(this.data.selectedType == '全部'){
+            url=API.getByCateDomain //领域下数据
+            data={
+                cateDomain: this.data.cateDomain || '',
+                currentPage: this.data.currentPage,
+                pageSize:10
+            }
+        }else{
+            url=API.getByCatePost //岗位下数据
+            data={
+                catePost: this.data.catePost || '',
+                currentPage: this.data.currentPage,
+                pageSize:10
+            }
+        }
+        REST.noVerfiyget({
+            url: url,
+            data:data,
+            success: res => {
+                console.log(res);
+
+                if(res.totalPages >= this.data.currentPage){ //没有数据了
+                    this.noMoreProduct = true
+                }else{
+                    this.noMoreProduct = false
+                }
+                if (this.data.currentPage == 1) {
+                    this.setData({
+                        products:res.data
+                    })
+
+                } else {
+                    this.setData({
+                        products: this.data.products.concat(res.data)
+                    })
+                }
+                console.log(this.data.products);
+
+                this.setData({
+                    selectedType:this.data.selectedType
+                })
+            },
+            fail: res => {
+                wx.showToast({
+                    title: '获取失败',
+                    icon: 'none',
+                    duration: 2000
+                });
+            },
+        })  
     }
 })

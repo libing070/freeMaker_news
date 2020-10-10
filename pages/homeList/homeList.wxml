@@ -4,7 +4,7 @@
     <view class="typeBox">
         <scroll-view class="typeTabs" scroll-x>
             <block wx:for="{{types}}" wx:key="index">
-                <view class="type {{selectedType == index ? 'sel' : ''}}" data-i="{{index}}" catchtap="tapTypeTab">{{item.value.cateName}}</view>
+                <view class="type {{selectedType == item.value.cateName ? 'sel' : ''}}" data-catepost="{{item.value.id}}"  data-i="{{item.value.cateName}}" catchtap="tapTypeTab">{{item.value.cateName}}</view>
             </block>
         </scroll-view>
     </view>
@@ -14,14 +14,14 @@
 </view>
 
 <view class="group" style="padding-bottom:{{ safeBottom }}px">
-    <home-cell wx:for="{{list}}" wx:key="index" obj="{{item}}" bindchangeName="changeName"></home-cell>
+    <home-cell wx:for="{{products}}" wx:key="index" obj="{{item}}" bindchangeName="changeName"></home-cell>
 </view>
 
 <view class="shade"  catchtouchmove="true" wx:if="{{menuShowing}}" catchtap="menuShowing">
     <view class="main" data-id="shadeMain" catchtap="menuShowing">
-        <view class="title">全部设计服务</view>
+        <view class="title">全部服务</view>
         <view class="box">
-            <view class="item" wx:for="{{treeData}}" data-catename="{{item.value.cateName}}" wx:key="index" catchtap="tapFindChilds">{{item.value.cateName}}</view>
+            <view class="item" wx:for="{{treeData}}" style="{{parentCateName == item.value.cateName ?'color:#ffffff;background:#FFBA20':''}}" data-catename="{{item.value.cateName}}" wx:key="index" catchtap="tapFindChilds">{{item.value.cateName}}</view>
         </view>
 
     </view>

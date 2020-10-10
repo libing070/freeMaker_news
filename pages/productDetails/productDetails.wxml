@@ -3,39 +3,39 @@
     <view class="top">
         <view class="swiper-box">
             <swiper class="swiper" bindchange="changeSwiper">
-                <block wx:for="{{obj.imgList}}" wx:key="index">
+                <block wx:for="{{data.images}}" wx:key="index">
                     <swiper-item>
-                        <image class="photo" src="{{item}}" mode="aspectFill"  data-item="{{item}}" catchtap="tapBanner"></image>
+                        <image class="photo" src="{{item.fullPath}}" mode="aspectFill"  data-item="{{item.fullPath}}" catchtap="tapBanner"></image>
                     </swiper-item>
                 </block>
             </swiper>
         </view>  
         <view class="pagination">
-            <text>{{currentPhotoIndex}}</text>/<text>{{obj.imgList.length}}</text>
+            <text>{{currentPhotoIndex}}</text>/<text>{{data.images.length}}</text>
         </view>  
     </view>
 
 
 
     <view class="title"  catchtap="tapToWorksDetail">
-        <view class="name">GINGER品牌10周年展览设计</view>
-        <view class="collect {{ collect ? 'sel' :''}}" catchtap="tapCollect" data-id="{{obj.id}}">
-            <image wx:if="{{!collect}}"src=" /images/common/icon-collect.png" class="icon"></image>
+        <view class="name">{{data.title}}</view>
+        <view class="collect {{ collect ? 'sel' :''}}" catchtap="tapCollect" data-id="{{obj.id}}" wx:if="">
+            <image wx:if="{{!collect}}" src=" /images/common/icon-collect.png" class="icon"></image>
             <text class="collect-name {{ collect ? 'sel' :''}}">{{collect ? '已收藏':'收藏'}}</text>
         </view>
     </view>
 
     <view class="tag-title">
-        <text class="tag">百度热榜</text>
+        <text class="tag">{{data.domainCate.cateName}}</text>
     </view>
 
     <view class="user" data-item="1" catchtap="shadeShowing">
         <view class="avatarBox" >
-            <image class="avatar" src="/images/common/default-head.png"></image>
+            <image class="avatar" src="{{data.freelancerInfo.headImg ? data.freelancerInfo.headImg :'/images/common/default-head.png'}}"></image>
         </view>
         <view>
-            <view class="name-user">波英冰</view>
-            <view  class="name-tag>">品牌设计师·平面设计师</view>
+            <view class="name-user">{{data.freelancerInfo.name}}</view>
+            <view  class="name-tag>">{{data.postCate.cateName}}</view>
         </view>
        <image class="arrow" src="/images/common/icon_wechat.png" data-item="0" catchtap="shadeShowing"></image>
     </view>
@@ -49,7 +49,7 @@
             </view>
         </view>
         <view class="content">
-            超文本标记语言（英语：HyperText Markup Language，简称：HTML）是一种用于创建网页的标准标记语言。您可以使用 HTML 来建立自己的 WEB 站点，HTML 运行在浏览器上，由浏览器来解析。在本教程中，您将学习如何使用 HTML 来创建站点。HTML 很容易学习！相信您能很快学会它
+            {{data.summarize}}
         </view>
     </view>
 
@@ -63,62 +63,62 @@
         </view>
         <view class="rate">
             <view class="grade">
-                <view class="number"><text style="font-size:60rpx;color: #0C2032;">4.9</text><text style="font-size:28rpx;color:#0C2032">分</text></view>
-                <view class="desc" style="font-size: 28rpx;color: #3F5161;">超级赞</view>
+                <view class="number"><text style="font-size:60rpx;color: #0C2032;">{{evaluationInfo.totalScore}}</text><text style="font-size:28rpx;color:#0C2032">分</text></view>
+                <view class="desc" style="font-size: 28rpx;color: #3F5161;">{{evaluationInfo.totalScoreMark}}</view>
             </view>
             <view class="progress">
                 <view class="pro-item">
                     <view class="name">过程质量</view>
-                    <view class="line"><view class="l-width" style="width:80%"></view></view>
-                    <view class="num">4.9</view>
+                    <view class="line"><view class="l-width" style="{{'width:' + evaluationInfo.processScoreWidth + '%'}}"></view></view>
+                    <view class="num">{{evaluationInfo.processScore}}</view>
                 </view>
                 <view class="pro-item">
                     <view class="name">结果质量</view>
-                    <view class="line"><view class="l-width" style="width:100%"></view></view>
-                    <view class="num">4.9</view>
+                    <view class="line"><view class="l-width" style="{{'width:' + evaluationInfo.resultScoreWidth + '%'}}"></view></view>
+                    <view class="num">{{evaluationInfo.resultScore}}</view>
                 </view>
                 <view class="pro-item">
                     <view class="name">推荐意向</view>
-                    <view class="line"><view class="l-width" style="width:70%"></view></view>
-                    <view class="num">4.9</view>
+                    <view class="line"><view class="l-width" style="{{'width:' + evaluationInfo.recommendScoreWidth + '%'}}"></view></view>
+                    <view class="num">{{evaluationInfo.recommendScore}}</view>
                 </view>
             </view>
         </view>
     </view>
 
     <view class="task-ended">
-        <view class="head">
+        <!-- <view class="head">
             <view class="left">已结任务</view>
-            <view class="right" catchtap="shadeShowing"  data-item="3">
+            <view class="right" catchtap="shadeShowing"  data-item="3" wx:if="">
                  <text class="more">查看全部</text>
                 <image class="triangle" src="/images/common/icon-triangle2.png"></image> 
             </view>
-        </view>
+        </view> -->
         <view class="task-box">
-            <view class="item" wx:for="{{3}}" wx:key="index">
+            <view class="item" wx:for="{{evaluationOrderInfos}}" wx:key="index">
                 <view class="title">
-                    <view class="desc">百度热榜百度热榜百度热榜</view>
-                    <view class="tag">百度热榜</view>
+                    <view class="desc">{{item.orderInfoDetail.summarize}}</view>
+                    <view class="tag">{{item.bdJobCate.cateName}}</view>
                 </view>
                 <view class="uu">
                     <view class="avatarBox">
                         <image class="avatar" src="/images/common/default-head.png"></image>
                     </view>
                     <view>
-                        <view class="name-user">雇主昵称</view>
-                        <view  class="name-tag>">2020-07-23</view>
+                        <view class="name-user">{{item.employerInfo.name}}</view>
+                        <view  class="name-tag>">{{item.createTime}}</view>
                     </view>
                     <view class="score">
                         <view class="star-box">
                             <view class="star">
-                                <block wx:for="{{one_1}}" wx:key="item">
+                                <block wx:for="{{item.totalScore}}" wx:key="item">
                                     <image class="img" src='/images/common/icon-starSel.png'></image>
                                 </block>
-                                <block wx:for="{{two_1}}" wx:key="item">
+                                <block wx:for="{{5-item.totalScore}}" wx:key="item">
                                     <image class="img" src='/images/common/icon-star.png'></image>
                                 </block>
                             </view>
-                            <view class="val">4.0<text style="font-size:24rpx;color: #3D4347;">分</text></view>
+                            <view class="val">{{item.totalScore}}<text style="font-size:24rpx;color: #3D4347;">分</text></view>
                         </view>
                     </view>
                 </view>
@@ -129,7 +129,7 @@
     <view class="other-works">
         <view class="head">
             <view class="left">其他作品</view>
-            <view class="right" catchtap="shadeShowing"  data-item="3">
+            <view class="right" catchtap="shadeShowing"  data-item="3" wx:if="">
                  <text class="more">查看全部</text>
                 <image class="triangle" src="/images/common/icon-triangle2.png"></image> 
             </view>
@@ -142,13 +142,13 @@
             </scroll-view>
         </view>
         <view class="product-box">
-            <view class="product-box-item" wx:for="{{5}}" wx:key="index">
-                 <image src="/images/common/715_2.jpg" mode="aspectFill" class="photoBox"></image>
-                 <view class="titles">{{index}}教辅类产品课件设计合集教辅类产品课件设计合集</view>
+            <view class="product-box-item" wx:for="{{otherProductdata}}" wx:key="index">
+                 <image src="{{item.images.fullPath}}" mode="aspectFill" class="photoBox"></image>
+                 <view class="titles">{{item.title}}</view>
                  <view class="mark-type">
                     <scroll-view class="menu" scroll-x="true">
-                        <view class="item" wx:for="{{6}}" wx:key="index" data-id="{{index}}" catchtap="tapTohomeList">
-                            <text class="name">更多类型{{index+1}}</text>
+                        <view class="item"  data-id="{{index}}" catchtap="tapTohomeList">
+                            <text class="name">{{item.postCate.cateName}}</text>
                         </view>
                     </scroll-view>  
                 </view>
@@ -160,8 +160,9 @@
 </view>
 
 <view class="tool-bar" style="padding-bottom: {{ safeBottom }}px">
-    <view class="money"><text class="unit" style="font-size: 32rpx;color: #3D4347;">¥</text>5000<text class="unit" style="font-size: 12px;color: #3D4347;">/时</text></view>
+    <view class="money"><text class="unit" style="font-size: 32rpx;color: #3D4347;">¥</text>{{data.hourlyWage}}<text class="unit" style="font-size: 12px;color: #3D4347;">/时</text></view>
     <view class="btn-box">
+        <!-- <auth-button wx:if="{{!user}}" bindloginCallbackEvent="loginCallback"></auth-button> -->
         <view class="buy" catchtap="tapToPublishDemand">购买服务</view>
     </view>
 </view>
@@ -174,8 +175,9 @@
                      <view class="left">联系TA</view>
                 </view>
                 <view class="copy">
-                    xxx设计师微信号
-                    <view class="btn" data-content="xxx设计师微信号" catchtap="tapCopy">一键复制</view>
+                    {{data.freelancerInfo.phone}}
+                    <!-- <view class="btn" data-content="{{data.freelancerInfo.phone}}" catchtap="tapCopy">一键复制</view> -->
+                    <view class="btn" data-content="{{data.freelancerInfo.phone}}" catchtap="freeTell">一键呼叫</view>
                 </view>
             </view>
 
@@ -187,21 +189,21 @@
                         <image class="avatar" src="/images/common/default-head.png"></image>
                     </view>
                     <view>
-                        <view class="name-user">波英冰</view>
-                        <view  class="name-tag>">品牌设计师·平面设计师</view>
+                        <view class="name-user">{{data.freelancerInfo.name}}</view>
+                        <view  class="name-tag>">{{data.postCate.cateName}}</view>
                     </view>
                 </view>
                 <view class="cell-group">
                     <view class="field">地域</view>
-                    <view class="message">北京市 朝阳区</view>
+                    <view class="message">{{(data.freelancerInfo.provinceCode && data.freelancerInfo.cityCode && data.freelancerInfo.districtCode) ? data.freelancerInfo.provinceCode + ' '+  data.freelancerInfo.cityCode + ' '+   data.freelancerInfo.districtCode:'暂无'}}</view>
                 </view>
                 <view class="cell-group" style="border-top: 0.1px solid #E6E6E6;border-bottom: 0.1px solid #E6E6E6;">
                     <view class="field">语言</view>
-                    <view class="message">普通话 雅思4分</view>
+                    <view class="message">{{data.freelancerInfo.language}}</view>
                 </view>
                 <view class="cell-group">
                     <view class="field">个人介绍</view>
-                    <view class="message">大家好！我是一名资深平面设计师，专注于品牌视觉形象设计，原创插画手绘达人。曾服务：南极人，王品台塑牛排，浦银大学，苏罗品牌，lwang印刷，等公司。个人原创手绘：《一日一草木系列》等作品。</view>
+                    <view class="message">{{data.freelancerInfo.skillSummarize}}</view>
                 </view>
             </view>
         </view>
@@ -210,7 +212,7 @@
                 <view class="head">
                     <view class="left">技能描述</view>
                 </view>
-                <view class="shade-skill-content">新锐平面设计师，很强的创新策划与实操能力，擅长标志设计、海报设计、品牌设计、周边设计等。</view>
+                <view class="shade-skill-content">{{data.summarize}}</view>
             </view>
         </view>
         <view wx:if="{{ currShadeItem == 3}}">
@@ -218,34 +220,34 @@
                 <view class="head">
                     <view class="left">综合评价</view>
                 </view>
-                <view class="evaluate-box" wx:for="{{3}}" wx:key="index">
+                <view class="evaluate-box" wx:for="{{evaluationDetailInfos}}" wx:key="index">
                     <view class="u" style="border-top:{{ index == 0 ? 'none' : '0.1px solid #E6E6E6'}}">
                         <view class="avatarBox">
                             <image class="avatar" src="/images/common/default-head.png"></image>
                         </view>
                         <view>
-                            <view class="name-user">186****6315</view>
-                            <view  class="name-tag>">2020-03-23</view>
+                            <view class="name-user">{{item.employerInfo.name}}}</view>
+                            <view  class="name-tag>">{{item.createTime}}</view>
                         </view>
                         <view class="score">
                             <view class="star-box">
                                 <view class="star">
-                                    <block wx:for="{{one_1}}" wx:key="item">
+                                    <block wx:for="{{item.totalScore}}" wx:key="item">
                                         <image class="img" src='/images/common/icon-starSel.png'></image>
                                     </block>
-                                    <block wx:for="{{two_1}}" wx:key="item">
+                                    <block wx:for="{{5-item.totalScore}}" wx:key="item">
                                         <image class="img" src='/images/common/icon-star.png'></image>
                                     </block>
                                 </view>
-                                <view class="val">4.0<text style="font-size: 24rpx;color: #0C2032;">分</text></view>
+                                <view class="val">{{item.totalScore}}<text style="font-size: 24rpx;color: #0C2032;">分</text></view>
                             </view>
                         </view>
                     </view>
-                    <view class="evaluate-news">第一次合作非常愉快，设计师人很nice，出稿速度也很快。希望有机会再次合作！</view>
+                    <view class="evaluate-news">{{item.description}}</view>
                     <view class="evaluate-othersBox">
                         <scroll-view class="evaluate-swiperBox" scroll-x>
-                            <block wx:for="{{10}}" wx:key="index">
-                                <image  class="evaluate-photoBox" src="/images/common/715_2.jpg" mode="aspectFill"></image>
+                            <block wx:for="{{item.images}}" wx:key="index">
+                                <image  class="evaluate-photoBox" src="{{item.fullPath}}" mode="aspectFill"></image>
                             </block>
                         </scroll-view>
                     </view>
@@ -256,3 +258,4 @@
     </view>
 </view>
 <auth-modal show="{{showAuthModal}}"></auth-modal>
+<auth-phone show="{{showAuthPhone}}"></auth-phone>

@@ -296,7 +296,6 @@ page {
 .task-ended{
     position: relative;
     margin:40rpx;
-    margin-top: 80rpx;
 }
 .task-ended .head{
     display: flex;
@@ -553,6 +552,7 @@ page {
     font-family: PingFangSC-Regular;
     font-size: 20rpx;
     color: #8392A0;
+    padding: 0 8rpx;
 }
 
 .tool-bar{

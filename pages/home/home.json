@@ -1,7 +1,10 @@
 {
     "navigationStyle":"custom",
+    "enablePullDownRefresh": true,
+    "backgroundTextStyle": "dark",
     "usingComponents": {
         "custom-tabbar": "/components/customTabbar/customTabbar",
-        "home-cell": "/components/homeCell/homeCell"
+        "home-cell": "/components/homeCell/homeCell",
+        "auth-phone": "/components/authPhone/authPhone"
     }
 }

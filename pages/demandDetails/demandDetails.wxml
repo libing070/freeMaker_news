@@ -1,33 +1,31 @@
 <!--pages/demandDetails/demandDetails.wxml-->
 
-<view class="order-status"  catchtap="tapToPushUserList">
+<view class="order-status"  catchtap="tapToPushUserList" data-id="{{demandDetail.id}}">
     <image class="status-icon" src="/images/common/icon_demand_status@2x.png"></image>
     <view class="desc">
-        <view class="status">待接单</view>
-        <view class="num">已将需求推送给12人</view>
+        <view class="status">{{demandDetail.statusName}}</view>
+        <view class="num">已将需求推送给{{demandDetail.recommendCount}}人</view>
     </view>
-
 </view>
 <view class="wrap">
-    <view class="titles">教辅类产品课件设计合集</view>
-    <view class="tag">品牌设计</view>
+    <view class="titles">{{demandDetail.summarize}}</view>
+    <view class="tag">{{demandDetail.jobCateIdName}}</view>
     <view class="title-name">订单描述</view>
-    <view class="order-desc">这里是订单描述，这里是订单描述，这里是订单描述，这里是订单描述，这里是订单描述，这里是订单描述。</view>
+    <view class="order-desc">{{demandDetail.description}}</view>
     <view class="dates-title">期望交付时间</view>
-    <view class="dates-value">2020年8月15日</view>
+    <view class="dates-value">{{demandDetail.expectDeliveryTime}}</view>
 </view>
 <view class="budget" >
-    <view class="title">订单预算</view>
+    <view class="title">预算</view>
     <view class="calc">
-        <view class="compute-mode">计算方式：400/时*2</view>
-        <view clss="total-price"><text style="font-family: PingFangSC-Regular;font-size: 32rpx;color: #0C2032;">¥</text><text style="font-family: DINAlternate-Bold;font-size: 52rpx;color: #0C2032;">800</text></view>
+        <view class="total-price"><text style="font-family: PingFangSC-Regular;font-size: 32rpx;color: #0C2032;">¥</text><text style="font-family: DINAlternate-Bold;font-size: 52rpx;color: #0C2032;">{{demandDetail.budget}}</text></view>
     </view>
 </view>
 
 <view class="no" style="padding-bottom: {{ 70 + safeBottom }}px"></view>
 <view class="tool-bar" style="padding-bottom: {{ safeBottom }}px">
     <view class="layout-1-1" >
-        <view class="left cancle" catchtap="tapCloseDemand">关闭需求</view>
+        <view wx:if="{{demandDetail.status!=40}}" class="left cancle" catchtap="tapCloseDemand" data-status="40">关闭需求</view>
         <view class="right ok" catchtap="tapEditDemand">编辑</view>
     </view>
 </view>

@@ -14,20 +14,31 @@ const formatNumber = n => {
   return n[1] ? n : '0' + n
 }
 
-const formatDate = datetime => {
-    var date = new Date(datetime);//时间戳为10位需*1000，时间戳为13位的话不需乘1000
-    var year = date.getFullYear(),
-        month = ("0" + (date.getMonth() + 1)).slice(-2),
-        sdate = ("0" + date.getDate()).slice(-2),
-        hour = ("0" + date.getHours()).slice(-2),
-        minute = ("0" + date.getMinutes()).slice(-2),
-        second = ("0" + date.getSeconds()).slice(-2);
-    // 拼接
-    var result = year + "年"+ month +"月"+ sdate +"日" ;
-    // 返回
-    return result;
+const formatDate = (datetime, format) => {
+  var date = new Date(datetime); //时间戳为10位需*1000，时间戳为13位的话不需乘1000
+  var year = date.getFullYear(),
+    month = ("0" + (date.getMonth() + 1)).slice(-2),
+    sdate = ("0" + date.getDate()).slice(-2),
+    hour = ("0" + date.getHours()).slice(-2),
+    minute = ("0" + date.getMinutes()).slice(-2),
+    second = ("0" + date.getSeconds()).slice(-2);
+
+  // 拼接
+  let result
+  if (format === 'yyyy/mm/dd') {
+    result = year + "/" + month + "/" + sdate;
+  } else if (format === 'yyyy-mm-dd') {
+    result = year + "-" + month + "-" + sdate;
+  } else if (format === '年月日') {
+    result = year + "年" + month + "月" + sdate + "日";
+  } else {
+    result = year + "/" + month + "/" + sdate;
+  }
+  // 返回
+  return result;
 }
+
 module.exports = {
   formatTime: formatTime,
-  formatDate:formatDate
+  formatDate: formatDate
 }

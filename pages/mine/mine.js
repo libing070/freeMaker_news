@@ -13,19 +13,24 @@ Page({
         pageType: '',
         tabs: ['我的需求', '我的订单', '我的作品'],
         safeBottom: app.safeBottom,
-        selecteddemandTab: 0,
+        selectedDemandTab: 0,
         dropdownShowing1: false,
         options1Text: '全部订单',
         options2Text: '全部状态',
+        status: 0,
         dropdownShowing2: false,
         options1: [{
+                'text': '全部订单',
+                'value': '10',
+                'checked': false
+            }, {
                 'text': '我发起的',
-                'value': '0',
+                'value': '20',
                 'checked': false
             },
             {
                 'text': '我收到的',
-                'value': '1',
+                'value': '30',
                 'checked': false
             }
         ],
@@ -35,28 +40,36 @@ Page({
                 'checked': false
             },
             {
-                'text': '进行中',
-                'value': '1',
+                'text': '制作中',
+                'value': '40',
                 'checked': false
             },
             {
-                'text': '待接单',
-                'value': '2',
+                'text': '已下单',
+                'value': '10',
                 'checked': false
             },
             {
                 'text': '已完成',
-                'value': '3',
+                'value': '70',
                 'checked': false
             },
             {
-                'text': '已关闭',
-                'value': '4',
+                'text': '已评价',
+                'value': '80',
                 'checked': false
             },
         ],
         totalIncome: 0,
-        orderList:[]
+        orderList: [],
+        demandList: [],
+        productionList: [],
+        demandCount: {
+            total: 0,
+            opened: 0,
+            closed: 0
+        },
+        orderTypeIndex: 10 //全部
     },
 
     /**
@@ -66,8 +79,10 @@ Page({
         this.setData({
             safeTop: app.safeTop
         });
-        this.getIncome()
-        this.getOrderList()
+        //todo zyc 待处理登录后再回调
+        // if(app.globalData.userToken){
+
+        // }
     },
 
     /**
@@ -81,13 +96,12 @@ Page({
      * 生命周期函数--监听页面显示
      */
     onShow: function () {
-        this.loginSuccess()
-        console.log(app.globalData.selectedTab);
         this.setData({
             selectedTab: app.globalData.selectedTab || 0
         })
         // 监听屏幕滚动 关键位置
         this.scrollChangeNavigationBar = 44
+        this.loginSuccess()
     },
 
     /**
@@ -151,19 +165,57 @@ Page({
             }
         }
     },
-    // mark: 登录成功
-    loginSuccess(login) {
+    // mark: 授权成功
+    authSuccess(login) {
+        if(login){
+            this.setData({
+                showAuthPhone:true //打开获取手机号自定义弹窗
+            })
+        }
+    },
+    // mark: 登录成功 （获取手机号成功）
+    loginSuccess(login){
         this.setData({
             user: app.user,
+            showAuthModal:false
         })
         if (login) {
             let customtabbarComponent = this.selectComponent('#customtabbarComponent'); // 页面获取自定义组件实例
-            if (this.data.pageType == 'demand') {
-                customtabbarComponent.tapToDemand(); // 通过实例调用组件事件 跳转到发布需求
-            } else if (this.data.pageType == 'product') {
-                customtabbarComponent.tapToProduct(); // 通过实例调用组件事件 跳转到发布作品
+            if(this.data.pageType=='demand'){
+                let e={
+                    currentTarget:{
+                        dataset:{
+                            pagetype:'demand'
+                        }
+                    }
+                }
+                customtabbarComponent.tapToDemand(e); // 通过实例调用组件事件 跳转到发布需求
+            }else if(this.data.pageType=='product'){
+                let e={
+                    currentTarget:{
+                        dataset:{
+                            pagetype:'product'
+                        }
+                    }
+                }
+                customtabbarComponent.tapToProduct(e); // 通过实例调用组件事件 跳转到发布作品
             }
         }
+
+        if(this.data.user){
+                        
+            this.getIncome()
+            this.getDemandGroupCount()
+            this.getDemandListByEmployerId()
+            this.getOrderList()
+        }
+    },
+
+    Relogin(){
+       console.log("重新登录");
+       this.setData({
+        showAuthModal:true
+       })
     },
     pageType(e) {
         console.log(e.detail.pageType);
@@ -173,32 +225,55 @@ Page({
     },
     //tab切换
     tapTab(e) {
+        // 未登录
+        if (!app.user) {
+            this.setData({
+                showAuthModal: true
+            })
+            return
+        }
         let tab = e.currentTarget.dataset.tab
         this.setData({
             selectedTab: tab,
             dropdownShowing1: false,
             dropdownShowing2: false,
         })
+        if (tab == 0) {
+            this.getDemandListByEmployerId()
+            this.getDemandGroupCount()
+        } else if (tab == 1) {
+            this.getOrderList()
+        } else if (tab == 2) {
+            this.getProductionListByFreelancerId()
+        }
     },
     //我的需求 二级菜单切换事件
     tapdemandTab(e) {
+        // 未登录
+        if (!app.user) {
+            this.setData({
+                showAuthModal: true
+            })
+            return
+        }
         let tab = e.currentTarget.dataset.tab
         this.setData({
-            selecteddemandTab: tab,
+            selectedDemandTab: tab,
         })
+        this.getDemandListByEmployerId()
     },
     //跳转到需求详情
-    tapToDemandDetails() {
+    tapToDemandDetails(e) {
         app.globalData.selectedTab = this.data.selectedTab
         wx.navigateTo({
-            url: '/pages/demandDetails/demandDetails',
+            url: '/pages/demandDetails/demandDetails?demandCode='+e.currentTarget.dataset.demandCode,
         })
     },
     //跳转到订单详情
     tapToOrderDetails(e) {
         app.globalData.selectedTab = this.data.selectedTab
         wx.navigateTo({
-            url: '/pages/orderDetails/orderDetails',
+            url: '/pages/orderDetails/orderDetails?orderId='+e.currentTarget.dataset.orderId,
         })
 
     },
@@ -211,26 +286,6 @@ Page({
             });
         }
     },
-    //下拉菜单切换事件1
-    tapChangedropdown1(e) {
-        let index = e.currentTarget.dataset.index
-        let item = e.currentTarget.dataset.item
-        let optionss = [...this.data.options1]
-        let options1Text = ""
-        for (let i = 0; i < optionss.length; i++) {
-            if (i == index) {
-                optionss[i].checked = true
-                options1Text = optionss[i].text
-            } else {
-                optionss[i].checked = false
-            }
-        }
-        this.setData({
-            options1: optionss,
-            dropdownShowing1: !this.data.dropdownShowing1,
-            options1Text: options1Text
-        })
-    },
     //我的订单 下拉菜单显示隐藏2
     dropdownShowing2(e) {
         if (e.currentTarget.dataset.id != "shadeMain") {
@@ -241,11 +296,36 @@ Page({
             });
         }
     },
+    //下拉菜单切换事件1
+    tapChangedropdown1(e) {
+        let index = e.currentTarget.dataset.index
+        let item = e.currentTarget.dataset.item
+        let optionss = [...this.data.options1]
+        let options1Text = ""
+        this.data.orderTypeIndex = index
+
+        let self = this
+        for (let op of optionss) {
+            if (op.value == index) {
+                op.checked = true
+                options1Text = op.text
+            } else {
+                op.checked = false
+            }
+        }
+        this.setData({
+            options1: optionss,
+            dropdownShowing1: !this.data.dropdownShowing1,
+            options1Text: options1Text,
+        })
+        this.getOrderList()
+    },
     //下拉菜单切换事件2
     tapChangedropdown2(e) {
         let index = e.currentTarget.dataset.index
         let optionss = [...this.data.options2]
         let options2Text = ""
+        this.data.status = optionss[index].value
         for (let i = 0; i < optionss.length; i++) {
             if (i == index) {
                 optionss[i].checked = true
@@ -259,12 +339,13 @@ Page({
             dropdownShowing2: !this.data.dropdownShowing2,
             options2Text: options2Text
         })
+        this.getOrderList()
     },
     //跳转到我的作品详情
-    tapToProductDetails() {
+    tapToProductDetails(e) {
         app.globalData.selectedTab = this.data.selectedTab
         wx.navigateTo({
-            url: '/pages/myproductDetails/myproductDetails',
+            url: '/pages/myproductDetails/myproductDetails?prodCode='+e.currentTarget.dataset.prodCode,
         })
     },
     getIncome() {
@@ -284,17 +365,15 @@ Page({
             }
         })
     },
-    loginCallback: function (e) {
-        this.getIncome()
-        console.log('登录回调事件', e)
-    },
     getOrderList() {
         let that = this
         REST.get({
             url: API.getOrderListByStakeholder,
             data: {
                 currentPage: 1,
-                pageSize: 10
+                pageSize: 10,
+                orderType: this.data.orderTypeIndex,
+                status: this.data.status
             },
             success(res) {
                 that.setData({
@@ -308,5 +387,88 @@ Page({
                 console.log("初始化订单列表完成:", that.data.orderList)
             }
         })
-    }
+    },
+    getDemandListByEmployerId() {
+        let that = this
+        REST.get({
+            url: API.getDemandListByEmployerId,
+            data: {
+                currentPage: 1,
+                pageSize: 10,
+                status: this.data.selectedDemandTab
+            },
+            success(res) {
+                that.setData({
+                    demandList: res.data
+                })
+            },
+            failed(res) {
+                console.error(res)
+            },
+            complete(res) {
+                console.log("初始化订单列表完成:", that.data.demandList)
+            }
+        })
+    },
+    getProductionListByFreelancerId() {
+        let that = this
+        REST.get({
+            url: API.getByLoginUser,
+            data: {
+                currentPage: 1,
+                pageSize: 10
+            },
+            success(res) {
+                that.setData({
+                    productionList: res.data
+                })
+            },
+            failed(res) {
+                console.error(res)
+            },
+            complete(res) {
+                console.log("初始化订单列表完成:", that.data.demandList)
+            }
+        })
+    },
+    updateDemandStatus(e) {
+        let that = this
+        REST.get({
+            url: API.updateDemandStatus,
+            data: {
+                demandCode: e.currentTarget.dataset.code,
+                status: e.currentTarget.dataset.status
+            },
+            success(res) {
+                that.getDemandListByEmployerId()
+            },
+            failed(res) {
+                console.error(res)
+            },
+            complete(res) {}
+        })
+    },
+    getDemandGroupCount() {
+        let that = this
+        REST.get({
+            url: API.getDemandGroupCount,
+            success(res) {
+                that.setData({
+                    'demandCount.total': res.total,
+                    'demandCount.opened': res.opened,
+                    'demandCount.closed': res.closed
+                })
+            },
+            failed(res) {
+                console.error(res)
+            },
+            complete(res) {}
+        })
+    },
+    //跳转到需求编辑页面（发布需求页面）
+    tapEditDemand(e) {
+        wx.navigateTo({
+            url: '/pages/publishDemand/publishDemand?demandCode='+e.currentTarget.dataset.demandCode,
+        })
+    },
 })

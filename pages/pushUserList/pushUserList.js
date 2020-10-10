@@ -1,5 +1,7 @@
 // pages/pushUserList/pushUserList.js
 const app = getApp()
+const API = require("../../utils/api.js")
+const REST = require("../../utils/restful.js")
 Page({
 
     /**
@@ -7,12 +9,20 @@ Page({
      */
     data: {
         safeBottom:app.safeBottom,
+        currentDemandId:'',
+        pushUserList:[]
     },
 
     /**
      * 生命周期函数--监听页面加载
      */
     onLoad: function (options) {
+        if(options && options.id){
+            this.setData({
+                currentDemandId: options.id //需求详情页面传入的ID
+            });
+            this.getPushUserList();
+        }
 
     },
 
@@ -65,9 +75,29 @@ Page({
 
     },
     //跳转到作品详情
-    tapToProductDetails(){
+    tapToProductDetails(e){
+        console.log(e.currentTarget.dataset.info)
         wx.navigateTo({
-            url: '/pages/productDetails/productDetails',
+            url: '/pages/productDetails/productDetails?id='+e.currentTarget.dataset.info.id,
+        })
+    },
+    getPushUserList(){
+        let that = this
+        REST.get({
+            url: API.getRecommendProductionInfoByDemandId,
+            data: {
+                demandId: this.data.currentDemandId
+            },
+            success(res) {
+                that.setData({
+                    pushUserList: res
+                });
+                console.log('获取推送人完毕：',res)
+            },
+            failed(res) {
+                console.error(res)
+            },
+            complete(res) {}
         })
     }
 })

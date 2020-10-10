@@ -46,28 +46,16 @@
   "simulatorType": "wechat",
   "simulatorPluginLibVersion": {},
   "condition": {
-    "search": {
-      "current": -1,
-      "list": []
-    },
-    "conversation": {
-      "current": -1,
-      "list": []
-    },
     "plugin": {
-      "current": -1,
       "list": []
     },
     "game": {
-      "current": -1,
       "list": []
     },
     "gamePlugin": {
-      "current": -1,
       "list": []
     },
     "miniprogram": {
-      "current": -1,
       "list": [
         {
           "id": -1,
@@ -134,22 +122,15 @@
         },
         {
           "id": -1,
-          "name": "pages/uploadTest/index",
-          "pathName": "pages/uploadTest/index",
+          "name": "pages/login/login",
+          "pathName": "pages/login/login",
           "query": "",
           "scene": null
         },
         {
           "id": -1,
-          "name": "pages/home/home",
-          "pathName": "pages/home/home",
-          "query": "",
-          "scene": null
-        },
-        {
-          "id": -1,
-          "name": "pages/demandDetails/demandDetails",
-          "pathName": "pages/demandDetails/demandDetails",
+          "name": "pages/orderDetails/orderDetails",
+          "pathName": "pages/orderDetails/orderDetails",
           "query": "",
           "scene": null
         },
@@ -162,15 +143,21 @@
         },
         {
           "id": -1,
-          "name": "pages/publishProduct/publishProduct",
-          "pathName": "pages/publishProduct/publishProduct",
+          "name": "pages/demandDetails/demandDetails",
+          "pathName": "pages/demandDetails/demandDetails",
           "query": "",
           "scene": null
         },
         {
           "id": -1,
-          "name": "pages/publishDemand/publishDemand",
-          "pathName": "pages/publishDemand/publishDemand",
+          "name": "pages/publishOrder/publishOrder",
+          "pathName": "pages/publishOrder/publishOrder",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "pages/home/home",
+          "pathName": "pages/home/home",
           "scene": null
         }
       ]

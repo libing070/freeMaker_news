@@ -4,15 +4,16 @@
         <view class="step-default-line"></view>
 
         <!-- 计算方式：总共7步,  每一步大约：14% ，width=当前步*14-->
+        <!-- todo 更新currentStep后需要刷新视图，否则进度条只按默认值加载 -->
         <view class="step-finish-line" style="width:{{(currentStep)*14}}%"></view>
         <view class="step" wx:for="{{steps}}" wx:key="index">
             <view class="step-item">
-                <image class="status-icon" wx:if="{{index < currentStep}}"src="/images/common/icon-step-success.png"></image> 
+                <image class="status-icon" wx:if="{{index <= currentStep}}" src="/images/common/icon-step-success.png"></image> 
+                <image class="status-icon" wx:elif="{{index > currentStep}}" src="/images/common/icon-step-default.png"></image> 
+                <image class="status-icon" wx:if="{{index == currentStep && (orderStatus.REJECT_30 == orderDetail.status|| orderStatus.CHECK_FAIL_70 == orderDetail.status)}}" src="/images/common/icon-step-fail.png"></image> 
                 <image class="status-icon" wx:elif="{{index == currentStep}}" src="/images/common/icon--step-current.png"></image> 
-                <image class="status-icon" wx:elif="{{index > currentStep}}"src="/images/common/icon-step-default.png"></image> 
-                <image class="status-icon" wx:if="{{index ==4 && isreject && currentStep == 4}}"src="/images/common/icon-step-fail.png"></image> 
             </view>
-            <view class="step-title {{index==currentStep ? 'curr':''}}">{{index ==4 && isreject && currentStep == 4? '验收不通过':item.text}}</view>
+            <view class="step-title {{index==currentStep ? 'curr':''}}">{{item.text}}</view>
         </view>
     </view>
 </view>
@@ -27,90 +28,128 @@
 
 
 <view class="wrap">
-    <view class="titles">教辅类产品课件设计合集</view>
-    <view class="tag">品牌设计</view>
+    <view class="titles">{{orderDetail.summarize}}</view>
+    <view class="tag">{{orderDetail.jobCateName}}</view>
     <view class="title-name">订单描述</view>
-    <view class="order-desc">这里是订单描述，这里是订单描述，这里是订单描述，这里是订单描述，这里是订单描述，这里是订单描述。</view>
+    <view class="order-desc">{{orderDetail.description}}</view>
     <view class="user-title">Freelancer</view>
-    <view class="user" catchtap="shadeShowing" data-type="userinfo">
+    <!-- todo 交互稿未发现需要显示作者详情，暂时不做动作触发，需要再接入 catchtap="shadeShowing"-->
+    <view class="user" data-type="userinfo">
         <view class="avatarBox" data-item="1" catchtap="shadeShowing">
             <image class="avatar" src="/images/common/default-head.png"></image>
         </view>
         <view>
-            <view class="name-user">波英冰</view>
-            <view  class="name-tag>">品牌设计师·平面设计师</view>
+            <view class="name-user">{{orderDetail.freelancer.name}}</view>
+            <view  class="name-tag>">{{orderDetail.jobCateName}}</view>
         </view>
        <image class="arrow" src="/images/common/icon_wechat.png" catchtap="shadeShowing" data-type="call"></image>
     </view>
     <view class="dates-title">期望交付时间</view>
-    <view class="dates-value">2020年8月15日</view>
+    <view class="dates-value">{{orderDetail.expectDeliveryTime}}</view>
 </view>
 <view class="budget" >
     <view class="title">订单预算</view>
     <view class="calc">
-        <view class="compute-mode">计算方式：400/时*2</view>
-        <view clss="total-price"><text style="font-family: PingFangSC-Regular;font-size: 32rpx;color: #0C2032;">¥</text><text style="font-family: DINAlternate-Bold;font-size: 52rpx;color: #0C2032;">800</text></view>
+        <view class="compute-mode">计算方式：{{orderDetail.orderPrice}}/时*{{orderDetail.orderTimes}}</view>
+        <view clss="total-price"><text style="font-family: PingFangSC-Regular;font-size: 32rpx;color: #0C2032;">¥</text><text style="font-family: DINAlternate-Bold;font-size: 52rpx;color: #0C2032;">{{orderDetail.orderMny}}</text></view>
+    </view>
+</view>
+
+<view class="evaluate">
+    <view class="head">订单评价</view>
+    <view class="evaluate-box" wx:for="{{1}}" wx:key="index">
+        <view class="u" style="border-top:{{ index == 0 ? 'none' : '0.1px solid #E6E6E6'}}">
+            <view class="avatarBox">
+                <image class="avatar" src="/images/common/default-head.png"></image>
+            </view>
+            <view>
+                <view class="name-user">{{evaluationInfo.employerInfo.name}}}</view>
+                <view  class="name-tag>">{{evaluationInfo.createTime}}</view>
+            </view>
+            <view class="score">
+                <view class="star-box">
+                    <view class="star">
+                        <block wx:for="{{evaluationInfo.totalScore}}" wx:key="item">
+                            <image class="img" src='/images/common/icon-starSel.png'></image>
+                        </block>
+                        <block wx:for="{{5-evaluationInfo.totalScore}}" wx:key="item">
+                            <image class="img" src='/images/common/icon-star.png'></image>
+                        </block>
+                    </view>
+                    <view class="val">{{evaluationInfo.totalScore}}<text style="font-size: 24rpx;color: #0C2032;">分</text></view>
+                </view>
+            </view>
+        </view>
+        <view class="evaluate-news">{{evaluationInfo.description}}</view>
+        <view class="evaluate-othersBox">
+            <scroll-view class="evaluate-swiperBox" scroll-x>
+                <block wx:for="{{evaluationInfo.attachments}}" wx:key="index">
+                    <image  class="evaluate-photoBox" src="{{item.path}}" data-item="{{item}}" mode="aspectFill"></image>
+                </block>
+            </scroll-view>
+        </view>
     </view>
 </view>
 
 <view class="no" style="padding-bottom: {{ 70 + safeBottom }}px"></view>
 <view class="tool-bar" style="padding-bottom: {{ safeBottom }}px">
    
-   <!--雇佣者-->
-
-    <block wx:if="{{userType == 0}}">
-        <!--接单-->
+    <!--雇佣者-->
+    <block wx:if="{{orderBelongType == 10}}">
+        <!--待接单-->
         <view class="layout-1-2" wx:if="{{currentStep == 1}}">
-            <view class="left cancle" catchtap="tapCancleOrder">取消订单</view>
-            <view class="right pay">立即支付</view>
+            <view class="left cancle" catchtap="tapCancelOrder">取消订单</view>
+            <view class="right cancle">立即支付</view>
         </view>
-        <!--支付-->
+        <!--待支付-->
         <view class="layout-1-2" wx:elif="{{currentStep == 2}}">
-            <view class="left cancle">取消订单</view>
-            <view class="right pay ok" data-status="40" catchtap="payOrder">立即支付</view>
+            <view class="left cancle" catchtap="tapCancelOrder">取消订单</view>
+            <view class="right ok" catchtap="shadeShowing"  data-type="pay">立即支付</view>
         </view>
-        <!--制作-->
-        <view class="layout-1" wx:elif="{{currentStep == 3}}">取消接单</view>
+
+        <!--制作中-->
+        <view class="layout-1 cancel-receiving" wx:elif="{{currentStep == 3}}">取消订单</view>
+
         <!--验收-->
-        <view class="layout-1-2" wx:elif="{{currentStep == 4}}">
+        <view class="layout-1-2" wx:elif="{{currentStep == 4 && orderDetail.status== 60}}">
             <view class="left cancle" catchtap="shadeShowing" data-type="nopass">不通过</view>
             <view class="right pay ok" catchtap="shadeShowing" data-type="checked">验收通过</view>
         </view>
+
+        <!--验收不通过 修改验收状态-->
+        <view class="layout-1 ok" wx:elif="{{currentStep == 4 && orderDetail.status== 70}}" catchtap="shadeShowing" data-type="checkstatus">修改验收状态</view>
+
         <!--完成-->
-        <view class="layout-1 ok" wx:elif="{{currentStep == 5}}">评价</view>
-  
+        <view class="layout-1 ok" wx:elif="{{currentStep == 5}}" catchtap="shadeShowing" data-type="appraise">评价</view>
+        
+        <!-- 评价 -->
+
     </block>
 
-
-
    <!--自由职业者-->
-     <!-- <view class="layout-1-1" wx:if="">
-          <view class="left close">关闭需求</view>
-          <view class="right edit">编辑</view>
-     </view>
-     <view class="layout-1-2" wx:if="">
-          <view class="left rejected">拒绝</view>
-          <view class="right receiving">接单</view>
-     </view>
-     <view class="layout-1 cancel-receiving " wx:if="">取消接单</view>
-     <view class="layout-1 made"  catchtap="shadeShowing" data-type="made" wx:if="">已制作完成</view>
-     <view class="layout-1 made"  wx:if="" catchtap="tapToPushUserList">查看需求推送人列表</view>
-     <view class="layout-1-1" wx:if="">
-          <view class="left cancle">取消</view>
-          <view class="right submit">提交</view>
-     </view>
-     <view class="layout-1-2"  wx:if="">
-          <view class="left edit">编辑</view>
-          <view class="right pay">立即支付</view>
-     </view>
-     <view class="layout-1-1"   wx:if="">
-          <view class="left nopass" catchtap="shadeShowing" data-type="nopass">不通过</view>
-          <view class="right checked"  catchtap="shadeShowing" data-type="checked">确认验收</view>
-     </view>
-     <view class="layout-1-1"  wx:if="">
-          <view class="left cancle">取消</view>
-          <view class="right checked" catchtap="shadeShowing" data-type="checked">确认验收</view>
-     </view> -->
+   <block wx:if="{{orderBelongType == 20}}">
+        <!--待接单-->
+        <view class="layout-1-2" wx:if="{{currentStep == 1}}">
+            <view class="left" catchtap="tapRejectOrder">拒绝</view>
+            <view class="right ok" catchtap="tapReceiveOrder" data-id="{{orderDetail.id}}">接单</view>
+        </view>
+        <!--待支付-->
+        <view class="layout-1 cancel-receiving " wx:elif="{{currentStep == 2}}">取消接单</view>
+
+        <!--制作中-->
+        <view class="layout-1 ok"  catchtap="shadeShowing" data-type="made"  wx:elif="{{currentStep == 3}}">完成制作</view>
+
+        <!--验收-->
+        <view class="layout-1-2" wx:elif="{{currentStep == 4 &&  orderDetail.status== 60}}">
+            <view class="layout-1 cancle">等待验收中</view>
+        </view>
+
+        <!--查看不通过原因-->
+        <view class="layout-1" wx:elif="{{currentStep == 4 &&  orderDetail.status== 70}}">
+            <view class="right"  catchtap="shadeShowing" data-type="noreason" >点击查看不通过原因<image style="width:18rpx;height:18rpx;" src="/images/common/icon_enter.png"></image></view>
+        </view>
+
+    </block>
 </view>
 
 <view class="shade" wx:if="{{shadeShowing}}" catchtap="shadeShowing">
@@ -120,9 +159,13 @@
             <view class="head">
                 <view class="left">联系TA</view>
             </view>
-            <view class="copy">
+            <!-- <view class="copy">
                 xxx设计师微信号
                 <view class="btn" data-content="xxx设计师微信号" catchtap="tapCopy">一键复制</view>
+            </view> -->
+            <view class="copy">
+                {{orderDetail.freelancer.phone}}
+                <view class="btn" data-content="18680506315" catchtap="freeTell">一键呼叫</view>
             </view>
         </view>
         <!--Freelancer 信息-->
@@ -132,7 +175,7 @@
                     <image class="avatar" src="/images/common/default-head.png"></image>
                 </view>
                 <view>
-                    <view class="name-user">波英冰</view>
+                    <view class="name-user">{{orderDetail.freelancer.name}}</view>
                     <view  class="name-tag>">品牌设计师·平面设计师</view>
                 </view>
             </view>
@@ -153,11 +196,11 @@
         <view class="shade-made" wx:if="{{ currPicker == 'made'}}">
             <view class="upload-title">上传凭证</view>
             <view class="images-box">
-                <view class="box" wx:for="{{imagesList}}" wx:key="index">
+                <view class="box" wx:for="{{attachmentList}}" wx:key="index">
                     <image src="/images/common/icon-delete.png" class="icon-delete" data-index="{{index}}" catchtap="deletePhotos"></image>
                     <image src="{{item}}" class="img" mode="aspectFill"  data-item="{{item}}"  catchtap="tapBanner"/>
                 </view>
-                <view class="box dotted-box" bindtap="tapUpload" wx:if="{{imagesList.length < 8}}">
+                <view class="box dotted-box" bindtap="tapUpload" wx:if="{{attachmentList.length < 8}}">
                     <image src="/images/common/icon-camera.png" class="upload-icon" catchtap="tapUpload" />
                     <text class="upload-text">上传图片</text>
                 </view>
@@ -169,7 +212,7 @@
             <view class="tool-bar" style="padding-bottom: {{ safeBottom }}px;border:none;">
                 <view class="layout-1-1">
                       <view class="left cancel">取消</view>
-                      <view class="right submit">提交</view>
+                      <view class="right submit {{ canClick ? 'ok':''}}" catchtap="tapMakeOrder">提交</view>
                 </view>
             </view>
         </view>
@@ -189,11 +232,11 @@
             </view>
             <view class="image-titile">上传图片凭证</view>
             <view class="images-box" style="padding-bottom: 112rpx;">
-                <view class="box" wx:for="{{imagesList}}" wx:key="index">
+                <view class="box" wx:for="{{attachmentList}}" wx:key="index">
                     <image src="/images/common/icon-delete.png" class="icon-delete" data-index="{{index}}" catchtap="deletePhotos"></image>
                     <image src="{{item}}" class="img" mode="aspectFill"  data-item="{{item}}"  catchtap="tapBanner"/>
                 </view>
-                <view class="box dotted-box" bindtap="tapUpload" wx:if="{{imagesList.length < 8}}">
+                <view class="box dotted-box" bindtap="tapUpload" wx:if="{{attachmentList.length < 8}}">
                     <image src="/images/common/icon-camera.png" class="upload-icon" catchtap="tapUpload" />
                     <!-- <text class="upload-text">上传图片</text> -->
                 </view>
@@ -212,6 +255,189 @@
                 <view class="layout-1-1">
                       <view class="left cancel"  catchtap="shadeShowing">取消</view>
                       <view class="right checked ok" catchtap="confirmAgree">确认验收</view>
+                </view>
+            </view>
+        </view>
+
+        <!--修改验收状态-->
+        <view class="shade-checkstatus" wx:if="{{ currPicker == 'checkstatus'}}">
+            <view class="body" style="padding-bottom:{{56 + safeBottom}}px">
+                <view class="title">修改验收状态</view>
+                <view class="notice">
+                    <image class="icon" src="/images/common/icon-warning.png"></image>
+                    <text class="text">仅有一次修改机会，确认后不可再次修改</text>
+                </view>
+                <view class="radio-box">
+                    <view class="item" catchtap="chooseRadioCheckstatus" data-index="1">
+                        <image class="icon" src="{{isRadiochecked && currRadioCheckstatusIndex == '1' ? '/images/common/icon_status_sel.png':'/images/common/icon_status_nor.png'}}"></image>
+                        <view class="name">
+                            <text class="n1">验收通过</text>
+                            <text class="n2">平台将给Freelancer打款。</text>
+                        </view>
+                    </view>
+                    <view class="item" catchtap="chooseRadioCheckstatus" data-index="2">
+                        <image class="icon" src="{{isRadiochecked && currRadioCheckstatusIndex == '2' ? '/images/common/icon_status_sel.png':'/images/common/icon_status_nor.png'}}"></image>
+                        <view class="name">
+                            <text class="n1">仍然不通过</text>
+                            <text class="n2">选择前建议与freelancer沟通需求</text>
+                        </view>
+                    </view>
+                </view>
+            </view>
+
+            <view class="tool-bar" style="padding-bottom: {{ safeBottom }}px;border:none;">
+                <view class="layout-1-1">
+                      <view class="left cancel"  catchtap="shadeShowing">取消</view>
+                      <view class="right checked {{isRadiochecked ? 'ok':''}}" catchtap="confirmCheckStatusAgree">确定</view>
+                </view>
+            </view>
+        </view>
+
+        <!--不通过原因-->
+        <view class="shade-noreason" wx:if="{{ currPicker == 'noreason'}}">
+            <view class="body" style="padding-bottom:{{56 + safeBottom}}px">
+                <view class="title">验收不通过原因</view>
+                <view class="notice">
+                    <image class="icon" src="/images/common/icon-warning.png"></image>
+                    <text class="text">请尽快与需求方沟通协商，还有一次验收机会。</text>
+                </view>
+                <view class="content">这里是未通过的原因哦，这里是未通过的原因哦，这里是未通过的原因哦，这里是未通过的原因哦，这里是未通过的原因哦。</view>
+                <view class="imagesBox">
+                        <scroll-view class="swiperBox" scroll-x>
+                            <block wx:for="{{5}}" wx:key="index">
+                                <image  class="photoBox" src="/images/common/715_2.jpg" mode="aspectFill"></image>
+                            </block>
+                        </scroll-view>
+                    </view>
+            </view>
+        </view>
+
+
+        <!--支付-->
+        <view class="shade-pay" wx:if="{{ currPicker == 'pay'}}">
+            <view class="title">支付指引</view>
+            <view class="notice">
+                <image class="icon" src="/images/common/icon-warning.png"></image>
+                <text class="text">目前仅支持线下付款方式，线上支付正在开发中尽请期待。</text>
+            </view>
+            <view class="payment">
+                <view class="ti">1.请将支付金额打入下方HowWork账户，并保留凭证。</view>
+                <view class="box">
+                    <view class="b1">
+                        <view class="key">开户名称</view>
+                        <view class="value">北京无限空间云科技有限公司</view>
+                    </view>
+                    <view class="b2">
+                        <view class="key">开户银行</view>
+                        <view class="value v1">
+                            <image class="img" src="/images/common/pic_bank@2x.png"></image>
+                            <text class="tex">招商银行股份有限公司北京长安街支行</text>
+                        </view>
+                    </view>
+                    <view class="b3">
+                        <view class="key">汇款账号</view>
+                        <view class="value">110941401110301</view>
+                        <view class="btn" catchtap="copyBankAccount">复制汇款账号</view>
+                    </view>
+
+                </view>
+            </view>
+            <view class="payment">
+                <view class="ti">2.联系企业客服，确认是否充值成功。</view>
+                <view class="grow">
+                    <image class="p1" src="/images/common/icon_customer_service@2x.png"></image>
+                    <view class="p2">
+                        <view class="key">HowWork 客服</view>
+                        <view class="value">微信号：HowWork001</view>
+                    </view>
+                    <view class="p3">
+                        <view class="btn" catchtap="copyWeChat">复制微信号</view>
+                    </view>
+                </view>
+            </view>
+            <view class="payment">
+                <view class="ti">3.付款信息经过企业客服确认后，订单状态将会变为“已支付”。</view>
+            </view>
+        </view>
+        <!--评价-->
+        <view class="shade-appraise" wx:if="{{ currPicker == 'appraise'}}" style="max-height:1000rpx;overflow-y: scroll;">
+            <view class="title">评价订单</view>
+            <view class="appraise">
+                <view class="name">总体评价</view>
+                <view class="star">
+                    <view class="star-default">
+                        <image wx:for="{{5}}" wx:key="index" class="img" bindtap="tapAppraiseStar" data-index="{{index}}" data-sel="" src="/images/common/emoji_normal@2x.png"></image>  
+                    </view>
+                    <view class="star-sel">
+                        <block wx:for="{{appraiseStarSelNum}}" wx:key="index">
+                            <image wx:if="{{index+1 == 1}}"  bindtap="tapAppraiseStar" data-index='1' data-sel="sel" class="img"  src="/images/common/emoji_normal_5@2x.png"></image>
+                            <image wx:elif="{{index+1 == 2}}" bindtap="tapAppraiseStar" data-index='2' data-sel="sel" class="img"  src="/images/common/emoji_normal_4@2x.png"></image>
+                            <image wx:elif="{{index+1 == 3}}" bindtap="tapAppraiseStar" data-index='3' data-sel="sel" class="img"  src="/images/common/emoji_normal_3@2x.png"></image>
+                            <image wx:elif="{{index+1 == 4}}" bindtap="tapAppraiseStar" data-index='4' data-sel="sel" class="img"  src="/images/common/emoji_normal_2@2x.png"></image>
+                            <image wx:elif="{{index+1 == 5}}" bindtap="tapAppraiseStar" data-index='5' data-sel="sel" class="img"  src="/images/common/emoji_normal_1@2x.png"></image>
+                        </block>
+                    </view>
+                </view>
+                <view class="msg">{{appraiseMsg}}</view>
+            </view>
+            <view class="appraise-childs">
+                <view class="name">结果打分</view>
+                <view class="star">
+                    <view class="star-default">
+                        <image wx:for="{{5}}" wx:key="index" class="img" bindtap="tapAppraiseChildsStar" data-type="1" data-index="{{index}}" data-sel="" src="/images/common/icon-star.png"></image>  
+                    </view>
+                    <view class="star-sel">
+                        <block wx:for="{{appraiseChildsStarSelNum1}}" wx:key="index">
+                            <image   bindtap="tapAppraiseChildsStar" data-index='{{appraiseChildsStarSelNum1}}'  data-type="1" data-sel="sel" class="img"  src="/images/common/icon-starSel.png"></image>
+                        </block>
+                    </view>
+                </view>
+            </view>
+            <view class="appraise-childs">
+                <view class="name">过程打分</view>
+                <view class="star">
+                    <view class="star-default">
+                        <image wx:for="{{5}}" wx:key="index" class="img" bindtap="tapAppraiseChildsStar" data-type="2" data-index="{{index}}" data-sel="" src="/images/common/icon-star.png"></image>  
+                    </view>
+                    <view class="star-sel">
+                        <block wx:for="{{appraiseChildsStarSelNum2}}" wx:key="index">
+                            <image   bindtap="tapAppraiseChildsStar" data-index='{{appraiseChildsStarSelNum2}}'  data-type="2" data-sel="sel" class="img"  src="/images/common/icon-starSel.png"></image>
+                        </block>
+                    </view>
+                </view>
+            </view>
+            <view class="appraise-childs">
+                <view class="name">推荐意向</view>
+                <view class="star">
+                    <view class="star-default">
+                        <image wx:for="{{5}}" wx:key="index" class="img" bindtap="tapAppraiseChildsStar" data-type="3" data-index="{{index}}" data-sel="" src="/images/common/icon-star.png"></image>  
+                    </view>
+                    <view class="star-sel">
+                        <block wx:for="{{appraiseChildsStarSelNum3}}" wx:key="index">
+                            <image   bindtap="tapAppraiseChildsStar" data-index='{{appraiseChildsStarSelNum3}}'  data-type="3" data-sel="sel" class="img"  src="/images/common/icon-starSel.png"></image>
+                        </block>
+                    </view>
+                </view>
+            </view>
+            <view class="appraise-tags-box">
+                <view class="tag-box {{item.select ?'yellow':''}}" wx:for="{{appraisemarkList}}" wx:key="index" data-id="{{index}}"  catchtap="tapChooseAppraiseMarks">{{item.name}}</view>
+            </view>
+            <view class="input-wrapper" style="margin:0 40rpx;border:2rpx solid #DBE1E6;border-radius:8rpx;position: relative;padding:8rpx">
+                <editor id="editor" class="editor" placeholder="很满意，期待您的下次合作"  bindinput="bindAppraiseEditorInput" bindready="onEditorReady"> </editor>
+                <view class="number" style="position: absolute;right:8rpx;bottom:8rpx">{{appraiseTotal}}/300</view>
+            </view>
+            <view class="images-box" style="padding-bottom: 112rpx;margin-left:20rpx">
+                <view class="box" wx:for="{{appraiseImagesList}}" wx:key="index">
+                    <image src="/images/common/icon-delete.png" class="icon-delete" data-index="{{index}}" catchtap="deleteAppraisePhotos"></image>
+                    <image src="{{item}}" class="img" mode="aspectFill"  data-item="{{item}}"  catchtap="tapAppraiseBanner"/>
+                </view>
+                <view class="box dotted-box" bindtap="tapAppraiseUpload" wx:if="{{appraiseImagesList.length < 8}}">
+                    <image src="/images/common/icon-camera.png" class="upload-icon" style="height:120rpx;width:120rpx" catchtap="tapAppraiseUpload" />
+                </view>
+            </view>
+            <view class="tool-bar" style="padding-bottom: {{ safeBottom }}px;border:none;">
+                <view class="layout-1-1">
+                      <view class="right ok" catchtap="tapshadeAppraiseSubmit">提交</view>
                 </view>
             </view>
         </view>

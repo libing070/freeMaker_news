@@ -94,9 +94,10 @@ Component({
         },
         //跳转到作品详情
         tapToWorksDetail(e) {
+            let code = e.currentTarget.dataset.code
             let id = e.currentTarget.dataset.id
             wx.navigateTo({
-                url: '/pages/productDetails/productDetails?id=' + id,
+                url: '/pages/productDetails/productDetails?code=' + code + '&productionId='+id,
             })
         }
     }

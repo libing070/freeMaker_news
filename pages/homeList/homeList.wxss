@@ -20,14 +20,14 @@ page {
 }
 
 .filter .typeTabs {
-    height: 80rpx;
+    height: 88rpx;
     white-space: nowrap;
 }
 
 .filter .typeTabs .type {
     color: #8392A0;
     font-size: 30rpx;
-    height: 64rpx;
+    height: 88rpx;
     margin: 0 35rpx;
     padding-top: 16rpx;
     display: inline-block;
@@ -48,7 +48,7 @@ page {
     height: 6rpx;
     left: 0;
     right: 0;
-    bottom: 0;
+    bottom: 30rpx;
     position: absolute;
     margin: auto;
 }
@@ -126,7 +126,7 @@ page {
     margin-right:10rpx;
     margin-top: 10rpx;
     margin-bottom: 10rpx;
-    max-width: 152rpx;
+    min-width: 152rpx;
     background: #F7F9FB;
     padding: 0 30rpx;
     border-radius: 8rpx;

@@ -181,3 +181,51 @@ page {
     background: #FFBA20;
     color: #FFFFFF;
 }
+
+.shade {
+    background-color: rgba(0, 0, 0, 0.5);
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    position: fixed;
+    z-index: 5;
+}
+
+.main {
+    background-color: white;
+    border-radius: 10px 10px 0 0;
+    width: 100%;
+    bottom: 0;
+    position: absolute;
+    animation: main-show 0.25s forwards;
+}
+
+@keyframes main-show {
+    0% {
+        transform: translateY(100%);
+    }
+
+    100% {
+        transform: translateY(0);
+    }
+}
+.shade .main .title{
+    margin-top: 106rpx;
+    margin-left: 40rpx;
+    font-family: PingFangSC-Medium;
+    font-size: 36rpx;
+    color: #0D1335;
+    font-weight: bold;
+
+}
+.shade .main .content{
+    margin-top: 56rpx;
+    margin-left: 40rpx;
+    margin-right: 40rpx;
+    font-family: PingFangSC-Regular;
+    font-size: 28rpx;
+    color: #3F5161;
+    margin-bottom: 64rpx;
+
+}

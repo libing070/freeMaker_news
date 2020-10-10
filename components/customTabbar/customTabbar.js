@@ -96,12 +96,34 @@ Component({
         },
         //发布需求
         tapToDemand(e){
+            let pageType=e.currentTarget.dataset.pagetype
+            this.triggerEvent('pageType', {
+                pageType:pageType
+            })
+            // 未登录
+            if (!app.user) {
+                this.setData({
+                    showAuthModal: true
+                })
+                return
+            }
             wx.navigateTo({
                 url: '/pages/publishDemand/publishDemand?type=0', //type: 0 发布需求 ,1 购买服务
             })
         },
         //发布需求
         tapToProduct(e){
+            let pageType=e.currentTarget.dataset.pagetype
+            this.triggerEvent('pageType', {
+                pageType:pageType
+            })
+            // 未登录
+            if (!app.user) {
+                this.setData({
+                    showAuthModal: true
+                })
+                return
+            }
             wx.navigateTo({
                 url: '/pages/publishProduct/publishProduct',
             })

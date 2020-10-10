@@ -34,18 +34,10 @@ Component({
     methods: {
         getUserInfo(e) {
             let allow = e.detail.errMsg == 'getUserInfo:ok'
-
             if (allow) {
-                app.login(() => {
-                    var myEventDetail = {} // detail对象，提供给事件监听函数
-                    var myEventOption = {} // 触发事件的选项
-                    this.triggerEvent('loginCallbackEvent', myEventDetail, myEventOption)
-                })
+                app.login()
             }
         }
     },
-    //触发获取手机号事件
-    getPhoneDone() {
-        console.log(111)
-    }
+
 })

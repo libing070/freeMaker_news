@@ -27,8 +27,9 @@ page {
 .menu-box .menu{
     position: relative;
     white-space: nowrap;
-    height: 106rpx;
+    height: 176rpx;
     width: 672rpx;
+    padding-top: 70rpx;
 }
 .menu-box .menu .item{
     margin-right: 112rpx;
@@ -89,7 +90,7 @@ page {
     margin-left: 40rpx;
 }
 .album-box .swiperBox{
-    height: 160rpx;
+    height: 168rpx;
     white-space: nowrap;
 }
 .album-box .swiperBox .itemBox{

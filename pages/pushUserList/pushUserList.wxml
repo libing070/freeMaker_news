@@ -6,15 +6,15 @@
         <text class="text">选择一个Freelancer,系统会自动取消其他人的订单。</text>
     </view>
 
-    <view class="box-cell" wx:for="{{10}}" wx:key="index" catchtap="tapToProductDetails">
+    <view class="box-cell" wx:for="{{pushUserList}}" wx:key="index" catchtap="tapToProductDetails" data-info="{{item.freelancerInfo}}">
         <image class='photo' src="/images/common/715_2.jpg" mode="aspectFill"></image>
         <view class="user-box">
             <view class="user">
                 <view class="avatarBox">
-                    <image class="avatar" src="/images/common/default-head.png"></image>
+                    <image class="avatar" src="{{item.freelancerInfo.headImg}}"></image>
                 </view>
                 <view>
-                    <view class="name-user">波英冰</view>
+                    <view class="name-user">{{item.freelancerInfo.name}}</view>
                     <view  class="name-tag>">xxxx | 4.9分</view>
                 </view>
             </view>
@@ -23,12 +23,12 @@
                     <view class="item" wx:for="{{10}}" wx:key="index" data-id="{{index}}" catchtap="tapTohomeList">
                         <text class="name">更多类型{{index+1}}</text>
                     </view>
-                </scroll-view>  
+                </scroll-view>
             </view>
         </view>
         <view class="price">
             <text class="unit">¥</text>
-            <text class="value">400</text>
+            <text class="value">{{item.hourlyWage}}</text>
             <text class="unit">/时</text>
         </view>
     </view>

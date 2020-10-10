@@ -1,5 +1,7 @@
 {
     "navigationBarTitleText": "HowWork",
+    "enablePullDownRefresh": true,
+    "backgroundTextStyle": "dark",
     "usingComponents": {
         "home-cell": "/components/homeCell/homeCell"
     }

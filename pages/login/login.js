@@ -26,10 +26,10 @@ Page({
     wx.login({
       success: res => {
           if (res.code) {
-              let resp = REST.request({
-                  url: API.userlogin,
-                  data: {code: res.code}
-              })
+              // let resp = REST.request({
+              //     url: API.userlogin,
+              //     data: {code: res.code}
+              // })
               console.log(resp)
           }
         }

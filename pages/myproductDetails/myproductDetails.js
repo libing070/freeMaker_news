@@ -1,5 +1,9 @@
 // pages/myproductDetails/myproductDetails.js
 const app = getApp()
+const API = require("../../utils/api.js")
+const REST = require("../../utils/restful.js")
+const util = require("../../utils/util.js")
+
 Page({
 
     /**
@@ -16,14 +20,19 @@ Page({
             "//img14.360buyimg.com/pop/jfs/t1/110316/1/13554/178993/5ea17d3aE88af5e39/1e6dfb8dfb8259f6.jpg",
             "//img14.360buyimg.com/pop/jfs/t1/119502/34/1004/98273/5ea17d49Ed74b4fa5/49e7bdfc7ab97813.png"]
         },
-
+        prodCode:'', //作品编码
+        prodDetail:{},
+        publishDate:'' //作品发布日期（创建时间）
     },
 
     /**
      * 生命周期函数--监听页面加载
      */
     onLoad: function (options) {
-
+        this.setData({
+            prodCode:options.prodCode
+        })
+        this.getProdDetail()
     },
 
     /**
@@ -108,6 +117,7 @@ Page({
     },
     //关闭需求
     tapDeleteProduct(){
+        let that = this
         wx.showModal({
             title: '提示信息',
             content: '确认删除当前作品吗？',
@@ -116,10 +126,23 @@ Page({
             confirmText: '确定',
             success: res => {
                 if (res.confirm) {
+                    that.delProdByCode(this.data.prodCode)
                     wx.showToast({
                         title: '作品已关闭',
                         icon: 'none',
-                        duration: 2000
+                        duration: 1000,
+                        success: ()=> {
+                            wx.navigateBack({
+                                delta: 1,
+                                success: function (e) {
+                                    let page = getCurrentPages().pop();
+                                    if (page == undefined || page == null) {
+                                        return
+                                    };
+                                    page.getProductionListByFreelancerId();
+                                }
+                            })
+                        }
                     }); 
                 }
             },
@@ -128,8 +151,85 @@ Page({
       //跳转到作品编辑页面（发布作品页面）
     tapEditProduct(){
         wx.navigateTo({
-            url: '/pages/publishProduct/publishProduct',
+            url: '/pages/publishProduct/publishProduct?prodCode='+this.data.prodCode,
         })
     },
-
+    getProdDetail(){
+        let that = this
+        REST.get({
+            url: API.getProdDetail,
+            data:{
+                code:this.data.prodCode
+            },
+            success(res) {
+                that.setData({
+                    prodDetail: res,
+                    publishDate:util.formatDate(res.createTime,'年月日'),
+                    shadeShowing:res.status == 30 ? true:false
+                })
+                if(that.data.prodDetail.status == 30 && that.data.shadeShowing){
+                    that.getReviewNotPassInfo(that.data.prodDetail.id)
+                }
+            },
+            failed(res) {
+                console.error(res)
+            },
+            complete(res) {
+                console.log("初始化作品详情:", that.data.prodDetail)
+            }
+        })
+    },
+    //审核未通过原因
+    getReviewNotPassInfo(id){
+        let that = this
+        REST.get({
+            url: API.getReviewNotPassInfo,
+            data:{
+                id:id
+            },
+            success(res) {
+                that.setData({
+                    reviewerOpinion:res[0].reviewerOpinion
+                })
+            },
+            failed(res) {
+                console.error(res)
+            },
+            complete(res) {
+            }
+        })
+    },
+    delProdByCode(){
+        let that = this
+        REST.post({
+            url: API.delStatusByCode,
+            data:{
+                code:this.data.prodCode
+            },
+            success(res) {
+                that.setData({
+                    prodDetail: res,
+                    publishDate:util.formatDate(res.createTime,'年月日')
+                })
+            },
+            failed(res) {
+                console.error(res)
+            },
+            complete(res) {
+                console.log("初始化作品详情:", that.data.prodDetail)
+            }
+        })
+    },
+    //显示隐藏
+    shadeShowing(e) {
+        if (e.currentTarget.dataset.id != "shadeMain") {
+            this.setData({
+                shadeShowing: !this.data.shadeShowing,
+                currPicker: e.currentTarget.dataset.type
+            });
+        }
+        if(this.data.prodDetail.status == 30 && this.data.shadeShowing){
+            this.getReviewNotPassInfo(this.data.prodDetail.id)
+        }
+    },
 })

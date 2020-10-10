@@ -1,0 +1,98 @@
+<!--pages/demand/demand.wxml-->
+<wxs module="fn">
+    module.exports = {
+        formatCurrrArea: function(currrArea) {
+            return currrArea.length!=0 ? (currrArea[0]+','+currrArea[1]+","+currrArea[2]): '请选择'
+        }
+    }
+</wxs>
+<view class="demand" style="padding-bottom: {{ 56 + safeBottom }}px">
+    <view class="user">
+            <view class="avatarBox" data-item="1">
+                <image class="avatar" src="{{headImg}}"></image>
+            </view>
+            <view>
+                <view class="name-user">{{freelancerName}}</view>
+                <view  class="name-tag>">{{domainCateName}}.{{postCateName}}</view>
+            </view>
+            <view class="collect {{ collect ? 'sel' :''}}" catchtap="tapCollect" data-id="{{obj.id}}">
+                <image wx:if="{{!collect}}"src=" /images/common/icon-collect.png" class="icon"></image>
+                <text class="collect-name {{ collect ? 'sel' :''}}">{{collect ? '已收藏':'收藏'}}</text>
+            </view>
+        </view>
+
+    <view class="input-wrapper">
+        <input class="input" placeholder-style='text-align:left' maxlength="100" placeholder="添加一个标题吧" bindinput="bindTitleInput" value="{{title}}" placeholder-style="color: #8392A0"/>
+    </view>
+    <view class="input-wrapper">
+        <editor id="editor" class="editor" placeholder="简单描述下您的需求吧"  bindinput="bindEditorInput" bindready="onEditorReady"></editor>
+        <view class="number">{{total}}/300</view>
+    </view>
+    <view class="content-wrapper">
+        <view class="names"><image class="icon-important" src="/images/common/icon-important.png"></image><text class="t">需求类型</text></view>
+        <view class="choose-val" catchtap="shadeShowing" data-type="demand" style="color:{{ demandType == '请选择' ? '#8392A0' : ' #0C2032'}}">{{demandType}}<image class="arrow"  src="/images/common/icon-arrow.png"></image></view>
+    </view>
+    <view class="content-wrapper">
+        <view class="names"><image class="icon-important" src="/images/common/icon-important.png"></image><text class="t">期望交付时间</text></view>
+        <view class="choose-val" catchtap="shadeShowing" data-type="date" style="color:{{ currentDateStr == '请选择' ? '#8392A0' : ' #0C2032'}}">{{currentDateStr}}<image class="arrow" src="/images/common/icon-arrow.png"></image></view>
+    </view>
+    <view class="input-budget">
+        <view class="names"><image class="icon-important" src="/images/common/icon-important.png"></image><text class="t">时薪(¥)</text></view>
+        <view style="height:120rpx;line-height:120rpx;font-size: 32rpx;color: #0C2032;">{{hourlyWage}}/时</view>
+        <!-- <input class="budget" type="number"  placeholder-style='text-align:right' maxlength="100" placeholder="请输入您的时薪" bindinput="bindhourlywageInput" value="{{hourlywage}}" placeholder-style="color: #8392A0"></input> -->
+    </view>
+    <view class="content-wrapper">
+        <view class="names"><image class="icon-important" src="/images/common/icon-important.png"></image><text class="t">购买数量</text></view>
+        <view class="stepper">
+            <image class="icon"src="/images/common/icon-minussign.png" catchtap="calcQuantity" data-type="minussign"></image>
+            <view class="value">{{buysum}}</view>
+            <image class="icon" src="/images/common/icon-plussign.png" catchtap="calcQuantity" data-type="plussign"></image>
+        </view>
+    </view>
+    
+    <view class="content-wrapper">
+        <view class="names"><image class="icon-important" src="/images/common/icon-important.png"></image><text class="t">省份城市</text></view>
+        <view class="choose-val" catchtap="shadeShowing" data-type="area" style="color:{{ fn.formatCurrrArea(currrArea) == '请选择' ? '#8392A0' : ' #0C2032'}}" >{{fn.formatCurrrArea(currrArea)}}<image class="arrow"  src="/images/common/icon-arrow.png"></image></view>
+    </view>
+</view>
+
+<view class="tool-bar" style="padding-bottom: {{ safeBottom }}px">
+    <view class="layout-1 {{isClickbtn ? 'ok' : ''}}" catchtap="tapPublishDemand">提交</view>
+</view>
+
+<view class="shade" wx:if="{{shadeShowing}}" catchtap="shadeShowing">
+    <view class="main"  data-id="shadeMain" catchtap="shadeShowing" style="padding-bottom: {{safeBottom}}px;">
+        <view wx:if="{{ currPicker == 'demand'}}">
+            <van-picker   
+                show-toolbar
+                title="请选择需求类型"
+                columns="{{ demandColumns }}"
+                value-key="jobCateName"
+                bind:cancel="onCancel"
+                bind:confirm="onDemandConfirm"
+                bind:change="onDemandChange"
+             />
+        </view>
+        <view wx:elif="{{currPicker == 'date'}}">
+            <van-datetime-picker
+            title="期望交付时间"
+            type="date"
+            value="{{ currentDate }}"
+            min-date="{{ minDate }}"
+            max-date="{{ maxDate }}"
+            formatter="{{ formatter }}"
+            bind:confirm="dateTapDone"
+            bind:cancel="tapCancel"
+            />
+        </view>
+        <view wx:elif="{{currPicker == 'area'}}">
+            <van-area
+            bind:confirm="areaTapDone"
+            bind:cancel="tapCancel"
+            area-list="{{ areaList }}"
+            value="{{currrAreaCode}}"
+            title="省/市/区"
+            />
+        </view>
+    </view>
+</view>

@@ -33,15 +33,6 @@ Component({
     },
 
     methods: {
-        getUserInfo(e) {
-            let allow = e.detail.errMsg == 'getUserInfo:ok'
-            
-            this.triggerEvent('callback', allow)
-
-            if (allow) {
-                app.login()
-            }
-        },
         onGetPhoneNumber (e) {
             this.triggerEvent('phonecallback', e)
             console.log(e.detail.errMsg)

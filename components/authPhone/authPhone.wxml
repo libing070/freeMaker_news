@@ -1,0 +1,14 @@
+<!--components/authPhone/authPhone.wxml-->
+
+<view class="shade" wx:if="{{show}}">
+    <view class="back">
+        <view class="title">提示信息</view>
+        <view class="content">申请获取手机号码，可查看更多信息</view>
+        <view class="buttons">
+            <view class="cancel" catchtap="tapCancel">拒绝</view>
+            <view class="cancel confirm">
+                <phone-button bindphonecallback="authDone"></phone-button>允许
+            </view>
+        </view>
+    </view>
+</view>

@@ -7,7 +7,7 @@ const REST = require("./utils/restful.js")
 App({
     globalData: {
         //domain: ENV.Dev, //本地
-         domain: ENV.Test, //测试
+          domain: ENV.Test, //测试
         // domain: ENV.Prod, //正式
         cookie: '',
 
@@ -15,7 +15,9 @@ App({
 
         selectedTab: 0, //我的页面 当前选择的菜单
 
-        userToken: ''
+        userToken: '',
+
+        code:''//登录官方凭证
 
     },
     API,
@@ -48,7 +50,7 @@ App({
         this.checkForUpdate();
     },
     //登录
-    login(afterEvent) {
+    login() {
         wx.showLoading({
             title: '正在登录',
             mask: true,
@@ -56,6 +58,7 @@ App({
 
         wx.login({
             success: res => {
+                this.globalData.code = res.code
                 getUserInfo(res.code)
             },
             fail: res => {
@@ -69,9 +72,7 @@ App({
             wx.getUserInfo({
                 withCredentials: true,
                 success: res => {
-                    console.log(res)
-                    this.user = res.userInfo
-
+                    this.globalData.userInfo = res.userInfo //中间层传给获取手机号接口使用 authPhone.js
                     //向后台同步用户信息
                     REST.post({
                         url: API.syncUserInfo,
@@ -85,45 +86,60 @@ App({
                             gender: this.user.gender
                         },
                         success: (data) => {
-                            this.userToken = data
-                            this.globalData.userInfo = this.user
-                            wx.setStorageSync('user', this.globalData.userInfo)
-                            //如果定义了，执行登录后回调
-                            if(afterEvent){
-                                afterEvent()
-                            }
+                            this.globalData.userToken = data.userToken  //中间层传给获取手机号接口使用 authPhone.js
 
-                            // 登录成功 通知当前页面
-                            let currentPage = this.currentPage()
-                            if (currentPage.loginSuccess) {
-                                currentPage.loginSuccess(true)
+                            if(data.hasPhone){
+                                this.user= this.globalData.userInfo
+                                wx.setStorageSync('user', this.globalData.userInfo)
+                                wx.setStorageSync('token', this.globalData.userToken)
+                                // 登录成功 通知当前页面
+                                let currentPage = this.currentPage()
+                                if (currentPage.loginSuccess) {
+                                    currentPage.loginSuccess(true)
+                                }
+                                wx.showToast({
+                                    title: '登录成功',
+                                    duration: 1000
+                                })
+                            }else{
+                                // 授权成功 通知当前页面 获取手机号码
+                                let currentPage = this.currentPage()
+                                if (currentPage.authSuccess) {
+                                    currentPage.authSuccess(true)
+                                }
                             }
-                            wx.showToast({
-                                title: '登录成功',
-                                duration: 1000
-                            })
-                            wx.hideLoading()
+                           
+                            wx.hideLoading() 
                         },
-                        failed: (resp) => {
-                            wx.hideLoading()
-                            wx.showToast({
-                                title: '请重新登录',
-                                icon: 'loading',
-                                duration: 1000
-                            })
-
-                            console.log('同步用户信息失败', resp)
-                        }
+                        fail: res => {
+                            fail()
+                        },
                     })
                 },
                 fail: res => {
                     wx.showToast({
-                        title: '登录失败，请重试',
+                        title: '系统错误，请重试',
                         icon: 'none',
                     })
                 }
             })
         }
+        let fail = () => {
+            wx.showToast({
+                title: '登录失败，请重试',
+                icon: 'none',
+            })
+            wx.hideLoading() 
+            wx.clearStorage()//清除所有缓存
+            this.user=""
+            this.globalData.userToken=""
+        }
+    },
+    //登录失效 跳转到我的页面
+    navbackMinePage(){
+        wx.navigateTo({
+            url: '/pages/mine/mine'
+        })
     },
     // 当前显示的页面实例
     currentPage() {

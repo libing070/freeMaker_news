@@ -17,14 +17,33 @@ module.exports = {
             header: {
                 cookie: app.globalData.cookie,
                 'content-type': object.contentType || 'application/json',
-                'userToken': app.globalData.userToken
+                userToken: app.globalData.userToken,
+                isNeedValid: object.isNeedValid === false?'false':'true'
             },
-            method: object.method || 'POST',
+            method: method || 'POST',
             success: res => {
                 let body = res.data
                 if (body.code === 1) {
                     object.success(body.data)
-                } else if (body.code != 1) {
+                }else if(body.code === 9527){ //登录失效
+                    wx.clearStorage();//清除本地缓存
+                    app.globalData.userToken = ""
+                    app.user = ""
+                    wx.showToast({
+                        title: '授权已失效，请重新登录',
+                        icon: 'none',
+                        duration:1500,
+                    })
+                    setTimeout(()=>{
+                        //通知当前页面 登录已失效 重新登录
+                        let currentPage = app.currentPage()
+                        if (currentPage.Relogin) {
+                            currentPage.Relogin(true)
+                        }
+                    },1500)
+
+
+                } else {
                     object.failed(body.message)
                 }
             },
@@ -47,11 +66,17 @@ module.exports = {
     post(object) {
         this.request(object, 'POST')
     },
+
     put(object) {
         this.request(object, 'PUT')
     },
 
     get(object) {
+        this.request(object, 'GET')
+    },
+
+    noVerfiyget(object) {
+        object.isNeedValid = false 
         this.request(object, 'GET')
     }
 }
