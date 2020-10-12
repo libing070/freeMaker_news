@@ -38,7 +38,14 @@ const formatDate = (datetime, format) => {
   return result;
 }
 
+const deleteHtmlTag = (html) => {
+  var dd = html.replace(/<[^>]+>/g, ""); //截取html标签
+  var dds = dd.replace(/&nbsp;/ig, ""); //截取空格等特殊标签
+  return dds
+}
+
 module.exports = {
   formatTime: formatTime,
-  formatDate: formatDate
+  formatDate: formatDate,
+  deleteHtmlTag: deleteHtmlTag
 }

@@ -6,9 +6,17 @@ const REST = require("./utils/restful.js")
 
 App({
     globalData: {
+
         //domain: ENV.Dev, //本地
-          domain: ENV.Test, //测试
+         domain: ENV.Test, //测试
         // domain: ENV.Prod, //正式
+
+
+        Bucket: 'howwork-1301749332',
+
+        Region: 'ap-beijing',
+
+
         cookie: '',
 
         userInfo: null,
@@ -78,12 +86,9 @@ App({
                         url: API.syncUserInfo,
                         data: {
                             code: code,
-                            nickName: this.user.nickName,
-                            language: this.user.language,
-                            province: this.user.province,
-                            city: this.user.city,
-                            avatarUrl: this.user.avatarUrl,
-                            gender: this.user.gender
+                            nickName: res.userInfo.nickName,
+                            language: res.userInfo.language,
+                            avatarUrl: res.userInfo.avatarUrl
                         },
                         success: (data) => {
                             this.globalData.userToken = data.userToken  //中间层传给获取手机号接口使用 authPhone.js
@@ -111,7 +116,7 @@ App({
                            
                             wx.hideLoading() 
                         },
-                        fail: res => {
+                        failed: res => {
                             fail()
                         },
                     })
@@ -129,7 +134,7 @@ App({
                 title: '登录失败，请重试',
                 icon: 'none',
             })
-            wx.hideLoading() 
+            wx.hideLoading()
             wx.clearStorage()//清除所有缓存
             this.user=""
             this.globalData.userToken=""

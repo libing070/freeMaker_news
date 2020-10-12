@@ -76,9 +76,9 @@ Page({
     },
     //跳转到作品详情
     tapToProductDetails(e){
-        console.log(e.currentTarget.dataset.info)
+        console.log(e.currentTarget.dataset.prodId)
         wx.navigateTo({
-            url: '/pages/productDetails/productDetails?id='+e.currentTarget.dataset.info.id,
+            url: '/pages/productDetails/productDetails?productionId='+e.currentTarget.dataset.prodId,
         })
     },
     getPushUserList(){

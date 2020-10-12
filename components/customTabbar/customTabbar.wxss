@@ -40,11 +40,11 @@ view.block_bottom {
 }
 
 .tabbar-item .image-box{
-    width: 56rpx;
-    height: 56rpx;
-    background-color: rgba(255,0,0,0.08);
+    width: 60rpx;
+    height: 60rpx;
+    /* background-color: rgba(255,0,0,0.08); */
     margin-top: 20rpx; 
-    margin-bottom: 4rpx;
+    /* margin-bottom: 4rpx; */
     position: relative;
 
 }
@@ -55,8 +55,8 @@ view.block_bottom {
     right: 0;
     bottom: 0;
     margin: auto;
-    width: 36rpx;
-    height: 36rpx;
+    width: 60rpx;
+    height: 60rpx;
 }
 .publish{
     position: absolute;

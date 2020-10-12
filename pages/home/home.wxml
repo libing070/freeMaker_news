@@ -11,7 +11,7 @@
     <view class="menu-box">
         <scroll-view class="menu" scroll-x>
             <view class="item" wx:for="{{firstLevelJobs}}" wx:key="index" data-id="{{index}}" data-catename="{{item.cateName}}"  data-type=""  catchtap="tapTohomeList">
-                <image class="icon" src="{{fn.randomIcon(staticIcon)}}"></image>
+                <image class="icon" src="{{staticIcon[index]}}"></image>
                 <view class="name">{{item.cateName}}</view>
             </view>
         </scroll-view>  

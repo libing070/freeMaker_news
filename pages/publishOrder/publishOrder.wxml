@@ -8,18 +8,18 @@
 </wxs>
 <view class="demand" style="padding-bottom: {{ 56 + safeBottom }}px">
     <view class="user">
-            <view class="avatarBox" data-item="1">
-                <image class="avatar" src="{{headImg}}"></image>
-            </view>
-            <view>
-                <view class="name-user">{{freelancerName}}</view>
-                <view  class="name-tag>">{{domainCateName}}.{{postCateName}}</view>
-            </view>
-            <view class="collect {{ collect ? 'sel' :''}}" catchtap="tapCollect" data-id="{{obj.id}}">
-                <image wx:if="{{!collect}}"src=" /images/common/icon-collect.png" class="icon"></image>
-                <text class="collect-name {{ collect ? 'sel' :''}}">{{collect ? '已收藏':'收藏'}}</text>
-            </view>
+        <view class="avatarBox" data-item="1">
+            <image class="avatar" src="{{headImg}}"></image>
         </view>
+        <view>
+            <view class="name-user">{{freelancerName}}</view>
+            <view  class="name-tag>">{{domainCateName}}.{{postCateName}}</view>
+        </view>
+        <view class="collect {{ collect ? 'sel' :''}}" catchtap="tapCollect" data-id="{{obj.id}}" wx:if="">
+            <image wx:if="{{!collect}}"src=" /images/common/icon-collect.png" class="icon"></image>
+            <text class="collect-name {{ collect ? 'sel' :''}}">{{collect ? '已收藏':'收藏'}}</text>
+        </view>
+    </view>
 
     <view class="input-wrapper">
         <input class="input" placeholder-style='text-align:left' maxlength="100" placeholder="添加一个标题吧" bindinput="bindTitleInput" value="{{title}}" placeholder-style="color: #8392A0"/>

@@ -5,7 +5,7 @@
             <swiper class="swiper" bindchange="changeSwiper">
                 <block wx:for="{{data.images}}" wx:key="index">
                     <swiper-item>
-                        <image class="photo" src="{{item.fullPath}}" mode="aspectFill"  data-item="{{item.fullPath}}" catchtap="tapBanner"></image>
+                        <image class="photo" src="{{item.fullPath}}" mode="widthFix"  data-item="{{item.fullPath}}" catchtap="tapBanner"></image>
                     </swiper-item>
                 </block>
             </swiper>
@@ -37,7 +37,8 @@
             <view class="name-user">{{data.freelancerInfo.name}}</view>
             <view  class="name-tag>">{{data.postCate.cateName}}</view>
         </view>
-       <image class="arrow" src="/images/common/icon_wechat.png" data-item="0" catchtap="shadeShowing"></image>
+       <image wx:if="{{data.freelancerInfo.accountCode}}" class="arrow wechat" src="/images/common/icon_wechat.png" data-item="0" catchtap="shadeShowing"></image>
+       <image class="arrow phone" src="/images/common/icon_phone@2x.png"  data-content="{{data.freelancerInfo.phone}}" catchtap="freeTell"></image>
     </view>
 
     <view class="skill-desc">
@@ -142,12 +143,12 @@
             </scroll-view>
         </view>
         <view class="product-box">
-            <view class="product-box-item" wx:for="{{otherProductdata}}" wx:key="index">
-                 <image src="{{item.images.fullPath}}" mode="aspectFill" class="photoBox"></image>
+            <view class="product-box-item" wx:for="{{otherProductdata}}" wx:key="index"  data-code="{{item.code}}" data-id="{{item.id}}" catchtap="tapToWorksDetail">
+                 <image src="{{item.images[0].fullPath}}" mode="aspectFill" class="photoBox"></image>
                  <view class="titles">{{item.title}}</view>
                  <view class="mark-type">
                     <scroll-view class="menu" scroll-x="true">
-                        <view class="item"  data-id="{{index}}" catchtap="tapTohomeList">
+                        <view class="item"  data-id="{{index}}">
                             <text class="name">{{item.postCate.cateName}}</text>
                         </view>
                     </scroll-view>  
@@ -169,15 +170,15 @@
 
 <view class="shade" wx:if="{{shadeShowing}}" catchtap="shadeShowing">
     <view class="main"  data-id="shadeMain" catchtap="shadeShowing" style="padding-bottom: {{safeBottom}}px;">
+
         <view wx:if="{{ currShadeItem == 0}}"><!--联系TA-->
             <view class="call-user">
                 <view class="head">
                      <view class="left">联系TA</view>
                 </view>
                 <view class="copy">
-                    {{data.freelancerInfo.phone}}
-                    <!-- <view class="btn" data-content="{{data.freelancerInfo.phone}}" catchtap="tapCopy">一键复制</view> -->
-                    <view class="btn" data-content="{{data.freelancerInfo.phone}}" catchtap="freeTell">一键呼叫</view>
+                    {{data.freelancerInfo.accountCode}}
+                    <view class="btn" data-content="{{data.freelancerInfo.accountCode}}" catchtap="tapCopy">一键复制</view>
                 </view>
             </view>
 
@@ -195,11 +196,11 @@
                 </view>
                 <view class="cell-group">
                     <view class="field">地域</view>
-                    <view class="message">{{(data.freelancerInfo.provinceCode && data.freelancerInfo.cityCode && data.freelancerInfo.districtCode) ? data.freelancerInfo.provinceCode + ' '+  data.freelancerInfo.cityCode + ' '+   data.freelancerInfo.districtCode:'暂无'}}</view>
+                    <view class="message">{{data.freelancerInfo.areaName ? data.freelancerInfo.areaName:'暂无'}}</view>
                 </view>
                 <view class="cell-group" style="border-top: 0.1px solid #E6E6E6;border-bottom: 0.1px solid #E6E6E6;">
                     <view class="field">语言</view>
-                    <view class="message">{{data.freelancerInfo.language}}</view>
+                    <view class="message">{{data.freelancerInfo.language == 10 ? '中文' : data.freelancerInfo.language == 20 ? '英文':'未知'}}</view>
                 </view>
                 <view class="cell-group">
                     <view class="field">个人介绍</view>

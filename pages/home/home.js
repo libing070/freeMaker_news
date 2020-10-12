@@ -10,7 +10,7 @@ Page({
     data: {
         safeBottom:app.safeBottom,
         safeTop:app.safeTop,
-        staticIcon:['/images/home/home-icon1.png','/images/home/home-icon2.png','/images/home/home-icon3.png','/images/home/home-icon3.png'],
+        staticIcon:['/images/home/icon_home_hr@2x.png','/images/home/icon_home_video@2x.png','/images/home/icon_home_design@2x.png','/images/home/icon_home_management@2x.png','/images/home/icon_home_operation@2x.png','/images/home/icon_home_development@2x.png'],
         pageType:'',
         firstLevelJobs:[],//一级标签
         secondLevelJobs:[],//二级标签

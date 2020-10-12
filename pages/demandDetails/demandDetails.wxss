@@ -34,6 +34,24 @@ page {
     font-size: 28rpx;
     color: #262626;
 }
+.order-status .btn{
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    margin: auto;
+    background: #FFBA20;
+    border-radius: 32rpx;
+    color: white;
+    width: 180rpx;
+    text-align: center;
+    height: 64rpx;
+    line-height: 64rpx;
+    font-family: PingFangSC-Medium;
+    font-size: 24rpx;
+    color: #FFFFFF;
+
+}
 .wrap{
     position: relative;
     margin:24rpx 40rpx;

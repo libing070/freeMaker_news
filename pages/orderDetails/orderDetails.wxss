@@ -205,7 +205,16 @@ page {
     color: #8392A0;
     margin-top: 2rpx;
 }
-.wrap .user .arrow{
+.wrap .user .arrow.wechat{
+    position: absolute;
+    top: -40rpx;
+    right: 100rpx;
+    bottom: 0;
+    margin:auto;
+    height:64rpx;
+    width: 64rpx;
+}
+.wrap .user .arrow.phone{
     position: absolute;
     right: 0rpx;
     top: -40rpx;
@@ -1209,6 +1218,27 @@ page {
     color: #C8C8C8;
 }
 .images-box .box.dotted-box .upload-icon{
-    width: 100rpx;
-    height: 100rpx;
+    width: 120rpx;
+    height: 120rpx;
+}
+
+._notice{
+    position: relative;
+    background: #EBF5FF;
+    height: 40rpx;
+    padding: 20rpx 0;
+}
+._notice .icon{
+    padding-left: 40rpx;
+    width: 32rpx;
+    height: 32rpx;
+    vertical-align: middle;
+
+}
+._notice .text{
+    font-size: 28rpx;
+    padding-left: 10rpx;
+    font-family: PingFangSC-Regular;
+    font-size: 24rpx;
+    color: #6F96BA;
 }

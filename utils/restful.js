@@ -17,8 +17,8 @@ module.exports = {
             header: {
                 cookie: app.globalData.cookie,
                 'content-type': object.contentType || 'application/json',
-                userToken: app.globalData.userToken,
-                isNeedValid: object.isNeedValid === false?'false':'true'
+                userToken: app.globalData.userToken || wx.getStorageSync("token"),
+                isNeedValid: object.isNeedValid === false?'false':'true',
             },
             method: method || 'POST',
             success: res => {

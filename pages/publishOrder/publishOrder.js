@@ -77,13 +77,17 @@ Page({
             headImg:options.headImg,
             domainCateName:options.domainCateName,
             postCateName:options.postCateName,
-            hourlyWage:options.hourlyWage
+            hourlyWage:options.hourlyWage,
+            jobCateId: Number(options.postCateId) //todo 回显
         });
         wx.setNavigationBarTitle({
             title: '购买服务'
         })
-        this.loadjobTree()
-        
+        this.loadjobTree(options.postCateId)
+        if (options.provinceCode && options.cityCode && options.districtCode) {
+            this.onFillArea(Number(options.provinceCode), Number(options.cityCode), Number(options.districtCode))
+        }
+
     },
 
     /**
@@ -144,7 +148,6 @@ Page({
     },
     //获取技能数据
     loadjobTree() {
-        let that =this
         REST.noVerfiyget({
             url: API.loadTreeData,
             success: res => {
@@ -153,7 +156,8 @@ Page({
                 this.setData({
                     treeData: res
                 })
-                
+
+                this.onFillDemandType()
             },
             failed: res => {
                 wx.showToast({

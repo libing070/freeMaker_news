@@ -40,25 +40,60 @@ Page({
                 'checked': false
             },
             {
-                'text': '制作中',
-                'value': '40',
-                'checked': false
-            },
-            {
                 'text': '已下单',
                 'value': '10',
                 'checked': false
             },
             {
-                'text': '已完成',
+                'text': '待接单',
+                'value': '20',
+                'checked': false
+            },
+            {
+                'text': '已拒单',
+                'value': '30',
+                'checked': false
+            },
+            {
+                'text': '待支付',
+                'value': '40',
+                'checked': false
+            },
+            {
+                'text': '制作中',
+                'value': '50',
+                'checked': false
+            },
+            {
+                'text': '待验收',
+                'value': '60',
+                'checked': false
+            },
+            {
+                'text': '验收不通过',
                 'value': '70',
                 'checked': false
             },
             {
-                'text': '已评价',
+                'text': '验收仍不通过',
+                'value': '71',
+                'checked': false
+            },
+            {
+                'text': '已完成',
                 'value': '80',
                 'checked': false
             },
+            {
+                'text': '已评价',
+                'value': '90',
+                'checked': false
+            },
+            {
+                'text': '已取消',
+                'value': '100',
+                'checked': false
+            }
         ],
         totalIncome: 0,
         orderList: [],
@@ -176,7 +211,7 @@ Page({
     // mark: 登录成功 （获取手机号成功）
     loginSuccess(login){
         this.setData({
-            user: app.user,
+            user:  app.user,
             showAuthModal:false
         })
         if (login) {
@@ -345,7 +380,7 @@ Page({
     tapToProductDetails(e) {
         app.globalData.selectedTab = this.data.selectedTab
         wx.navigateTo({
-            url: '/pages/myproductDetails/myproductDetails?prodCode='+e.currentTarget.dataset.prodCode,
+            url: '/pages/myproductDetails/myproductDetails?prodId='+e.currentTarget.dataset.prodId,
         })
     },
     getIncome() {
@@ -471,4 +506,9 @@ Page({
             url: '/pages/publishDemand/publishDemand?demandCode='+e.currentTarget.dataset.demandCode,
         })
     },
+    tapEdit(e) {
+        wx.navigateTo({
+            url: '/pages/publishProduct/publishProduct?prodId='+e.currentTarget.dataset.prodId,
+        })
+    }
 })

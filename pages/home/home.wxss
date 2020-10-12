@@ -29,10 +29,10 @@ page {
     white-space: nowrap;
     height: 176rpx;
     width: 672rpx;
-    padding-top: 70rpx;
+    padding-top: 24rpx;
 }
 .menu-box .menu .item{
-    margin-right: 112rpx;
+    margin-right: 80rpx;
     display: inline-flex;
     flex-direction: column;
     align-items: center;/*左右居中*/
@@ -44,13 +44,12 @@ page {
     margin-right: 40rpx;
 }
 .menu-box .item .icon{
-    width: 64rpx;
-    height: 64rpx;
+    width: 100rpx;
+    height: 100rpx;
 }
 .menu-box .item .name{
-    margin-top: 6.8rpx;
     font-family: PingFangSC-Regular;
-    font-size: 24rpx;
+    font-size: 28rpx;
     color: #3F5161;
     letter-spacing: 0;
     text-align: center;

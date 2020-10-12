@@ -1,14 +1,10 @@
 // pages/product/product.js
 const app = getApp()
-const util = require("../../utils/util");
-const area = require("../../utils/area");
 const REST = require("../../utils/restful.js")
 const API = require("../../utils/api.js")
+const uploadFile = require("./../../utils/upload.js")
 
-const skillsList = {
-    浙江: ['杭州', '宁波', '温州', '嘉兴', '湖州'],
-    福建: ['福州', '厦门', '莆田', '三明', '泉州'],
-};
+
 Page({
 
     /**
@@ -21,65 +17,14 @@ Page({
         shadeShowing: false,
         currTreeSelectNavIndex: 0,
         skillType: '全部类型',
-        skillsColumns: [{
-                values: Object.keys(skillsList),
-                className: 'column1',
-            },
-            {
-                values: skillsList['浙江'],
-                className: 'column2',
-                defaultIndex: 2,
-            },
-        ],
-        markList: [{
-                val: 'UI设计',
-                select: false
-            },
-            {
-                val: '品牌设计',
-                select: false
-            },
-            {
-                val: 'UI设计',
-                select: false
-            },
-            {
-                val: '品牌设计',
-                select: false
-            },
-            {
-                val: 'UI设计',
-                select: false
-            },
-            {
-                val: '品牌设计',
-                select: false
-            },
-            {
-                val: 'UI设计',
-                select: false
-            },
-            {
-                val: '品牌设计',
-                select: false
-            },
-            {
-                val: 'UI设计',
-                select: false
-            },
-            {
-                val: '品牌设计',
-                select: false
-            },
-        ],
-        chooseMarkList: [],
+        markList: [],
         prod: {
             title: '',
             summarize: '',
-            hourlyWage: 0,
-            jobs: [],
-            markList: [],
-            attachmentInfos: []
+            hourlyWage: '',
+            jobCateId: '', //岗位
+            skills: [], //技能
+            images: []//images
         },
         treeData: [],
         demandType: ''
@@ -90,9 +35,9 @@ Page({
      */
     onLoad: function (options) {
         this.loadjobTree()
-        if (options.prodCode) {
+        if (options.prodId) {
             this.setData({
-                prodCode: options.prodCode
+                prodId: options.prodId
             })
             this.getProdDetail()
         }
@@ -157,7 +102,9 @@ Page({
     onEditorReady() {
         const that = this
         wx.createSelectorQuery().select('#editor').context(function (res) {
-            that.editorCtx = res.context
+            if(that.data.prod.summarize){
+                that.setEditorData(that.data.prod.summarize)
+            }
         }).exec()
     },
     //编辑器内容改变时触发
@@ -184,7 +131,7 @@ Page({
     },
     //上传作品
     tapUpload(e) {
-        if (this.data.prod.attachmentInfos.length >= 8) {
+        if (this.data.prod.images.length >= 8) {
             wx.showToast({
                 title: '最多上传8张哦',
                 icon: 'none',
@@ -192,29 +139,44 @@ Page({
             });
             return
         }
-        wx.chooseImage({
-            count: 8 - this.data.prod.attachmentInfos.length,
-            sizeType: ['compressed'],
-            success: (res) => {
-                let attachment = {
+
+        //参数详见 :utils/upload.js 
+        uploadFile('production',(filePath)=>{
+            let attachment = {
                     type: 1, //图片
                     name: '',
-                    path: res.tempFilePaths[0]
-                }
-                this.data.prod.attachmentInfos.push(attachment)
-                this.setData({
-                    'prod.attachmentInfos': this.data.prod.attachmentInfos
-                })
+                    path: filePath.filePath, //相对路径
+                    otherPath:filePath.filePath, //相对路径
+                    fullPath:filePath.fullPath, //全路径
             }
-        });
+            this.data.prod.images.push(attachment)
+            this.setData({
+                'prod.images': this.data.prod.images
+            })
+        })
+        // wx.chooseImage({
+        //     count: 8 - this.data.prod.images.length,
+        //     sizeType: ['compressed'],
+        //     success: (res) => {
+        //         let attachment = {
+        //             type: 1, //图片
+        //             name: '',
+        //             path: res.tempFilePaths[0]
+        //         }
+        //         this.data.prod.images.push(attachment)
+        //         this.setData({
+        //             'prod.images': this.data.prod.images
+        //         })
+        //     }
+        // });
     },
     //删除图片
     deletePhotos(e) {
         let currIndex = e.currentTarget.dataset.index;
         console.log(currIndex);
-        this.data.prod.attachmentInfos.splice(currIndex, 1);
+        this.data.prod.images.splice(currIndex, 1);
         this.setData({
-            'prod.attachmentInfos': this.data.prod.attachmentInfos,
+            'prod.images': this.data.prod.images,
         })
     },
     // 点击图片
@@ -223,7 +185,7 @@ Page({
         let current = e.currentTarget.dataset.item
 
         let urls = []
-        for (let item of this.data.prod.attachmentInfos) {
+        for (let item of this.data.prod.images) {
             //urls.push('http:' + item)
             urls.push(item)
         }
@@ -283,7 +245,7 @@ Page({
         });
     },
     //跳转到我的作品列表
-    tapToMyProduct() {
+    validSubmit() {
         if (this.trimStr(this.data.prod.title) == '') {
             wx.showToast({
                 title: '请填写标题',
@@ -300,7 +262,7 @@ Page({
             });
             return
         }
-        if (this.data.prod.attachmentInfos.length <= 0) {
+        if (this.data.prod.images.length <= 0) {
             wx.showToast({
                 title: '至少上传一张作品图片哦',
                 icon: 'none',
@@ -353,14 +315,19 @@ Page({
     //点击标签事件
     tapChooseMarks(e) {
         let id = e.currentTarget.dataset.id
+
+        this.data.prod.skills.push({jobSkillId:this.data.markList[id].id})
+
         this.setData({
             [`markList[${id}].select`]: !this.data.markList[id].select,
+            'prod.skills':this.data.prod.skills
         })
     },
     tapCreateProd() {
+        this.validSubmit()
         let that = this
         REST.post({
-            url: this.data.prodCode ? API.modifyProd : API.createProd,
+            url: this.data.prodId ? API.modifyProd : API.createProd,
             data: this.data.prod,
             success(res) {
                 console.log(res);
@@ -482,10 +449,10 @@ Page({
         let that = this
         let dataSet = this.data.selectFromatObject
         let col1Keys = Object.keys(dataSet)
-        if(this.data.jobCateId){
+        if(this.data.prod.jobCateId){
             col1Keys.forEach((col1Key,col1Index)=>{
                 dataSet[col1Key].forEach((col2Item,col2Index)=>{
-                    if(col2Item.jobCateId === that.data.jobCateId){
+                    if(col2Item.jobCateId === that.data.prod.jobCateId){
                         that.setData({
                             'demandColumns[1].values':dataSet[col1Key],
                             'demandColumns[1].defaultIndex':col2Index,
@@ -508,13 +475,14 @@ Page({
         this.setData({
             shadeShowing: false,
             demandType: value[0].jobCateName + "-" + value[1].jobCateName,
-            jobCateId: value[1].jobCateId,
+            'prod.jobCateId': value[1].jobCateId,
             'demandColumns[0].defaultIndex':index[0],
             'demandColumns[1].values':this.data.selectFromatObject[value[0].jobCateId],
             'demandColumns[1].defaultIndex':index[1],
         });
 
         this.watchInputSelectStatus();
+        this.getSkillByJob(value[1].jobCateId)
     },
     onDemandChange(event) {
         const {
@@ -528,7 +496,7 @@ Page({
     watchInputSelectStatus() {
         if (this.trimStr(this.data.prod.title) == '' ||
             this.data.total <= 0 ||
-            this.data.prod.jobs.length == 0 ||
+            this.data.prod.jobCateId == '' ||
             this.data.prod.hourlyWage == 0) {
             this.setData({
                 isClickbtn: false
@@ -550,14 +518,23 @@ Page({
         REST.get({
             url: API.getProdDetail,
             data: {
-                code: this.data.prodCode
+                id: this.data.prodId
             },
             success(res) {
                 that.setData({
-                    prod: res,
-                    'prod.summarize': that.setEditorData(res.summarize),
-                    'prod.attachmentInfos': res.images
+                    'prod.id':res.id,
+                    'prod.title':res.title,
+                    'prod.summarize': res.summarize,
+                    'prod.images': res.images,
+                    'prod.jobCateId': res.postCate.id,
+                    'prod.hourlyWage': res.hourlyWage,
+                    'markList':that.data.markList
+
                 })
+                
+                that.onEditorReady()
+                that.onFillDemandType()
+                that.getSkillByJob(res.postCate.id,res.skills)
             },
             failed(res) {
                 console.error(res)
@@ -567,22 +544,61 @@ Page({
             }
         })
     },
-    //需求详情，富文本框回填编辑值 用lambda试试
+    //需求详情，富文本框回填编辑值 
     setEditorData(desc) {
-        let that = this
         this.editorCtx.setContents({
             html: desc,
             success: function () {
-                that.setEditorDesc(desc)
+                this.bindEditorInput({detail: {html: desc}})            
             }
         })
     },
-    setEditorDesc(desc) {
-        let e = {
-            detail: {
-                html: desc
+    getSkillByJob(jobCateId,skills){
+        let that = this
+        REST.get({
+            url: API.getSkillList,
+            data: {
+                jobCateId: jobCateId
+            },
+            success(res) {
+                if(res){
+                    let tmpList=[]
+                    res.forEach((item)=>{
+                        let arr = {
+                            val: item.skillName,
+                            id: item.id,
+                            select: false
+                        }
+                        tmpList.push(arr)
+                })
+                    that.setData({
+                        markList: tmpList
+                    })
+
+                    //传入编辑技能，待使用promise
+                    if(skills){
+                        let editSkillList = []
+                        that.data.markList.forEach((item)=>{
+                            skills.forEach((chooseItem)=>{
+                            if(item.id === chooseItem.jobSkillId){
+                            item.select = true
+                            editSkillList.push({jobSkillId:item.id})                        }
+                    })
+                    })
+                        that.setData({
+                            'prod.skills': editSkillList,
+                            markList:that.data.markList
+                        })
+                    }
+                }
+
+            },
+            failed(res) {
+                console.error(res)
+            },
+            complete(res) {
+                console.log("加载岗位的技能:", that.data.markList)
             }
-        }
-        this.bindEditorInput(e)
-    },
+        })
+    }
 })

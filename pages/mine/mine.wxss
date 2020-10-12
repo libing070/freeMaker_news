@@ -76,7 +76,7 @@ page {
     height: 56rpx;
     position: relative;
     margin-right: 10rpx;
-    background-color: rgba(255,0,0,0.3)
+    /* background-color: rgba(255,0,0,0.3) */
 }
 .price .wallet .icon{
     position: absolute;
@@ -85,8 +85,8 @@ page {
     left: 0;
     right: 0;
     margin:auto;
-    width: 40rpx;
-    height: 40rpx;
+    width: 60rpx;
+    height: 60rpx;
 }
 .price .mm{
     position: relative;
@@ -206,28 +206,40 @@ page {
 }
 
 .demand-order-list .title{
+    position: relative;
     padding-top:44rpx;
     margin-left: 32rpx;
 }
 .demand-order-list .title .tag{
-    display: inline-block;
+    position: absolute;
+    display: block;
     background: #F4F4F4;
     border-radius: 8px;
-    color: white;
     text-align: center;
-    padding:8rpx 18rpx;
+    padding: 0 18rpx;
     font-family: PingFangSC-Regular;
     font-size: 24rpx;
     color: #8392A0;
-    margin-left: 16rpx;
+    top: 44rpx;
+    line-height: 27px;
+    bottom: 0;
+    margin: auto;
+    right: 14rpx;
+    height: 54rpx;
 }
 .demand-order-list .title .name{
-    display: inline-block;
+    display: -webkit-box;
     font-weight: bold;
     font-family: PingFangSC-Medium;
     font-size: 36rpx;
     color: #3D4347;
+    max-width:440rpx;
+    -webkit-box-orient: vertical;
+    height: 54rpx;
+    -webkit-line-clamp: 1;
+    overflow: hidden;
 }
+
 .demand-order-list .item{
     margin-left: 32rpx;
     padding-top:28rpx;
@@ -403,7 +415,7 @@ page {
     animation: main-shows 0.25s forwards;
     display: flex;
     flex-direction: column;
-    flex-wrap: wrap;
+    /* flex-wrap: wrap; */
     padding-bottom: 40rpx;
 }
 
@@ -418,7 +430,7 @@ page {
     }
 }
 .shade-cell-main .shade-item-option{
-    display: flex;
+    display: inline-block;
     flex-direction: row;
     justify-content: space-between;
     align-items: center;

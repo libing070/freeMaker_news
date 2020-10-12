@@ -20,7 +20,7 @@ Page({
             "//img14.360buyimg.com/pop/jfs/t1/110316/1/13554/178993/5ea17d3aE88af5e39/1e6dfb8dfb8259f6.jpg",
             "//img14.360buyimg.com/pop/jfs/t1/119502/34/1004/98273/5ea17d49Ed74b4fa5/49e7bdfc7ab97813.png"]
         },
-        prodCode:'', //作品编码
+        prodId:'', //作品编码
         prodDetail:{},
         publishDate:'' //作品发布日期（创建时间）
     },
@@ -30,7 +30,7 @@ Page({
      */
     onLoad: function (options) {
         this.setData({
-            prodCode:options.prodCode
+            prodId:options.prodId
         })
         this.getProdDetail()
     },
@@ -103,17 +103,17 @@ Page({
     },
     // 点击图片
     tapBanner(e) {
-        let current = 'http:' + e.currentTarget.dataset.item
+       let current = e.currentTarget.dataset.item
 
-        let urls = []
-        for (let item of this.data.obj.imgList) {
-            urls.push('http:' + item)
-        }
+       let urls = []
+       for (let item of this.data.prodDetail.images) {
+           urls.push(item.fullPath)
+       }
 
-        wx.previewImage({
-            current,
-            urls,
-        })
+       wx.previewImage({
+           current,
+           urls,
+       })
     },
     //关闭需求
     tapDeleteProduct(){
@@ -126,7 +126,7 @@ Page({
             confirmText: '确定',
             success: res => {
                 if (res.confirm) {
-                    that.delProdByCode(this.data.prodCode)
+                    that.delProdByCode(this.data.prodId)
                     wx.showToast({
                         title: '作品已关闭',
                         icon: 'none',
@@ -151,7 +151,7 @@ Page({
       //跳转到作品编辑页面（发布作品页面）
     tapEditProduct(){
         wx.navigateTo({
-            url: '/pages/publishProduct/publishProduct?prodCode='+this.data.prodCode,
+            url: '/pages/publishProduct/publishProduct?prodId='+this.data.prodId,
         })
     },
     getProdDetail(){
@@ -159,7 +159,7 @@ Page({
         REST.get({
             url: API.getProdDetail,
             data:{
-                code:this.data.prodCode
+                id:this.data.prodId
             },
             success(res) {
                 that.setData({
@@ -202,9 +202,9 @@ Page({
     delProdByCode(){
         let that = this
         REST.post({
-            url: API.delStatusByCode,
+            url: API.delStatusById,
             data:{
-                code:this.data.prodCode
+                id:this.data.prodId
             },
             success(res) {
                 that.setData({

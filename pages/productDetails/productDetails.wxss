@@ -7,7 +7,7 @@ page {
 }
 .detail .top{
     position: relative;
-    height: 562.4rpx;
+    height: 562.5rpx;
 
 }
 .detail .top .img{
@@ -29,8 +29,8 @@ page {
 }
 .detail .top .pagination{
     position: absolute;
-    right: 40rpx;
-    bottom: 22.4rpx;
+    right: 20rpx;
+    bottom: 20rpx;
     border-radius: 20rpx;
     padding: 0 14rpx;
     line-height: 40rpx;
@@ -151,7 +151,17 @@ page {
     color: #8392A0;
     margin-top: 2rpx;
 }
-.user .arrow{
+.user .arrow.wechat{
+    position: absolute;
+    right: 100rpx;
+    top: -40rpx;
+    bottom: 0;
+    margin:auto;
+    height:64rpx;
+    width: 64rpx;
+}
+
+.user .arrow.phone{
     position: absolute;
     right: 0rpx;
     top: -40rpx;

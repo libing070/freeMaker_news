@@ -13,7 +13,8 @@
     "pages/pushUserList/pushUserList",
     "pages/uploadTest/index",
     "pages/login/login",
-    "pages/myproductDetails/myproductDetails"
+    "pages/myproductDetails/myproductDetails",
+    "pages/test/test"
   ],
   "tabBar": {
     "custom": true,

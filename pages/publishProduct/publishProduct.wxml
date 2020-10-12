@@ -8,12 +8,12 @@
         <view class="number">{{total}}/300</view>
     </view>
     <view class="images-box">
-        <view class="box" wx:for="{{prod.attachmentInfos}}" wx:key="index">
+        <view class="box" wx:for="{{prod.images}}" wx:key="index">
             <image src="/images/common/icon-delete.png" class="icon-delete" data-index="{{index}}" catchtap="deletePhotos"></image>
-            <image src="{{item.path}}" class="img" mode="aspectFill"  data-item="{{item}}"  catchtap="tapBanner"/>
+            <image src="{{item.fullPath}}" class="img" mode="aspectFill"  data-item="{{item}}"  catchtap="tapBanner"/>
             <view wx:if="{{index == 0}}" class="cover">封面</view>
         </view>
-        <view class="box dotted-box" bindtap="tapUpload" wx:if="{{prod.attachmentInfos.length < 8}}">
+        <view class="box dotted-box" bindtap="tapUpload" wx:if="{{prod.images.length < 8}}">
             <image src="/images/common/icon_upload_works@2x.png" class="upload-icon" catchtap="tapUpload" />
             <text class="upload-text">添加作品图片</text>
         </view>
@@ -25,7 +25,7 @@
 
     <view class="mark-type">
         <scroll-view class="menu" scroll-x="true">
-            <view class="item {{item.select ?'yellow':''}}" wx:for="{{prod.markList}}" wx:key="index" data-id="{{index}}" catchtap="tapChooseMarks">
+            <view class="item {{item.select ?'yellow':''}}" wx:for="{{markList}}" wx:key="index" data-id="{{index}}" catchtap="tapChooseMarks">
                 <text class="name">{{item.val}}</text>
             </view>
         </scroll-view>  
@@ -46,26 +46,6 @@
 
 <view class="shade" wx:if="{{shadeShowing}}" catchtap="shadeShowing">
     <view class="main"  data-id="shadeMain" catchtap="shadeShowing" style="padding-bottom: {{safeBottom}}px;">
-        <!-- <view class="tree-select-title">请选择技能类型</view>
-        <view class="tree-select-box">
-            <view class="tree-select-nav">
-                <view wx:for="{{20}}" wx:key="index" data-index="{{index}}" class="item {{index == currTreeSelectNavIndex ? 'sel' : ''}}" catchtap="tapTreeSelectNav">
-                    {{item}}
-                </view>
-            </view>
-            <view class="tree-select-main">
-                <view wx:for="{{100}}" class="item" wx:key="index">
-                    {{currTreeSelectNavIndex}}------{{item}}
-                </view>
-            </view>
-        </view> -->
-        <!-- <van-picker   
-            show-toolbar
-            title="请选择技能类型"
-            columns="{{ skillsColumns }}"
-            bind:cancel="onCancel"
-            bind:confirm="onSkillsChange"
-         /> -->
         <van-picker   
             show-toolbar
             title="请选择技能类型"
@@ -75,6 +55,5 @@
             bind:confirm="onDemandConfirm"
             bind:change="onDemandChange"
         />
-
     </view>
 </view>

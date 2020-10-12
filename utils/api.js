@@ -4,6 +4,7 @@ module.exports = {
     ,getByCatePost:"/v1/productionListApi/getByCatePost"
     ,configs:"/v1/display/configs"
     ,loadTreeData:"/v1/jobTree/treeData"
+    ,getCateLevelIds:"/v1/jobTree/getCateLevelIds"
     ,getSkillList:"/v1/jobTree/getSkillList"
     //个人信息
     ,syncUserInfo: "/v1/miniApp/syncUserInfo"
@@ -14,11 +15,12 @@ module.exports = {
     ,updateOrderStatus: "/v1/orderApi/updateOrderStatus"
     ,getOrderListByStakeholder: "/v1/orderApi/getOrderListByStakeholder"
     ,saveOrder: "/v1/orderApi/save"
-
+    ,getOrderUnAcceptInfo: "/v1/orderApi/getOrderUnAcceptInfo"
+    
     //作品
     ,getProductionListByFreelancerId: "/v1/productionListApi/getByFreelancer" 
-    ,getProdDetail: "/v1/productionViewApi/getByCode"
-    ,delStatusByCode: "/v1/productionApi/delStatusByCode"
+    ,getProdDetail: "/v1/productionViewApi/getById"
+    ,delStatusById: "/v1/productionApi/delStatusById"
     ,createProd:"/v1/productionApi/release"
     ,modifyProd:"/v1/productionApi/modify"
     ,getByCatePostOther: "/v1/productionListApi/getByCatePostOther"
@@ -36,5 +38,7 @@ module.exports = {
     // 评价信息
     ,findByCateAndFreelancer:"/v1/evaluation/findByCateAndFreelancer"
     ,findOverallEvaluationByCateAndFreelancer:"/v1/evaluation/findOverallEvaluationByCateAndFreelancer"
-
+    ,publishEvaluation:"/v1/evaluation/publish"
+    ,findByOrderId: "/v1/evaluation/findByOrderId"
+    ,getTagByJobCateId: "/v1/jobTag/getTagByJobCateId"
 }

@@ -2,6 +2,8 @@
 const app = getApp()
 const REST = require("../../utils/restful.js")
 const API = require("../../utils/api.js")
+const area = require("../../utils/area");
+
 Page({
 
     /**
@@ -98,7 +100,7 @@ Page({
     loadData(){
         REST.noVerfiyget({
             url: API.getProdDetail,
-            data:{ code : this.data.code },
+            data:{ id : this.data.productionId },
             success: res => {
 
                 console.log(res);
@@ -107,10 +109,11 @@ Page({
                     data:res
                 })
 
+                this.initAreaName()
                 this.loadEvaluationInfo()
                 this.loadEvaluationOrderInfo()
             },
-            fail: res => {
+            failed: res => {
                 wx.showToast({
                     title: '获取失败',
                     icon: 'none',
@@ -118,6 +121,21 @@ Page({
                 });
             },
         })
+    },
+    initAreaName() {
+        let freelancerInfo = this.data.data.freelancerInfo
+        if (freelancerInfo.provinceCode != null && freelancerInfo.cityCode != null && freelancerInfo.districtCode != null) {
+            let areaName = ''
+            if (freelancerInfo.provinceCode != '110000' && freelancerInfo.provinceCode != '120000' && freelancerInfo.provinceCode != '500000' && freelancerInfo.provinceCode != '310000' ) {
+                areaName += area.default.province_list[Number(freelancerInfo.provinceCode)] + ' '
+            }
+
+            areaName += area.default.city_list[Number(freelancerInfo.cityCode)] + ' ' + area.default.county_list[Number(freelancerInfo.districtCode)]
+
+            this.setData({
+                [`data.freelancerInfo.areaName`]: areaName 
+            })
+        }
     },
     loadEvaluationInfo() {
         REST.get({
@@ -178,12 +196,12 @@ Page({
              },
             success: res => {
                 this.setData({
-                    otherProductdata:res.data
+                    otherProductdata:res
                 })
 
                 console.log(this.data.otherProductdata);
             },
-            fail: res => {
+            failed: res => {
                 wx.showToast({
                     title: '获取失败',
                     icon: 'none',
@@ -302,6 +320,12 @@ Page({
             })
         }
     },
+    //mark: 重新登录
+    Relogin(){
+        this.setData({
+         showAuthModal:true
+        })
+    },
     //购买服务事件(发布需求)
     tapToPublishDemand(e){
         // 未登录
@@ -315,15 +339,23 @@ Page({
         let name = this.data.data.freelancerInfo.name //自由职业者名称
         let headImg = this.data.data.freelancerInfo.headImg //头像url
         let domainCateName = this.data.data.domainCate.cateName //领域名称
+        let postCateId = this.data.data.postCate.id //岗位ID
         let postCateName = this.data.data.postCate.cateName //岗位名称
         let hourlyWage = this.data.data.hourlyWage //时薪
+        let provinceCode = this.data.data.freelancerInfo.provinceCode // 省
+        let cityCode = this.data.data.freelancerInfo.cityCode // 城市
+        let districtCode = this.data.data.freelancerInfo.districtCode // 区
         wx.navigateTo({
           url: '/pages/publishOrder/publishOrder?type=1&freelancerId='+id
           +"&freelancerName="+name
           +"&headImg="+headImg
           +"&domainCateName="+domainCateName
           +"&hourlyWage="+hourlyWage
-          +"&postCateName="+postCateName,
+          +"&postCateId="+postCateId
+          +"&postCateName="+postCateName
+          +"&provinceCode="+provinceCode
+          +"&cityCode="+cityCode
+          +"&districtCode="+districtCode,
         })
     },
     //一键复制
@@ -345,5 +377,13 @@ Page({
       
           })
     },
+    //其他作品跳转
+    tapToWorksDetail(e){
+        let code = e.currentTarget.dataset.code
+        let id = e.currentTarget.dataset.id
+        wx.navigateTo({
+            url: '/pages/productDetails/productDetails?code=' + code + '&productionId='+id,
+        })
+    }
 
 })

@@ -1,0 +1,2 @@
+<!--pages/test/test.wxml-->
+<view style="height:100rpx;width:200rpx;line-height:100rpx;text-align:center" catchtap="upload">上传</view>

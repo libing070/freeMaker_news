@@ -71,7 +71,7 @@
                         <text class='name' style="color: {{options1Text != '全部订单' ? '#FFBA20':'#8392A0'}}">{{options1Text}}</text>
                         <image class="icon" src="{{options1Text == '全部订单' ? '/images/mine/icon_unfold_gray@2x.png':dropdownShowing1?'/images/mine/icon_away_yellow@2x.png':'/images/mine/icon_unfold_yellow@2x.png'}}"></image>
                     </view>
-                    <view class="menu-item"  catchtap="dropdownShowing2">
+                    <view class="menu-item"  catchtap="dropdownShowing2" style="width: 200rpx;">
                         <text class='name' style="color: {{options2Text != '全部状态' ? '#FFBA20':'#8392A0'}}">{{options2Text}}</text>
                         <image class="icon" src="{{options2Text == '全部状态' ? '/images/mine/icon_unfold_gray@2x.png':dropdownShowing2?'/images/mine/icon_away_yellow@2x.png':'/images/mine/icon_unfold_yellow@2x.png'}}"></image>
                     </view>
@@ -80,15 +80,15 @@
                     <view class="shade-cell-main" data-id="shadeMain" catchtap="dropdownShowing1">
                         <view class="shade-item-option" catchtap="tapChangedropdown1" wx:for="{{options1}}" wx:key="index" data-index="{{item.value}}" data-item="{{item}}">
                             <text class="name {{ item.checked ? 'sel' : ''}}">{{ item.text }}</text>
-                            <image wx:if="{{item.checked}}"class="checked" src="/images/mine/icon_status_Selected@2x.png"></image>
+                            <!-- <image wx:if="{{item.checked}}"class="checked" src="/images/mine/icon_status_Selected@2x.png"></image> -->
                         </view>
                     </view>
                 </view>
-                <view class="shade-cell" catchtouchmove="true"  wx:if="{{dropdownShowing2}}" catchtap="dropdownShowing2">
-                    <view class="shade-cell-main" data-id="shadeMain" catchtap="dropdownShowing2">
+                <view class="shade-cell"   wx:if="{{dropdownShowing2}}" catchtap="dropdownShowing2">
+                    <view class="shade-cell-main" data-id="shadeMain" catchtap="dropdownShowing2"  style="max-height:600rpx;overflow-y: scroll;">
                         <view class="shade-item-option" catchtap="tapChangedropdown2" wx:for="{{options2}}" wx:key="index" data-index="{{index}}" data-item="{{item}}">
                             <text class="name {{ item.checked ? 'sel' : ''}}">{{ item.text }}</text>
-                            <image wx:if="{{item.checked}}"class="checked" src="/images/mine/icon_status_Selected@2x.png"></image>
+                            <!-- <image wx:if="{{item.checked}}"class="checked" src="/images/mine/icon_status_Selected@2x.png"></image> -->
                         </view>
                     </view>
                 </view>
@@ -126,9 +126,9 @@
         </view>
     </view>
     <view class="product-container" wx:if="{{selectedTab == 2}}">
-        <view class="product-list" wx:for="{{productionList}}" wx:key="index" catchtap="tapToProductDetails" data-prod-code="{{item.code}}">
+        <view class="product-list" wx:for="{{productionList}}" wx:key="index" catchtap="tapToProductDetails" data-prod-id="{{item.id}}">
             <view class="top">
-                <image class="photo" src="{{item.images[0].path}}" mode="aspectFill"></image>
+                <image class="photo" src="{{item.images[0].fullPath}}" mode="aspectFill"></image>
                 <view class="p-u">
                     <view class="title">{{item.title}}</view>
                     <view class="mark-type">
@@ -141,13 +141,13 @@
                     <view class="p-u-price">
                         <text class="unit">¥</text>
                         <text class="value">{{item.hourlyWage}}</text>
-                        <text class="unit">/时</text>
+                        <text class="unit">元/时</text>
                     </view>
                 </view>
             </view>
             <view class="border-line"></view>
             <view class="btn-box">
-                <view class="edit">编辑</view>
+                <view class="edit" catchtap="tapEdit" data-prod-id="{{item.id}}">编辑</view>
                 <view class="status">
                     <view class="name {{index%2==0?'yellow':''}}">{{item.statusName}}</view>
                     <image class="allow-icon" src="{{index%2==0?'/images/mine/icon_mine_enter_yellow@2x.png':'/images/mine/icon_mine_enter_gray@2x.png'}}"></image>

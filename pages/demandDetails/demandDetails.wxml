@@ -1,11 +1,19 @@
 <!--pages/demandDetails/demandDetails.wxml-->
 
-<view class="order-status"  catchtap="tapToPushUserList" data-id="{{demandDetail.id}}">
+<view class="order-status">
     <image class="status-icon" src="/images/common/icon_demand_status@2x.png"></image>
     <view class="desc">
-        <view class="status">{{demandDetail.statusName}}</view>
-        <view class="num">已将需求推送给{{demandDetail.recommendCount}}人</view>
+        <!-- <view class="status">{{demandDetail.statusName}}</view> -->
+        <block  wx:if="{{demandDetail.recommendCount > 0}}">
+            <view class="status">已为您匹配{{demandDetail.recommendCount}}人</view>
+            <view class="num">快去挑选接单人吧</view>
+        </block>
+        <block  wx:else>
+            <view class="status">还未匹配到合适人选</view>
+            <view class="num">请等候</view>
+        </block>
     </view>
+    <view wx:if="{{demandDetail.recommendCount > 0}}" class="btn"  catchtap="tapToPushUserList" data-id="{{demandDetail.id}}">选择候选人</view>
 </view>
 <view class="wrap">
     <view class="titles">{{demandDetail.summarize}}</view>
