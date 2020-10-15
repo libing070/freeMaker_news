@@ -70,6 +70,10 @@ Page({
      * 生命周期函数--监听页面加载
      */
     onLoad: function (options) {
+        //禁止转发 分享朋友圈
+        wx.hideShareMenu({
+            menus: ['shareAppMessage', 'shareTimeline']
+        })
         watch.setWatcher(this); // 设置监听器，建议在onLoad下调用
         this.setData({
             areaList: area.default,
@@ -77,9 +81,7 @@ Page({
         });
         wx.setNavigationBarTitle({
             title: '发布需求'
-        })
-        this.loadjobTree()
-        
+        })        
     },
 
     /**
@@ -373,6 +375,7 @@ Page({
         const that = this
         wx.createSelectorQuery().select('#editor').context(function (res) {
             that.editorCtx = res.context
+            that.loadjobTree()
         }).exec()
     },
     //编辑器内容改变时触发
@@ -574,32 +577,46 @@ Page({
             cityCode: this.data.currrAreaCode[1], //城市
             districtCode: this.data.currrAreaCode[2], //区
         }
-        console.log(data);
-        REST.post({
-            url: this.data.editDemandCode?API.updateDemand:API.publishDemand ,
-            data: data,
-            success: res => {
-                console.log(res);
-                app.globalData.selectedTab = 0
-                wx.switchTab({
-                    url: '/pages/mine/mine',
-                    success: function (e) {
-                        let page = getCurrentPages().pop();
-                        if (page == undefined || page == null) {
-                            return
-                        };
-                        page.onLoad();
-                    }
+
+        wx.requestSubscribeMessage({
+            tmplIds: ['cv5hTnU_ABBjp8spFDvQacYttU2ZC3guvvJAoGKC8bA','0mfM9FVKOJzkD-tbXC9M1d5d5pfouIhjxDMBUzYogFI'], // 此处可填写多个模板 ID，但低版本微信不兼容只能授权一个
+            success:res=> {
+                console.log(res) //'accept'表示用户接受；'reject'表示用户拒绝；'ban'表示已被后台封禁
+                REST.post({
+                    url: this.data.editDemandCode?API.updateDemand:API.publishDemand ,
+                    data: data,
+                    success: res => {
+                        console.log(res);
+                        app.globalData.selectedTab = 0
+                        wx.switchTab({
+                            url: '/pages/mine/mine',
+                            success: function (e) {
+                                let page = getCurrentPages().pop();
+                                if (page == undefined || page == null) {
+                                    return
+                                };
+                                page.onLoad();
+                            }
+                        })
+                    },
+                    failed: res => {
+                        wx.showToast({
+                            title: '提交失败',
+                            icon: 'none',
+                            duration: 2000
+                        });
+                    },
                 })
             },
-            failed: res => {
-                wx.showToast({
-                    title: '提交失败',
-                    icon: 'none',
-                    duration: 2000
-                });
+            fail:res=>{
+                console.log(res)
             },
-        })
+            complete:res=>{
+                console.log(res)
+            },
+    
+        }) 
+
     },
     //todo 和demandDetail的需求查看详情 待抽取共用
     getDemandDetail() {

@@ -196,6 +196,89 @@ page {
     color: #6F96BA;
 
 }
+
+.my-demand-list{
+    position: relative;
+    background-color: white;
+    box-shadow: 0 2px 8px 0 rgba(36, 19, 72, 0.04);
+    margin:20rpx;
+    border-radius: 8rpx;
+}
+
+.my-demand-list .title{
+    position: relative;
+    padding-top:44rpx;
+    margin-left: 32rpx;
+}
+.my-demand-list .title .tag{
+    position: absolute;
+    color: #8392A0;
+    top: 44rpx;
+    line-height: 27px;
+    bottom: 0;
+    margin: auto;
+    right: 32rpx;
+    height: 54rpx;
+    font-family: PingFangSC-Regular;
+    font-size: 24rpx;
+    color: #8392A0;
+}
+.my-demand-list .title .tag.yellow{
+    color: #FFBA20;
+}
+.my-demand-list .title .name{
+    display: -webkit-box;
+    font-weight: bold;
+    font-family: PingFangSC-Medium;
+    font-size: 36rpx;
+    color: #3D4347;
+    max-width:550rpx;
+    -webkit-box-orient: vertical;
+    height: 54rpx;
+    -webkit-line-clamp: 1;
+    overflow: hidden;
+}
+.my-demand-list .tags{
+    margin-left: 32rpx;
+    display: inline-block;
+    position: relative;
+    background: #F4F4F4;
+    border-radius: 8px;
+    text-align: center;
+    padding: 0 18rpx;
+    margin-top: 16rpx;
+    font-family: PingFangSC-Regular;
+    font-size: 24rpx;
+    color: #8392A0;
+    line-height: 27px;
+    height: 54rpx;
+}
+.my-demand-list .item{
+    margin-left: 32rpx;
+    padding-top:16rpx;
+    font-family: PingFangSC-Regular;
+    font-size: 28rpx;
+    color: #8392A0;
+}
+.my-demand-list .item.remuneration{
+    padding-top:8rpx;
+}
+.my-demand-list .see-btn{
+    position: absolute;
+    right: 32rpx;
+    bottom: 32rpx;
+    width: 168rpx;
+    height: 56rpx;
+    line-height:56rpx;
+    background-color: #FFBA20;
+    font-size:24rpx;
+    color: #ffffff;
+    text-align: center;
+    border-radius: 28rpx;
+
+}
+
+
 .demand-order-list{
     position: relative;
     background-color: white;
@@ -328,6 +411,9 @@ page {
 }
 .demand-order-list  .btn-box .status .name.yellow{
     color: #FFBA20;
+}
+.demand-order-list  .btn-box .status .name.red{
+    color: #FF6F68;
 }
 .demand-order-list  .btn-box .status .allow-icon{
     width: 24rpx;
@@ -466,7 +552,7 @@ page {
     margin-top: 32rpx;
     margin-left: 32rpx;
     width: 224rpx;
-    height: 168rpx;
+    height: 184rpx;
     border-radius: 8rpx;
 }
 .product-list .top  .p-u{
@@ -475,18 +561,23 @@ page {
     position: relative;
     width: calc(100% - 160px);
     display: flex;
-    height: 168rpx;
+    height: 184rpx;
     flex-direction: column;
 }
 .product-list .top  .p-u .title{
     font-family: PingFangSC-Regular;
-    font-size: 32rpx;
+    font-size: 28rpx;
     color: #0C2032;
     font-weight: 500;
+    height: 80rpx;
+    display: -webkit-box;
+     -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    overflow: hidden; 
 }
 .mark-type{
     width: 100%;
-    margin-top: 20rpx;
+    margin-top: 0rpx;
 }
 .mark-type .menu{
     position: relative;

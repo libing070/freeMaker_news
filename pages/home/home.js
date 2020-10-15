@@ -153,7 +153,7 @@ Page({
                 });
                 console.log(res.recommendProductInfos);
             },
-            fail: res => {
+            failed: res => {
                 wx.showToast({
                     title: '获取失败',
                     icon: 'none',

@@ -18,6 +18,10 @@ Page({
      * 生命周期函数--监听页面加载
      */
     onLoad: function (options) {
+        //禁止转发 分享朋友圈
+        wx.hideShareMenu({
+            menus: ['shareAppMessage', 'shareTimeline']
+        })
         this.setData({
             demandCode: options.demandCode
         })

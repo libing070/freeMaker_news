@@ -29,8 +29,8 @@ page {
 }
 .detail .top .pagination{
     position: absolute;
-    right: 40rpx;
-    bottom: 22.4rpx;
+    right: 20rpx;
+    bottom: 20rpx;
     border-radius: 20rpx;
     padding: 0 14rpx;
     line-height: 40rpx;
@@ -88,7 +88,12 @@ page {
     font-size: 36rpx;
     font-family: PingFangSC-Semibold;
     color: #0C2032;
-    line-height: 40rpx;
+    /* line-height: 40rpx; */
+    width: 500rpx;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+   -webkit-line-clamp: 1;
+   overflow: hidden; 
 }
 .title .price{
     font-family: DINAlternate-Bold;

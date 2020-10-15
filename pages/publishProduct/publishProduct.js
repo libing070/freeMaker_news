@@ -34,12 +34,15 @@ Page({
      * 生命周期函数--监听页面加载
      */
     onLoad: function (options) {
+        //禁止转发 分享朋友圈
+        wx.hideShareMenu({
+            menus: ['shareAppMessage', 'shareTimeline']
+        })
         this.loadjobTree()
         if (options.prodId) {
             this.setData({
                 prodId: options.prodId
             })
-            this.getProdDetail()
         }
 
     },
@@ -102,15 +105,14 @@ Page({
     onEditorReady() {
         const that = this
         wx.createSelectorQuery().select('#editor').context(function (res) {
-            if(that.data.prod.summarize){
-                that.setEditorData(that.data.prod.summarize)
-            }
+            that.editorCtx = res.context
+            that.getProdDetail()
         }).exec()
     },
     //编辑器内容改变时触发
     bindEditorInput(e) {
-        let summarize = this.deleteHtmlTag(e.detail.html);
-        if (summarize.length > 300) {
+        let description = this.deleteHtmlTag(e.detail.html);
+        if (description.length > 300) {
             wx.showToast({
                 title: '请输入300字以内',
                 icon: 'none',
@@ -119,9 +121,11 @@ Page({
             return
         }
         this.setData({
-            total: summarize.length,
-            'prod.summarize': summarize,
+            total: description.length,
+            'prod.summarize': description,
         });
+        console.log(this.data.description)
+        this.watchInputSelectStatus();
     },
     //删除html标签
     deleteHtmlTag(html) {
@@ -204,26 +208,6 @@ Page({
             });
         }
     },
-    // //点击树形左侧菜单
-    // tapTreeSelectNav(e) {
-    //     let currTreeSelectNavIndex=e.currentTarget.dataset.index
-    //     this.setData({
-    //         currTreeSelectNavIndex
-    //     })
-    // },
-    //选择技能
-    onSkillsChange(event) {
-        const {
-            picker,
-            value,
-            index
-        } = event.detail;
-        console.log(`当前值：${value}, 当前索引：${index}`);
-        this.setData({
-            shadeShowing: false,
-            skillType: `${value}`
-        });
-    },
     //去除首尾空格
     trimStr(str) {
         return str.replace(/(^\s*)|(\s*$)/g, "");
@@ -252,7 +236,7 @@ Page({
                 icon: 'none',
                 duration: 2000
             });
-            return
+            return 
         }
         if (this.data.total <= 0) {
             wx.showToast({
@@ -270,7 +254,7 @@ Page({
             });
             return
         }
-        if (this.data.skillType == '全部类型') {
+        if (this.data.prod.jobCateId == '') {
             wx.showToast({
                 title: '请选择技能类型',
                 icon: 'none',
@@ -307,49 +291,83 @@ Page({
             });
             return
         }
-        app.globalData.selectedTab = 2
-        wx.switchTab({
-            url: '/pages/mine/mine',
-        })
+        //app.globalData.selectedTab = 2
+        // wx.switchTab({
+        //     url: '/pages/mine/mine',
+        // })
+
+        return true
     },
     //点击标签事件
     tapChooseMarks(e) {
         let id = e.currentTarget.dataset.id
+        let selectJobSkillId =this.data.markList[id].id
 
-        this.data.prod.skills.push({jobSkillId:this.data.markList[id].id})
-
+        if(this.data.prod.skills){
+            let hasNode = false
+            let deleteIndex = 0
+            this.data.prod.skills.forEach((item,index)=>{
+                if(item.jobSkillId === selectJobSkillId){
+                    hasNode = true
+                    deleteIndex = index
+                    return
+                }
+            })
+            if(hasNode){
+                this.data.prod.skills.splice(deleteIndex,1)
+            }else{
+                this.data.prod.skills.push({jobSkillId:selectJobSkillId})
+            }
+        }
+        console.log(this.data.prod.skills)
         this.setData({
             [`markList[${id}].select`]: !this.data.markList[id].select,
             'prod.skills':this.data.prod.skills
         })
     },
     tapCreateProd() {
-        this.validSubmit()
+        if(!this.validSubmit()) return 
+        
         let that = this
-        REST.post({
-            url: this.data.prodId ? API.modifyProd : API.createProd,
-            data: this.data.prod,
-            success(res) {
-                console.log(res);
-                app.globalData.selectedTab = 2
-                wx.switchTab({
-                    url: '/pages/mine/mine',
-                    success: function (e) {
-                        let page = getCurrentPages().pop();
-                        if (page == undefined || page == null) {
-                            return
-                        };
-                        page.getProductionListByFreelancerId();
+        wx.requestSubscribeMessage({
+            tmplIds: ['cv5hTnU_ABBjp8spFDvQacYttU2ZC3guvvJAoGKC8bA','0mfM9FVKOJzkD-tbXC9M1d5d5pfouIhjxDMBUzYogFI'], // 此处可填写多个模板 ID，但低版本微信不兼容只能授权一个
+            success:res=> {
+                console.log(res) //'accept'表示用户接受；'reject'表示用户拒绝；'ban'表示已被后台封禁
+                REST.post({
+                    url: this.data.prodId ? API.modifyProd : API.createProd,
+                    data: this.data.prod,
+                    success(res) {
+                        console.log(res);
+                        app.globalData.selectedTab = 2
+                        wx.switchTab({
+                            url: '/pages/mine/mine',
+                            success: function (e) {
+                                let page = getCurrentPages().pop();
+                                if (page == undefined || page == null) {
+                                    return
+                                };
+                                page.getProductionListByFreelancerId();
+                            }
+                        })
+                    },
+                    failed(res) {
+                        console.error(res)
+                    },
+                    complete(res) {
+                        console.log("初始化作品详情:", that.data.prodDetail)
                     }
                 })
+
             },
-            failed(res) {
-                console.error(res)
+            fail:res=>{
+                console.log(res)
             },
-            complete(res) {
-                console.log("初始化作品详情:", that.data.prodDetail)
-            }
+            complete:res=>{
+                console.log(res)
+            },
+    
         })
+
     },
     //根据选择的需求类型查找cateTreeCode编码
     findCateTreeCode() {
@@ -523,6 +541,7 @@ Page({
             success(res) {
                 that.setData({
                     'prod.id':res.id,
+                    'prod.code':res.code,
                     'prod.title':res.title,
                     'prod.summarize': res.summarize,
                     'prod.images': res.images,
@@ -532,9 +551,9 @@ Page({
 
                 })
                 
-                that.onEditorReady()
                 that.onFillDemandType()
                 that.getSkillByJob(res.postCate.id,res.skills)
+                that.setEditorData(res.summarize)
             },
             failed(res) {
                 console.error(res)
@@ -544,14 +563,23 @@ Page({
             }
         })
     },
-    //需求详情，富文本框回填编辑值 
-    setEditorData(desc) {
+    //需求详情，富文本框回填编辑值 用lambda试试
+    setEditorData(desc){
+        let that = this
         this.editorCtx.setContents({
-            html: desc,
-            success: function () {
-                this.bindEditorInput({detail: {html: desc}})            
-            }
+        html: desc,
+        success: function () {
+            that.setEditorDesc(desc)
+        }
         })
+    },
+    setEditorDesc(desc){
+        let e = {
+            detail:{
+                html:desc
+            }
+        }
+        this.bindEditorInput(e)
     },
     getSkillByJob(jobCateId,skills){
         let that = this

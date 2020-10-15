@@ -39,28 +39,30 @@
             <view  catchtap="tapdemandTab" data-tab="20" class="level {{selectedDemandTab == 20 ? 'sel' : ''}}">启用中{{demandCount.opened}}</view>
             <view  catchtap="tapdemandTab" data-tab="40" class="level {{selectedDemandTab == 40 ? 'sel' : ''}}">已停用·{{demandCount.closed}}</view>
         </view>
-        <view class="demand-order-list" wx:for="{{demandList}}" wx:key="index" catchtap="tapToDemandDetails" data-demand-code="{{item.code}}">
+        <view class=" my-demand-list" style="height:{{item.status == 20? '360rpx' : '286rpx'}}" wx:for="{{demandList}}" wx:key="index" catchtap="tapToDemandDetails" data-demand-code="{{item.code}}">
             <view class="title">
                 <view class="name">{{item.summarize}}</view>
-                <view class="tag">{{item.jobCateIdName}}</view>
+                <view class="tag {{item.status==20?'yellow':''}}">{{item.statusName}}</view>
             </view>
+            <view class="tags">{{item.jobCateIdName}}</view>
             <view class="item date">
-                <text class="key">交付日期：</text>
+                <text class="key">交付时间：</text>
                 <text class="value">{{item.expectDeliveryTime}}</text>
             </view>
             <view class="item remuneration">
                 <text class="key">需求预算：</text>
                 <text class="value">{{item.budget}}元</text>
             </view>
-            <view class="border-line"></view>
-            <view class="btn-box">
+            <view wx:if="{{item.status == 20}}" class="see-btn">查看进度</view>
+            <!-- <view class="border-line" wx:if=""></view>
+            <view class="btn-box" wx:if="">
                 <view class="reset" wx:if="{{item.status==40}}" catchtap="updateDemandStatus" data-status="20" data-code="{{item.code}}">重新启用</view>
                 <view class="edit" catchtap="tapEditDemand" data-demand-code="{{item.code}}">编辑</view>
                 <view class="status">
                     <view class="name {{item.status==20?'yellow':''}}">{{item.statusName}}</view>
                     <image class="allow-icon" src="{{status==20?'/images/mine/icon_mine_enter_yellow@2x.png':'/images/mine/icon_mine_enter_gray@2x.png'}}"></image>
                 </view>
-            </view>
+            </view> -->
         </view>
     </view>
     <view class="order-container" wx:if="{{selectedTab == 1}}">
@@ -109,13 +111,16 @@
                 </view>
                 <view class="border-line"></view>
                 <view class="btn-box">
-                    <view class="contact">
+                    <!-- <view class="contact">
                         <image class="wechart-icon" src="/images/mine/icon_contact_wechat@2x.png"></image>
                         <view class="name">联系对方</view>
-                    </view>
+                    </view> -->
                     <view class="status">
-                        <view class="name {{index%2==0?'yellow':''}}">{{item.statusName}}</view>
-                        <image class="allow-icon" src="{{index%2==0?'/images/mine/icon_mine_enter_yellow@2x.png':'/images/mine/icon_mine_enter_gray@2x.png'}}"></image>
+                        <view wx:if="{{item.status==10 || item.status==50 || item.status==80 || item.status==90  }}" class="name yellow">{{item.statusName}}</view>
+                        <view wx:elif="{{item.status==30 || item.status==70 || item.status==100 || item.status==61 || item.status==81 }}" class="name red">{{item.statusName}}</view>
+                        <view wx:else class="name">{{item.statusName}}</view>
+
+                        <!-- <image class="allow-icon" src="{{index%2==0?'/images/mine/icon_mine_enter_yellow@2x.png':'/images/mine/icon_mine_enter_gray@2x.png'}}"></image> -->
                     </view>
                 </view>
             </view>
@@ -149,8 +154,8 @@
             <view class="btn-box">
                 <view class="edit" catchtap="tapEdit" data-prod-id="{{item.id}}">编辑</view>
                 <view class="status">
-                    <view class="name {{index%2==0?'yellow':''}}">{{item.statusName}}</view>
-                    <image class="allow-icon" src="{{index%2==0?'/images/mine/icon_mine_enter_yellow@2x.png':'/images/mine/icon_mine_enter_gray@2x.png'}}"></image>
+                    <view class="name {{item.status==20 || item.status==40?'yellow':item.status==30? 'red': ''}}">{{item.statusName}}</view>
+                    <!-- <image class="allow-icon" src="{{index%2==0?'/images/mine/icon_mine_enter_yellow@2x.png':'/images/mine/icon_mine_enter_gray@2x.png'}}"></image> -->
                 </view>
             </view>
         </view>

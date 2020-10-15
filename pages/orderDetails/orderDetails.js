@@ -22,19 +22,29 @@ Page({
         followDesc:'',//完成制作、验收不通过的文字描述
         failedReasonList:[],
         steps: [{
-            text: '下单',
+            undo: '下单',
+            done: '下单'
         }, {
-            text: '接单'
+            undo: '待接单',
+            done: '接单',
+            stop: '取消'
         }, {
-            text: '支付'
+            undo: '待支付',
+            done: '支付',
+            stop: '取消'
         }, {
-            text: '制作'
+            undo: '制作',
+            done: '制作'
         }, {
-            text: '验收'
+            undo: '待验收',
+            done: '验收',
+            stop:'验收不通过'
         }, {
-            text: '完成'
+            undo: '完成',
+            done: '完成'
         }, {
-            text: '评价'
+            undo: '评价',//为了适应显示，唯一一组违反语义的值
+            done: '待评价'//为了适应显示，唯一一组违反语义的值
         }],
         orderStatus:{
             INIT_10:10,   //已下单, 0
@@ -82,6 +92,10 @@ Page({
      * 生命周期函数--监听页面加载
      */
     onLoad: function (options) {
+        //禁止转发 分享朋友圈
+        wx.hideShareMenu({
+            menus: ['shareAppMessage', 'shareTimeline']
+        })
         this.data.orderId = options.orderId
         this.getOrderDetail()
     },
@@ -452,7 +466,7 @@ Page({
         })
     },
     //取消订单
-    tapCancleOrder() {
+    tapCancelOrder(e) {
         let that = this
         wx.showModal({
             title: '提示信息',
@@ -462,7 +476,11 @@ Page({
             confirmText: '确定',
             success: res => {
                 if (res.confirm) {
-                    that.updateOrderStatus(this.data.orderStatus.REJECT_30)
+                    this.updateOrderStatus(e.currentTarget.dataset.status)
+                    wx.showToast({
+                        title: '取消订单成功',
+                        duration: 1000
+                    })                    
                     wx.navigateBack({
                         delta: 1,
                         success: function (e) {
@@ -768,13 +786,6 @@ Page({
                 })
             },
             failed: (resp) => {}
-        })
-    },
-    tapCancelOrder() {
-        this.updateOrderStatus(this.data.orderStatus.CANCELD_100)
-        wx.showToast({
-            title: '取消订单成功',
-            duration: 1000
         })
     }
 })

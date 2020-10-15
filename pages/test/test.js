@@ -70,12 +70,26 @@ Page({
   onShareAppMessage: function () {
 
   },
-  upload(){ 
-    uploadFile('demand',function(url){
+  upload() {
+    uploadFile('demand', function (url) {
 
       console.log(url)
 
-     })
-      
+    })
+
+  },
+  openMessage(e) {
+    let tmplids = e.currentTarget.dataset.tmplids
+    wx.requestSubscribeMessage({
+
+      tmplIds: [tmplids], // 此处可填写多个模板 ID，但低版本微信不兼容只能授权一个
+
+      success(res) {
+
+        console.log(res) //'accept'表示用户接受；'reject'表示用户拒绝；'ban'表示已被后台封禁
+
+      }
+
+    })
   }
 })

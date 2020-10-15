@@ -164,7 +164,7 @@
     <view class="money"><text class="unit" style="font-size: 32rpx;color: #3D4347;">¥</text>{{data.hourlyWage}}<text class="unit" style="font-size: 12px;color: #3D4347;">/时</text></view>
     <view class="btn-box">
         <!-- <auth-button wx:if="{{!user}}" bindloginCallbackEvent="loginCallback"></auth-button> -->
-        <view class="buy" catchtap="tapToPublishDemand">购买服务</view>
+        <view class="buy"  bindtap="tapToPublishDemand">购买服务</view>
     </view>
 </view>
 
@@ -187,7 +187,7 @@
             <view class="shade-user">
                 <view class="u">
                     <view class="avatarBox">
-                        <image class="avatar" src="/images/common/default-head.png"></image>
+                        <image class="avatar" src="{{data.freelancerInfo.headImg ? data.freelancerInfo.headImg :'/images/common/default-head.png'}}"></image>
                     </view>
                     <view>
                         <view class="name-user">{{data.freelancerInfo.name}}</view>
@@ -227,7 +227,7 @@
                             <image class="avatar" src="/images/common/default-head.png"></image>
                         </view>
                         <view>
-                            <view class="name-user">{{item.employerInfo.name}}}</view>
+                            <view class="name-user">{{item.employerInfo.name}}</view>
                             <view  class="name-tag>">{{item.createTime}}</view>
                         </view>
                         <view class="score">

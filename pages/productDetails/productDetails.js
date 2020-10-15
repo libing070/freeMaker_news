@@ -3,6 +3,7 @@ const app = getApp()
 const REST = require("../../utils/restful.js")
 const API = require("../../utils/api.js")
 const area = require("../../utils/area");
+const util = require("../../utils/util.js")
 
 Page({
 
@@ -59,6 +60,7 @@ Page({
      * 生命周期函数--监听页面显示
      */
     onShow: function () {
+
         this.loginSuccess()
     },
 
@@ -94,7 +96,19 @@ Page({
      * 用户点击右上角分享
      */
     onShareAppMessage: function () {
-
+        let code = this.data.code
+        let productionId = this.data.productionId //作品ID
+        return {
+            path:  '/pages/productDetails/productDetails?code=' + code + '&productionId='+id,
+            success: function (res) {
+              　// 转发成功之后的回调
+    　　　　　　 if(res.errMsg == 'shareAppMessage:ok'){
+    　　　　　　 }
+            },
+            fail: function (res) {
+              // 转发失败
+            }
+        }
     },
     //获取数据
     loadData(){
@@ -138,7 +152,7 @@ Page({
         }
     },
     loadEvaluationInfo() {
-        REST.get({
+        REST.noVerfiyget({
             url: API.findOverallEvaluationByCateAndFreelancer,
             data:{ 
                 jobCateId : this.data.data.jobCateId,
@@ -162,7 +176,7 @@ Page({
         
     },
     loadEvaluationOrderInfo() {
-        REST.get({
+        REST.noVerfiyget({
             url: API.findByCateAndFreelancer,
             data:{ 
                 jobCateId : this.data.data.jobCateId,
@@ -283,6 +297,10 @@ Page({
                 success: res => {
                     console.log('综合评价详情：');
                     console.log(res);
+                    res.forEach(item => {
+                        item.description = util.deleteHtmlTag(item.description)
+                    })
+
                     this.setData({
                         evaluationDetailInfos: res
                     })
@@ -319,6 +337,7 @@ Page({
                 showAuthPhone:false
             })
         }
+
     },
     //mark: 重新登录
     Relogin(){
@@ -345,18 +364,34 @@ Page({
         let provinceCode = this.data.data.freelancerInfo.provinceCode // 省
         let cityCode = this.data.data.freelancerInfo.cityCode // 城市
         let districtCode = this.data.data.freelancerInfo.districtCode // 区
-        wx.navigateTo({
-          url: '/pages/publishOrder/publishOrder?type=1&freelancerId='+id
-          +"&freelancerName="+name
-          +"&headImg="+headImg
-          +"&domainCateName="+domainCateName
-          +"&hourlyWage="+hourlyWage
-          +"&postCateId="+postCateId
-          +"&postCateName="+postCateName
-          +"&provinceCode="+provinceCode
-          +"&cityCode="+cityCode
-          +"&districtCode="+districtCode,
+        wx.requestSubscribeMessage({
+            tmplIds: ['cv5hTnU_ABBjp8spFDvQacYttU2ZC3guvvJAoGKC8bA','0mfM9FVKOJzkD-tbXC9M1d5d5pfouIhjxDMBUzYogFI'], // 此处可填写多个模板 ID，但低版本微信不兼容只能授权一个
+            success:res=> {
+                console.log(res) //'accept'表示用户接受；'reject'表示用户拒绝；'ban'表示已被后台封禁
+                wx.navigateTo({
+                    url: '/pages/publishOrder/publishOrder?type=1&freelancerId='+id
+                    +"&freelancerName="+name
+                    +"&headImg="+headImg
+                    +"&domainCateName="+domainCateName
+                    +"&hourlyWage="+hourlyWage
+                    +"&postCateId="+postCateId
+                    +"&postCateName="+postCateName
+                    +"&provinceCode="+provinceCode
+                    +"&cityCode="+cityCode
+                    +"&districtCode="+districtCode,
+                })
+
+            },
+            fail:res=>{
+                console.log(res)
+            },
+            complete:res=>{
+                console.log(res)
+            },
+    
         })
+     
+
     },
     //一键复制
     tapCopy(e){
@@ -384,6 +419,6 @@ Page({
         wx.navigateTo({
             url: '/pages/productDetails/productDetails?code=' + code + '&productionId='+id,
         })
-    }
+    },
 
 })

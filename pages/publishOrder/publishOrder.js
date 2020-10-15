@@ -69,6 +69,10 @@ Page({
      * 生命周期函数--监听页面加载
      */
     onLoad: function (options) {
+        //禁止转发 分享朋友圈
+        wx.hideShareMenu({
+            menus: ['shareAppMessage', 'shareTimeline']
+        })
         watch.setWatcher(this); // 设置监听器，建议在onLoad下调用
         this.setData({
             areaList: area.default,

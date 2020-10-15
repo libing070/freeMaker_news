@@ -40,7 +40,7 @@
 </view>
 
 <view class="tool-bar" style="padding-bottom: {{ safeBottom }}px">
-    <view class="layout-1 ok" catchtap="tapCreateProd">发布</view>
+    <view class="layout-1 ok" bindtap="tapCreateProd">发布</view>
 </view>
 
 

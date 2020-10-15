@@ -34,7 +34,7 @@
 </view>
 
 <view class="tool-bar" style="padding-bottom: {{ safeBottom }}px">
-    <view class="layout-1 {{isClickbtn ? 'ok' : ''}}" catchtap="tapPublishDemand">提交</view>
+    <view class="layout-1 {{isClickbtn ? 'ok' : ''}}" bindtap="tapPublishDemand">提交</view>
 </view>
 
 <view class="shade" wx:if="{{shadeShowing}}" catchtap="shadeShowing">

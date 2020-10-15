@@ -25,7 +25,9 @@ App({
 
         userToken: '',
 
-        code:''//登录官方凭证
+        code:'',//登录官方凭证
+
+        isLoadSubscribeMessage:false //消息模板是否已加载过
 
     },
     API,
@@ -50,12 +52,38 @@ App({
         }
 
         this.user = wx.getStorageSync('user') || ''
+        this.getSetting()
     },
     /**
      * 当小程序启动，或从后台进入前台显示，会触发 onShow
      */
     onShow(options) {
         this.checkForUpdate();
+    },
+    getSetting(){
+        wx.getSetting({
+            withSubscriptions: true,
+            success (res) {
+              console.log(res.authSetting)
+              // res.authSetting = {
+              //   "scope.userInfo": true,
+              //   "scope.userLocation": true
+              // }
+              console.log(res.subscriptionsSetting)
+
+              
+
+            //   res.subscriptionsSetting = {
+            //     mainSwitch: true, // 订阅消息总开关
+            //     itemSettings: {   // 每一项开关
+            //       SYS_MSG_TYPE_INTERACTIVE: 'accept', // 小游戏系统订阅消息
+            //       SYS_MSG_TYPE_RANK: 'accept',
+            //       zun-LzcQyW-edafCVvzPkK4de2Rllr1fFpw2A_x0oXE: 'reject', // 普通一次性订阅消息
+            //       ke_OZC_66gZxALLcsuI7ilCJSP2OJ2vWo2ooUPpkWrw: 'ban',
+            //     }
+            //   }
+            }
+          })
     },
     //登录
     login() {

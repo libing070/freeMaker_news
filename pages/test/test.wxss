@@ -1,1 +1,11 @@
 /* pages/test/test.wxss */
+
+.btn{
+  height: 88rpx;
+  background-color: #FFBA20;
+  text-align: center;
+  line-height: 88rpx;
+  color: white;
+  margin: 20rpx;
+  border-radius: 16rpx;
+}
