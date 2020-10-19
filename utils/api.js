@@ -10,6 +10,7 @@ module.exports = {
     ,syncUserInfo: "/v1/miniApp/syncUserInfo"
     ,getTotalIncome: "/v1/freelancer/income"
     ,updatePhone:"/v1/miniApp/updatePhone"
+    ,updateAll:'/v1/userApi/updateAll'
     //订单
     ,getOrderDetail: "/v1/orderApi/getOrderInfoById"
     ,updateOrderStatus: "/v1/orderApi/updateOrderStatus"

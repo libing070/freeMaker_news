@@ -510,5 +510,16 @@ Page({
         wx.navigateTo({
             url: '/pages/publishProduct/publishProduct?prodId='+e.currentTarget.dataset.prodId,
         })
+    },
+    //跳转我的个人信息页面
+    tapMyInfo(){
+        //未登录
+        if(!app.user){
+            return
+        }
+        app.globalData.selectedTab = this.data.selectedTab
+        wx.navigateTo({
+            url: '/pages/myInfo/myInfo?headImg='+app.user.avatarUrl + '&name='+app.user.nickName
+        })
     }
 })

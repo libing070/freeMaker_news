@@ -1,0 +1,104 @@
+<!--pages/myInfo/myInfo.wxml-->
+<wxs module="fn">
+    module.exports = {
+        formatCurrrArea: function(currrArea) {
+            return currrArea.length!=0 ? (currrArea[0]+','+currrArea[1]+","+currrArea[2]): '去添加'
+        }
+    }
+</wxs>
+
+<view class="my-info">
+    <view class="basic">
+        <view class="item head">
+            <view class="title">头像</view>
+            <view class="avatar"  catchtap="uploadHead"><image class="img" mode="aspectFill" src="{{headImgs.fullPath}}"></image></view>
+            <image class="icon" src="/images/common/icon-arrow.png" catchtap="uploadHead"></image>
+        </view>
+        <view class="item">
+            <view class="title">用户名</view>
+            <input class="input"  placeholder-style='text-align:right' maxlength="20" placeholder="这里是用户名" bindinput="bindNameInput" value="{{name}}" placeholder-style="color: #8392A0"/> 
+            <image class="icon" src="/images/common/icon_edit@2x.png"></image>
+        </view>
+        <view class="item">
+            <view class="title">手机号 </view>
+            <input class="input" type="number"  placeholder-style='text-align:right' maxlength="11" placeholder="这里是手机号" bindinput="bindPhoneInput" value="{{phone}}" placeholder-style="color: #8392A0" /> 
+            <image class="icon" src="/images/common/icon_edit@2x.png"></image>
+            <cover-view class="dialog" wx:if="{{hasPhoneDialog}}" catchtap="shadeShowing" data-type="phoneDialog"></cover-view>
+        </view>
+        <view class="item">
+            <view class="title">微信号</view>
+            <input class="input"  placeholder-style='text-align:right' maxlength="20" placeholder="这里是微信号" bindinput="bindWeChatInput" value="{{wechat}}" placeholder-style="color: #8392A0"  /> 
+            <image class="icon" src="/images/common/icon_edit@2x.png"></image>
+            <cover-view class="dialog" wx:if="{{hasWechatDialog}}" catchtap="shadeShowing" data-type="wechatDialog"></cover-view>
+
+        </view>
+        <view class="item">
+            <view class="title">地域</view>
+            <input class="input" disabled="true"  placeholder-style='text-align:right' placeholder="{{fn.formatCurrrArea(currrArea)}}" placeholder-style="color: #8392A0" data-type="area" catchtap="shadeShowing"/> 
+            <image class="icon" style="width:30rpx;height:30rpx" src="/images/common/icon-arrow.png" data-type="area" catchtap="shadeShowing" ></image>
+        </view>
+        <view class="item">
+            <view class="title">语言</view>
+            <input class="input" disabled="true"  placeholder-style='text-align:right' placeholder="{{currrLanguage || '去添加'}}" placeholder-style="color: #8392A0"  data-type="language" catchtap="shadeShowing" /> 
+            <image class="icon"  style="width:30rpx;height:30rpx" src="/images/common/icon-arrow.png"  data-type="language" catchtap="shadeShowing"></image>
+        </view>
+        <view class="item-desc">
+            <view class="top">
+                <view class="title">个人介绍</view>
+                <image class="icon" src="/images/common/icon_edit@2x.png"></image>
+            </view>
+            <view class="textarea">
+                <textarea bindinput="bindDescInput" value="{{desc}}" auto-height placeholder="添加一段自我介绍，让更多的人了解你！" />
+
+            </view>
+
+        </view>
+    </view>
+</view>
+
+<view class="tool-bar" style="padding-bottom: {{ safeBottom }}px">
+    <view class="layout-1 ok" bindtap="tapSaveInfo">保存</view>
+</view>
+
+
+<view class="shade" wx:if="{{shadeShowing}}" catchtap="shadeShowing">
+    <view class="main"  data-id="shadeMain" catchtap="shadeShowing" style="padding-bottom: {{safeBottom}}px;">
+        <view wx:if="{{ currPicker == 'language'}}">
+            <van-picker
+            show-toolbar
+            title="语言"
+            columns="{{ columnsLanguage }}"
+            default-index="{{ 2 }}"
+            bind:cancel="tapCancel"
+            bind:confirm="onLanguageConfirm"
+            />
+        </view>
+        <view wx:elif="{{currPicker == 'area'}}">
+            <van-area
+            bind:confirm="areaTapDone"
+            bind:cancel="tapCancel"
+            area-list="{{ areaList }}"
+            value="{{currrAreaCode}}"
+            title="省/市/区"
+            />
+        </view>
+        <view wx:elif="{{currPicker == 'phoneDialog'}}">
+             <view class="dialog-mask">
+                 <view class="title">温馨提示</view>
+                 <view class="desc" style="padding-bottom: {{ safeBottom +112}}px">为了保障对方能够联系到你，请填写正确的手机号。</view>
+                 <view class="tool-bar" style="padding-bottom: {{ safeBottom }}px">
+                    <view class="layout-1 ok"  catchtap="hasPhoneDialog">我知道了</view>
+                </view>
+             </view>
+        </view>
+        <view wx:elif="{{currPicker == 'wechatDialog'}}">
+            <view class="dialog-mask">
+                <view class="title">温馨提示</view>
+                <view class="desc" style="padding-bottom: {{ safeBottom +112 }}px">保障对方能够联系到你，请填写正确的微信号。</view>
+                <view class="tool-bar" style="padding-bottom: {{ safeBottom }}px">
+                    <view class="layout-1 ok" catchtap="hasWechatDialog">我知道了</view>
+                </view>
+            </view>
+        </view>
+    </view>
+</view>
