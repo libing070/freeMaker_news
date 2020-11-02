@@ -42,7 +42,7 @@ page {
     letter-spacing: 0.46rpx;
 }
 .tag-title{
-    margin-top:14rpx;
+    margin-top:40rpx;
     margin-right: 40rpx;
     margin-left: 40rpx;
     position: relative;
@@ -585,6 +585,15 @@ page {
     font-weight: bold;
     padding-left: 40rpx;
 }
+.tool-bar .money .unit{
+    display: inline-block;
+}
+.tool-bar .money .value{
+    display: inline-block;
+    font-size:50rpx;
+    font-family: DINAlternate-Bold;
+    font-weight: bold;
+}
 .tool-bar .btn-box{
     flex-grow:3;
     height: 112rpx;
@@ -596,9 +605,9 @@ page {
 }
 
 .tool-bar .btn-box .buy{
-    width: 432rpx;
     height: 88rpx;
     line-height: 88rpx;
+    padding: 0 80rpx;
     background: #FFBA20;
     border-radius: 8rpx;
     text-align: center;

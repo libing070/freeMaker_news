@@ -12,7 +12,7 @@
         </view>
         <view class="name-box" catchtap="tapMyInfo">
             <view class="name-user">{{user ? user.nickName : '一键登录'}}<image wx:if="{{user}}" class="icon-edit" style="width:30rpx;height:30rpx;padding-left:8rpx" src="/images/common/icon_edit@2x.png"></image></view>
-            <view class="name-tag" wx:if="{{user}}">修改个人信息</view>
+            <!-- <view class="name-tag" wx:if="{{user}}">修改个人信息</view> -->
         </view>      
 
         <view class="price">
@@ -107,7 +107,7 @@
                 </view>
                 <view class="item remuneration">
                     <text class="key">预计酬劳：</text>
-                    <text class="value">{{item.orderMny}}元</text>
+                    <text class="value">{{item.actOrderMny}}元</text>
                 </view>
                 <view class="border-line"></view>
                 <view class="btn-box">
@@ -117,7 +117,7 @@
                     </view> -->
                     <view class="status">
                         <view wx:if="{{item.status==10 || item.status==50 || item.status==80 || item.status==90  }}" class="name yellow">{{item.statusName}}</view>
-                        <view wx:elif="{{item.status==30 || item.status==70 || item.status==100 || item.status==61 || item.status==81 }}" class="name red">{{item.statusName}}</view>
+                        <view wx:elif="{{item.status==30 || item.status==70 || item.status==100 || item.status==61 || item.status==81 }}" class="name red">{{item.status==61 ? '待验收' : item.statusName}}</view>
                         <view wx:else class="name">{{item.statusName}}</view>
 
                         <!-- <image class="allow-icon" src="{{index%2==0?'/images/mine/icon_mine_enter_yellow@2x.png':'/images/mine/icon_mine_enter_gray@2x.png'}}"></image> -->
@@ -143,11 +143,24 @@
                             </view>
                         </scroll-view>  
                     </view>
-                    <view class="p-u-price">
-                        <text class="unit">¥</text>
-                        <text class="value">{{item.hourlyWage}}</text>
-                        <text class="unit">元/时</text>
+                
+                    <view class="p-u-price" wx:if="{{item.budgetType == 0}}">
+                        <view class="unit" style="font-family: PingFangSC-Regular;font-size: 24rpx;color: #8392A0;">时薪：</view>
+                        <view class="unit" style="font-family: PingFangSC-Regular;font-size: 24rpx;">¥</view>
+                        <view class="value" style="padding-left:4rpx;padding-right:4rpx">{{item.hourlyWage}}</view>
+                        <view class="unit" wx:if="{{item.hourlyWage}}" style="font-family: PingFangSC-Regular;font-size: 24rpx;color: #0C2032;">元/小时</view>
                     </view>
+                    <view class="p-u-price"  wx:elif="{{item.budgetType == 1}}">
+                        <view class="unit" style="font-family: PingFangSC-Regular;font-size: 24rpx;color: #8392A0;">一口价：</view>
+                        <view class="unit" style="font-family: PingFangSC-Regular;font-size: 24rpx;">¥</view>
+                        <view class="value" style="padding-left:4rpx;padding-right:4rpx" wx:if="{{item.hourlyWage}}">{{item.hourlyWage}}</view>
+                        <view class="unit" wx:if="{{item.hourlyWage}}" style="font-family: PingFangSC-Regular;font-size: 24rpx;color: #0C2032;">元</view>
+                    </view>
+                    <view class="p-u-price"  wx:elif="{{item.budgetType == 2}}">
+                        <view class="unit"  style="font-family: PingFangSC-Regular;font-size: 24rpx;color: #0C2032;">面议</view>
+                    </view>
+
+
                 </view>
             </view>
             <view class="border-line"></view>
@@ -163,6 +176,6 @@
 
 </view>
 
-<custom-tabbar active-index="1"  id="customtabbarComponent" bindpageType="pageType" ></custom-tabbar>
+<custom-tabbar active-index="1"  id="customtabbarComponent" bindpageType="pageType" bindchildclickPlus="parentClickPlus" ></custom-tabbar>
 <auth-modal show="{{showAuthModal}}"></auth-modal>
 <auth-phone show="{{showAuthPhone}}"></auth-phone>

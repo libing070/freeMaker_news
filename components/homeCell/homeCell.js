@@ -94,6 +94,7 @@ Component({
         },
         //跳转到作品详情
         tapToWorksDetail(e) {
+            app.globalData.myDemandDetailData = {} //清空数据 注意:存放的值是 title 和 description ，从我的需求-选择候选人-购买服务的步骤  回填 title，description
             let code = e.currentTarget.dataset.code
             let id = e.currentTarget.dataset.id
             wx.navigateTo({

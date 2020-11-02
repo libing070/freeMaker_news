@@ -1,4 +1,11 @@
 <!--pages/myproductDetails/myproductDetails.wxml-->
+<wxs module="fn">
+    module.exports = {
+        formatCurrrArea: function(currrArea) {
+            return currrArea.length!=0 ? (currrArea[0]+','+currrArea[1]+","+currrArea[2]): '暂无'
+        }
+    }
+</wxs>
 <view class="detail">
     <view class="top">
         <view class="swiper-box">
@@ -15,37 +22,53 @@
         </view>  
     </view>
 
-    <view wx:if="{{prodDetail.status== 30 }}" class="status" style="font-size: 24rpx;color: #FF6F68;" catchtap="shadeShowing">审核未通过<image src="/images/mine/icon_mine_enter_red@2x.png" style="width:24rpx;height:24rpx;vertical-align: middle;    padding-bottom: 4rpx;"></image></view>
+    <view wx:if="{{prodDetail.status== 30 }}" class="status"   data-type="noreson" catchtap="shadeShowing" style="font-size: 24rpx;color: #FF6F68;">审核未通过<image src="/images/mine/icon_mine_enter_red@2x.png" style="width:24rpx;height:24rpx;vertical-align: middle;    padding-bottom: 4rpx;"></image></view>
     <view wx:elif="{{prodDetail.status== 20 }}" class="status"  style="font-size: 24rpx;color: #FFBA20;">审核中</view>
     <view wx:else class="status">{{publishDate}}发布</view>
 
     <view class="title"  catchtap="tapToWorksDetail">
         <view class="name">{{prodDetail.title}}</view>
-        <view class="price">
-            <text class="unit">¥</text>
-            <text class="value">{{prodDetail.hourlyWage}}</text>
-            <text class="unit">/时</text>
-        </view>
     </view>
 
     <view class="tag-title">
-        <text class="tag">{{prodDetail.postCate.cateName}}</text>
+        <text class="tag">{{prodDetail.domainCate.cateName}}</text>
     </view>
 
+    <view class="user">
+        <view class="avatarBox" >
+            <image class="avatar" src="{{prodDetail.freelancerInfo.headImg ? prodDetail.freelancerInfo.headImg  :'/images/common/default-head.png'}}"></image>
+        </view>
+        <view>
+            <view class="name-user">{{prodDetail.freelancerInfo.name}}</view>
+            <view  class="name-tag>">{{prodDetail.postCate.cateName}}</view>
+        </view>
+        <image wx:if="{{prodDetail.freelancerInfo.accountCode}}" class="arrow wechat" src="/images/common/icon_wechat.png" data-type="callWechat" catchtap="shadeShowing"></image>
+        <image class="arrow phone" src="/images/common/icon_phone@2x.png"  data-content="{{prodDetail.freelancerInfo.phone}}" catchtap="freeTell" data-type="callPhone"></image>
+    </view>
+    <view class="cell-group">
+        <view class="field">地域</view>
+        <view class="message">{{fn.formatCurrrArea(currrArea)}}</view>
+    </view>
+    <view class="cell-group" style="padding-bottom: 40rpx;border-bottom: 0.1px solid #E6E6E6;">
+        <view class="field">个人介绍</view>
+        <textarea disabled style="{{isIosSystem ? 'margin-top:-10rpx;margin-left:-10rpx':''}}"  auto-height class="message" value="{{prodDetail.freelancerInfo.skillSummarize}}"></textarea>
+    </view>
 
-
-    <view class="skill-desc">
+    <view class="skill-desc" style="padding-bottom: 40rpx;border-bottom: 0.1px solid #E6E6E6;">
         <view class="head">
             <view class="left">技能描述</view>
         </view>
-        <view class="content">
-            {{prodDetail.summarize}}
-        </view>
+        <textarea class="content" style="width:100%;{{isIosSystem ? 'margin-left:-10rpx':''}}" disabled  auto-height value="{{prodDetail.summarize}}"></textarea>
+    </view>
+    <view class="price-detail">
+        <view class="title">薪资计算方式</view>
+        <view class="res">{{prodDetail.budgetType == 0 ? '时薪 ('+prodDetail.hourlyWage+'元/小时）' : prodDetail.budgetType == 1 ? '一口价 ('+prodDetail.hourlyWage+'元）' : '面议'}}</view>
+
     </view>
     <view style="height:{{ ( 50 + safeBottom ) * 2 }}rpx"></view>
 </view>
 
-<view class="tool-bar" style="padding-bottom: {{ safeBottom }}px">
+<view class="tool-bar" style="z-index:9999;padding-bottom: {{ safeBottom }}px">
   <view class="layout-1-1" >
         <view class="left del" catchtap="tapDeleteProduct">删除作品</view>
         <view class="right ok" catchtap="tapEditProduct">编辑作品</view>
@@ -54,7 +77,21 @@
 
 <view class="shade" wx:if="{{shadeShowing}}" catchtap="shadeShowing">
     <view class="main"  data-id="shadeMain" catchtap="shadeShowing" style="padding-bottom: {{safeBottom}}px;">
-           <view class="title">审核未通过原因</view>
-           <view class="content">{{reviewerOpinion}}</view>
+        <view wx:if="{{currPicker == 'callWechat'}}">
+            <view class="call-user">
+                <view class="head">
+                     <view class="left">联系TA</view>
+                </view>
+                <view class="copy">
+                    {{prodDetail.freelancerInfo.accountCode}}
+                    <view class="btn" data-content="{{prodDetail.freelancerInfo.accountCode}}" catchtap="tapCopy">一键复制</view>
+                </view>
+            </view>
+        </view>
+        <view wx:elif="{{currPicker == 'noreson'}}">
+            <view class="title">审核未通过原因</view>
+            <view class="content">{{reviewerOpinion}}</view>
+        </view>
+                   
     </view>
 </view>

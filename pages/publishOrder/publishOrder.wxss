@@ -97,6 +97,7 @@ page {
   padding: 40rpx;
   height: 440rpx;
   opacity: 0.8;
+  width: 90%;
   font-family: PingFangSC-Regular;
   font-size: 32rpx;
   color: #0C2032;

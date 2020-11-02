@@ -89,7 +89,7 @@ page {
     font-family: PingFangSC-Semibold;
     color: #0C2032;
     /* line-height: 40rpx; */
-    width: 500rpx;
+    width: 100%;
     display: -webkit-box;
     -webkit-box-orient: vertical;
    -webkit-line-clamp: 1;
@@ -106,6 +106,81 @@ page {
     margin-left: 4rpx;
     font-size: 48rpx;
 } 
+.user {
+    margin-top: 80rpx;
+    position: relative;
+    display: flex;
+    align-items: center;
+    margin:40rpx;
+}
+
+ .user .avatarBox {
+    width: 80rpx;
+    height: 80rpx;
+    position: relative;
+    margin-right: 10px;
+    flex-shrink: 0;
+}
+
+.user .avatarBox .avatar {
+    border-radius: 50%;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    border: 4rpx solid #FFBA20;
+}
+
+.user .name-user {
+    font-family: PingFangSC-Medium;
+    font-size: 28rpx;
+    color: #0C2032;
+    font-weight: 500;
+}
+
+.user .name-tag {
+    font-family: PingFangSC-Regular;
+    font-size: 24rpx;
+    color: #8392A0;
+    margin-top: 2rpx;
+}
+ .user .arrow.wechat{
+    position: absolute;
+    right: 100rpx;
+    top: -40rpx;
+    bottom: 0;
+    margin:auto;
+    height:64rpx;
+    width: 64rpx;
+}
+
+ .user .arrow.phone{
+    position: absolute;
+    right: 0rpx;
+    top: -40rpx;
+    bottom: 0;
+    margin:auto;
+    height:64rpx;
+    width: 64rpx;
+}
+ .cell-group{
+    display: flex;
+    flex-direction: row;
+    margin:0 40rpx;
+    padding:20rpx 0;
+    position: relative;
+}
+ .cell-group .field{
+    width: 120rpx;
+    text-align: left;
+    font-size: 28rpx;
+    color: #8392A0;
+}
+.cell-group .message{
+    width: calc(100% - 120rpx);
+    padding-left: 40rpx;
+    font-size: 28rpx;
+    color: #3F5161;
+}
 
 .skill-desc{
     position: relative;
@@ -128,10 +203,29 @@ page {
 
 .skill-desc .content{
     margin-top:40rpx;
-    margin-bottom: 40rpx;
     font-family: PingFangSC-Regular;
     font-size: 28rpx;
     color: #3F5161;
+}
+ .price-detail{
+    position: relative;
+    margin-top: 80rpx;
+
+}
+ .price-detail .title{
+    font-family: PingFangSC-Medium;
+    font-size: 36rpx;
+    color: #0C2032;
+    font-weight: bold;
+
+}
+ .price-detail .res{
+    margin-left: 40rpx;
+    margin-top: 40rpx;
+    font-family: PingFangSC-Regular;
+    font-size: 28rpx;
+    color: #3F5161;
+    padding-bottom: 80rpx;
 }
 
 
@@ -194,7 +288,7 @@ page {
     right: 0;
     bottom: 0;
     position: fixed;
-    z-index: 5;
+    z-index: 10000;
 }
 
 .main {
@@ -233,4 +327,44 @@ page {
     color: #3F5161;
     margin-bottom: 64rpx;
 
+}
+
+.call-user{
+    position: relative; 
+}
+.call-user .head{
+    margin:40rpx;
+    margin-top: 112rpx;
+    font-family: PingFangSC-Medium;
+    font-size: 36rpx;
+    color: #0D1335;
+}
+.call-user .copy{
+    position: relative;
+    height: 88rpx;
+    line-height: 88rpx;
+    background: #F4F4F4;
+    border-radius: 8px 0 0 8px;
+    font-family: PingFangSC-Regular;
+    font-size: 28rpx;
+    color: #3F5161;
+    margin-left: 40rpx;
+    padding-left: 24rpx;
+    margin-right: 40rpx;
+    margin-bottom: 156rpx;
+}
+.call-user .copy .btn{
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    height: 88rpx;
+    width: 230rpx;
+    line-height: 88rpx;
+    background-color: #FFBA20;
+    font-family: PingFangSC-Medium;
+    font-size: 28rpx;
+    color: #FFFFFF;
+    text-align: center;
+    border-radius: 8rpx;
 }

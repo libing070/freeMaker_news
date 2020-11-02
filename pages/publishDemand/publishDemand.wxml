@@ -11,7 +11,8 @@
         <input class="input" placeholder-style='text-align:left' maxlength="100" placeholder="添加一个标题吧" bindinput="bindTitleInput" value="{{title}}" placeholder-style="color: #8392A0"/>
     </view>
     <view class="input-wrapper">
-        <editor id="editor" class="editor" placeholder="简单描述下您的需求吧"  bindinput="bindEditorInput" bindready="onEditorReady"></editor>
+        <!-- <editor id="editor" class="editor" placeholder="简单描述下您的需求吧"  bindinput="bindEditorInput" bindready="onEditorReady"></editor>  -->
+        <textarea class="editor" placeholder="简单描述下您的需求吧" value="{{description}}" bindinput="bindEditorInput"></textarea>
         <view class="number">{{total}}/300</view>
     </view>
     <view class="content-wrapper">

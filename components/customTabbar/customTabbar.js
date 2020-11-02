@@ -1,8 +1,11 @@
 const config = require('./tabbarConfig.js')
+const API = require("../../utils/api.js")
+const REST = require("../../utils/restful.js")
 const app = getApp()
 Component({
     
     properties: {
+    
         activeIndex: {
             type: Number,
             value: 0,//默认当前选中第一项
@@ -37,7 +40,7 @@ Component({
     pageLifetimes: {
         // 组件所在页面的生命周期函数
         show: function () { 
-
+           
         },
         hide: function () { 
             this.setData({
@@ -52,10 +55,27 @@ Component({
             this.changeTag(idx)
         },
         // 点击中间的大加号等于点击第三项
-        clickPlus() {
-            this.changeTag(2)
+        clickPlus(isClickPlus) {
+            this.triggerEvent('childclickPlus', {
+                isClickPlus:true
+            })
+
+            // 未登录
+            if (!app.user) {
+                this.setData({
+                    showAuthModal: true
+                })
+                return
+            }
+            this.setData({
+                showAuthModal: false,
+                shadeShowing:isClickPlus
+            })
+
+            this.isExistProduct()
         },
         changeTag(idx) {
+
             //如果点击当前所在的项，不会跳转
             if (idx == this.data.activeIndex)
                 return;
@@ -108,7 +128,7 @@ Component({
                 return
             }
             wx.navigateTo({
-                url: '/pages/publishDemand/publishDemand?type=0', //type: 0 发布需求 ,1 购买服务
+                url: '/pages/publishDemand/publishDemand?type=0', //type: 0 发布需求 ,1 编辑需求
             })
         },
         //发布需求
@@ -125,8 +145,24 @@ Component({
                 return
             }
             wx.navigateTo({
-                url: '/pages/publishProduct/publishProduct',
+               // url: '/pages/publishProduct/publishProduct',
+               url: '/pages/talentMovein/talentMovein?currStep='+this.data.currStep
+
             })
+        },
+        //是否发布过作品 （审核通过的作品）
+        isExistProduct(){
+            REST.get({
+                url: API.hasProductionById,
+                success: (data) => {
+                    this.setData({
+                        productName:data ? '发布服务': '人才入驻',
+                        productNameChild1:data ? '发布更多技能': '发布技能',
+                        currStep:data ? 2:1
+                    })
+                },
+                failed: (resp) => {}
+            })  
         }
     }
 })

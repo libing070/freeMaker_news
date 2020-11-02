@@ -68,7 +68,7 @@
             show-toolbar
             title="语言"
             columns="{{ columnsLanguage }}"
-            default-index="{{ 2 }}"
+            default-index="{{ columnsLanguageIndex }}"
             bind:cancel="tapCancel"
             bind:confirm="onLanguageConfirm"
             />

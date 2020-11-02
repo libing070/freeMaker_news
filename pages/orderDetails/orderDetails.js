@@ -33,7 +33,7 @@ Page({
             done: '支付',
             stop: '取消'
         }, {
-            undo: '制作',
+            undo: '制作中',
             done: '制作'
         }, {
             undo: '待验收',
@@ -43,8 +43,8 @@ Page({
             undo: '完成',
             done: '完成'
         }, {
-            undo: '评价',//为了适应显示，唯一一组违反语义的值
-            done: '待评价'//为了适应显示，唯一一组违反语义的值
+            undo: '待评价',//为了适应显示，唯一一组违反语义的值
+            done: '评价'//为了适应显示，唯一一组违反语义的值
         }],
         orderStatus:{
             INIT_10:10,   //已下单, 0
@@ -200,23 +200,31 @@ Page({
     },
     // 评价提交
     tapshadeAppraiseSubmit() {
-        if (this.data.total == 0) {
-            wx.showToast({
-                title: '请填您的意见或建议',
-                icon: 'none',
-                duration: 2000
-            });
-            return
-        }
-        if (this.data.appraiseImagesList.length == 0) {
-            wx.showToast({
-                title: '至少上传一张图片',
-                icon: 'none',
-                duration: 2000
-            });
-            return
-        }
+        // if (this.data.total == 0) {
+        //     wx.showToast({
+        //         title: '请填您的意见或建议',
+        //         icon: 'none',
+        //         duration: 2000
+        //     });
+        //     return
+        // }
+        // if (this.data.appraiseImagesList.length == 0) {
+        //     wx.showToast({
+        //         title: '至少上传一张图片',
+        //         icon: 'none',
+        //         duration: 2000
+        //     });
+        //     return
+        // }
 
+        if (this.data.appraiseStarSelNum == 0 || this.data.appraiseChildsStarSelNum1 == 0 ||this.data.appraiseChildsStarSelNum2 == 0 ||this.data.appraiseChildsStarSelNum3 == 0) {
+            wx.showToast({
+                title: '您还没有为人才打分',
+                icon: 'none',
+                duration: 2000
+            });
+            return
+        }
         this.setData({
             shadeShowing: !this.data.shadeShowing,
             currPicker: ''
@@ -344,7 +352,7 @@ Page({
         this.setData({
             attachmentList: this.data.attachmentList,
         })
-        this.watchOperation()
+        this.watchPayFollow()
     },
     // 点击图片
     tapBanner(e) {
@@ -372,7 +380,8 @@ Page({
     },
     //评价使用
     watchOperation() {
-        if (this.data.total == 0 || this.data.appraiseImagesList.length == 0) {
+        
+        if (this.data.appraiseStarSelNum == 0 || this.data.appraiseChildsStarSelNum1 == 0 ||this.data.appraiseChildsStarSelNum2 == 0 ||this.data.appraiseChildsStarSelNum3 == 0) {
             this.setData({
                 canClick: false
             })
@@ -432,7 +441,7 @@ Page({
             failed: (resp) => {}
         })
     },
-    //验收不通过提交时间
+    //验收不通过提交事件
     tapshadeNopass() {
         if (this.data.total == 0) {
             wx.showToast({
@@ -450,8 +459,11 @@ Page({
             });
             return
         }
-    
-        this.updateOrderStatus(this.data.orderStatus.CHECK_FAIL_70,this.data.attachmentList,this.data.followDesc)
+        if(this.data.currRadioCheckstatusIndex == 81){//仍然不通过
+            this.updateOrderStatus(this.data.orderStatus.FINISHED_81,this.data.attachmentList,this.data.followDesc)
+        }else{
+            this.updateOrderStatus(this.data.orderStatus.CHECK_FAIL_70,this.data.attachmentList,this.data.followDesc)
+        }
         wx.showToast({
             title: '提交成功',
             duration: 1000
@@ -582,6 +594,7 @@ Page({
             appraiseChildsStarSelNum2:appraiseStarSelNum == 5 ? 5 : this.data.appraiseChildsStarSelNum2,
             appraiseChildsStarSelNum3:appraiseStarSelNum == 5 ? 5 : this.data.appraiseChildsStarSelNum3,
         })
+        this.watchOperation()
     },
     //结果打分
     tapAppraiseChildsStar(e){
@@ -620,6 +633,8 @@ Page({
 
 
         }
+        this.watchOperation()
+
     },
     //点击评价标签事件
     tapChooseAppraiseMarks(e) {
@@ -643,7 +658,6 @@ Page({
             total: summarize.length,
             appraiseSummarize: e.detail.html
         });
-        this.watchOperation()
     },
     //上传评价作品
     tapAppraiseUpload(e) {
@@ -668,18 +682,8 @@ Page({
                 appraiseImagesList: this.data.appraiseImagesList
             })
 
-            this.watchOperation()
         })
-        // wx.chooseImage({
-        //     count: 8 - this.data.appraiseImagesList.length,
-        //     sizeType: ['compressed'],
-        //     success: (res) => {
-        //         this.setData({
-        //             appraiseImagesList: this.data.appraiseImagesList.concat(res.tempFilePaths)
-        //         });
-        //         this.watchOperation()
-        //     }
-        // });
+    
     },
     //删除图片
     deleteAppraisePhotos(e) {
@@ -689,7 +693,6 @@ Page({
         this.setData({
             appraiseImagesList: this.data.appraiseImagesList,
         })
-        //this.watchOperation()
     },
     // 点击图片
     tapAppraiseBanner(e) {
@@ -741,7 +744,8 @@ Page({
             return
         }
         let changeStatus = this.data.orderDetail.status === this.data.orderStatus.PAID_50 ?
-                                this.data.orderStatus.CHECKING_60:this.data.orderStatus.CHECK_FAIL_61
+            this.data.orderStatus.CHECKING_60
+            : this.data.orderStatus.CHECK_FAIL_61
         this.updateOrderStatus(changeStatus,this.data.attachmentList,this.data.followDesc)
         wx.showToast({
             title: '提交成功',
@@ -768,10 +772,17 @@ Page({
     },
     //修改二次验收状态
     confirmCheckStatusAgree(){
-        this.updateOrderStatus(this.data.currRadioCheckstatusIndex)
-        this.setData({
-            shadeShowing: false
-        })
+        if(this.data.currRadioCheckstatusIndex == 81){//仍然不通过 填写不通过原因 打开不通过弹窗页面填写不通过信息
+            this.setData({
+                currPicker:'nopass'
+            })
+        }else{
+            this.updateOrderStatus(this.data.currRadioCheckstatusIndex)
+            this.setData({
+                shadeShowing: false
+            })
+        }
+        
     },
     //获取失败原因
     getFailedReason(){     
@@ -783,6 +794,123 @@ Page({
             success: (data) => {
                 this.setData({
                     failedReasonList: data
+                })
+            },
+            failed: (resp) => {}
+        })
+    },
+    //获取支付凭证
+    tapLoadPayAttachment(e){
+        let type = e.currentTarget.dataset.type;
+        this.setData({
+            currPicker:'pay',
+            shadeShowing: true
+        })
+        let that = this
+        REST.get({
+            url: API.getPaymentVoucherInfo,
+            data: {
+                orderId: this.data.orderId,
+            },
+            success: (data) => {
+                this.setData({
+                    serialId:data.id,
+                    orderId: data.orderId,
+                    attachmentList:data.images
+                })
+                this.watchPayFollow()
+            },
+            failed: (resp) => {}
+        })
+    },
+    // 上传支付凭证
+    tapPayUpload(){
+    
+        //参数详见 :utils/upload.js 
+        uploadFile('order',(filePath)=>{
+            let attachment = {
+                path: filePath.filePath, //相对路径
+                otherPath:filePath.filePath, //相对路径
+                fullPath:filePath.fullPath, //全路径
+            }
+            this.data.attachmentList.push(attachment)
+            this.setData({
+                attachmentList: this.data.attachmentList
+            })
+            this.watchPayFollow()
+
+        })
+
+    },
+    watchPayFollow() {
+        if (this.data.attachmentList.length == 0) {
+            this.setData({
+                canClick: false
+            })
+        } else {
+            this.setData({
+                canClick: true
+            })
+        }
+    },
+    //我已完成打款 点击事件
+    tapPay(e){
+        if (this.data.attachmentList.length == 0) {
+            wx.showToast({
+                title: '请上传支付凭证',
+                icon: 'none',
+                duration: 2000
+            })
+            return
+        } 
+        let that = this
+        REST.post({
+            url: API.uploadPayAttachment,
+            data: {
+                id:this.dataserialId || '',
+                orderId: this.data.orderId,
+                images: this.data.attachmentList,
+            },
+            success: (data) => {
+                wx.showToast({
+                    title: '支付凭证提交成功',
+                    duration: 1000
+                })
+                this.setData({
+                    shadeShowing: false,
+                    attachmentList:[]
+                })
+            },
+            failed: (resp) => {}
+        })       
+    },
+    bindUpdatePriceInput(e){
+        let actOrderMny = e.detail.value;
+        this.setData({
+            updateActOrderMny:actOrderMny,
+        });
+        console.log(this.data.updateActOrderMny)
+    },
+    //修改价格弹窗
+    tapUpdatePrice(e){
+        this.setData({
+            currPicker:'updatePrice',
+            shadeShowing: true,
+        })
+    },
+    //修改价格确认
+    tapUpdatePriceok(){
+        let that = this
+        REST.put({
+            url: API.updateOrderMny,
+            data: {
+                id: this.data.orderId,
+                actOrderMny:this.data.updateActOrderMny
+            },
+            success: (data) => {
+                that.getOrderDetail()
+                this.setData({
+                    shadeShowing: false,
                 })
             },
             failed: (resp) => {}

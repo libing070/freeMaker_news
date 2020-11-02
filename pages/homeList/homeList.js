@@ -262,10 +262,10 @@ Page({
             success: res => {
                 console.log(res);
 
-                if(res.totalPages >= this.data.currentPage){ //没有数据了
-                    this.noMoreProduct = true
-                }else{
+                if(res.totalPages >= this.data.currentPage){ //有数据了
                     this.noMoreProduct = false
+                }else{
+                    this.noMoreProduct = true
                 }
                 if (this.data.currentPage == 1) {
                     this.setData({

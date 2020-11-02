@@ -8,6 +8,7 @@ Page({
     * 页面的初始数据
     */
     data: {
+        isClickPlus:false,//点击的是否是加号按钮
         safeBottom:app.safeBottom,
         safeTop:app.safeTop,
         staticIcon:['/images/home/icon_home_hr@2x.png','/images/home/icon_home_video@2x.png','/images/home/icon_home_design@2x.png','/images/home/icon_home_management@2x.png','/images/home/icon_home_operation@2x.png','/images/home/icon_home_development@2x.png'],
@@ -81,7 +82,13 @@ Page({
     onShareAppMessage: function () {
 
     },
-
+    //点击子组件 加号 返回值 true
+    parentClickPlus(e){
+        let isClickPlus = e.detail.isClickPlus
+        this.setData({
+            isClickPlus
+        })
+    },
     // mark: 授权成功
     authSuccess(login) {
         if(login){
@@ -96,29 +103,31 @@ Page({
             user: app.user,
         })
         if (login) {
-            this.setData({
-                showAuthModal:false
-            })
             let customtabbarComponent = this.selectComponent('#customtabbarComponent'); // 页面获取自定义组件实例
-            if(this.data.pageType=='demand'){
-                let e={
-                    currentTarget:{
-                        dataset:{
-                            pagetype:'demand'
-                        }
-                    }
-                }
-                customtabbarComponent.tapToDemand(e); // 通过实例调用组件事件 跳转到发布需求
-            }else if(this.data.pageType=='product'){
-                let e={
-                    currentTarget:{
-                        dataset:{
-                            pagetype:'product'
-                        }
-                    }
-                }
-                customtabbarComponent.tapToProduct(e); // 通过实例调用组件事件 跳转到发布作品
-            }
+            customtabbarComponent.clickPlus(this.data.isClickPlus); // isClickPlus:true 点击的是加号 自动弹出弹窗
+
+
+            //废弃
+            // let customtabbarComponent = this.selectComponent('#customtabbarComponent'); // 页面获取自定义组件实例
+            // if(this.data.pageType=='demand'){
+            //     let e={
+            //         currentTarget:{
+            //             dataset:{
+            //                 pagetype:'demand'
+            //             }
+            //         }
+            //     }
+            //     customtabbarComponent.tapToDemand(e); // 通过实例调用组件事件 跳转到发布需求
+            // }else if(this.data.pageType=='product'){
+            //     let e={
+            //         currentTarget:{
+            //             dataset:{
+            //                 pagetype:'product'
+            //             }
+            //         }
+            //     }
+            //     customtabbarComponent.tapToProduct(e); // 通过实例调用组件事件 跳转到发布作品
+            // }
         }
     },
 

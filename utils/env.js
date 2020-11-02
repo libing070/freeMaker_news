@@ -1,5 +1,5 @@
 module.exports = {
     Dev: "http://localhost:8004",
-    Test: "https://wx.dbndb.cn",
-    Prod: "https://www.dbndb.cn "
+    Test: "https://t-api.haohuoer.cn",
+    Prod: "https://api.haohuoer.cn/"
 }

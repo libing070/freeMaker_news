@@ -73,14 +73,21 @@ Page({
         wx.hideShareMenu({
             menus: ['shareAppMessage', 'shareTimeline']
         })
-        watch.setWatcher(this); // 设置监听器，建议在onLoad下调用
+
+       let  myDemandDetailData =app.globalData.myDemandDetailData
+
+        //watch.setWatcher(this); // 设置监听器，建议在onLoad下调用
         this.setData({
+            title:myDemandDetailData.title ? myDemandDetailData.title:'',
+            description:myDemandDetailData.description? myDemandDetailData.description:'',
+            total:myDemandDetailData.description ? myDemandDetailData.description.length:0,
             areaList: area.default,
             freelancerId:options.freelancerId,
             freelancerName:options.freelancerName,
             headImg:options.headImg,
             domainCateName:options.domainCateName,
             postCateName:options.postCateName,
+            budgetType:options.budgetType,
             hourlyWage:options.hourlyWage,
             jobCateId: Number(options.postCateId) //todo 回显
         });
@@ -91,6 +98,8 @@ Page({
         if (options.provinceCode && options.cityCode && options.districtCode) {
             this.onFillArea(Number(options.provinceCode), Number(options.cityCode), Number(options.districtCode))
         }
+
+        this.watchInputSelectStatus();
 
     },
 
@@ -308,15 +317,12 @@ Page({
         return value
     },
     //监听输入框，选择框 状态
-    watchInputSelectStatus() {
-        console.log(this.data.demandType)
-        console.log(this.data.currentDateStr)
-        console.log(this.data.budget)
-        console.log(this.data.currrArea)
+    watchInputSelectStatus() {        
         if (this.trimStr(this.data.title) == '' ||
             this.data.total <= 0 ||
             this.data.demandType == '请选择' ||
             this.data.currentDateStr == '请选择' ||
+            (this.data.budgetType!=0 && (this.data.hourlyWage<=0 || this.data.hourlyWage == undefined)) ||
             this.data.currrArea.length <= 0) {
             this.setData({
                 isClickbtn: false
@@ -347,7 +353,7 @@ Page({
     bindhourlywageInput(e) {
         let hourlyWage = this.clearNoNum(e.detail.value)
         this.setData({
-          hourlyWage,
+          hourlyWage:hourlyWage
         });
         this.watchInputSelectStatus();
     },
@@ -387,7 +393,7 @@ Page({
     },
     //编辑器内容改变时触发
     bindEditorInput(e) {
-        let description = this.deleteHtmlTag(e.detail.html);
+        let description =e.detail.value
         if (description.length > 300) {
             wx.showToast({
                 title: '请输入300字以内',
@@ -400,7 +406,6 @@ Page({
             total: description.length,
             description: description,
         });
-        console.log(this.data.description)
         this.watchInputSelectStatus();
     },
     //删除html标签
@@ -555,6 +560,15 @@ Page({
             });
             return
         }
+        if  (this.data.budgetType!=0 && (this.data.hourlyWage<=0 || this.data.hourlyWage == undefined)) {
+            wx.showToast({
+                title: '请输入价格',
+                icon: 'none',
+                duration: 2000
+            });
+            return
+        }
+
         if (this.data.currrArea.length <= 0) {
             wx.showToast({
                 title: '请选择省份城市',
@@ -569,8 +583,10 @@ Page({
             summarize: this.data.title, //标题
             description: this.data.description, //描述
             orderMny: this.data.hourlyWage * this.data.buysum, //总金额
+            budgetType:this.data.budgetType,//价格类型
             orderPrice:this.data.hourlyWage,//时薪
             orderTimes:this.data.buysum,//购买数量
+            actOrderMny: this.data.hourlyWage * this.data.buysum,
             cateTreeCode: this.data.cateCode, //需求类型岗位tree编码
             jobCateId: this.data.jobCateId, //需求类型岗位编码
             expectDeliveryTime: this.data.expectDeliveryTime, //期望交付时间

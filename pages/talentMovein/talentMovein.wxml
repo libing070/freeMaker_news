@@ -1,0 +1,343 @@
+<!--pages/talentMovein/talentMovein.wxml-->
+<wxs module="fn">
+    module.exports = {
+        formatCurrrArea: function(currrArea) {
+            return currrArea.length!=0 ? (currrArea[0]+','+currrArea[1]+","+currrArea[2]): '去添加'
+        },
+        formatDemandType:function(demandType,index){
+            return demandType.split('-')[index]
+        }
+    }
+</wxs>
+
+<view class="movein" style="padding-bottom: {{ 56 + safeBottom }}px">
+
+    <view class="step">
+        <view class="child step-1">
+            <image class="bg" src="/images/common/bg_1yellow@2x.png"/>
+            <view class="desc">
+                <text class="tag curr">1</text>
+                <text class="name curr">填写个人信息</text>
+            </view>
+        </view>
+        <view class="child step-2">
+            <image wx:if="{{currStep < 2}}" class="bg" src="/images/common/bg_1gray@2x.png"/>
+            <image wx:else class="bg" src="/images/common/bg_1yellow@2x.png"/>
+            <view class="desc">
+                <text class="tag {{currStep < 2 ? '' : 'curr'}}">2</text>
+                <text class="name {{currStep < 2 ? '' : 'curr'}}">添加技能作品</text>
+            </view>
+        </view>
+        <view class="child step-3">
+            <image wx:if="{{currStep < 3 }}" class="bg" src="/images/common/bg_2gray@2x.png"/>
+            <image wx:else class="bg" src="/images/common/bg_2yellow.png"/>
+            <view class="desc">
+                <text class="tag {{currStep < 3 ? '' : 'curr'}}">3</text>
+                <text class="name {{currStep < 3 ? '' : 'curr'}}">发布后完成入驻</text>
+            </view>
+        </view>
+    </view>
+    <!--填写个人信息-->
+    <view class="movein-first" style="display:{{ currStep == 1 ? 'block' : 'none'}}">
+      <view class="basic" >
+          <view class="item head">
+              <view class="title">头像</view>
+              <view class="avatar"  catchtap="uploadHead"><image class="img" mode="aspectFill" src="{{headImgs.fullPath}}"></image></view>
+              <image class="icon" src="/images/common/icon-arrow.png" catchtap="uploadHead"></image>
+          </view>
+          <view class="item">
+              <view class="title">用户名</view>
+              <input class="input"  placeholder-style='text-align:right' maxlength="20" placeholder="这里是用户名" bindinput="bindNameInput" value="{{name}}" placeholder-style="color: #8392A0"/> 
+              <image class="icon" src="/images/common/icon_edit@2x.png"></image>
+          </view>
+          <view class="item">
+              <view class="title">手机号 </view>
+              <input class="input" type="number"  placeholder-style='text-align:right' maxlength="11" placeholder="这里是手机号" bindinput="bindPhoneInput" value="{{phone}}" placeholder-style="color: #8392A0" /> 
+              <image class="icon" src="/images/common/icon_edit@2x.png"></image>
+              <cover-view class="dialog" wx:if="{{hasPhoneDialog}}" catchtap="shadeShowing" data-type="phoneDialog"></cover-view>
+          </view>
+          <view class="item">
+              <view class="title">微信号</view>
+              <input class="input"  placeholder-style='text-align:right' maxlength="20" placeholder="这里是微信号" bindinput="bindWeChatInput" value="{{wechat}}" placeholder-style="color: #8392A0"  /> 
+              <image class="icon" src="/images/common/icon_edit@2x.png"></image>
+              <cover-view class="dialog" wx:if="{{hasWechatDialog}}" catchtap="shadeShowing" data-type="wechatDialog"></cover-view>
+
+          </view>
+          <view class="item">
+              <view class="title">地域</view>
+              <input class="input" disabled="true"  placeholder-style='text-align:right' placeholder="{{fn.formatCurrrArea(currrArea)}}" placeholder-style="color: #8392A0" data-type="area" catchtap="shadeShowing"/> 
+              <image class="icon" style="width:30rpx;height:30rpx" src="/images/common/icon-arrow.png" data-type="area" catchtap="shadeShowing" ></image>
+          </view>
+          <view class="item">
+              <view class="title">语言</view>
+              <input class="input" disabled="true"  placeholder-style='text-align:right' placeholder="{{currrLanguage || '去添加'}}" placeholder-style="color: #8392A0"  data-type="language" catchtap="shadeShowing" /> 
+              <image class="icon"  style="width:30rpx;height:30rpx" src="/images/common/icon-arrow.png"  data-type="language" catchtap="shadeShowing"></image>
+          </view>
+          <view class="item-desc">
+              <view class="top">
+                  <view class="title">个人介绍</view>
+                  <image class="icon" src="/images/common/icon_edit@2x.png"></image>
+              </view>
+              <view class="textarea" wx:if="{{currStep == 1}}">
+                  <textarea bindinput="bindDescInput" value="{{desc}}" auto-height placeholder="添加一段自我介绍，让更多的人了解你！"></textarea>
+
+              </view>
+
+          </view>
+        </view>
+    
+        <view class="tool-bar" style="z-index:9999;padding-bottom: {{ safeBottom }}px;">
+            <view class="layout-1 ok" catchtap="tapUpdateUserInfo" data-currstep="2" >下一步</view>
+        </view>
+    </view>
+    <!--填写技能作品-->
+    <view class="movein-second"style="display:{{ currStep == 2 ? 'block' : 'none'}}">
+ 
+        <view class="content-wrapper">
+            <view class="names"><image class="icon-important" src="/images/common/icon-important.png"></image><text class="t">技能类型</text></view>
+            <view class="choose-val" catchtap="shadeShowing" data-type="demand" style="color:{{ demandType == '全部类型' ? '#8392A0' : ' #0C2032'}}">{{demandType}}<image class="arrow" wx:if="{{skillType == '全部类型'}}" src="/images/common/icon-arrow.png"></image></view>
+        </view>
+
+        <view class="mark-type" wx:if="{{markList.length}}">
+            <scroll-view class="menu" scroll-x="true">
+                <view class="item {{item.select ?'yellow':''}}" wx:for="{{markList}}" wx:key="index" data-id="{{index}}" catchtap="tapChooseMarks">
+                    <text class="name">{{item.val}}</text>
+                </view>
+            </scroll-view>  
+        </view>
+
+        <view class="editor-wrap">
+            <view class="names"><image class="icon-important" src="/images/common/icon-important.png"></image><text class="t">技能描述</text></view>
+            <view class="input-wrapper">
+                <textarea wx:if="{{currStep == 2}}" id="editor" class="editor" value="{{prod.summarize}}" placeholder="请描述您的技能，尽可能清晰具体哦"  bindinput="bindEditorInput"> </textarea>
+                <view class="number">{{total}}/300</view>
+            </view>
+        </view>
+
+        <view class="images-wrap">
+            <view class="names"><image class="icon-important" src="/images/common/icon-important.png"></image><text class="t">作品图片</text></view> 
+            <!-- <view class="radio-box" wx:if="">
+                <view class="box" catchtap="tapChooseImageRadio" data-index="1">
+                    <image class="icon" src="{{chooseImageRadioIndex == 1 ? '/images/common/icon_status_sel.png' : '/images/common/icon_status_nor.png'}}" />
+                    <text class="name">默认图片</text>
+                </view>
+                <view class="box" catchtap="tapChooseImageRadio" data-index="2">
+                    <image class="icon" src="{{chooseImageRadioIndex == 2? '/images/common/icon_status_sel.png' : '/images/common/icon_status_nor.png'}}" />
+                    <text class="name">自定义图片</text>
+                </view>
+            </view> -->
+
+            <view class="images-box">
+                <view class="box" wx:for="{{prod.images}}" wx:key="index">
+                    <image src="/images/common/icon-delete.png" class="icon-delete" data-index="{{index}}" catchtap="deletePhotos"></image>
+                    <image src="{{item.fullPath}}" class="img" mode="aspectFill"  data-item="{{item}}"  catchtap="tapBanner"/>
+                    <view wx:if="{{index == 0}}" class="cover">封面</view>
+                </view>
+                <!-- <view class="box dotted-box" bindtap="tapUpload" wx:if="{{prod.images.length < 8}}">
+                    <image src="/images/common/icon_upload_works@2x.png" class="upload-icon" catchtap="tapUpload" />
+                    <text class="upload-text">添加作品图片</text>
+                </view> -->
+                <view class="box dotted-box" catchtap="shadeShowing" data-type="imagepreview" wx:if="{{prod.images.length < 8}}">
+                    <image src="/images/common/icon_upload_works@2x.png" class="upload-icon"/>
+                    <text class="upload-text">添加作品图片</text>
+                </view>
+            </view>
+        </view>
+        <view class="price-wrap">
+            <view class="names"><image class="icon-important" src="/images/common/icon-important.png"></image><text class="t">薪资计算方式</text></view> 
+            <view class="radio-box">
+                <view class="box" catchtap="tapChoosePriceRadio" data-index="0">
+                    <image class="icon" src="{{choosePriceRadioIndex == 0 ? '/images/common/icon_status_sel.png' : '/images/common/icon_status_nor.png'}}" />
+                    <text class="name">时薪</text>
+                </view>
+                <view class="box" catchtap="tapChoosePriceRadio" data-index="1">
+                    <image class="icon" src="{{choosePriceRadioIndex == 1? '/images/common/icon_status_sel.png' : '/images/common/icon_status_nor.png'}}" />
+                    <text class="name">一口价</text>
+                </view>
+                <view class="box" catchtap="tapChoosePriceRadio" data-index="2">
+                    <image class="icon" src="{{choosePriceRadioIndex == 2? '/images/common/icon_status_sel.png' : '/images/common/icon_status_nor.png'}}" />
+                    <text class="name">面议</text>
+                </view>
+            </view>
+        </view>
+        <view class="bargaining-wrap" wx:if="{{choosePriceRadioIndex < 2}}">
+                <view class="names">
+                    <image class="icon-important" src="/images/common/icon-important.png"></image>
+                    <text class="t">{{choosePriceRadioIndex == 0 ? '服务定价（元/小时）': choosePriceRadioIndex == 1 ? '服务定价（元）' : ''}}</text>
+                </view> 
+                <input class="input" type="number" placeholder-style='text-align:right'maxlength="10" placeholder="请输入服务定价" bindinput="bindhourlywageInput" value="{{prod.hourlyWage}}" placeholder-style="color: rgba(131,146,160,0.5)"/>
+        </view>
+        <view class="title-wrap">
+                <view class="names">
+                    <image class="icon-important" src="/images/common/icon-important.png"></image>
+                    <text class="t">作品名称</text>
+                </view> 
+                <input class="input" type="text" placeholder-style='text-align:right'maxlength="100" placeholder="请为作品添加一个名称" bindinput="bindTitleInput" value="{{prod.title}}" placeholder-style="color: rgba(131,146,160,0.5)"/>
+        </view>
+        <view class="tool-bar" style="z-index:9999;padding-bottom: {{ safeBottom }}px;">
+                <view class="layout-1-1">
+                      <view class="left cancel"  catchtap="tapPrev" data-currstep="1">上一步</view>
+                      <view class="right submit {{isClickbtn ? 'ok' : ''}}" catchtap="tapPushPreview" data-currstep="3">发布预览</view>
+                </view>
+        </view>
+    </view>
+
+    <!--发布后完成入驻-->
+    <view class="movein-third" style="display:{{ currStep == 3 ? 'block' : 'none'}}">
+        <view class="preview-detail">
+            <view class="top">
+                <view class="swiper-box">
+                    <swiper class="swiper" bindchange="changeSwiper">
+                        <block wx:for="{{prod.images}}" wx:key="index">
+                            <swiper-item>
+                                <image class="photo" src="{{item.fullPath}}" mode="widthFix"  data-item="{{item.fullPath}}" catchtap="tapPreviewBanner"></image>
+                            </swiper-item>
+                        </block>
+                    </swiper>
+                </view>  
+                <view class="pagination">
+                    <text>{{currentPhotoIndex}}</text>/<text>{{prod.images.length}}</text>
+                </view>  
+            </view>
+
+            <view class="title"  catchtap="tapToWorksDetail">
+                <view class="name">{{prod.title}}</view>
+                <view class="collect {{ collect ? 'sel' :''}}" catchtap="tapCollect" data-id="{{obj.id}}" wx:if="">
+                    <image wx:if="{{!collect}}" src=" /images/common/icon-collect.png" class="icon"></image>
+                    <text class="collect-name {{ collect ? 'sel' :''}}">{{collect ? '已收藏':'收藏'}}</text>
+                </view>
+            </view>
+
+            <view class="tag-title">
+                <text class="tag">{{fn.formatDemandType(demandType,0)}}</text>
+            </view>
+
+            <view class="user">
+                <view class="avatarBox" >
+                    <image class="avatar" src="{{headImgs.fullPath ? headImgs.fullPath :'/images/common/default-head.png'}}"></image>
+                </view>
+                <view>
+                    <view class="name-user">{{prevViewfreelancerInfo.name}}</view>
+                    <view  class="name-tag>">{{fn.formatDemandType(demandType,1)}}</view>
+                </view>
+                <image wx:if="{{prevViewfreelancerInfo.accountCode}}" class="arrow wechat" src="/images/common/icon_wechat.png" data-type="callWechat" catchtap="shadeShowing"></image>
+                <image class="arrow phone" src="/images/common/icon_phone@2x.png"  data-content="{{prevViewfreelancerInfo.phone}}" catchtap="freeTell" data-type="callPhone"></image>
+            </view>
+            <view class="cell-group">
+                <view class="field">地域</view>
+                <view class="message">{{fn.formatCurrrArea(currrArea)}}</view>
+            </view>
+            <view class="cell-group" wx:if="{{prevViewfreelancerInfo.skillSummarize}}" style="padding-bottom: 40rpx;border-bottom: 0.1px solid #E6E6E6;">
+                <view class="field">个人介绍</view>
+                <textarea wx:if="{{currStep ==3}}" style="padding-left:40rpx;{{isIosSystem ? 'margin-top:-10rpx;margin-left:-10rpx':''}}" disabled  auto-height class="message" value="{{prevViewfreelancerInfo.skillSummarize}}"></textarea>
+
+            </view>
+            <view class="skill-desc" style="padding-bottom: 40rpx;border-bottom: 0.1px solid #E6E6E6;">
+                <view class="head">
+                    <view class="left">技能描述</view>
+                </view>
+                <textarea  wx:if="{{currStep ==3}}"  style="width:100%;{{isIosSystem ? 'margin-left:-10rpx':''}}" disabled  auto-height class="content" value="{{prod.summarize}}"></textarea>
+            </view> 
+            <view class="price-detail">
+                <view class="title">薪资计算方式</view>
+                <view class="res">{{prod.budgetType == 0 ? '时薪 ('+prod.hourlyWage+'元/小时）' : prod.budgetType == 1 ? '一口价 ('+prod.hourlyWage+'元）' : '面议'}}</view>
+
+            </view>
+            <view style="height:{{ ( 50 + safeBottom ) * 2 }}rpx"></view>
+            <view class="tool-bar" style="z-index:9999;padding-bottom: {{ safeBottom }}px;">
+                <view class="layout-1-1">
+                      <view class="left cancel"  catchtap="tapPrev" data-currstep="1">再次编辑</view>
+                      <view class="right submit ok" catchtap="tapCreateProd">确认发布</view>
+                </view>
+            </view>
+        </view>
+
+    </view>
+
+</view>
+
+<view class="shade" wx:if="{{shadeShowing}}" catchtap="shadeShowing">
+    <view class="main"  data-id="shadeMain" catchtap="shadeShowing" style="padding-bottom: {{safeBottom}}px;">
+        <view wx:if="{{ currPicker == 'language'}}">
+            <van-picker
+            show-toolbar
+            title="语言"
+            columns="{{ columnsLanguage }}"
+            default-index="{{ columnsLanguageIndex }}"
+            bind:cancel="tapCancel"
+            bind:confirm="onLanguageConfirm"
+            />
+        </view>
+        <view wx:elif="{{currPicker == 'area'}}">
+            <van-area
+            bind:confirm="areaTapDone"
+            bind:cancel="tapCancel"
+            area-list="{{ areaList }}"
+            value="{{currrAreaCode}}"
+            title="省/市/区"
+            />
+        </view>
+        <view wx:elif="{{currPicker == 'phoneDialog'}}">
+             <view class="dialog-mask">
+                 <view class="title">温馨提示</view>
+                 <view class="desc" style="padding-bottom: {{ safeBottom +112}}px">为了保障对方能够联系到你，请填写正确的手机号。</view>
+                 <view class="tool-bar" style="padding-bottom: {{ safeBottom }}px">
+                    <view class="layout-1 ok"  catchtap="hasPhoneDialog">我知道了</view>
+                </view>
+             </view>
+        </view>
+        <view wx:elif="{{currPicker == 'wechatDialog'}}">
+            <view class="dialog-mask">
+                <view class="title">温馨提示</view>
+                <view class="desc" style="padding-bottom: {{ safeBottom +112 }}px">保障对方能够联系到你，请填写正确的微信号。</view>
+                <view class="tool-bar" style="padding-bottom: {{ safeBottom }}px">
+                    <view class="layout-1 ok" catchtap="hasWechatDialog">我知道了</view>
+                </view>
+            </view>
+        </view>
+        <view wx:elif="{{currPicker == 'demand'}}">
+            <van-picker   
+            show-toolbar
+            title="请选择技能类型"
+            columns="{{ demandColumns }}"
+            value-key="jobCateName"
+            bind:cancel="onCancel"
+            bind:confirm="onDemandConfirm"
+            bind:change="onDemandChange"
+        />
+        </view>
+        <view class="dialog-imagepreview" wx:if="{{currPicker == 'imagepreview'}}" style="padding-bottom: {{56+ safeBottom }}px;">
+            <view class="title"><text class="big">为你推荐</text><text class="small">选择一张你心仪的照片</text></view>
+            <view class="album-box">
+                <scroll-view class="swiperBox" scroll-x>
+                    <block wx:for="{{imagepreview}}" wx:key="index">
+                        <view class="itemBox"  data-type="currchilds"   catchtap="tapChooseImagePrevewRadio" data-index="{{index}}">
+                            <image  class="photoBox" src="{{item.url}}" mode="aspectFill"></image>
+                            <view class="bg"></view>
+                            <image class="radio" src="{{item.selected ? '/images/common/icon-radio-sel.png' : '/images/common/icon-radio.png'}}"/>
+                        </view>
+                    </block>
+                </scroll-view>
+            </view>
+
+            <image class="my-images-upload-btn"  bindtap="tapUploadProduct" src="/images/common/icon-long-upload.png"></image>
+            <view class="tool-bar" style="z-index:9999;padding-bottom: {{ safeBottom }}px;">
+                <view class="layout-1-1">
+                      <view class="left cancel"  catchtap="shadeShowing">取消</view>
+                      <view class="right submit {{hasImagepreview.selected ? 'ok' : ''}}" data-index="{{hasImagepreview.index}}" catchtap="tapAddRecommendImage">确认添加</view>
+                </view>
+           </view>
+        </view>
+        <view wx:elif="{{currPicker == 'callWechat'}}">
+            <view class="call-user">
+                <view class="head">
+                     <view class="left">联系TA</view>
+                </view>
+                <view class="copy">
+                    {{prevViewfreelancerInfo.accountCode}}
+                    <view class="btn" data-content="{{prevViewfreelancerInfo.accountCode}}" catchtap="tapCopy">一键复制</view>
+                </view>
+            </view>
+        </view>
+    </view>
+</view>

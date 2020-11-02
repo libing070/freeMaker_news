@@ -604,10 +604,12 @@ page {
     color: #0C2032;
 }
 .p-u-price .unit{
+    display: inline-block;
     font-family: DINAlternate-Bold;
     font-size: 20rpx;
 } 
  .p-u-price .value{
+     display: inline-block;
     font-family: DINAlternate-Bold;
     font-size: 48rpx;
 } 

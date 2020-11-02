@@ -31,10 +31,20 @@
             <view  class="name-tag>">{{obj.postCate.cateName}}</view>
 
         </view>
-        <view class="money">
-            <view class="unit" style="font-weight: bold;font-size: 33.6rpx;color: #0C2032;">¥</view>
-            <view class="value">{{obj.hourlyWage}}</view>
-            <view class="unit" style="font-family: PingFangSC-Regular;font-size: 33.6rpx;color: #0C2032;">/时</view>
+        <view class="money" wx:if="{{obj.budgetType == 0}}">
+            <view class="unit" style="font-family: PingFangSC-Regular;font-size: 24rpx;color: #8392A0;">时薪：</view>
+            <view class="unit" style="font-family: PingFangSC-Regular;font-size: 33.6rpx;">¥</view>
+            <view class="value" style="padding-left:4rpx;padding-right:4rpx" wx:if="{{obj.hourlyWage}}">{{obj.hourlyWage ? obj.hourlyWage :''}}</view>
+            <view class="unit" wx:if="{{obj.hourlyWage}}" style="font-family: PingFangSC-Regular;font-size: 33.6rpx;color: #0C2032;">元/小时</view>
+        </view>
+        <view class="money"  wx:elif="{{obj.budgetType == 1}}">
+            <view class="unit" style="font-family: PingFangSC-Regular;font-size: 24rpx;color: #8392A0;">一口价：</view>
+            <view class="unit" style="font-family: PingFangSC-Regular;font-size: 33.6rpx;">¥</view>
+            <view class="value" style="padding-left:4rpx;padding-right:4rpx" wx:if="{{obj.hourlyWage}}">{{obj.hourlyWage ? obj.hourlyWage :''}}</view>
+            <view class="unit" wx:if="{{obj.hourlyWage}}" style="font-family: PingFangSC-Regular;font-size: 33.6rpx;color: #0C2032;">元</view>
+        </view>
+        <view class="money"  wx:elif="{{obj.budgetType == 2}}">
+            <view class="unit"  style="font-family: PingFangSC-Regular;font-size: 33.6rpx;color: #0C2032;">面议</view>
         </view>
     </view>
 </view>

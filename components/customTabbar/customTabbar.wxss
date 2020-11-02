@@ -155,4 +155,11 @@ view.block_bottom {
     font-family: PingFangSC-Regular;
     font-size: 28rpx;
     color: #0C2032;
+    margin-bottom: 5rpx;
+}
+.shade .main .box .b .bottom{
+    opacity: 0.5;
+    font-family: PingFangSC-Regular;
+    font-size: 20rpx;
+    color: #0C2032;
 }

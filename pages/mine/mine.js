@@ -8,6 +8,7 @@ Page({
      * 页面的初始数据
      */
     data: {
+        isClickPlus:false,//点击的是否是加号按钮
         safeTop: 0,
         selectedTab: 0,
         pageType: '',
@@ -173,6 +174,30 @@ Page({
     onShareAppMessage: function () {
 
     },
+    //获取个人信息接口
+    getCurrentInfo(){
+        REST.get({
+            url: API.getCurrentInfo,
+            success:res => {
+            
+                app.user.nickName=res.name
+                app.user.avatarUrl=res.headImg
+
+                this.setData({
+                    user:app.user,
+                })
+
+                wx.setStorageSync('user', app.user)
+
+            },
+            failed(res) {
+                console.error(res)
+            },
+            complete(res) {
+                console.log("个人信息拉去完成", res)
+            }
+        })
+    },
     onPageScroll(e) {
         // 导航栏 变白色
         if (e.scrollTop >= this.scrollChangeNavigationBar) {
@@ -200,6 +225,13 @@ Page({
             }
         }
     },
+    //点击子组件 加号 返回值 true
+    parentClickPlus(e){
+        let isClickPlus = e.detail.isClickPlus
+        this.setData({
+            isClickPlus
+        })
+    },
     // mark: 授权成功
     authSuccess(login) {
         if(login){
@@ -211,34 +243,38 @@ Page({
     // mark: 登录成功 （获取手机号成功）
     loginSuccess(login){
         this.setData({
-            user:  app.user,
-            showAuthModal:false
+            showAuthModal: false,
         })
         if (login) {
             let customtabbarComponent = this.selectComponent('#customtabbarComponent'); // 页面获取自定义组件实例
-            if(this.data.pageType=='demand'){
-                let e={
-                    currentTarget:{
-                        dataset:{
-                            pagetype:'demand'
-                        }
-                    }
-                }
-                customtabbarComponent.tapToDemand(e); // 通过实例调用组件事件 跳转到发布需求
-            }else if(this.data.pageType=='product'){
-                let e={
-                    currentTarget:{
-                        dataset:{
-                            pagetype:'product'
-                        }
-                    }
-                }
-                customtabbarComponent.tapToProduct(e); // 通过实例调用组件事件 跳转到发布作品
-            }
+            customtabbarComponent.clickPlus(this.data.isClickPlus); // isClickPlus:true 点击的是加号 自动弹出弹窗
+
+            //废弃
+            // let customtabbarComponent = this.selectComponent('#customtabbarComponent'); // 页面获取自定义组件实例
+            // if(this.data.pageType=='demand'){
+            //     let e={
+            //         currentTarget:{
+            //             dataset:{
+            //                 pagetype:'demand'
+            //             }
+            //         }
+            //     }
+            //     customtabbarComponent.tapToDemand(e); // 通过实例调用组件事件 跳转到发布需求
+            // }else if(this.data.pageType=='product'){
+            //     let e={
+            //         currentTarget:{
+            //             dataset:{
+            //                 pagetype:'product'
+            //             }
+            //         }
+            //     }
+            //     customtabbarComponent.tapToProduct(e); // 通过实例调用组件事件 跳转到发布作品
+            // }
         }
 
-        if(this.data.user){
-                        
+        if(app.user){
+            
+            this.getCurrentInfo()         
             this.getIncome()
             this.getDemandGroupCount()
             this.getDemandListByEmployerId()
@@ -498,12 +534,6 @@ Page({
                 console.error(res)
             },
             complete(res) {}
-        })
-    },
-    //跳转到需求编辑页面（发布需求页面）
-    tapEditDemand(e) {
-        wx.navigateTo({
-            url: '/pages/publishDemand/publishDemand?demandCode='+e.currentTarget.dataset.demandCode,
         })
     },
     tapEdit(e) {

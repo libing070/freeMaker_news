@@ -3,6 +3,7 @@ const app = getApp()
 const API = require("../../utils/api.js")
 const REST = require("../../utils/restful.js")
 const util = require("../../utils/util.js")
+const area = require("../../utils/area");
 
 Page({
 
@@ -10,6 +11,7 @@ Page({
      * 页面的初始数据
      */
     data: {
+        isIosSystem:app.isIosSystem,
         safeBottom: app.safeBottom,
         collect:false,
         currentPhotoIndex:1,
@@ -22,7 +24,9 @@ Page({
         },
         prodId:'', //作品编码
         prodDetail:{},
-        publishDate:'' //作品发布日期（创建时间）
+        publishDate:'' ,//作品发布日期（创建时间）
+        currrArea: [], //省市区
+        currrAreaCode: '',
     },
 
     /**
@@ -154,8 +158,11 @@ Page({
     },
       //跳转到作品编辑页面（发布作品页面）
     tapEditProduct(){
+        // wx.navigateTo({
+        //     url: '/pages/publishProduct/publishProduct?prodId='+this.data.prodId,
+        // })
         wx.navigateTo({
-            url: '/pages/publishProduct/publishProduct?prodId='+this.data.prodId,
+            url: '/pages/talentMovein/talentMovein?currStep=2&prodId='+this.data.prodId,
         })
     },
     getProdDetail(){
@@ -169,11 +176,15 @@ Page({
                 that.setData({
                     prodDetail: res,
                     publishDate:util.formatDate(res.createTime,'年月日'),
-                    shadeShowing:res.status == 30 ? true:false
+                    shadeShowing:res.status == 30 ? true:false,
+                    currPicker: res.status == 30 ? 'noreson' : ''
+
                 })
                 if(that.data.prodDetail.status == 30 && that.data.shadeShowing){
                     that.getReviewNotPassInfo(that.data.prodDetail.id)
                 }
+                that.onFillArea(res.freelancerInfo.provinceCode,res.freelancerInfo.cityCode,res.freelancerInfo.districtCode)
+
             },
             failed(res) {
                 console.error(res)
@@ -182,6 +193,17 @@ Page({
                 console.log("初始化作品详情:", that.data.prodDetail)
             }
         })
+    },
+    //省份显示回填
+    onFillArea(provincCode,cityCode,districtCode){
+        this.setData({
+            currrArea: [area.default.province_list[provincCode],area.default.city_list[cityCode],area.default.county_list[districtCode]],
+            currrAreaCode: [provincCode,cityCode,districtCode],
+
+        })
+        console.log(this.data.currrArea);
+        console.log(this.data.currrAreaCode);
+
     },
     //审核未通过原因
     getReviewNotPassInfo(id){
@@ -226,6 +248,7 @@ Page({
     },
     //显示隐藏
     shadeShowing(e) {
+        console.log(e.currentTarget.dataset.type)
         if (e.currentTarget.dataset.id != "shadeMain") {
             this.setData({
                 shadeShowing: !this.data.shadeShowing,
@@ -235,5 +258,24 @@ Page({
         if(this.data.prodDetail.status == 30 && this.data.shadeShowing){
             this.getReviewNotPassInfo(this.data.prodDetail.id)
         }
+    },
+    //一键复制
+    tapCopy(e){
+        let content = e.currentTarget.dataset.content;
+        wx.setClipboardData({
+            data: content,
+            success (res) {
+                console.log(res);
+            }
+        })
+    },
+    //一键呼叫
+    freeTell(e){
+        let content = e.currentTarget.dataset.content;
+        wx.makePhoneCall({
+
+            phoneNumber: content,
+    
+        })
     },
 })

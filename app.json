@@ -15,7 +15,8 @@
     "pages/login/login",
     "pages/myproductDetails/myproductDetails",
     "pages/test/test",
-    "pages/myInfo/myInfo"
+    "pages/myInfo/myInfo",
+    "pages/talentMovein/talentMovein"
   ],
   "tabBar": {
     "custom": true,

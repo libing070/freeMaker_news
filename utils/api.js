@@ -11,12 +11,17 @@ module.exports = {
     ,getTotalIncome: "/v1/freelancer/income"
     ,updatePhone:"/v1/miniApp/updatePhone"
     ,updateAll:'/v1/userApi/updateAll'
+    ,getCurrentInfo:'/v1/userApi/getCurrentInfo'
     //订单
     ,getOrderDetail: "/v1/orderApi/getOrderInfoById"
     ,updateOrderStatus: "/v1/orderApi/updateOrderStatus"
     ,getOrderListByStakeholder: "/v1/orderApi/getOrderListByStakeholder"
     ,saveOrder: "/v1/orderApi/save"
+    ,modifyOrderMny: "/v1/orderApi/modifyOrderMny"
     ,getOrderUnAcceptInfo: "/v1/orderApi/getOrderUnAcceptInfo"
+    ,getPaymentVoucherInfo:"/v1/orderApi/getPaymentVoucherInfo"
+    ,uploadPayAttachment:"/v1/orderApi/uploadPayAttachment"
+    ,updateOrderMny:"/v1/orderApi/updateOrderMny"
     
     //作品
     ,getProductionListByFreelancerId: "/v1/productionListApi/getByFreelancer" 
@@ -27,6 +32,7 @@ module.exports = {
     ,getByCatePostOther: "/v1/productionListApi/getByCatePostOther"
     ,getByLoginUser:"/v1/productionViewApi/getByLoginUser"
     ,getReviewNotPassInfo:"/v1/productionViewApi/getReviewNotPassInfo"
+    ,hasProductionById:"/v1/productionApi/hasProductionById"
     //需求
     ,getDemandListByEmployerId: "/v1/demandApi/getPageByEmployerId"
     ,updateDemandStatus: "/v1/demandApi/updateStatus"

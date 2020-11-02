@@ -54,5 +54,5 @@
 
 </view>
 
-<custom-tabbar active-index="0" id="customtabbarComponent" bindpageType="pageType" ></custom-tabbar>
+<custom-tabbar active-index="0" id="customtabbarComponent" bindpageType="pageType" bindchildclickPlus="parentClickPlus"></custom-tabbar>
 <auth-phone show="{{showAuthPhone}}"></auth-phone>

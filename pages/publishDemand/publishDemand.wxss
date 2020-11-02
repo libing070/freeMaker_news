@@ -82,6 +82,7 @@ page {
 }
 .input-wrapper{
     position: relative;
+    width: 100vw;
 }
 .input-wrapper .input{
     height: 112rpx;
@@ -94,9 +95,11 @@ page {
 }
 
 .input-wrapper .editor{
-    padding: 40rpx;
+    padding-top: 40rpx;
     height: 440rpx;
     opacity: 0.8;
+    width: 90%;
+    margin: auto;
     font-family: PingFangSC-Regular;
     font-size: 32rpx;
     color: #0C2032;

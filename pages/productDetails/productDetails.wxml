@@ -49,20 +49,19 @@
                 <image class="triangle" src="/images/common/icon-triangle2.png"></image> 
             </view>
         </view>
-        <view class="content">
-            {{data.summarize}}
-        </view>
+        <textarea auto-height disabled style="width:100%;{{isIosSystem ? 'margin-left:-10rpx':''}}" class="content" value="{{data.summarize}}">
+        </textarea>
     </view>
 
     <view class="evaluation">
         <view class="head">
             <view class="left">综合评价</view>
-            <view class="right" catchtap="shadeShowing"  data-item="3">
+            <view class="right" catchtap="shadeShowing"  data-item="3" wx:if="{{evaluationOrderInfos.length}}">
                  <text class="more">全部评价</text>
                 <image class="triangle" src="/images/common/icon-triangle2.png"></image> 
             </view>
         </view>
-        <view class="rate">
+        <view class="rate"  wx:if="{{evaluationOrderInfos.length}}">
             <view class="grade">
                 <view class="number"><text style="font-size:60rpx;color: #0C2032;">{{evaluationInfo.totalScore}}</text><text style="font-size:28rpx;color:#0C2032">分</text></view>
                 <view class="desc" style="font-size: 28rpx;color: #3F5161;">{{evaluationInfo.totalScoreMark}}</view>
@@ -85,6 +84,7 @@
                 </view>
             </view>
         </view>
+        <view wx:else style="margin-top:40rpx;margin-bottom:40rpx;font-family: PingFangSC-Regular;font-size: 28rpx;color: #3F5161;">作者刚来HowWork不久，暂时没有综合评价。</view>
     </view>
 
     <view class="task-ended">
@@ -127,9 +127,9 @@
         </view>
     </view>
 
-    <view class="other-works">
+    <view class="other-works" wx:if="{{otherProductdata.length}}">
         <view class="head">
-            <view class="left">其他作品</view>
+            <view class="left">推荐他人</view>
             <view class="right" catchtap="shadeShowing"  data-item="3" wx:if="">
                  <text class="more">查看全部</text>
                 <image class="triangle" src="/images/common/icon-triangle2.png"></image> 
@@ -161,9 +161,31 @@
 </view>
 
 <view class="tool-bar" style="padding-bottom: {{ safeBottom }}px">
-    <view class="money"><text class="unit" style="font-size: 32rpx;color: #3D4347;">¥</text>{{data.hourlyWage}}<text class="unit" style="font-size: 12px;color: #3D4347;">/时</text></view>
+    <!-- <view class="money">
+        <text class="unit" wx:if="{{data.budgetType != 2}}" style="font-size: 32rpx;color: #3D4347;">¥</text>
+        {{data.budgetType == 2 ? '': data.hourlyWage}}
+        <text class="unit" style="font-size: 12px;color: #3D4347;">
+            {{data.budgetType == 0 ? '元/小时':data.budgetType == 1 ? '一口价' : '面议' }}
+        </text>
+    </view> -->
+
+    <view class="money" wx:if="{{data.budgetType == 0}}">
+            <view class="unit" style="font-family: PingFangSC-Regular;font-size: 24rpx;color: #8392A0;">时薪：</view>
+            <view class="unit" style="font-family: PingFangSC-Regular;font-size: 33.6rpx;">¥</view>
+            <view class="value" style="padding-left:4rpx;padding-right:4rpx" wx:if="{{data.hourlyWage}}">{{data.hourlyWage ? data.hourlyWage :''}}</view>
+            <view class="unit" wx:if="{{data.hourlyWage}}" style="font-family: PingFangSC-Regular;font-size: 33.6rpx;color: #0C2032;">元/小时</view>
+        </view>
+        <view class="money"  wx:elif="{{data.budgetType == 1}}">
+            <view class="unit" style="font-family: PingFangSC-Regular;font-size: 24rpx;color: #8392A0;">一口价：</view>
+            <view class="unit" style="font-family: PingFangSC-Regular;font-size: 33.6rpx;">¥</view>
+            <view class="value" style="padding-left:4rpx;padding-right:4rpx" >{{data.hourlyWage}}</view>
+            <view class="unit" wx:if="{{data.hourlyWage}}" style="font-family: PingFangSC-Regular;font-size: 33.6rpx;color: #0C2032;">元</view>
+        </view>
+        <view class="money"  wx:elif="{{data.budgetType == 2}}">
+            <view class="unit"  style="font-family: PingFangSC-Regular;font-size: 33.6rpx;color: #0C2032;">面议</view>
+    </view>
+
     <view class="btn-box">
-        <!-- <auth-button wx:if="{{!user}}" bindloginCallbackEvent="loginCallback"></auth-button> -->
         <view class="buy"  bindtap="tapToPublishDemand">购买服务</view>
     </view>
 </view>
@@ -213,7 +235,7 @@
                 <view class="head">
                     <view class="left">技能描述</view>
                 </view>
-                <view class="shade-skill-content">{{data.summarize}}</view>
+                <textarea auto-height disabled style="width:100%;{{isIosSystem ? 'margin-left:-10rpx':''}}" class="shade-skill-content" value="{{data.summarize}}"></textarea>
             </view>
         </view>
         <view wx:if="{{ currShadeItem == 3}}">

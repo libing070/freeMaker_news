@@ -8,9 +8,10 @@ App({
     globalData: {
 
         //domain: ENV.Dev, //本地
-         domain: ENV.Test, //测试
-        // domain: ENV.Prod, //正式
+        domain: ENV.Test, //测试
+        //domain: ENV.Prod, //正式
 
+        
 
         Bucket: 'howwork-1301749332',
 
@@ -27,7 +28,9 @@ App({
 
         code:'',//登录官方凭证
 
-        isLoadSubscribeMessage:false //消息模板是否已加载过
+        isLoadSubscribeMessage:false, //消息模板是否已加载过
+
+        myDemandDetailData:{}, //清空数据 注意:存放的值是 title 和 description ，从我的需求-选择候选人-购买服务的步骤  回填 title，description
 
     },
     API,
@@ -36,6 +39,8 @@ App({
 
         //wx.clearStorage();//真机调试 清除缓存 注：正式环境删除
         let info = wx.getSystemInfoSync()
+        this.isIosSystem = info.system.indexOf("iOS")!=-1 //获取操作系统
+        console.log(this.isIosSystem)
         // 屏幕宽高
         this.screenWidth = info.screenWidth
         this.screenHeight = info.screenHeight
@@ -205,5 +210,5 @@ App({
                 })
             }
         })
-    }
+    },
 })

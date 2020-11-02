@@ -17,9 +17,9 @@ Page({
         shadeShowing: false,
         currrArea: [], //省市区
         currrAreaCode: '',
-
-        columnsLanguage :['中文', '英语'],
-
+        userInfo:{},
+        columnsLanguage :[{id:10,text:'中文'},{id:20,text:'英文'}],
+        columnsLanguageIndex:1,
         hasPhoneDialog:true,
         hasWechatDialog:true,
     },
@@ -28,6 +28,8 @@ Page({
      * 生命周期函数--监听页面加载
      */
     onLoad: function (options) {
+        this.getCurrentInfo()
+
         this.setData({
             areaList: area.default,
             [`headImgs.fullPath`]:options.headImg,
@@ -60,7 +62,6 @@ Page({
      * 生命周期函数--监听页面卸载
      */
     onUnload: function () {
-
     },
 
     /**
@@ -82,6 +83,50 @@ Page({
      */
     onShareAppMessage: function () {
 
+    },
+    //获取个人信息接口
+    getCurrentInfo(){
+        REST.get({
+            url: API.getCurrentInfo,
+            success:res => {
+              
+                console.log(res)
+
+                let currrLanguage=''
+                for(let i in this.data.columnsLanguage){
+                    if(this.data.columnsLanguage[i].id == res.freelancerInfo.language){
+                        currrLanguage = this.data.columnsLanguage[i].text
+                        break
+                    }
+                }
+                this.setData({
+                    phone:res.freelancerInfo.phone,
+                    desc:res.freelancerInfo.skillSummarize,
+                    wechat:res.freelancerInfo.accountCode,
+                    currrLanguage:currrLanguage,
+                    columnsLanguageIndex:res.freelancerInfo.language/10
+                })
+
+                if(res.freelancerInfo.provinceCode){
+                    this.onFillArea(res.freelancerInfo.provinceCode,res.freelancerInfo.cityCode,res.freelancerInfo.districtCode)
+                }
+
+            },
+            failed(res) {
+                console.error(res)
+            },
+            complete(res) {
+                console.log("个人信息拉去完成", res)
+            }
+        })
+    },
+    //省份显示回填
+    onFillArea(provincCode,cityCode,districtCode){
+        this.setData({
+            currrArea: [area.default.province_list[provincCode],area.default.city_list[cityCode],area.default.county_list[districtCode]],
+            currrAreaCode: [provincCode,cityCode,districtCode],
+
+        })
     },
     //上传头像
     uploadHead(){
@@ -165,7 +210,7 @@ Page({
     },
     //语言
     onLanguageConfirm(e){
-        let currrLanguage = e.detail.value;
+        let currrLanguage = e.detail.value.text;
         this.setData({
             shadeShowing: false,
             currrLanguage
@@ -241,7 +286,8 @@ Page({
             headImg:this.data.headImgs.path,
             freelancerInfo:{
                 language:this.data.currrLanguage == '中文' ? 10 :20,
-                skillSummarize:this.data.desc
+                skillSummarize:this.data.desc,
+                accountCode:this.data.wechat
             },
 
         }

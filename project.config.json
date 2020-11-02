@@ -37,7 +37,7 @@
   "compileType": "miniprogram",
   "libVersion": "2.12.2",
   "appid": "wxebd3588df98ae1a7",
-  "projectname": "freeMaker_news",
+  "projectname": "freemaker-miniapp",
   "debugOptions": {
     "hidedInDevtools": []
   },
@@ -172,6 +172,13 @@
           "id": -1,
           "name": "pages/myInfo/myInfo",
           "pathName": "pages/myInfo/myInfo",
+          "query": "",
+          "scene": null
+        },
+        {
+          "id": -1,
+          "name": "pages/talentMovein/talentMovein",
+          "pathName": "pages/talentMovein/talentMovein",
           "scene": null
         }
       ]

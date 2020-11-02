@@ -18,8 +18,9 @@
 <view class="wrap">
     <view class="titles">{{demandDetail.summarize}}</view>
     <view class="tag">{{demandDetail.jobCateIdName}}</view>
-    <view class="title-name">订单描述</view>
-    <view class="order-desc">{{demandDetail.description}}</view>
+    <view class="title-name">需求描述</view>
+    <textarea style="{{isIosSystem ? 'padding-left:-10rpx':''}}" disabled  auto-height class="order-desc" value="{{demandDetail.description}}"></textarea>
+
     <view class="dates-title">期望交付时间</view>
     <view class="dates-value">{{demandDetail.expectDeliveryTime}}</view>
 </view>

@@ -890,6 +890,13 @@ page {
     font-size: 24rpx;
     color: #ffffff;
 }
+.main .shade-pay .payment .ts{
+    margin-left: 40rpx;
+    font-family: PingFangSC-Regular;
+    font-size: 28rpx;
+    color: #8392A0;
+}
+
 /*评价*/
 .main .shade-appraise{
     position: relative;
@@ -1182,6 +1189,42 @@ page {
 .main .shade-noreason .body .imagesBox .swiperBox .photoBox:last-child{
     padding-right: 0;
 }
+
+
+.main .shade-updatePrice{
+    position: relative;
+}
+.main .shade-updatePrice .title{
+    margin-top: 114rpx;
+    margin-left: 40rpx;
+    font-family: PingFangSC-Medium;
+    font-size: 36rpx;
+    color: #0C2032;
+}
+.main .shade-updatePrice .conetnt{
+    color: #8392A0;
+    margin-top: 60rpx;
+    margin-left: 40rpx;
+    margin-right: 40rpx;
+    height: 90rpx;
+    align-items: center;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding-bottom: 70rpx;
+}
+.main .shade-updatePrice .conetnt .price-input{
+    height: 90rpx;
+    text-align: right;
+    padding-right: 20rpx;
+    line-height: 90rpx;
+    font-size: 38rpx;
+    color: #000000;
+    font-weight: bold;
+    width: 280rpx;
+    border: 1rpx solid #F0F0F0;
+}
+
 
 .images-box{
     border-bottom: 0.1px solid #E6E6E6;

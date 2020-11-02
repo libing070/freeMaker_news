@@ -79,8 +79,10 @@ Page({
             areaList: area.default,
             editDemandCode: options.demandCode //查看详情页面传入的code
         });
+        this.loadjobTree()
+
         wx.setNavigationBarTitle({
-            title: '发布需求'
+            title: options.type == 0 ? '发布需求':'编辑需求'
         })        
     },
 
@@ -380,7 +382,9 @@ Page({
     },
     //编辑器内容改变时触发
     bindEditorInput(e) {
-        let description = this.deleteHtmlTag(e.detail.html);
+       // let description = this.deleteHtmlTag(e.detail.html);
+        let description = e.detail.value;
+
         if (description.length > 300) {
             wx.showToast({
                 title: '请输入300字以内',
@@ -471,6 +475,7 @@ Page({
     //省份显示回填
     onFillArea(provincCode,cityCode,districtCode){
         this.setData({
+            currrAreaCode: [provincCode,cityCode,districtCode],
             currrArea: [area.default.province_list[provincCode],area.default.city_list[cityCode],area.default.county_list[districtCode]]
         })
     },
@@ -514,7 +519,7 @@ Page({
     },
     //跳转到我的作品列表
     tapPublishDemand() {
-        this.findCateTreeCode()
+      //  this.findCateTreeCode()
 
         if (this.trimStr(this.data.title) == '') {
             wx.showToast({
@@ -629,7 +634,9 @@ Page({
             success(res) {
                 that.setData({
                     title: res.summarize,
-                    description: that.setEditorData(res.description),
+                   // description: that.setEditorData(res.description),
+                    description: res.description,
+                    total:res.description.length,
                     jobCateId: res.jobCateId,//todo 回显
                     currentDateStr: util.formatDate(res.expectDeliveryTime, '年月日'),
                     expectDeliveryTime : res.expectDeliveryTime,
@@ -639,6 +646,7 @@ Page({
                 that.onFillDemandType()
                 that.onFillArea(res.provinceCode,res.cityCode,res.districtCode)
                 console.log("需求详情加载完毕")
+                that.watchInputSelectStatus()
             },
             failed(res) {
                 console.error(res)

@@ -11,6 +11,7 @@ Page({
      * 页面的初始数据
      */
     data: {
+        isIosSystem:app.isIosSystem,
         safeBottom: app.safeBottom,
         collect:false,
         currentPhotoIndex:1,
@@ -360,6 +361,7 @@ Page({
         let domainCateName = this.data.data.domainCate.cateName //领域名称
         let postCateId = this.data.data.postCate.id //岗位ID
         let postCateName = this.data.data.postCate.cateName //岗位名称
+        let budgetType = this.data.data.budgetType //计算方式
         let hourlyWage = this.data.data.hourlyWage //时薪
         let provinceCode = this.data.data.freelancerInfo.provinceCode // 省
         let cityCode = this.data.data.freelancerInfo.cityCode // 城市
@@ -373,6 +375,7 @@ Page({
                     +"&freelancerName="+name
                     +"&headImg="+headImg
                     +"&domainCateName="+domainCateName
+                    +"&budgetType="+budgetType
                     +"&hourlyWage="+hourlyWage
                     +"&postCateId="+postCateId
                     +"&postCateName="+postCateName

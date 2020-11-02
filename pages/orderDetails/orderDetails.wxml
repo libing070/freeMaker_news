@@ -17,16 +17,27 @@
             <view class="step-item">
                 <image class="status-icon" wx:if="{{index <= currentStep}}" src="/images/common/icon-step-success.png"></image> 
                 <image class="status-icon" wx:elif="{{index > currentStep}}" src="/images/common/icon-step-default.png"></image> 
-                <image class="status-icon" wx:if="{{index == currentStep && (orderStatus.REJECT_30 == orderDetail.status|| orderStatus.CHECK_FAIL_70 == orderDetail.status|| orderStatus.CHECK_FAIL_61 == orderDetail.status|| orderStatus.CANCELD_100 == orderDetail.status || orderStatus.FINISHED_81 == orderDetail.status)}}" src="/images/common/icon-step-fail.png"></image>
+                <image class="status-icon" wx:if="{{index == currentStep && (orderStatus.REJECT_30 == orderDetail.status|| orderStatus.CHECK_FAIL_70 == orderDetail.status|| orderStatus.CANCELD_100 == orderDetail.status || orderStatus.FINISHED_81 == orderDetail.status)}}" src="/images/common/icon-step-fail.png"></image>
                 <image class="status-icon" wx:elif="{{index == currentStep}}" src="/images/common/icon--step-current.png"></image> 
             </view>
        
-            <block  wx:if="{{index == currentStep && (orderStatus.REJECT_30 == orderDetail.status||  orderStatus.CANCELD_70 == orderDetail.status||orderStatus.CHECK_FAIL_61 == orderDetail.status|| orderStatus.CANCELD_100 == orderDetail.status || orderStatus.FINISHED_81 == orderDetail.status)}}">
+            <block  wx:if="{{(index == currentStep && (orderStatus.REJECT_30 == orderDetail.status||  orderStatus.CHECK_FAIL_70 == orderDetail.status|| orderStatus.CANCELD_100 == orderDetail.status || orderStatus.FINISHED_81 == orderDetail.status))}}">
                 <view class="step-title {{index==currentStep ? 'curr':''}}">{{item.stop}}</view>
+            </block>
+            <!-- <block  wx:if="{{(index == (currentStep+1) && (orderStatus.FINISHED_80 == orderDetail.status)) || (index == currentStep && (orderStatus.EVALUATED_90 == orderDetail.status))}}">
+                <view class="step-title {{index==currentStep ? 'curr':''}}">{{index == (currentStep+1) && (orderStatus.FINISHED_80 == orderDetail.status) ? item.undo : item.done}}</view>
+            </block>
+            <block wx:else>
+                <view class="step-title {{index==currentStep ? 'curr':''}}" >{{index == currentStep ? item.undo: item.done}}</view>
+            </block> -->
+
+            <block  wx:elif="{{(index == currentStep && (orderStatus.FINISHED_80 == orderDetail.status)) || (index == currentStep && (orderStatus.EVALUATED_90 == orderDetail.status))}}">
+                <view class="step-title {{index==currentStep ? 'curr':''}}">{{index == (currentStep+1) && (orderStatus.FINISHED_80 == orderDetail.status) ? item.undo : item.done}}</view>
             </block>
             <block wx:else>
                 <view class="step-title {{index==currentStep ? 'curr':''}}" >{{index == currentStep ? item.undo: item.done}}</view>
             </block>
+
         </view>
     </view>
 </view>
@@ -74,9 +85,17 @@
 </view>
 <view class="budget" >
     <view class="title">订单预算</view>
-    <view class="calc">
+    <view class="calc" wx:if="{{orderDetail.budgetType == 0}}">
         <view class="compute-mode">计算方式：{{orderDetail.orderPrice}}元/时*{{orderDetail.orderTimes}}</view>
-        <view clss="total-price"><text style="font-family: PingFangSC-Regular;font-size: 32rpx;color: #0C2032;">¥</text><text style="font-family: DINAlternate-Bold;font-size: 52rpx;color: #0C2032;">{{orderDetail.orderMny}}</text></view>
+        <view clss="total-price"><text wx:if="{{orderDetail.orderMny != orderDetail.actOrderMny}}" style="font-family: PingFangSC-Regular;font-size: 24rpx;color: #8392A0;text-decoration: line-through;padding-right:4rpx">¥{{orderDetail.orderMny}}</text><text style="font-family: PingFangSC-Regular;font-size: 32rpx;color: #0C2032;">¥</text><text style="font-family: DINAlternate-Bold;font-size: 52rpx;color: #0C2032;">{{orderDetail.actOrderMny}}</text></view>
+    </view>
+    <view class="calc" wx:if="{{orderDetail.budgetType == 1}}">
+        <view class="compute-mode">计算方式：一口价</view>
+        <view clss="total-price"><text style="font-family: PingFangSC-Regular;font-size: 32rpx;color: #0C2032;">¥</text><text style="font-family: DINAlternate-Bold;font-size: 52rpx;color: #0C2032;">{{orderDetail.actOrderMny}}</text></view>
+    </view>
+    <view class="calc" wx:if="{{orderDetail.budgetType == 2}}">
+        <view class="compute-mode">计算方式：面议</view>
+        <view clss="total-price"><text style="font-family: PingFangSC-Regular;font-size: 32rpx;color: #0C2032;">¥</text><text style="font-family: DINAlternate-Bold;font-size: 52rpx;color: #0C2032;">{{orderDetail.actOrderMny}}</text></view>
     </view>
 </view>
 
@@ -85,7 +104,7 @@
     <view class="evaluate-box" wx:for="{{1}}" wx:key="index">
         <view class="u" style="border-top:{{ index == 0 ? 'none' : '0.1px solid #E6E6E6'}}">
             <view class="avatarBox">
-                <image class="avatar" src="/images/common/default-head.png"></image>
+                <image class="avatar" src="{{evaluationInfo.employerInfo.headImg ? evaluationInfo.employerInfo.headImg :'/images/common/default-head.png'}}"></image>
             </view>
             <view>
                 <view class="name-user">{{evaluationInfo.employerInfo.name}}</view>
@@ -106,7 +125,7 @@
             </view>
         </view>
         <view class="evaluate-news">{{evaluationInfo.description}}</view>
-        <view class="evaluate-othersBox">
+        <view class="evaluate-othersBox" wx:if="{{evaluationInfo.images.length>0}}">
             <scroll-view class="evaluate-swiperBox" scroll-x>
                 <block wx:for="{{evaluationInfo.images}}" wx:key="index">
                     <image  class="evaluate-photoBox" src="{{item.fullPath}}" data-item="{{item.fullPath}}" mode="aspectFill"></image>
@@ -124,12 +143,12 @@
         <!--待接单-->
         <view class="layout-1-2" wx:if="{{currentStep == 1 && orderDetail.status == orderStatus.WAITING_20}}">
             <view class="left cancle" catchtap="tapCancelOrder" data-status="{{orderStatus.REJECT_30}}">取消订单</view>
-            <view class="right cancle">立即支付</view>
+            <view class="right">立即支付</view>
         </view>
         <!--待支付-->
         <view class="layout-1-2" wx:elif="{{currentStep == 2 && orderDetail.status == orderStatus.TAKING_40}}">
             <view class="left cancle" catchtap="tapCancelOrder" data-status="{{orderStatus.CANCELD_100}}">取消订单</view>
-            <view class="right ok" catchtap="shadeShowing"  data-type="pay">立即支付</view>
+            <view class="right ok" catchtap="tapLoadPayAttachment"  data-type="pay">立即支付</view>
         </view>
 
         <!--制作中-->
@@ -141,8 +160,18 @@
             <view class="right pay ok" catchtap="shadeShowing" data-type="checked">验收通过</view>
         </view>
 
+         <!--第一次不通过原因-->
+         <view class="layout-1-1" wx:elif="{{currentStep == 4 && orderDetail.status== 70}}">
+            <view class="left" style="width:50%"  catchtap="shadeShowing" data-type="noreason" >点击查看不通过原因<image style="width:18rpx;height:18rpx;" src="/images/common/icon_enter.png"></image></view>
+        </view>
+
         <!--验收不通过 修改验收状态-->
         <view class="layout-1 ok" wx:elif="{{currentStep == 4 && orderDetail.status==orderStatus.CHECK_FAIL_61}}" catchtap="shadeShowing" data-type="checkstatus">修改验收状态</view>
+
+         <!--二次不通过查看不通过原因-->
+         <view class="layout-1-1" wx:elif="{{currentStep == 4 && orderDetail.status== 81}}">
+            <view class="left" style="width:50%"  catchtap="shadeShowing" data-type="noreason" >点击查看不通过原因<image style="width:18rpx;height:18rpx;" src="/images/common/icon_enter.png"></image></view>
+        </view>
 
         <!--完成-->
         <view class="layout-1 ok" wx:elif="{{currentStep == 5}}" catchtap="shadeShowing" data-type="appraise">评价</view>
@@ -156,21 +185,26 @@
             <view class="right ok" catchtap="tapReceiveOrder" data-id="{{orderDetail.id}}">接单</view>
         </view>
         <!--待支付-->
-        <view class="layout-1 cancel-receiving " wx:elif="{{currentStep == 2 && orderDetail.status == orderStatus.TAKING_40 }}">取消接单</view>
+        <view class="layout-1-2" wx:elif="{{currentStep == 2 && orderDetail.status == orderStatus.TAKING_40 }}">
+            <view class="left ok" catchtap="tapUpdatePrice" data-type="updatePrice">修改价格</view>
+            <view class="right cancle" catchtap="tapCancelOrder" data-status="{{orderStatus.REJECT_30}}">取消接单</view>
+        </view>
 
         <!--制作中-->
         <view class="layout-1 ok"  catchtap="shadeShowing" data-type="made"  wx:elif="{{currentStep == 3}}">完成制作</view>
 
         <!--验收-->
-        <view class="layout-1-2" wx:elif="{{currentStep == 4 &&  orderDetail.status== 60}}">
-            <view class="layout-1 cancle">等待验收中</view>
-        </view>
+        <view class="layout-1 cancle" wx:elif="{{currentStep == 4 &&  (orderDetail.status== 60 || orderDetail.status== 61 )}}">等待验收中</view>
 
         <!--查看不通过原因-->
-        <view class="layout-1-1" wx:elif="{{currentStep == 4 &&  orderDetail.status== 70}}">
+        <view class="layout-1-1" wx:elif="{{currentStep == 4 && orderDetail.status== 70}}">
             <view class="left" style="width:50%"  catchtap="shadeShowing" data-type="noreason" >点击查看不通过原因<image style="width:18rpx;height:18rpx;" src="/images/common/icon_enter.png"></image></view>
             <view class="right ok"  style="width:50%" catchtap="shadeShowing" data-type="made">完成制作</view>
+        </view>
 
+        <!--二次不通过查看不通过原因-->
+        <view class="layout-1-1" wx:elif="{{currentStep == 4 && orderDetail.status== 81}}">
+            <view class="left" style="width:50%"  catchtap="shadeShowing" data-type="noreason" >点击查看不通过原因<image style="width:18rpx;height:18rpx;" src="/images/common/icon_enter.png"></image></view>
         </view>
 
     </block>
@@ -318,13 +352,16 @@
         <view class="shade-noreason" wx:if="{{ currPicker == 'noreason'}}">
             <view class="body" style="padding-bottom:{{56 + safeBottom}}px">
                 <view class="title">验收不通过原因</view>
-                <view class="notice">
-                    <image class="icon" src="/images/common/icon-warning.png"></image>
-                    <text class="text">请尽快与需求方沟通协商，还有一次验收机会。</text>
-                </view>
-                <block wx:for="{{failedReasonList}}">
+                <block wx:if="{{orderBelongType == 20}}">
+                    <view class="notice"  wx:if="{{failedReasonList.length < 2}}">
+                        <image class="icon" src="/images/common/icon-warning.png"></image>
+                        <text class="text">请尽快与需求方沟通协商，还有一次验收机会。</text>
+                    </view>
+                </block>
+                
+                <block wx:for="{{failedReasonList}}" wx:key="index">
                     <view class="content">{{item.description}}</view>
-                    <view class="imagesBox">
+                    <view class="imagesBox" style="padding-bottom:20rpx ;border-bottom:1px solid  #F0F0F0;">
                         <scroll-view class="swiperBox" scroll-x>
                             <block wx:for="{{item.images}}" wx:key="index" wx:for-item="image">
                                 <image  class="photoBox" src="{{image.fullOtherPath}}" mode="aspectFill"></image>
@@ -348,7 +385,7 @@
                 <view class="box">
                     <view class="b1">
                         <view class="key">开户名称</view>
-                        <view class="value">北京无限空间云科技有限公司</view>
+                        <view class="value">北京思维跳动咨询服务有限公司</view>
                     </view>
                     <view class="b2">
                         <view class="key">开户银行</view>
@@ -365,7 +402,7 @@
 
                 </view>
             </view>
-            <view class="payment">
+            <view class="payment" wx:if="">
                 <view class="ti">2.联系企业客服，确认是否充值成功。</view>
                 <view class="grow">
                     <image class="p1" src="/images/common/icon_customer_service@2x.png"></image>
@@ -378,8 +415,25 @@
                     </view>
                 </view>
             </view>
-            <view class="payment">
+            <view class="payment" wx:if="">
                 <view class="ti">3.付款信息经过企业客服确认后，订单状态将会变为“已支付”。</view>
+            </view>
+
+            <view class="payment">
+                <view class="ti">2.上传支付凭证</view>
+                <view class="ts">上传文件大小不超过10M，文件个数仅限1个</view>
+            </view>
+            <view class="images-box" style="padding-bottom: 112rpx;margin-left:40rpx">
+                <view class="box" wx:for="{{attachmentList}}" wx:key="index">
+                    <image src="/images/common/icon-delete.png" class="icon-delete" data-index="{{index}}" catchtap="deletePhotos"></image>
+                    <image src="{{item.fullPath}}" class="img" mode="aspectFill"  data-item="{{item.fullPath}}"  catchtap="tapBanner"/>
+                </view>
+                <view class="box dotted-box" bindtap="tapPayUpload" wx:if="{{attachmentList.length < 1}}">
+                    <image src="/images/common/icon-camera.png" class="upload-icon" catchtap="tapPayUpload" />
+                </view>
+            </view>
+            <view class="tool-bar" style="padding-bottom: {{ safeBottom }}px;border:none;">
+                <view class="layout-1 {{canClick ? 'ok': ''}}" bindtap="tapPay">我已完成打款</view>
             </view>
         </view>
         <!--评价-->
@@ -461,6 +515,29 @@
             <view class="tool-bar" style="padding-bottom: {{ safeBottom }}px;border:none;">
                 <view class="layout-1-1">
                       <view class="right {{ canClick ? 'ok':''}}" catchtap="tapshadeAppraiseSubmit">提交</view>
+                </view>
+            </view>
+        </view>
+        <!--修改价格-->
+        <view class="shade-updatePrice" wx:if="{{ currPicker == 'updatePrice'}}" style="padding-bottom:{{56 + safeBottom}}px">
+
+            <view class="title">修改价格</view>
+            <view class="conetnt" wx:if="{{orderDetail.budgetType == 0}}">
+                <view>薪资计算方式：{{orderDetail.orderPrice}}元/时*{{orderDetail.orderTimes}}</view>
+                <input class="price-input" type="number"  maxlength="10"bindinput="bindUpdatePriceInput" value="{{orderDetail.actOrderMny}}" />
+            </view>
+            <view class="conetnt" wx:elif="{{orderDetail.budgetType == 1}}">
+                <view>薪资计算方式：一口价</view>
+                <input class="price-input" type="number"  maxlength="10"bindinput="bindUpdatePriceInput" value="{{orderDetail.actOrderMny}}" />
+            </view>
+            <view class="conetnt" wx:elif="{{orderDetail.budgetType == 2}}">
+                <view>薪资计算方式：面议</view>
+                <input class="price-input" type="number"  maxlength="10"bindinput="bindUpdatePriceInput" value="{{orderDetail.actOrderMny}}" />
+            </view>
+            <view class="tool-bar" style="padding-bottom: {{ safeBottom }}px;border:none;">
+                <view class="layout-1-1">
+                      <view class="left cancel" catchtap="shadeShowing">取消</view>
+                      <view class="right submit ok" catchtap="tapUpdatePriceok">确定</view>
                 </view>
             </view>
         </view>

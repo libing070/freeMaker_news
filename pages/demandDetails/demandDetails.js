@@ -9,6 +9,7 @@ Page({
      * 页面的初始数据
      */
     data: {
+        isIosSystem:app.isIosSystem,
         safeBottom: app.safeBottom,
         demandCode: '',
         demandDetail: {}
@@ -78,7 +79,10 @@ Page({
     },
     //跳转到需求推送人列表
     tapToPushUserList(e) {
-        console.log(e)
+        app.globalData.myDemandDetailData={
+            title:this.data.demandDetail.summarize,
+            description:this.data.demandDetail.description
+        }
         wx.navigateTo({
             url: '/pages/pushUserList/pushUserList?id='+e.currentTarget.dataset.id,
         })
@@ -118,7 +122,7 @@ Page({
     //跳转到需求编辑页面（发布需求页面）
     tapEditDemand() {
         wx.navigateTo({
-            url: '/pages/publishDemand/publishDemand?type=0&demandCode='+this.data.demandDetail.code,
+            url: '/pages/publishDemand/publishDemand?type=1&demandCode='+this.data.demandDetail.code,
         })
     },
     getDemandDetail() {

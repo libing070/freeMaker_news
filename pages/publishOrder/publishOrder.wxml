@@ -25,7 +25,7 @@
         <input class="input" placeholder-style='text-align:left' maxlength="100" placeholder="添加一个标题吧" bindinput="bindTitleInput" value="{{title}}" placeholder-style="color: #8392A0"/>
     </view>
     <view class="input-wrapper">
-        <editor id="editor" class="editor" placeholder="简单描述下您的需求吧"  bindinput="bindEditorInput" bindready="onEditorReady"></editor>
+        <textarea  id="editor" class="editor" value="{{description}}" placeholder="请描述您的技能，尽可能清晰具体哦"  bindinput="bindEditorInput"> </textarea>
         <view class="number">{{total}}/300</view>
     </view>
     <view class="content-wrapper">
@@ -37,11 +37,23 @@
         <view class="choose-val" catchtap="shadeShowing" data-type="date" style="color:{{ currentDateStr == '请选择' ? '#8392A0' : ' #0C2032'}}">{{currentDateStr}}<image class="arrow" src="/images/common/icon-arrow.png"></image></view>
     </view>
     <view class="input-budget">
-        <view class="names"><image class="icon-important" src="/images/common/icon-important.png"></image><text class="t">时薪(¥)</text></view>
+        <block wx:if="{{budgetType == 0}}">
+            <view class="names"><image class="icon-important" src="/images/common/icon-important.png"></image><text class="t">时薪(¥)</text></view>
         <view style="height:120rpx;line-height:120rpx;font-size: 32rpx;color: #0C2032;">{{hourlyWage}}/时</view>
-        <!-- <input class="budget" type="number"  placeholder-style='text-align:right' maxlength="100" placeholder="请输入您的时薪" bindinput="bindhourlywageInput" value="{{hourlywage}}" placeholder-style="color: #8392A0"></input> -->
+        </block>
+        <block wx:elif="{{budgetType == 1}}">
+            <view class="names"><image class="icon-important" src="/images/common/icon-important.png"></image><text class="t">一口价(¥)</text></view>
+            <input class="budget" type="number"  style="height:120rpx;line-height:120rpx;font-size: 28rpx;color: #0C2032;"  placeholder-style='text-align:right' maxlength="100" placeholder="请输入价格" bindinput="bindhourlywageInput" value="{{hourlyWage}}" placeholder-style="color: #8392A0"></input> 
+        </block>
+        <block wx:elif="{{budgetType == 2}}">
+            <view class="names"><image class="icon-important" src="/images/common/icon-important.png"></image><text class="t">面议(¥)</text></view>
+            <input class="budget" type="number"  style="height:120rpx;line-height:120rpx;font-size: 28rpx;color: #0C2032;"  placeholder-style='text-align:right' maxlength="100" placeholder="请输入价格" bindinput="bindhourlywageInput" value="{{hourlyWage}}" placeholder-style="color: #8392A0"></input> 
+        </block>
+
+        <!-- <view class="names"><image class="icon-important" src="/images/common/icon-important.png"></image><text class="t">时薪(¥)</text></view>
+        <view style="height:120rpx;line-height:120rpx;font-size: 32rpx;color: #0C2032;">{{hourlyWage}}/时</view> -->
     </view>
-    <view class="content-wrapper">
+    <view class="content-wrapper"  wx:if="{{budgetType == 0}}">
         <view class="names"><image class="icon-important" src="/images/common/icon-important.png"></image><text class="t">购买数量</text></view>
         <view class="stepper">
             <image class="icon"src="/images/common/icon-minussign.png" catchtap="calcQuantity" data-type="minussign"></image>
