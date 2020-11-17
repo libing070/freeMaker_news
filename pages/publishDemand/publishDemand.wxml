@@ -8,12 +8,11 @@
 </wxs>
 <view class="demand" style="padding-bottom: {{ 56 + safeBottom }}px">
     <view class="input-wrapper">
-        <input class="input" placeholder-style='text-align:left' maxlength="100" placeholder="添加一个标题吧" bindinput="bindTitleInput" value="{{title}}" placeholder-style="color: #8392A0"/>
+        <input class="input" placeholder-style='text-align:left' maxlength="100" placeholder="添加一个标题吧" bindinput="bindTitleInput" value="{{title}}" placeholder-style="color: #8392A0"  style="border:none"/>
     </view>
     <view class="input-wrapper">
-        <!-- <editor id="editor" class="editor" placeholder="简单描述下您的需求吧"  bindinput="bindEditorInput" bindready="onEditorReady"></editor>  -->
-        <textarea class="editor" placeholder="简单描述下您的需求吧" value="{{description}}" bindinput="bindEditorInput"></textarea>
-        <view class="number">{{total}}/300</view>
+        <textarea class="editor" maxlength="500" placeholder="简单描述下您的需求吧"  value="{{description}}" bindinput="bindEditorInput"></textarea>
+        <view class="number">{{total}}/500</view>
     </view>
     <view class="content-wrapper">
         <view class="names"><image class="icon-important" src="/images/common/icon-important.png"></image><text class="t">需求类型</text></view>
@@ -23,18 +22,84 @@
         <view class="names"><image class="icon-important" src="/images/common/icon-important.png"></image><text class="t">期望交付时间</text></view>
         <view class="choose-val" catchtap="shadeShowing" data-type="date" style="color:{{ currentDateStr == '请选择' ? '#8392A0' : ' #0C2032'}}">{{currentDateStr}}<image class="arrow" src="/images/common/icon-arrow.png"></image></view>
     </view>
-    <view class="input-budget">
-        <view class="names"><image class="icon-important" src="/images/common/icon-important.png"></image><text class="t">预算(¥)</text></view>
-        <input class="budget" type="number"  placeholder-style='text-align:right' maxlength="100" placeholder="请输入您的预算" bindinput="bindbudgetInput" value="{{budget}}" placeholder-style="color: #8392A0"></input>
+
+    <view class="price-wrap" >
+        <view class="names"><image class="icon-important" src="/images/common/icon-important.png"></image><text class="t">薪资计算方式</text></view> 
+        <view class="radio-box" style="{{choosePriceRadioIndex == 2? 'border-bottom: 0.1px solid #E6E6E6;':''}}">
+            <view class="box" catchtap="tapChoosePriceRadio" data-index="0">
+                <image class="icon" src="{{choosePriceRadioIndex == 0 ? '/images/common/icon_status_sel.png' : '/images/common/icon_status_nor.png'}}" />
+                <text class="name">时薪</text>
+            </view>
+            <view class="box" catchtap="tapChoosePriceRadio" data-index="1">
+                <image class="icon" src="{{choosePriceRadioIndex == 1? '/images/common/icon_status_sel.png' : '/images/common/icon_status_nor.png'}}" />
+                <text class="name">一口价</text>
+            </view>
+            <!-- <view class="box" catchtap="tapChoosePriceRadio" data-index="2">
+                <image class="icon" src="{{choosePriceRadioIndex == 2? '/images/common/icon_status_sel.png' : '/images/common/icon_status_nor.png'}}" />
+                <text class="name">面议</text>
+            </view> -->
+        </view>
     </view>
+    <view class="bargaining-wrap" wx:if="{{choosePriceRadioIndex < 2}}">
+        <view class="names">
+            <image class="icon-important" src="/images/common/icon-important.png"></image>
+            <text class="t">{{choosePriceRadioIndex == 0 ? '服务定价（元/小时）': choosePriceRadioIndex == 1 ? '服务定价（元）' : ''}}</text>
+        </view> 
+        <input class="input" type="number" cursor-spacing="100" placeholder-style='text-align:right'maxlength="10" placeholder="请输入服务定价" bindinput="bindhourlywageInput" value="{{budget}}" placeholder-style="color: rgba(131,146,160,0.5)"/>
+    </view>   
     
+    <view class="price-wrap" style="border-bottom: 0.1px solid #E6E6E6;">
+        <view class="names"><image class="icon-important" src="/images/common/icon-important.png"></image><text class="t">交付方式</text></view> 
+        <view class="radio-box">
+            <view class="box" catchtap="tapChoosePayRadio" data-index="0">
+                <image class="icon" src="{{choosePayRadioIndex == 0 ? '/images/common/icon_status_sel.png' : '/images/common/icon_status_nor.png'}}" />
+                <text class="name">远程</text>
+            </view>
+            <view class="box" catchtap="tapChoosePayRadio" data-index="1">
+                <image class="icon" src="{{choosePayRadioIndex == 1? '/images/common/icon_status_sel.png' : '/images/common/icon_status_nor.png'}}" />
+                <text class="name">现场</text>
+            </view>
+        </view>
+    </view> 
     <view class="content-wrapper">
-        <view class="names"><image class="icon-important" src="/images/common/icon-important.png"></image><text class="t">省份城市</text></view>
+        <view class="names"><image class="icon-important" src="/images/common/icon-important.png"></image><text class="t">所在地</text></view>
         <view class="choose-val" catchtap="shadeShowing" data-type="area" style="color:{{ fn.formatCurrrArea(currrArea) == '请选择' ? '#8392A0' : ' #0C2032'}}" >{{fn.formatCurrrArea(currrArea)}}<image class="arrow"  src="/images/common/icon-arrow.png"></image></view>
     </view>
+    <view class="price-wrap" style="border-bottom: 0.1px solid #E6E6E6;">
+        <view class="names"><image class="icon-important" src="/images/common/icon-important.png"></image><text class="t">雇佣者类型</text></view> 
+        <view class="radio-box">
+            <view class="box" catchtap="tapChooseEmployerRadio" data-index="0">
+                <image class="icon" src="{{chooseEmployerRadioIndex == 0 ? '/images/common/icon_status_sel.png' : '/images/common/icon_status_nor.png'}}" />
+                <text class="name">企业雇主</text>
+            </view>
+            <view class="box" catchtap="tapChooseEmployerRadio" data-index="1">
+                <image class="icon" src="{{chooseEmployerRadioIndex == 1? '/images/common/icon_status_sel.png' : '/images/common/icon_status_nor.png'}}" />
+                <text class="name">个人雇主</text>
+            </view>
+        </view>
+    </view> 
+    <block wx:if="{{chooseEmployerRadioIndex == 0}}">
+        <view class="bargaining-wrap" style="margin-top:56rpx">
+            <view class="names">
+                <image class="icon-important" src="/images/common/icon-important.png"></image>
+                <text class="t">公司名称</text>
+            </view> 
+            <input class="input" placeholder-style='text-align:right'maxlength="100" placeholder="请输入公司名称" bindinput="bindCompanyInput"  value="{{company}}" placeholder-style="color: rgba(131,146,160,0.5)"/>
+        </view>   
+        <view class="bargaining-wrap" style="margin-top:56rpx">
+            <view class="names">
+                <image class="icon-important" src="/images/common/icon-important.png"></image>
+                <text class="t">职务</text>
+            </view> 
+            <input class="input" placeholder-style='text-align:right'maxlength="100" placeholder="请输入您的职务" bindinput="bindJobTitleInput"  value="{{jobTitle}}" placeholder-style="color: rgba(131,146,160,0.5)"/>
+        </view> 
+    </block>
+
+
+ 
 </view>
 
-<view class="tool-bar" style="padding-bottom: {{ safeBottom }}px">
+<view class="tool-bar" style="z-index:9999;padding-bottom: {{ safeBottom }}px">
     <view class="layout-1 {{isClickbtn ? 'ok' : ''}}" bindtap="tapPublishDemand">提交</view>
 </view>
 

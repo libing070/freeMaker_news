@@ -90,8 +90,6 @@ Page({
             url: API.getCurrentInfo,
             success:res => {
               
-                console.log(res)
-
                 let currrLanguage=''
                 for(let i in this.data.columnsLanguage){
                     if(this.data.columnsLanguage[i].id == res.freelancerInfo.language){
@@ -104,7 +102,9 @@ Page({
                     desc:res.freelancerInfo.skillSummarize,
                     wechat:res.freelancerInfo.accountCode,
                     currrLanguage:currrLanguage,
-                    columnsLanguageIndex:res.freelancerInfo.language/10
+                    columnsLanguageIndex:res.freelancerInfo.language/10,
+                    jobTitle:res.employerInfo.jobTitle,
+                    company:res.employerInfo.company,
                 })
 
                 if(res.freelancerInfo.provinceCode){
@@ -116,7 +116,6 @@ Page({
                 console.error(res)
             },
             complete(res) {
-                console.log("个人信息拉去完成", res)
             }
         })
     },
@@ -174,7 +173,6 @@ Page({
     },
     //省份下拉确认按钮事件
     areaTapDone(e) {
-        console.log(e);
         let currrArea = e.detail.values;
         if (currrArea[0].name == "" || currrArea[0].name == "请选择") {
             wx.showToast({
@@ -229,6 +227,31 @@ Page({
             shadeShowing: false
         });
     },
+    //公司
+    bindCompanyNameInput(e){
+        let company = e.detail.value
+        this.setData({
+            company,
+        });
+    },
+    tapHasCompany(){
+        if(!this.data.company){
+            wx.showToast({
+                title: '请先填写公司名称',
+                icon: 'none',
+                duration: 2000
+            });
+            return
+        }
+    },
+    //职务
+    bindJobInput(e){
+        let jobTitle = e.detail.value
+        this.setData({
+            jobTitle,
+        });
+    },
+
     //隐藏覆盖在电话输入框的遮罩
     hasPhoneDialog(){
         this.setData({
@@ -252,6 +275,15 @@ Page({
                 duration: 2000
             });
             return
+        }
+        var regmobile = /^[1][3,5,6,7,8,9][0-9]{9}$/;
+        if (this.data.phone.length >=1 && (!regmobile.test(this.data.phone) || this.data.phone.length != 11)) {
+            wx.showToast({
+                title: '请输入正确的手机号',
+                icon: 'none',
+                duration: 2000
+            });
+            return;
         }
         if (!this.data.currrAreaCode) {
             wx.showToast({
@@ -278,6 +310,15 @@ Page({
             return
         }
 
+        // if (!this.data.company && this.data.jobTitle) {
+        //     wx.showToast({
+        //         title: '请先填写公司名称',
+        //         icon: 'none',
+        //         duration: 2000
+        //     });
+        //     return
+        // }
+
         let data={
             provinceCode: this.data.currrAreaCode[0],
             cityCode: this.data.currrAreaCode[1],
@@ -287,8 +328,15 @@ Page({
             freelancerInfo:{
                 language:this.data.currrLanguage == '中文' ? 10 :20,
                 skillSummarize:this.data.desc,
-                accountCode:this.data.wechat
+                accountCode:this.data.wechat,
+                phone:this.data.phone,
+                name:this.data.name,
+                headImg:this.data.headImgs.path,
             },
+            // employerInfo:{
+            //     company:this.data.company,
+            //     jobTitle:this.data.jobTitle
+            // }
 
         }
         REST.post({

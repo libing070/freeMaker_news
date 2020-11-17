@@ -19,7 +19,7 @@ page {
     position: relative;
     display: flex;
     align-items: center;
-    padding-bottom: 64rpx;
+    padding-bottom: 184rpx;
 }
 
 .avatarBox {
@@ -115,7 +115,48 @@ page {
     font-family: PingFangSC-Regular;
     color: #FFFFFF;
 }
-
+.share{
+    position: absolute;
+    bottom: 20rpx;
+    height: 120rpx;
+    width: 100vw;
+    display: flex;
+    background-color: white;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+}
+.share .icon{
+    margin-left: 40rpx;
+    width: 36rpx;
+    height: 28rpx;
+    margin-right: 14rpx;
+}
+.share .name{
+    font-family: PingFangSC-Medium;
+    font-size: 32rpx;
+    color: #0C2032;
+}
+.share .share-box{
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: 40rpx;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+}
+.share .share-box .n{
+    font-family: PingFangSC-Regular;
+    font-size: 28rpx;
+    color: #8392A0;
+}
+.share .share-box .arrow{
+    margin-left: 16rpx;
+    width: 20rpx;
+    height: 20rpx;
+}
 .tabs {
     position: relative;
     border-top: 1px solid #e6e6e6;
@@ -204,10 +245,15 @@ page {
     margin:20rpx;
     border-radius: 8rpx;
 }
-
+.my-demand-list .demand-status{
+    position: relative;
+    height: 40rpx;
+    margin-left: 32rpx;
+    margin-top: 20rpx;
+}
 .my-demand-list .title{
     position: relative;
-    padding-top:44rpx;
+    padding-top:20rpx;
     margin-left: 32rpx;
 }
 .my-demand-list .title .tag{
@@ -423,21 +469,35 @@ page {
 .order-container{
     position: relative;
 }
-.order-container .no-data{
-    margin-top:200rpx;
+ .no-data{
+    margin-top:140rpx;
     display: flex;
     flex-direction: column;
     align-items: center;
 }
-.order-container .no-data .icon{
-    width: 150rpx;
-    height: 150rpx;
+ .no-data .icon{
+    width: 250rpx;
+    height: 250rpx;
 }
-.order-container .no-data .desc{
+.no-data .desc{
     width: 420rpx;
     margin-top:30rpx ;
     font-size: 30rpx;
-    color: #7D7D7D;
+    color: #8392A0;
+    text-align: center;
+}
+.no-data .btn{
+    height: 88rpx;
+    line-height: 88rpx;
+    text-align: center;
+    border-radius: 8rpx;
+    font-family: PingFangSC-Medium;
+    font-size: 28rpx;
+    background: #FFBA20;
+    color: #FFFFFF;
+    width: calc(100% - 80rpx);
+    margin: auto;
+    margin-top: 40rpx;
 }
 .order-list .dropdown-menu{
     position: relative;

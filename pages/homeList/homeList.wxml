@@ -15,6 +15,9 @@
 
 <view class="group" style="padding-bottom:{{ safeBottom }}px">
     <home-cell wx:for="{{products}}" wx:key="index" obj="{{item}}" bindchangeName="changeName"></home-cell>
+    <view class="loading-box" wx:if="{{ loadmoreShowing }}" style="margin:30rpx 0" >
+        <van-loading size="22px" color="#c9c9c9" type="spinner">努力加载中...</van-loading>
+    </view>
 </view>
 
 <view class="shade"  catchtouchmove="true" wx:if="{{menuShowing}}" catchtap="menuShowing">

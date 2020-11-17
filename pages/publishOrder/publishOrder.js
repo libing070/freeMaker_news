@@ -164,7 +164,6 @@ Page({
         REST.noVerfiyget({
             url: API.loadTreeData,
             success: res => {
-                console.log(res);
                 this.filterTreeData(res);
                 this.setData({
                     treeData: res
@@ -204,7 +203,6 @@ Page({
                 selectFromatObject[level1.jobCateId] = level2
             }
         }
-        console.log(selectFromatObject)
 
         let demandColumns = [{
                 values: level1List,
@@ -248,7 +246,6 @@ Page({
             value,
             index
         } = event.detail;
-        console.log(`当前值：${value}, 当前索引：${index}`);
 
         this.setData({
             shadeShowing: false,
@@ -394,9 +391,9 @@ Page({
     //编辑器内容改变时触发
     bindEditorInput(e) {
         let description =e.detail.value
-        if (description.length > 300) {
+        if (description.length > 500) {
             wx.showToast({
-                title: '请输入300字以内',
+                title: '请输入500字以内',
                 icon: 'none',
                 duration: 2000
             });
@@ -445,7 +442,6 @@ Page({
     },
     //省份下拉确认按钮事件
     areaTapDone(e) {
-        console.log(e);
         let currrArea = e.detail.values;
         if (currrArea[0].name == "" || currrArea[0].name == "请选择") {
             wx.showToast({
@@ -595,12 +591,10 @@ Page({
             districtCode: this.data.currrAreaCode[2], //区
             freelancerId:this.data.freelancerId
         }
-        console.log(data);
         REST.post({
             url: API.saveOrder ,
             data: data,
             success: res => {
-                console.log(res);
                 app.globalData.selectedTab = 1
                 wx.switchTab({
                     url: '/pages/mine/mine',
@@ -635,7 +629,6 @@ Page({
                 }) 
                 that.onFillDemandType()
                 that.onFillArea(res.provinceCode,res.cityCode,res.districtCode)
-                console.log("需求详情加载完毕")
             },
             failed(res) {
                 console.error(res)

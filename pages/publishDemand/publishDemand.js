@@ -63,7 +63,11 @@ Page({
         editDemandCode: '', //编辑的需求编号
         editOrderCode: '', //编辑的订单编号
         demandDetail:{},
-        orderDetail:{}
+        orderDetail:{},
+        choosePriceRadioIndex:'',//0 时薪 ，1一口价 ，2面议
+        choosePayRadioIndex:0,//0 远程，1 现场
+        chooseEmployerRadioIndex:'',//0 企业， 1个人
+
     },
 
     /**
@@ -77,9 +81,12 @@ Page({
         watch.setWatcher(this); // 设置监听器，建议在onLoad下调用
         this.setData({
             areaList: area.default,
-            editDemandCode: options.demandCode //查看详情页面传入的code
+            editDemandCode: options.demandCode || '' //查看详情页面传入的code
         });
         this.loadjobTree()
+        if(options.type == 0){
+            this.getCurrentInfo()
+        }
 
         wx.setNavigationBarTitle({
             title: options.type == 0 ? '发布需求':'编辑需求'
@@ -148,7 +155,6 @@ Page({
         REST.noVerfiyget({
             url: API.loadTreeData,
             success: res => {
-                console.log(res);
                 this.filterTreeData(res);
                 this.setData({
                     treeData: res
@@ -189,7 +195,6 @@ Page({
                 selectFromatObject[level1.jobCateId] = level2
             }
         }
-        console.log(selectFromatObject)
 
         let demandColumns = [{
                 values: level1List,
@@ -233,7 +238,6 @@ Page({
             value,
             index
         } = event.detail;
-        console.log(`当前值：${value}, 当前索引：${index}`);
 
         this.setData({
             shadeShowing: false,
@@ -303,15 +307,12 @@ Page({
     },
     //监听输入框，选择框 状态
     watchInputSelectStatus() {
-        console.log(this.data.demandType)
-        console.log(this.data.currentDateStr)
-        console.log(this.data.budget)
-        console.log(this.data.currrArea)
+       
         if (this.trimStr(this.data.title) == '' ||
             this.data.total <= 0 ||
             this.data.demandType == '请选择' ||
             this.data.currentDateStr == '请选择' ||
-            this.data.budget == '' ||
+            (this.data.budget == 0 && this.data.budgetType != 2)||
             this.data.currrArea.length <= 0) {
             this.setData({
                 isClickbtn: false
@@ -330,19 +331,12 @@ Page({
         });
         this.watchInputSelectStatus();
     },
-    //预算
-    bindbudgetInput(e) {
+
+    //时薪 一口价
+    bindhourlywageInput(e) {
         let budget = this.clearNoNum(e.detail.value)
         this.setData({
             budget,
-        });
-        this.watchInputSelectStatus();
-    },
-    //时薪
-    bindhourlywageInput(e) {
-        let hourlywage = this.clearNoNum(e.detail.value)
-        this.setData({
-            hourlywage,
         });
         this.watchInputSelectStatus();
     },
@@ -385,9 +379,9 @@ Page({
        // let description = this.deleteHtmlTag(e.detail.html);
         let description = e.detail.value;
 
-        if (description.length > 300) {
+        if (description.length > 500) {
             wx.showToast({
-                title: '请输入300字以内',
+                title: '请输入500字以内',
                 icon: 'none',
                 duration: 2000
             });
@@ -397,7 +391,6 @@ Page({
             total: description.length,
             description: description,
         });
-        console.log(this.data.description)
         this.watchInputSelectStatus();
     },
     //删除html标签
@@ -405,6 +398,55 @@ Page({
         var dd = html.replace(/<[^>]+>/g, ""); //截取html标签
         var dds = dd.replace(/&nbsp;/ig, ""); //截取空格等特殊标签
         return dds
+    },
+    //薪资计算方式 切换事件
+    tapChoosePriceRadio(e){
+        let index = e.currentTarget.dataset.index
+        this.setData({
+            choosePriceRadioIndex: index,
+            budget: this.data.budget,
+            budgetType: index,
+        }) 
+
+    },
+    //交付方式 切换事件
+    tapChoosePayRadio(e){
+        let index = e.currentTarget.dataset.index
+        this.setData({
+            choosePayRadioIndex: index,
+        }) 
+
+    },
+    bindCompanyInput(e) {
+        let company = e.detail.value;
+        this.setData({
+            company,
+        });
+        this.watchInputSelectStatus();
+    },
+    bindJobTitleInput(e) {
+        let jobTitle = e.detail.value;
+        this.setData({
+            jobTitle,
+        });
+        this.watchInputSelectStatus();
+    },
+    //雇佣者 类型切换事件
+    tapChooseEmployerRadio(e){
+        let index = e.currentTarget.dataset.index
+        this.setData({
+          chooseEmployerRadioIndex: index
+        })
+        if( index == 0 && this.data.company == '个体经营者'){
+            this.setData({
+                company: ''
+            })
+        }
+        if( index == 0 && this.data.jobTitle == '个体雇主'){
+            this.setData({
+                jobTitle: ''
+            })
+        }
     },
     //显示隐藏
     shadeShowing(e) {
@@ -437,7 +479,6 @@ Page({
     },
     //省份下拉确认按钮事件
     areaTapDone(e) {
-        console.log(e);
         let currrArea = e.detail.values;
         if (currrArea[0].name == "" || currrArea[0].name == "请选择") {
             wx.showToast({
@@ -553,9 +594,9 @@ Page({
             });
             return
         }
-        if (this.data.budget == '') {
+        if (this.data.budget == '' && this.data.budgetType != 2) {
             wx.showToast({
-                title: '请填写您的预算',
+                title: '请填写您的服务定价',
                 icon: 'none',
                 duration: 2000
             });
@@ -569,12 +610,32 @@ Page({
             });
             return
         }
+        if (!this.data.company  && this.data.chooseEmployerRadioIndex == 0) {
+            wx.showToast({
+                title: '请填写公司名称',
+                icon: 'none',
+                duration: 2000
+            });
+            return
+        }
+        if (!this.data.jobTitle && this.data.chooseEmployerRadioIndex == 0) {
+            wx.showToast({
+                title: '请填写您的职务',
+                icon: 'none',
+                duration: 2000
+            });
+            return
+        }
 
         let data = {
             code:this.data.editDemandCode,
             summarize: this.data.title, //标题
             description: this.data.description, //描述
-            budget: this.data.budget, //预算
+            budget: this.data.budgetType == 2 ? 0: this.data.budget, //预算
+            budgetType:this.data.choosePriceRadioIndex == '' ? 0: this.data.choosePriceRadioIndex,
+            deliveryType:this.data.choosePayRadioIndex,//交付方式
+            companyName:this.data.chooseEmployerRadioIndex == 0 ? this.data.company : '个体经营者',//企业信息
+            jobTitle:this.data.chooseEmployerRadioIndex == 0 ? this.data.jobTitle : '个体雇主',
             cateTreeCode: this.data.cateCode, //需求类型岗位tree编码
             jobCateId: this.data.jobCateId, //需求类型岗位编码
             expectDeliveryTime: this.data.expectDeliveryTime, //期望交付时间
@@ -586,23 +647,29 @@ Page({
         wx.requestSubscribeMessage({
             tmplIds: ['cv5hTnU_ABBjp8spFDvQacYttU2ZC3guvvJAoGKC8bA','0mfM9FVKOJzkD-tbXC9M1d5d5pfouIhjxDMBUzYogFI'], // 此处可填写多个模板 ID，但低版本微信不兼容只能授权一个
             success:res=> {
-                console.log(res) //'accept'表示用户接受；'reject'表示用户拒绝；'ban'表示已被后台封禁
+                 //'accept'表示用户接受；'reject'表示用户拒绝；'ban'表示已被后台封禁
                 REST.post({
                     url: this.data.editDemandCode?API.updateDemand:API.publishDemand ,
                     data: data,
                     success: res => {
-                        console.log(res);
                         app.globalData.selectedTab = 0
-                        wx.switchTab({
-                            url: '/pages/mine/mine',
-                            success: function (e) {
-                                let page = getCurrentPages().pop();
-                                if (page == undefined || page == null) {
-                                    return
-                                };
-                                page.onLoad();
-                            }
+                        wx.showToast({
+                            title: '提交成功',
+                            duration: 2000
                         })
+                        setTimeout(()=>{
+                            wx.switchTab({
+                                url: '/pages/mine/mine',
+                                success: function (e) {
+                                    let page = getCurrentPages().pop();
+                                    if (page == undefined || page == null) {
+                                        return
+                                    };
+                                    page.onLoad();
+                                }
+                            })
+                        },2000)
+                        
                     },
                     failed: res => {
                         wx.showToast({
@@ -614,10 +681,8 @@ Page({
                 })
             },
             fail:res=>{
-                console.log(res)
             },
             complete:res=>{
-                console.log(res)
             },
     
         }) 
@@ -641,11 +706,16 @@ Page({
                     currentDateStr: util.formatDate(res.expectDeliveryTime, '年月日'),
                     expectDeliveryTime : res.expectDeliveryTime,
                     budget: res.budget,
+                    budgetType:res.budgetType,
+                    choosePriceRadioIndex:res.budgetType,
+                    chooseEmployerRadioIndex:res.companyName == '个体经营者'? 1 : 0,
+                    company:res.companyName,
+                    jobTitle:res.jobTitle,
+                    choosePayRadioIndex:res.deliveryType,
                     currrAreaCode: res.districtCode//todo 回显
                 }) 
                 that.onFillDemandType()
                 that.onFillArea(res.provinceCode,res.cityCode,res.districtCode)
-                console.log("需求详情加载完毕")
                 that.watchInputSelectStatus()
             },
             failed(res) {
@@ -701,5 +771,27 @@ Page({
         if (value) {
             filterCateCode(treeData, value)
         }
-    }
+    },
+    //获取个人信息接口 判断是 企业雇主 还是个体雇主 根据 公司名称来判断 为空代表个体 反之 企业
+    getCurrentInfo(){
+        REST.get({
+            url: API.getCurrentInfo,
+            success:res => {
+                this.setData({
+                    chooseEmployerRadioIndex:res.employerInfo.company == '个体经营者'? 1 : 0,
+                    company:res.employerInfo.company,
+                    jobTitle:res.employerInfo.jobTitle
+                })
+                if(res.freelancerInfo.provinceCode){
+                    this.onFillArea(res.freelancerInfo.provinceCode,res.freelancerInfo.cityCode,res.freelancerInfo.districtCode)
+
+                }
+            },
+            failed(res) {
+                console.error(res)
+            },
+            complete(res) {
+            }
+        })
+    },
 })

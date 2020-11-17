@@ -11,13 +11,13 @@
     <view class="menu-box">
         <scroll-view class="menu" scroll-x>
             <view class="item" wx:for="{{firstLevelJobs}}" wx:key="index" data-id="{{index}}" data-catename="{{item.cateName}}"  data-type=""  catchtap="tapTohomeList">
-                <image class="icon" src="{{staticIcon[index]}}"></image>
+                <image class="icon" src="{{item.icon? item.icon: staticIcon[index]}}"></image>
                 <view class="name">{{item.cateName}}</view>
             </view>
         </scroll-view>  
     </view>
 
-    <view class="recommend-navbar" style="margin-top:64rpx;margin-bottom:40rpx">
+    <!-- <view class="recommend-navbar" style="margin-top:64rpx;margin-bottom:40rpx">
         <view class="left">专辑推荐</view>
         <view class="right" data-catename="{{secondLevelJobs[0].cateName}}" data-type="currchilds"   catchtap="tapTohomeList" wx:if="">
             <text class="more">see all</text>
@@ -37,9 +37,19 @@
                 </view>
             </block>
         </scroll-view>
-   </view>
+   </view> -->
 
-    <view class="recommend-navbar" style="margin-top:82rpx;margin-bottom:24rpx">
+   <view class="demand-center">
+        <image class="icon" catchtap="tapToDemandList" src="/images/home/icon-demand-center.png"></image>
+        <view class="vv">
+            <image class="icon" catchtap="tapToInvite" src="/images/home/icon-invite-friends.png"></image>
+            <auth-button wx:if="{{!user}}" bindloginCallbackEvent="loginCallback"></auth-button>
+        </view>
+        
+
+    </view>
+
+    <view class="recommend-navbar" style="margin-top:66rpx;margin-bottom:24rpx">
         <view class="left">为你推荐</view>
         <view class="right" data-catename="" data-type="allchilds"  catchtap="tapTohomeList" wx:if="">
             <text class="more">see all</text>
@@ -50,9 +60,13 @@
 
     <view class="group">
         <home-cell wx:for="{{recommendProductInfos}}" wx:key="index" obj="{{item}}" bindchangeName="changeName"></home-cell>
+        <view class="loading-box" wx:if="{{ loadmoreShowing }}" style="margin-top:300rpx;" >
+            <van-loading size="22px" color="#c9c9c9" type="spinner">努力加载中...</van-loading>
+        </view>
     </view>
 
 </view>
 
 <custom-tabbar active-index="0" id="customtabbarComponent" bindpageType="pageType" bindchildclickPlus="parentClickPlus"></custom-tabbar>
 <auth-phone show="{{showAuthPhone}}"></auth-phone>
+<auth-modal show="{{showAuthModal}}"></auth-modal>

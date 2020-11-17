@@ -336,7 +336,9 @@ page {
     border-radius: 8rpx;
 }
 .editor-wrap .input-wrapper .editor{
+    width: calc(100% - 40rpx);
     padding: 20rpx;
+    padding-bottom: 40rpx;
     height: 440rpx;
     opacity: 0.8;
     font-family: PingFangSC-Regular;
@@ -345,8 +347,8 @@ page {
 }
 .editor-wrap .input-wrapper .number{
     position: absolute;
-    bottom: 40rpx;
-    right: 40rpx;
+    bottom: 10rpx;
+    right: 20rpx;
     font-family: PingFangSC-Regular;
     font-size: 24rpx;
     color: #8392A0;
@@ -792,15 +794,15 @@ page {
     width: 288rpx;
     margin-right: 24rpx;
     display: inline-flex;
-    background: #F7F9FB;
+    /* background: #F7F9FB; */
     border-radius: 8rpx;
     align-items: center;
     justify-content: center;
 }
 .album-box .swiperBox .itemBox .photoBox{
-    margin-left: 20rpx;
+    /* margin-left: 20rpx; */
     height: 214rpx;
-    width: 288rpx;
+    width: 267.5rpx;
 }
 
 .album-box .swiperBox .itemBox:nth-child(1){
@@ -818,8 +820,8 @@ page {
     bottom: 0;
     margin: auto;
     height: 214rpx;
-    width: 288rpx;
-    background: rgba(0,0,0,0.30);
+    width: 267.5rpx;
+    /* background: rgba(0,0,0,0.30); */
 }
 
 .album-box .swiperBox .itemBox .radio{
@@ -1041,7 +1043,7 @@ page {
 }
 .preview-detail  .price-detail .res{
     margin-left: 40rpx;
-    margin-top: 40rpx;
+    margin-top: 20rpx;
     font-family: PingFangSC-Regular;
     font-size: 28rpx;
     color: #3F5161;

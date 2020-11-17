@@ -1,0 +1,45 @@
+<!--pages/canOrdersList/canOrdersList.wxml-->
+<view class="product-container" style="padding-bottom: {{ 56 + safeBottom }}px">
+    <view class="notice">请选择一项接单所需要的服务</view>
+    <view class="product-list" wx:for="{{productionList}}" wx:key="index"  catchtap="tapChooseRadio" data-orderid="{{item.id}}" data-index="{{index}}">
+        <view class="top">
+            <view class="radio-box">
+                <image class="icon" src="{{chooseRadioIndex === index? '/images/common/icon_status_sel.png' : '/images/common/icon_status_nor.png'}}" />
+            </view>
+            <image class="photo" src="{{item.images[0].fullPath}}" mode="aspectFill"></image>
+            <view class="p-u">
+                <view class="title">{{item.title}}</view>
+                <view class="mark-type">
+                    <scroll-view class="menu" scroll-x="true">
+                        <view class="item">
+                            <text class="name"> {{item.postCate.cateName}}</text>
+                        </view>
+                    </scroll-view>  
+                </view>
+                <view class="p-u-price" wx:if="{{item.budgetType == 0}}">
+                    <view class="unit" style="font-family: PingFangSC-Regular;font-size: 24rpx;color: #8392A0;">时薪：</view>
+                    <view class="unit" style="font-family: PingFangSC-Regular;font-size: 24rpx;">¥</view>
+                    <view class="value" style="padding-left:4rpx;padding-right:4rpx">{{item.hourlyWage}}</view>
+                    <view class="unit" wx:if="{{item.hourlyWage}}" style="font-family: PingFangSC-Regular;font-size: 24rpx;color: #0C2032;">元/小时</view>
+                </view>
+                <view class="p-u-price"  wx:elif="{{item.budgetType == 1}}">
+                    <view class="unit" style="font-family: PingFangSC-Regular;font-size: 24rpx;color: #8392A0;">一口价：</view>
+                    <view class="unit" style="font-family: PingFangSC-Regular;font-size: 24rpx;">¥</view>
+                    <view class="value" style="padding-left:4rpx;padding-right:4rpx" wx:if="{{item.hourlyWage}}">{{item.hourlyWage}}</view>
+                    <view class="unit" wx:if="{{item.hourlyWage}}" style="font-family: PingFangSC-Regular;font-size: 24rpx;color: #0C2032;">元</view>
+                </view>
+                <view class="p-u-price"  wx:elif="{{item.budgetType == 2}}">
+                    <view class="unit"  style="font-family: PingFangSC-Regular;font-size: 24rpx;color: #0C2032;">面议</view>
+                </view>
+
+
+            </view>
+        </view>
+    </view>
+    <view class="tool-bar" style="padding-bottom: {{ safeBottom }}px">
+        <view class="layout-1-1" >
+            <view class="left cancle" catchtap="tapCancle">取消</view>
+            <view class="right {{canClick ? 'ok' : ''}}" catchtap="tapReceiveOrder">确认接单</view>
+        </view>
+    </view>
+</view>

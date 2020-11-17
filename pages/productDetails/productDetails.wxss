@@ -118,8 +118,8 @@ page {
     display: flex;
     align-items: center;
     margin:40rpx;
-    padding-bottom: 40rpx;
-    border-bottom: 0.1px solid #E6E6E6;
+    /* padding-bottom: 20rpx; */
+    /* border-bottom: 0.1px solid #E6E6E6; */
 }
 
 .user .avatarBox {
@@ -154,7 +154,7 @@ page {
 .user .arrow.wechat{
     position: absolute;
     right: 100rpx;
-    top: -40rpx;
+    top: 0;
     bottom: 0;
     margin:auto;
     height:64rpx;
@@ -164,13 +164,31 @@ page {
 .user .arrow.phone{
     position: absolute;
     right: 0rpx;
-    top: -40rpx;
+    top: 0;
     bottom: 0;
     margin:auto;
     height:64rpx;
     width: 64rpx;
 }
-
+.cell-group{
+    display: flex;
+    flex-direction: row;
+    margin:0 40rpx;
+    padding:20rpx 0;
+    position: relative;
+}
+ .cell-group .field{
+    width: 120rpx;
+    text-align: left;
+    font-size: 28rpx;
+    color: #8392A0;
+}
+.cell-group .message{
+    width: calc(100% - 120rpx);
+    padding-left: 40rpx;
+    font-size: 28rpx;
+    color: #3F5161;
+}
 .skill-desc{
     position: relative;
     margin:40rpx;
@@ -231,7 +249,6 @@ page {
     height: 50rpx;
 }
 .evaluation .head .left{
-    font-weight: bold;
     font-family: PingFangSC-Medium;
     font-size: 36rpx;
     color: #0C2032;
@@ -243,11 +260,14 @@ page {
 }
 .evaluation .head .right .more{
     margin-right: 4prx;
+    font-family: PingFangSC-Regular;
+    font-size: 24rpx;
+    color: #8392A0;
+    text-align: center;
 }
 .evaluation .head .right .triangle{
-    height: 20rpx;
-    width: 20rpx;
-    vertical-align: middle;
+    height: 17rpx;
+    width: 17rpx;
 }
 .evaluation .rate{
     display: flex;
@@ -261,12 +281,15 @@ page {
     flex-direction: column;
     align-items: center;
     width: 130rpx;
+    
 }
 .evaluation .rate .progress{
     flex-grow:1;
     margin-left:40rpx ;
+    padding-left: 52rpx;
     display: flex;
     flex-direction: column;
+    border-left: 1px solid #e6e6e6;
 }
 .progress .pro-item{
     display: flex;
@@ -275,34 +298,57 @@ page {
     height: 40rpx;
 }
 .progress .pro-item .name{
-    text-align: center;
-    flex-grow:1;
+    /* flex-grow:1; */
     font-family: PingFangSC-Regular;
     font-size: 24rpx;
     color: #3F5161;
+    margin-right: 20rpx;
 }
-.progress .pro-item .line{
-    text-align: left;
-    width: 216rpx;
-    height: 8rpx;
-    line-height: 8rpx;
-    background: #E6E6E6;
-    border-radius: 50rpx;
+.progress .pro-item .star-box{
+    position: relative;
+    width: 100px;
+    margin: auto;
+    height: 12px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+
 }
-.progress .pro-item .line .l-width{
-    background: #FFBA20;
-    height: 8rpx;
-    line-height: 8rpx;
-    border-radius: 50rpx;
+.progress .pro-item .star-box .star-image {
+    position: relative;
+    width: 12px;
+    height: 12px;
+    src: "/images/common/star/icon-normal.png";
+  
 }
-.progress .pro-item .num{
-    text-align: center;
-    flex-grow:1;
-    font-family: DINAlternate-Bold;
-    font-size: 24rpx;
-    color: #0C2032;
+.progress .pro-item .star-box .item {
+    position: absolute;
+    top: 0;
+    width: 6px;
+    height: 12px;
 }
 
+
+.progress .pro-item .num{
+    text-align: right;
+    flex-grow:1;
+}
+.progress .pro-item .num .n1{
+    font-size:24rpx;
+    color: #0C2032;
+    font-family: DINAlternate-Bold;
+}
+.progress .pro-item .num .n2{
+    font-size:20rpx;
+    color: #000E14;
+    font-family: DINAlternate-Bold;
+}
+.progress .pro-item .num .n3{
+    font-family: PingFangSC-Regular;
+    font-size: 16rpx;
+    color: #3D4347;
+    padding-left: 2rpx;
+}
 .task-ended{
     position: relative;
     margin:40rpx;
@@ -338,9 +384,9 @@ page {
     position: relative;
 }
 .task-ended .task-box .item{
-    border: 0.1px solid #E6E6E6;  
+    border-bottom: 0.1px solid #E6E6E6;  
     margin:40rpx 0;
-    height: 220rpx;
+    /* height: 220rpx; */
 }
 .task-box .item .title{
     position: relative;
@@ -349,7 +395,7 @@ page {
     justify-content: flex-start;
     align-items: center;
     height: 40rpx;
-    margin-left:20rpx ;
+    margin-left:0 ;
     margin-top: 32rpx;
 }
 .task-box .item .title .tag{
@@ -375,8 +421,7 @@ page {
 .uu {
     position: relative;
     display: flex;
-    align-items: center;
-    padding:20rpx;
+    padding:20rpx 0;
     margin-top: 22rpx;
 }
 
@@ -409,37 +454,129 @@ page {
     color: #8392A0;
     margin-top: 4rpx;
 }
-.uu .score{
+.uu .star-box{
     position: absolute;
-    right: 20rpx;
+    width: 100px;
+    margin: auto;
+    right: 88rpx;
+    top: 0;
+    height: 12px;
+    display: flex;
+    bottom: 0;
+    flex-direction: row;
+    justify-content: space-around;
+
+}
+.uu .star-box .star-image {
+    position: relative;
+    width: 12px;
+    height: 12px;
+    src: "/images/common/star/icon-normal.png";
+  
+}
+.uu .star-box .item {
+    position: absolute;
+    top: 0;
+    width: 6px;
+    height: 12px;
+}
+
+.uu .total-score{
+    position: absolute;
     top: 0;
     bottom: 0;
-    margin:auto;
+    right: 6rpx;
+    margin: auto;
     height: 40rpx;
 }
-.uu .score .star-box{
+.uu .total-score .n1{
+    font-family: DINAlternate-Bold;
+    font-size: 35rpx;
+    color: #3D4347;
+}
+.uu .total-score .n2{
+    font-family: DINAlternate-Bold;
+    font-size: 28rpx;
+    color: #000000;
+}
+.uu .total-score .n3{
+    font-family: PingFangSC-Regular;
+    font-size: 20rpx;
+    color: #3D4347;
+    padding-left: 4rpx;
+    padding-right: 4rpx;
+}
+
+.task-box .item  .evaluate-news{
     position: relative;
+    padding: 20rpx 0;
+    padding-top: 0;
+}
+.task-box .item  .evaluate-news .content{
+    width: 100%;
+    font-family: PingFangSC-Regular;
+    font-size: 28rpx;
+    color: #3F5161;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    word-break: break-all;
+    /* line-height: 22px; */
+}
+/* 展开收缩 */
+.task-box .item  .evaluate-news .content.ellipsis{
+    -webkit-line-clamp:4; 
+  }
+  .task-box .item  .evaluate-news .content.unellipsis{
+    -webkit-line-clamp:0;  /*全部显示*/
+}  
+.task-box .item  .evaluate-news .btn{
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    height: 40rpx;
+    background-color: white;
     display: flex;
     flex-direction: row;
     justify-content: flex-start;
     align-items: center;
+    transition: transform 0.25s;
+    z-index: 10;
+
 
 }
-.uu .score .star-box .star{
+.task-box .item .evaluate-news .btn .point{
+    margin-right: 40rpx;
+}
+.task-box .item  .evaluate-news .btn .text{
+    font-family: PingFangSC-Regular;
+    font-size: 28rpx;
+    color: #FFBA20;
+}
+.task-box .item  .evaluate-news .btn .icon{
+    margin-left: 15rpx;
+    width: 16px;
+    height: 9.4px;
+}
+.task-box .item  .evaluate-news .btn .icon.scale{
+    transform: scale(1, -1);
+
+}
+.evaluate-images{
     position: relative;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    flex-wrap:wrap;
+    padding-bottom: 20rpx;
 }
-.uu .score .star-box .star .img{
-    width: 24rpx;
-    height: 24rpx;
-    margin-right: 12rpx;
-    display: inline-block;
-}
-.uu .score .star-box .val{
-    margin-left: 25rpx;
-    font-family: DINAlternate-Bold;
-    font-weight: bold;
-    font-size: 36rpx;
-    color: #3D4347;
+.evaluate-images .image{
+    width: 210rpx;
+    border-radius: 8rpx;
+    height: 210rpx;
+    margin-right: 15rpx;
+    margin-bottom: 15rpx;
 }
 
 .other-works{
@@ -623,6 +760,7 @@ page {
     right: 0;
     bottom: 0;
     position: fixed;
+    z-index:10000;
 }
 
 .main {

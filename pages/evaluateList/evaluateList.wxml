@@ -1,0 +1,60 @@
+<!--pages/evaluateList/evaluateList.wxml-->
+<wxs module="fn">
+    module.exports = {
+        substring140: function(value) {
+            return ((value+"").length >140) ? (value.substring(0,140) + "..."):value
+        },
+        formatScoreSplit: function(score,index) {
+            var res = ((score+"").split("."))[index]
+            return res
+        }
+    }
+</wxs>
+<view class="menu">
+    <view class="tabbar">
+        <view catchtap="tapSort" data-index="0" class="item {{currTap == 0 ? 'sel':''}}">按综合评分</view>
+        <view catchtap="tapSort" data-index="1" class="item {{currTap == 1 ? 'sel':''}}">按订单时间</view>
+        <view class="line"></view>
+    </view>
+</view>
+
+
+<view class="wrap" style="padding-bottom:{{safeBottom}}px">
+    <view class="evaluate-box" wx:for="{{evaluationDetailInfos}}" wx:key="index">
+        <view class="u" style="border-top:{{ index == 0 ? 'none' : '0.1px solid #E6E6E6'}}">
+            <view class="avatarBox">
+                <image bindload="loadEndImage" data-index="{{index}}" class="avatar" src="{{item.employerInfo.headImg ?item.employerInfo.headImg :'/images/common/default-head.png' }}"></image>
+            </view>
+            <view>
+                <view class="name-user">{{item.employerInfo.name}}</view>
+                <view  class="name-tag>">{{item.createTime}}</view>
+            </view>
+            <view class="star-box">
+                <image  class="star-image"  wx:for="{{stars}}" wx:key="index"  wx:for-item="_item" src="{{item.totalScore > _item ?(item.totalScore-_item <= 0.5?item.half:item.selected) : normalSrc}}">
+                    <view class="item" style="left:0rpx"></view>
+                    <view class="item" style="left:6px;"></view>
+                </image>
+            </view>
+            <view class="total-score">
+                <text class="n1">{{fn.formatScoreSplit(item.totalScore,0)}}</text>
+                <text class="n2">.{{fn.formatScoreSplit(item.totalScore,1)}}</text>
+                <text class="n3">分</text>
+            </view>
+        </view>
+        <view class="evaluate-news">
+            <textarea disabled maxlength="300" auto-height value="{{item.description ? item.description :'该雇主还没有留下评价。' }}" id="evaluate-news-{{index}}" class="content  {{item.ellipsis?'ellipsis':'unellipsis'}}">   
+            </textarea>
+            <!-- <view class="btn" bindtap="ellipsis" data-index="{{index}}" wx:if="{{item.ellipsis}}">
+                <text class="point" >...</text>
+                <text class="text">展开</text>
+                <image class="icon {{item.ellipsis ? '' : 'scale'}}" src="/images/common/icon-down.png"></image>
+            </view> -->
+        </view>
+        <view class="evaluate-images">
+            <image  data-item="{{_item.fullPath}}"  wx:for-item="_item" data-index="{{item.i}}" catchtap="tapBanner"  class="image" lazy-load="true" wx:for="{{item.images}}" wx:key="_index" src="{{_item.fullPath}}" mode="aspectFill" ></image>
+        </view>
+    </view>
+    <view class="loading-box" wx:if="{{ loadmoreShowing }}" style="margin:30rpx 0" >
+            <van-loading size="22px" color="#c9c9c9" type="spinner">努力加载中...</van-loading>
+    </view>
+</view>

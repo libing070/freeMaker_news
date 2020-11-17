@@ -1,0 +1,48 @@
+<!--pages/invite/invite.wxml-->
+<view class="preview">
+    <image mode="widthFix"class="poster-bg" src="https://howwork-1301749332.cos.ap-beijing.myqcloud.com/user/2020-11-11/wxebd3588df98ae1a7.o6zAJs6MrGfeTqciNsKbK7FuwdHM.VUTMgg9N3ycR2b16297005b6984ec685da198bd09b1d.jpg">
+    </image>
+    <image class="scan" src="{{scanImage}}" mode="widthFix"></image>
+    <image src="/images/mine/icon-shadow.png" mode="widthFix" class="shadow"></image>
+</view>
+<view class="title">分享我的专属海报</view>
+<view class="share-box">
+    <!-- <view class="box">
+        <image class="icon" src="/images/mine/icon-friends.png"></image>
+        <text class="text">朋友圈</text>
+    </view> -->
+    <view class="box">
+        <image class="icon" src="/images/mine/icon-wechat.png"></image>
+        <text class="text">微信</text>
+        <button class="btn" style="padding:0" catchtap="tapShare" open-type="share"></button>
+    </view>
+    <view class="box" catchtap="savePoster" style="opacity:{{poster ? '1': 0.5}}">
+        <image class="icon" src="/images/mine/icon-download.png"></image>
+        <text class="text">下载到本地</text>
+    </view>
+</view>
+<view class="record">
+    <view class="title">我的邀请战绩</view>
+    <view class="box">
+        <view class="item">
+            <view class="top"><text class="value">{{recommended}}</text><text class="unit">人</text></view>
+            <view class="bottom">登陆小程序</view>
+        </view>
+        <view class="item" style="border-left: 1px solid rgba(207,207,208,.27);border-right: 1px solid rgba(207,207,208,.27);">
+            <view class="top"><text class="value">{{publishProduction}}</text><text class="unit">人</text></view>
+            <view class="bottom">申请入驻</view>
+        </view>
+        <view class="item">
+            <view class="top"><text class="value">{{productionPass}}</text><text class="unit">人</text></view>
+            <view class="bottom">审核通过</view>
+        </view>
+    </view>
+</view>
+<view class="no" style="height:{{safeBottom}}px"></view>
+
+<canvas   wx:if="{{canvasSize}}" canvas-id="poster" style="{{canvasSize}};opacity:0;display:{{poster ? 'none' :'block'}}"></canvas>
+<!-- <view wx:if="{{poster}}" class="shade" data-hide catchtap="dismiss">
+    <view data-hide>
+        <image class="poster" src="{{poster}}" mode="widthFix"></image>
+    </view>
+</view> -->

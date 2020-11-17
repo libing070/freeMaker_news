@@ -2,7 +2,6 @@
   "pages": [
     "pages/home/home",
     "pages/mine/mine",
-    "pages/task/task",
     "pages/homeList/homeList",
     "pages/publishDemand/publishDemand",
     "pages/publishOrder/publishOrder",
@@ -12,11 +11,18 @@
     "pages/orderDetails/orderDetails",
     "pages/pushUserList/pushUserList",
     "pages/uploadTest/index",
-    "pages/login/login",
     "pages/myproductDetails/myproductDetails",
     "pages/test/test",
     "pages/myInfo/myInfo",
-    "pages/talentMovein/talentMovein"
+    "pages/talentMovein/talentMovein",
+    "pages/demandList/demandList",
+    "pages/extDemandDetails/extDemandDetails",
+    "pages/employerMovein/employerMovein",
+    "pages/canOrdersList/canOrdersList",
+    "pages/moveinGuide/moveinGuide",
+    "components/cropImage/cropImage",
+    "pages/invite/invite",
+    "pages/evaluateList/evaluateList"
   ],
   "tabBar": {
     "custom": true,

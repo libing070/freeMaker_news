@@ -15,13 +15,17 @@ Page({
         pageType:'',
         firstLevelJobs:[],//一级标签
         secondLevelJobs:[],//二级标签
-        recommendProductInfos:[]//为你推荐
+        recommendProductInfos:[],//为你推荐
+        loadmoreShowing: false
+
     },
 
     /**
     * 生命周期函数--监听页面加载
     */
-    onLoad: function (options) {        
+    onLoad: function (options) {   
+        console.log(options.scene)
+     
         this.loadFirstLevelJobs()
     },
 
@@ -80,7 +84,11 @@ Page({
     * 用户点击右上角分享
     */
     onShareAppMessage: function () {
-
+        return {
+            title:'欢迎入驻平台',
+            path: '/pages/home/home',
+            imageUrl:'https://howwork-1301749332.cos.ap-beijing.myqcloud.com/production/2020-11-10/wxebd3588df98ae1a7.o6zAJs6MrGfeTqciNsKbK7FuwdHM.NZug5zJdJUm43e1def5a672022c71acc146f6c78c9b0.png'
+          }
     },
     //点击子组件 加号 返回值 true
     parentClickPlus(e){
@@ -132,14 +140,12 @@ Page({
     },
 
     pageType(e){
-        console.log(e.detail.pageType);
         this.setData({
             pageType: e.detail.pageType
         })
     },
     changeName(event) {
         
-        console.log(event.detail)
     },
     //跳转到homelist
     tapTohomeList(e) {
@@ -152,6 +158,9 @@ Page({
     },
     //获取一级领域接口
     loadFirstLevelJobs(){
+        this.setData({
+            loadmoreShowing: true
+        })
         REST.noVerfiyget({
             url: API.configs,
             success: res => {
@@ -160,7 +169,6 @@ Page({
                     secondLevelJobs:res.secondLevelJobs,
                     recommendProductInfos:res.recommendProductInfos
                 });
-                console.log(res.recommendProductInfos);
             },
             failed: res => {
                 wx.showToast({
@@ -169,6 +177,24 @@ Page({
                     duration: 2000
                 });
             },
+            complete:(res) =>{
+                this.setData({
+                    loadmoreShowing: false
+                })
+                
+            }
+        })
+    },
+    //跳转到需求列表页面
+    tapToDemandList(){
+        wx.navigateTo({
+            url: '/pages/demandList/demandList',
+        })
+    },
+    //邀请好友
+    tapToInvite(){
+        wx.navigateTo({
+            url: '/pages/invite/invite',
         })
     }
 })

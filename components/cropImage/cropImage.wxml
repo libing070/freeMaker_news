@@ -1,0 +1,14 @@
+<!--components/cropImage/cropImage.wxml-->
+<import src="/components/we-cropper/we-cropper.wxml"/>
+
+<view class="cropper-wrapper">
+    <template style="" is="we-cropper" data="{{...cropperOpt}}"/>
+    <cover-view class="tool-bar" style="padding-bottom: {{ safeBottom }}px">
+        <cover-view class="layout-1-1" >
+            <cover-view class="left cancle" bindtap="back">取消</cover-view>
+            <cover-view class="right ok" bindtap="getCropperImage">确认添加</cover-view>
+        </cover-view>
+   </cover-view>
+</view>
+
+

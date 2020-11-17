@@ -1,4 +1,8 @@
 {
   "navigationBarTitleText": "需求详情",
-  "usingComponents": {}
+  "usingComponents": {
+      "auth-modal": "/components/authModal/authModal",
+      "auth-button": "/components/authButton/authButton",
+      "auth-phone": "/components/authPhone/authPhone"
+  }
 }

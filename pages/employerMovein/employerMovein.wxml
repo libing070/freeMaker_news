@@ -1,0 +1,129 @@
+<!--pages/employerMovein/employerMovein.wxml-->
+<wxs module="fn">
+    module.exports = {
+        formatCurrrArea: function(currrArea) {
+            return currrArea.length!=0 ? (currrArea[0]+','+currrArea[1]+","+currrArea[2]): '请选择'
+        },
+        formatDemandType:function(demandType,index){
+            return demandType.split('-')[index]
+        }
+    }
+</wxs>
+<!--填写个人信息-->
+<view class="movein">
+    <view class="basic" >
+        <view class="item head">
+            <view class="title">头像</view>
+            <view class="avatar"  catchtap="uploadHead"><image class="img" mode="aspectFill" src="{{headImgs.fullPath}}"></image></view>
+            <image class="icon" src="/images/common/icon-arrow.png" catchtap="uploadHead"></image>
+        </view>
+        <view class="item">
+            <view class="title">用户名</view>
+            <input class="input"  placeholder-style='text-align:right' maxlength="20" placeholder="请输入您的用户名" bindinput="bindNameInput" value="{{name}}" placeholder-style="color: #8392A0"/> 
+            <image class="icon" src="/images/common/icon_edit@2x.png"></image>
+        </view>
+        <view class="item">
+            <view class="title">雇佣者类型</view>
+            <view class="radio-box">
+                <view class="box" catchtap="tapChooseEmployerRadio" data-index="0">
+                    <image class="radio-icon" src="{{chooseEmployerRadioIndex == 0 ? '/images/common/icon_status_sel.png' : '/images/common/icon_status_nor.png'}}" />
+                    <text class="name">企业雇主</text>
+                </view>
+                <view class="box" catchtap="tapChooseEmployerRadio" data-index="1">
+                    <image class="radio-icon" src="{{chooseEmployerRadioIndex == 1? '/images/common/icon_status_sel.png' : '/images/common/icon_status_nor.png'}}" />
+                    <text class="name">个人雇主</text>
+                </view>
+            </view>
+        </view>
+        <block wx:if="{{ chooseEmployerRadioIndex == 0 }}">
+            <view class="item">
+                <view class="title">公司</view>
+                <input class="input"  placeholder-style='text-align:right' maxlength="20" placeholder="请输入公司名称" bindinput="bindCompanyInput" value="{{company}}" placeholder-style="color: #8392A0"/> 
+                <image class="icon" src="/images/common/icon_edit@2x.png"></image>
+            </view>
+            <view class="item">
+                <view class="title">职务</view>
+                <input class="input"  placeholder-style='text-align:right' maxlength="20" placeholder="请输入您的职务" bindinput="bindJobInput"  value="{{jobTitle}}" placeholder-style="color: #8392A0"/> 
+                <image class="icon" src="/images/common/icon_edit@2x.png"></image>
+                <!-- <cover-view class="dialog" wx:if="{{!company}}" catchtap="tapHasCompany"></cover-view> -->
+
+            </view>
+            
+        </block>
+        <block wx:else>
+            <view class="item">
+                <view class="title">公司</view>
+                <input class="input"  placeholder-style='text-align:right' value="个体经营者" disabled placeholder-style="color: #8392A0"/> 
+                <image class="icon" src="/images/common/icon_edit@2x.png"></image>
+            </view>
+            <view class="item">
+                <view class="title">职务</view>
+                <input class="input"  placeholder-style='text-align:right'  value="个体雇主" disabled placeholder-style="color: #8392A0"/> 
+                <image class="icon" src="/images/common/icon_edit@2x.png"></image>
+            </view>
+           
+        </block>
+
+       
+        <view class="item">
+            <view class="title">手机号码</view>
+            <input class="input" type="number"  placeholder-style='text-align:right' maxlength="11" placeholder="请输入正确的手机号" bindinput="bindPhoneInput" value="{{phone}}" placeholder-style="color: #8392A0" /> 
+            <image class="icon" src="/images/common/icon_edit@2x.png"></image>
+            <cover-view class="dialog" wx:if="{{hasPhoneDialog}}" catchtap="shadeShowing" data-type="phoneDialog"></cover-view>
+        </view>
+        <view class="item">
+            <view class="title">微信号</view>
+            <input class="input"  placeholder-style='text-align:right' maxlength="20" placeholder="请输入您的微信号" bindinput="bindWeChatInput" value="{{wechat}}" placeholder-style="color: #8392A0"  /> 
+            <image class="icon" src="/images/common/icon_edit@2x.png"></image>
+            <cover-view class="dialog" wx:if="{{hasWechatDialog}}" catchtap="shadeShowing" data-type="wechatDialog"></cover-view>
+
+        </view>
+        <view class="item">
+            <view class="title">所在地</view>
+            <input class="input" disabled="true"  placeholder-style='text-align:right' placeholder="{{fn.formatCurrrArea(currrArea)}}" placeholder-style="color: #8392A0" data-type="area" catchtap="shadeShowing"/> 
+            <image class="icon" style="width:30rpx;height:30rpx" src="/images/common/icon-arrow.png" data-type="area" catchtap="shadeShowing" ></image>
+        </view>
+    </view>
+
+    <view class="tool-bar" style="z-index:9999;padding-bottom: {{ safeBottom }}px;">
+        <view class="layout-1-1">
+                <view class="left cancel"  data-type="1" catchtap="tapSaveInfo">入驻并发布需求</view>
+                <view class="right submit ok" data-type="2" catchtap="tapSaveInfo">申请入驻</view>
+        </view>
+    </view>
+</view>
+
+<view class="shade" wx:if="{{shadeShowing}}" catchtap="shadeShowing">
+    <view class="main"  data-id="shadeMain" catchtap="shadeShowing" style="padding-bottom: {{safeBottom}}px;">
+
+        <view wx:if="{{currPicker == 'area'}}">
+            <van-area
+            bind:confirm="areaTapDone"
+            bind:cancel="tapCancel"
+            area-list="{{ areaList }}"
+            value="{{currrAreaCode}}"
+            title="省/市/区"
+            />
+        </view>
+        <view wx:elif="{{currPicker == 'phoneDialog'}}">
+             <view class="dialog-mask">
+                 <view class="title">温馨提示</view>
+                 <view class="desc" style="padding-bottom: {{ safeBottom +112}}px">为了保障对方能够联系到你，请填写正确的手机号。</view>
+                 <view class="tool-bar" style="padding-bottom: {{ safeBottom }}px">
+                    <view class="layout-1 ok"  catchtap="hasPhoneDialog">我知道了</view>
+                </view>
+             </view>
+        </view>
+        <view wx:elif="{{currPicker == 'wechatDialog'}}">
+            <view class="dialog-mask">
+                <view class="title">温馨提示</view>
+                <view class="desc" style="padding-bottom: {{ safeBottom +112 }}px">保障对方能够联系到你，请填写正确的微信号。</view>
+                <view class="tool-bar" style="padding-bottom: {{ safeBottom }}px">
+                    <view class="layout-1 ok" catchtap="hasWechatDialog">我知道了</view>
+                </view>
+            </view>
+        </view>
+
+   
+    </view>
+</view>

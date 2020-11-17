@@ -1,5 +1,5 @@
 {
-    "navigationBarTitleText": "人才入驻",
+    "navigationBarTitleText": "",
 
     "usingComponents": {
         "van-picker": "/miniprogram_npm/@vant/weapp/picker/index",

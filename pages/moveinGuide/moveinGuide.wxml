@@ -1,0 +1,13 @@
+<!--pages/moveinGuide/moveinGuide.wxml-->
+<view class="guide">
+    <image class="bg" mode="widthFix" src="/images/common/icon-guide-bg.png"></image>
+    <image class="step" mode="widthFix"  src="/images/common/icon-guide-step.png"></image>
+    <view class="t1">简单三步入驻HowWork</view>
+    <view class="t2">审核通过即可接单</view>
+    <view class="tool-bar" style="padding-bottom: {{ safeBottom }}px">
+          <view class="layout-1-1" >
+              <view class="left cancle" catchtap="tapCancle">取消</view>
+              <view class="right ok" catchtap="tapMovein">申请入驻</view>
+          </view>
+    </view>
+</view>

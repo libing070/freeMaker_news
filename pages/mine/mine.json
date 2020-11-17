@@ -1,10 +1,13 @@
 {
     "navigationBarTitleText": "我的",
     "navigationStyle":"custom",
+    "enablePullDownRefresh": true,
+    "backgroundTextStyle": "dark",
     "usingComponents": {
         "custom-tabbar": "/components/customTabbar/customTabbar",
         "auth-modal": "/components/authModal/authModal",
         "auth-button": "/components/authButton/authButton",
-        "auth-phone": "/components/authPhone/authPhone"
+        "auth-phone": "/components/authPhone/authPhone",
+        "van-loading": "/miniprogram_npm/@vant/weapp/loading/index"
     }
 }

@@ -1,6 +1,6 @@
 <!--pages/demandDetails/demandDetails.wxml-->
 
-<view class="order-status">
+<view class="order-status" wx:if="{{demandDetail.demandStatus == 30}}">
     <image class="status-icon" src="/images/common/icon_demand_status@2x.png"></image>
     <view class="desc">
         <!-- <view class="status">{{demandDetail.statusName}}</view> -->
@@ -19,23 +19,45 @@
     <view class="titles">{{demandDetail.summarize}}</view>
     <view class="tag">{{demandDetail.jobCateIdName}}</view>
     <view class="title-name">需求描述</view>
-    <textarea style="{{isIosSystem ? 'padding-left:-10rpx':''}}" disabled  auto-height class="order-desc" value="{{demandDetail.description}}"></textarea>
+    <textarea maxlength="500" style="{{isIosSystem ? 'padding-left:-10rpx':''}}" disabled  auto-height class="order-desc" value="{{demandDetail.description}}"></textarea>
 
     <view class="dates-title">期望交付时间</view>
     <view class="dates-value">{{demandDetail.expectDeliveryTime}}</view>
 </view>
 <view class="budget" >
     <view class="title">预算</view>
-    <view class="calc">
-        <view class="total-price"><text style="font-family: PingFangSC-Regular;font-size: 32rpx;color: #0C2032;">¥</text><text style="font-family: DINAlternate-Bold;font-size: 52rpx;color: #0C2032;">{{demandDetail.budget}}</text></view>
+    <view class="calc" wx:if="{{demandDetail.budgetType == 0}}">
+        <view class="total-price">
+            <text style="font-family: PingFangSC-Regular;font-size: 28rpx;color: #8392A0;">时薪：¥</text>
+            <text style="font-family: DINAlternate-Bold;font-size: 52rpx;color: #0C2032;padding:0 6rpx;">{{demandDetail.budget}}</text>
+            <text style="font-family: PingFangSC-Regular;font-size: 28rpx;color: #8392A0;">元/小时</text>
+        </view>
     </view>
+    <view class="calc"  wx:elif="{{demandDetail.budgetType == 1}}">
+        <view class="total-price">
+            <text style="font-family: PingFangSC-Regular;font-size: 28rpx;color: #8392A0;">一口价：¥</text>
+            <text style="font-family: DINAlternate-Bold;font-size: 52rpx;color: #0C2032;;padding:0 6rpx;">{{demandDetail.budget}}</text>
+            <text style="font-family: PingFangSC-Regular;font-size: 28rpx;color: #8392A0;">元</text>
+        </view>
+    </view>
+    <view class="calc"  wx:elif="{{demandDetail.budgetType == 2}}">
+        <view class="total-price">
+            <text style="font-family: DINAlternate-Bold;font-size: 52rpx;color: #8392A0;">面议</text>
+        </view>
+    </view>
+
+    <view class="delivery-type">交付方式</view>
+    <view class="delivery-name">{{demandDetail.deliveryType == 0 ? '远程':'现场'}}</view>
+
 </view>
 
 <view class="no" style="padding-bottom: {{ 70 + safeBottom }}px"></view>
-<view class="tool-bar" style="padding-bottom: {{ safeBottom }}px">
+<view class="tool-bar" style="padding-bottom: {{ safeBottom }}px"  wx:if="{{demandDetail.demandStatus == 30}}">
     <view class="layout-1-1" >
         <view wx:if="{{demandDetail.status!=40}}" class="left cancle" catchtap="tapCloseDemand" data-status="40">关闭需求</view>
         <view class="right ok" catchtap="tapEditDemand">编辑</view>
     </view>
 </view>
 
+<auth-modal show="{{showAuthModal}}"></auth-modal>
+<auth-phone show="{{showAuthPhone}}"></auth-phone>

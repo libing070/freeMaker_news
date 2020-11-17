@@ -31,16 +31,25 @@ App({
         isLoadSubscribeMessage:false, //消息模板是否已加载过
 
         myDemandDetailData:{}, //清空数据 注意:存放的值是 title 和 description ，从我的需求-选择候选人-购买服务的步骤  回填 title，description
-
+        
+        scene:""
     },
     API,
     onLaunch: function () {
+
+        console.log(`
+        $$       $$        $$ $$ $$       $$           $$           $$      $$ $$ $$          $$ $$ $$ $$          $$      $$ 
+        $$       $$      $$        $$      $$         $$$$         $$     $$        $$       $$         $$        $$     $$ 
+        $$       $$     $$          $$      $$       $$  $$       $$     $$          $$      $$         $$       $$   $$ 
+        $$$$$$$$$$$    $$            $$      $$     $$    $$     $$     $$            $$     $$ $$ $$ $$        $$ $$ 
+        $$       $$     $$          $$        $$   $$      $$   $$       $$           $$    $$    $$           $$    $$ 
+        $$       $$      $$        $$          $$ $$        $$ $$         $$        $$     $$       $$        $$       $$ 
+        $$       $$        $$ $$ $$             $$            $$            $$ $$ $$      $$          $$     $$          $$ `)
 
 
         //wx.clearStorage();//真机调试 清除缓存 注：正式环境删除
         let info = wx.getSystemInfoSync()
         this.isIosSystem = info.system.indexOf("iOS")!=-1 //获取操作系统
-        console.log(this.isIosSystem)
         // 屏幕宽高
         this.screenWidth = info.screenWidth
         this.screenHeight = info.screenHeight
@@ -63,18 +72,19 @@ App({
      * 当小程序启动，或从后台进入前台显示，会触发 onShow
      */
     onShow(options) {
+        console.log(options.query.scene)
+        this.globalData.scene=options.query.scene || ''
+        
         this.checkForUpdate();
     },
     getSetting(){
         wx.getSetting({
             withSubscriptions: true,
             success (res) {
-              console.log(res.authSetting)
               // res.authSetting = {
               //   "scope.userInfo": true,
               //   "scope.userLocation": true
               // }
-              console.log(res.subscriptionsSetting)
 
               
 
@@ -121,7 +131,8 @@ App({
                             code: code,
                             nickName: res.userInfo.nickName,
                             language: res.userInfo.language,
-                            avatarUrl: res.userInfo.avatarUrl
+                            avatarUrl: res.userInfo.avatarUrl,
+                            scene:this.globalData.scene
                         },
                         success: (data) => {
                             this.globalData.userToken = data.userToken  //中间层传给获取手机号接口使用 authPhone.js

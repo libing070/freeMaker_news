@@ -9,7 +9,7 @@
 <view class="demand" style="padding-bottom: {{ 56 + safeBottom }}px">
     <view class="user">
         <view class="avatarBox" data-item="1">
-            <image class="avatar" src="{{headImg}}"></image>
+            <image class="avatar" mode="aspectFill" src="{{headImg}}"></image>
         </view>
         <view>
             <view class="name-user">{{freelancerName}}</view>
@@ -25,8 +25,8 @@
         <input class="input" placeholder-style='text-align:left' maxlength="100" placeholder="添加一个标题吧" bindinput="bindTitleInput" value="{{title}}" placeholder-style="color: #8392A0"/>
     </view>
     <view class="input-wrapper">
-        <textarea  id="editor" class="editor" value="{{description}}" placeholder="请描述您的技能，尽可能清晰具体哦"  bindinput="bindEditorInput"> </textarea>
-        <view class="number">{{total}}/300</view>
+        <textarea  id="editor" maxlength="500" class="editor" value="{{description}}" placeholder="请描述您的技能，尽可能清晰具体哦"  bindinput="bindEditorInput"> </textarea>
+        <view class="number">{{total}}/500</view>
     </view>
     <view class="content-wrapper">
         <view class="names"><image class="icon-important" src="/images/common/icon-important.png"></image><text class="t">需求类型</text></view>

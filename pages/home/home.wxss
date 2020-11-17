@@ -133,3 +133,22 @@ page {
 .album-box .swiperBox .itemBox:last-child{
     padding-right: 0;
 }
+
+.demand-center{
+    position: relative;
+    margin: auto;
+    width: 672rpx;
+    height: 176rpx;
+    margin-top: 56rpx;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+.demand-center .vv{
+    position: relative;
+}
+.demand-center .icon{
+  
+    width: 326rpx;
+    height: 176rpx;
+}

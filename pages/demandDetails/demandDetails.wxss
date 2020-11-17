@@ -96,6 +96,7 @@ page {
     font-family: PingFangSC-Regular;
     font-size: 28rpx;
     color: #8392A0;
+    width: calc(100% - 64rpx);
 }
 
 .wrap .dates-title{
@@ -129,23 +130,36 @@ page {
     padding-top: 40rpx;
     margin-left: 32rpx;
     margin-right: 32rpx;
-    padding-bottom: 24rpx;
-    border-bottom: 0.1px solid #E6E6E6;
+    /* border-bottom: 0.1px solid #E6E6E6; */
 }
 .budget .calc{
-    margin-top: 42rpx;
+    margin-top: 24rpx;
     margin-left: 32rpx;
     margin-right: 32rpx;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-    padding-bottom: 42rpx;
 }
 .budget .calc .compute-mode{
     font-family: PingFangSC-Regular;
     font-size: 28rpx;
     color: #8392A0;
+}
+.budget .delivery-type{
+    font-family: PingFangSC-Medium;
+    font-size: 32rpx;
+    color: #0C2032;
+    padding-top: 40rpx;
+    margin-left: 32rpx;
+}
+.budget .delivery-name{
+    font-family: PingFangSC-Regular;
+    font-size: 28rpx;
+    margin-left: 32rpx;
+    color: #8392A0;
+    margin-top: 24rpx;
+    padding-bottom: 64rpx;
 }
 .tool-bar{
     position: fixed;

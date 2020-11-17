@@ -1,0 +1,352 @@
+/* pages/employerMovein/employerMovein.wxss */
+
+page {
+    background-color: white;
+}
+.movein{
+    position: relative;
+    width: 100vw;
+}
+.basic{
+    margin-top: 40rpx;
+    margin-left: 40rpx;
+    margin-right: 40rpx;
+    background-color: white;
+    border-radius: 8rpx;
+}
+.basic .item{
+    position: relative;
+    margin: 0 32rpx;
+    border-bottom: 1rpx solid #E6E6E6;
+    height:120rpx;
+}
+.basic .item.head{
+    height: 144rpx;
+}
+
+.basic .item.head .avatar{
+    top: 0;
+    bottom: 0;
+    right: 60rpx;
+    margin: auto;
+    position: absolute;
+    background: rgba(144,157,170,0.22);
+    border-radius: 100%;
+    width: 100rpx;
+    height: 100rpx;
+}
+.basic .item.head .avatar .img{
+    border: 4rpx solid #FFBA20;
+    width: 100%;
+    height: 100%;
+    border-radius: 100%;
+}
+.basic .item.head .icon{
+    top: 0;
+    bottom: 0;
+    right:0;
+    margin: auto;
+    position: absolute;
+    height: 30rpx;
+    width: 30rpx;
+    padding-left: 40rpx;
+}
+.basic .item .title{
+    font-weight: bold;
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    margin: auto;
+    width: 180rpx;
+    height: 120rpx;
+    line-height: 120rpx;
+    font-family: PingFangSC-Medium;
+    font-size: 32rpx;
+    color: #0C2032;
+}
+.basic .item .input{
+    top: 0;
+    bottom: 0;
+    right: 60rpx;
+    margin: auto;
+    position: absolute;
+    text-align: right;
+    color: #8392A0
+}
+.basic .item .radio-box{
+    position: absolute;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    margin: auto;
+    height: 40rpx;
+    display: flex;
+    flex-direction: row;
+  }
+.basic .item  .radio-box .box{
+    height: 40rpx;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin-left: 50rpx;
+    font-family: PingFangSC-Regular;
+    font-size: 28rpx;
+    color: #0D1335;
+  
+  }
+.basic .item  .radio-box .box .radio-icon{
+     margin-right:12rpx;
+     height: 32rpx;
+     width: 32rpx;
+  }
+.basic .item .icon{
+    top: 0;
+    bottom: 0;
+    right:0;
+    margin: auto;
+    position: absolute;
+    height: 40rpx;
+    width: 40rpx;
+    padding-left: 40rpx;
+}
+
+.basic .item  .dialog{
+    width: calc( 100% - 180rpx);
+    position: relative;
+    z-index: 8;
+    height: 120rpx;
+    margin-left: 180rpx;
+}
+.basic .item-desc{
+    position: relative;
+    margin: 0 32rpx;
+}
+.basic .item-desc .top{
+    height: 40rpx;
+    margin-top: 32rpx;
+    position: relative;
+    padding-bottom: 30rpx;
+}
+.basic .item-desc .top .title{
+    font-weight: bold;
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    margin: auto;
+    width: 180rpx;
+    height: 120rpx;
+    line-height: 120rpx;
+    font-family: PingFangSC-Medium;
+    font-size: 32rpx;
+    color: #0C2032;
+}
+.basic .item-desc .top .icon{
+    top: 0;
+    bottom: 0;
+    right:0;
+    margin: auto;
+    position: absolute;
+    height: 40rpx;
+    width: 40rpx;
+}
+.basic .item-desc .textarea{
+    width: 100%;
+    font-family: PingFangSC-Regular;
+    font-size: 28rpx;
+    color: #8392A0;
+    padding-bottom: 56rpx;
+}
+.basic .item-desc .textarea textarea{
+    width: 100%;
+}
+
+.tool-bar{
+    position: fixed;
+    bottom: 0;
+    box-shadow: inset 0 1px 0 0 #F0F0F0;
+    background-color: white;
+    height: 112rpx;
+    width: 100vw;
+    left: 0;
+    right: 0;
+    margin:auto;
+    display: flex;
+    flex-direction: row;
+}
+.tool-bar .layout-1{
+    height: 88rpx;
+    line-height: 88rpx;
+    background: #F4F4F4;
+    border-radius: 8rpx;
+    text-align: center;
+    flex-grow: 1;
+    margin:auto 40rpx;
+    font-family: PingFangSC-Medium;
+    font-size: 28rpx;
+    color: rgba(12,32,50, 0.2);
+    text-align: center;
+}
+.tool-bar .layout-1.ok{
+    background:#FFBA20;
+    color: #FFFFFF;
+}
+
+.tool-bar .layout-1-2{
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    width: 90vw;
+    margin:auto;
+    justify-content: space-between;
+}
+.tool-bar .layout-1-2 .left{
+    flex-grow: 1;
+    height: 88rpx;
+    line-height: 88rpx;
+    background: #EBF5FF;
+    text-align: center;
+    margin-right: 20rpx;
+    border-radius: 8rpx;
+    font-family: PingFangSC-Medium;
+    font-size: 28rpx;
+    color: #6F96BA;
+
+}
+.tool-bar .layout-1-2 .right{
+    flex-grow: 2;
+    height: 88rpx;
+    line-height: 88rpx;
+    background: #F4F4F4;
+    text-align: center;
+    border-radius: 8rpx;
+    font-family: PingFangSC-Medium;
+    font-size: 28rpx;
+    color:rgba(12,32,50,.2)
+}
+.tool-bar .layout-1-2 .right.ok{
+    background: #FFBA20;
+    color: #FFFFFF;
+}
+.tool-bar .layout-1{
+    height: 88rpx;
+    line-height: 88rpx;
+    background: #F4F4F4;
+    border-radius: 8rpx;
+    font-family: PingFangSC-Medium;
+    font-size: 28rpx;
+    text-align: center;
+    flex-grow: 1;
+    color:rgba(12,32,50,.2);
+    margin:auto 40rpx;
+}
+.tool-bar .layout-1.ok{
+    background: #FFBA20;
+    color: #FFFFFF;
+}
+
+.tool-bar .layout-1-1{
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    width: 90vw;
+    margin:auto;
+    justify-content: space-between;
+}
+
+.tool-bar .layout-1-1 .left{
+    flex-grow: 1;
+    height: 88rpx;
+    line-height: 88rpx;
+    background: #EBF5FF;
+    text-align: center;
+    margin-right: 20rpx;
+    border-radius: 8rpx;
+    font-family: PingFangSC-Medium;
+    font-size: 28rpx;
+    color: #6F96BA;
+    width: 50%;
+
+}
+.tool-bar .layout-1-1 .right{
+    flex-grow: 1;
+    height: 88rpx;
+    line-height: 88rpx;
+    background: #F4F4F4;
+    color: white;
+    text-align: center;
+    border-radius: 8rpx;
+    font-family: PingFangSC-Medium;
+    font-size: 28rpx;
+    color:rgba(12,32,50,.2);
+    width: 50%;
+}
+.tool-bar .layout-1-1 .right.ok{
+        background: #FFBA20;
+        color: #FFFFFF;
+}
+.shade {
+    background-color: rgba(0, 0, 0, 0.5);
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    position: fixed;
+    z-index: 10000;
+}
+
+.main {
+    background-color: white;
+    border-radius: 10px 10px 0 0;
+    width: 100%;
+    bottom: 0;
+    position: absolute;
+    animation: main-show 0.25s forwards;
+}
+
+@keyframes main-show {
+    0% {
+        transform: translateY(100%);
+    }
+
+    100% {
+        transform: translateY(0);
+    }
+}
+.main .dialog-mask{
+    position: relative;
+}
+.main .dialog-mask .title{
+    margin-top: 114rpx;
+    margin-left: 40rpx;
+    font-family: PingFangSC-Medium;
+    font-size: 36rpx;
+    color: #0D1335;
+}
+.main .dialog-mask .desc{
+    font-family: PingFangSC-Regular;
+    font-size: 28rpx;
+    color: #8392A0;
+    margin-top: 24rpx;
+    margin-left: 40rpx;
+}
+.main .dialog-imagepreview{
+    position: relative;
+}
+.main .dialog-imagepreview .title{
+    margin-top: 114rpx;
+    margin-left: 40rpx;
+}
+.main .dialog-imagepreview .title .big{
+    font-family: PingFangSC-Medium;
+    font-size: 36rpx;
+    color: #0D1335;
+}
+.main .dialog-imagepreview .title .small{
+    padding-left: 6rpx;
+    opacity: 0.4;
+    font-family: PingFangSC-Regular;
+    font-size: 24rpx;
+    color: #0D1335;
+}

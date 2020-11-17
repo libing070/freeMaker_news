@@ -5,6 +5,8 @@ const util = require("../../utils/util.js")
 const area = require("../../utils/area");
 const app = getApp()
 const uploadFile = require("./../../utils/upload.js")
+const watch = require("../../utils/watch.js");
+
 Page({
 
     /**
@@ -27,7 +29,7 @@ Page({
         title: '',
         total: 0,
         currTreeSelectNavIndex: 0,
-        skillType: '全部类型',
+        skillType: '选一个擅长的领域吧',
         markList: [],
         prod: {
             title: '',
@@ -39,12 +41,12 @@ Page({
             images: []//images
         },
         treeData: [],
-        demandType: '全部类型',
+        demandType: '选一个擅长的领域吧',
 
         chooseImageRadioIndex:1, //1 默认图片 ，2 自定义图片
         choosePriceRadioIndex:0,//0 时薪 ，1一口价 ，2面议
 
-        imagepreview:[{url:'https://howwork-1301749332.file.myqcloud.com/production/2020-10-29/tmp_8e102f0cb7834f977f9c7103b2803446.jpg',selected:false}],//预览图片集合
+        imagepreview:[{url:'https://howwork-1301749332.cos.ap-beijing.myqcloud.com/production/2020-11-11/wxebd3588df98ae1a7.o6zAJs6MrGfeTqciNsKbK7FuwdHM.flmAXVrv6v2P7868499f3fb7dc3d1ad33360836e1ca2.png',selected:false}],//预览图片集合
         chooseImagePrevewRadioIndex:1, //1选中 2为选中
 
         isClickbtn:false,//是否可以发布预览
@@ -57,6 +59,8 @@ Page({
      * 生命周期函数--监听页面加载
      */
     onLoad: function (options) {
+        watch.setWatcher(this); // 设置监听器，建议在onLoad下调用
+
         //禁止转发 分享朋友圈
         wx.hideShareMenu({
             menus: ['shareAppMessage', 'shareTimeline']
@@ -77,6 +81,9 @@ Page({
             [`headImgs.fullPath`]:options.headImg,
             name:options.name
         });
+        wx.setNavigationBarTitle({
+            title: this.data.currStep == 1 ? '人才入驻': this.data.currStep == 2 ? '发布服务': '服务预览'
+        }) 
     },
 
     /**
@@ -127,13 +134,19 @@ Page({
     onShareAppMessage: function () {
 
     },
+    watch: {
+        'currStep':  function(value, oldValue){
+            if (value == 1) {
+                this.getCurrentInfo()
+            }
+
+        },
+    },
     //获取个人信息接口
     getCurrentInfo(){
         REST.get({
             url: API.getCurrentInfo,
             success:res => {
-            
-                console.log(res)
 
                 let currrLanguage=''
                 for(let i in this.data.columnsLanguage){
@@ -163,7 +176,6 @@ Page({
                 console.error(res)
             },
             complete(res) {
-                console.log("个人信息拉去完成", res)
             }
         })
     },
@@ -212,17 +224,18 @@ Page({
     },
     //显示隐藏
     shadeShowing(e) {
-        console.log(e.currentTarget.dataset.type)
         if (e.currentTarget.dataset.id != "shadeMain") {
             this.setData({
                 shadeShowing: !this.data.shadeShowing,
                 currPicker: e.currentTarget.dataset.type
             });
+            if(e.currentTarget.dataset.type == 'imagepreview'){//加载岗位对应的默认图片
+                this.getDefaultImage()
+            }
         }
     },
     //省份下拉确认按钮事件
     areaTapDone(e) {
-        console.log(e);
         let currrArea = e.detail.values;
         if (currrArea[0].name == "" || currrArea[0].name == "请选择") {
             wx.showToast({
@@ -298,7 +311,6 @@ Page({
         REST.noVerfiyget({
             url: API.loadTreeData,
             success: res => {
-                console.log(res);
                 this.filterTreeData(res);
                 this.setData({
                     treeData: res
@@ -333,13 +345,13 @@ Page({
                 for (let child of childs) {
                     level2.push({
                         jobCateId: child.value.id,
-                        jobCateName: child.value.cateName
+                        jobCateName: child.value.cateName,
+                        jobCateCode:child.value.cateCode
                     })
                 }
                 selectFromatObject[level1.jobCateId] = level2
             }
         }
-        console.log(selectFromatObject)
 
         let demandColumns = [{
                 values: level1List,
@@ -371,6 +383,7 @@ Page({
                             'demandColumns[1].defaultIndex':col2Index,
                             'demandColumns[0].defaultIndex':col1Index,
                             demandType: that.data.demandColumns[0].values[col1Index].jobCateName + "-" + col2Item.jobCateName,
+                            jobCateCode:col2Item.jobCateCode
                         })
                     }
                 })
@@ -383,11 +396,11 @@ Page({
             value,
             index
         } = event.detail;
-        console.log(`当前值：${value}, 当前索引：${index}`);
 
         this.setData({
             shadeShowing: false,
             demandType: value[0].jobCateName + "-" + value[1].jobCateName,
+            jobCateCode:value[1].jobCateCode,
             'prod.jobCateId': value[1].jobCateId,
             'demandColumns[0].defaultIndex':index[0],
             'demandColumns[1].values':this.data.selectFromatObject[value[0].jobCateId],
@@ -442,7 +455,6 @@ Page({
                 console.error(res)
             },
             complete(res) {
-                console.log("初始化作品详情:", that.data.prodDetail)
             }
         })
     },
@@ -491,7 +503,6 @@ Page({
                 console.error(res)
             },
             complete(res) {
-                console.log("加载岗位的技能:", that.data.markList)
             }
         })
     },
@@ -526,7 +537,6 @@ Page({
                 this.data.prod.skills.push({jobSkillId:selectJobSkillId})
             }
         }
-        console.log(this.data.prod.skills)
         this.setData({
             [`markList[${id}].select`]: !this.data.markList[id].select,
             'prod.skills':this.data.prod.skills
@@ -558,9 +568,9 @@ Page({
     //编辑器内容改变时触发
     bindEditorInput(e) {
         let description = e.detail.value;
-        if (description.length > 300) {
+        if (description.length > 500) {
             wx.showToast({
-                title: '请输入300字以内',
+                title: '请输入500字以内',
                 icon: 'none',
                 duration: 2000
             });
@@ -570,7 +580,6 @@ Page({
             total: description.length,
             'prod.summarize': description,
         });
-        console.log(this.data.description)
         this.watchInputSelectStatus();
     },
     //删除html标签
@@ -581,7 +590,6 @@ Page({
     },
     //上传作品
     tapUploadProduct(e) {
-
         if (this.data.prod.images.length >= 8) {
             wx.showToast({
                 title: '最多上传8张哦',
@@ -604,6 +612,20 @@ Page({
             hasImagepreview:{selected:false, index:'-1'}
         })
 
+        wx.chooseImage({
+            count: 1, // 默认9
+            sizeType: ['original', 'compressed'], // 可以指定是原图还是压缩图，默认二者都有
+            sourceType: ['album', 'camera'], // 可以指定来源是相册还是相机，默认二者都有
+            success (res) {
+              const src = res.tempFilePaths[0]
+      
+              wx.navigateTo({
+                  url: `/components/cropImage/cropImage?src=${src}`
+              })
+            }
+          })
+          return 
+
         //参数详见 :utils/upload.js 
         uploadFile('production',(filePath)=>{
             let attachment = {
@@ -623,7 +645,6 @@ Page({
     //删除图片
     deletePhotos(e) {
         let currIndex = e.currentTarget.dataset.index;
-        console.log(currIndex);
         this.data.prod.images.splice(currIndex, 1);
         this.setData({
             'prod.images': this.data.prod.images,
@@ -677,7 +698,6 @@ Page({
             'prod.budgetType': index,
         }) 
 
-        console.log(this.data.prod.budgetType+"=========")
     },
     //个人信息点击下一步
     tapUpdateUserInfo(e){
@@ -689,6 +709,15 @@ Page({
                 duration: 2000
             });
             return
+        }
+        var regmobile = /^[1][3,5,6,7,8,9][0-9]{9}$/;
+        if (this.data.phone.length >=1 && (!regmobile.test(this.data.phone) || this.data.phone.length != 11)) {
+            wx.showToast({
+                title: '请输入正确的手机号',
+                icon: 'none',
+                duration: 2000
+            });
+            return;
         }
         if (!this.data.currrAreaCode) {
             wx.showToast({
@@ -719,7 +748,9 @@ Page({
                 language:this.data.currrLanguage == '中文' ? 10 :20,
                 skillSummarize:this.data.desc,
                 accountCode:this.data.wechat,
-                phone:this.data.phone
+                phone:this.data.phone,
+                name:this.data.name,
+                headImg:this.data.headImgs.path,
             },
 
         }
@@ -730,6 +761,9 @@ Page({
                 let currstep = e.currentTarget.dataset.currstep
                 this.setData({
                     currStep: currstep
+                }) 
+                wx.setNavigationBarTitle({
+                    title: this.data.currStep == 1 ? '人才入驻': this.data.currStep == 2 ? '发布服务': '服务预览'
                 }) 
             },
             failed: res => {
@@ -747,6 +781,9 @@ Page({
         let currstep = e.currentTarget.dataset.currstep
         this.setData({
             currStep: currstep
+        }) 
+        wx.setNavigationBarTitle({
+            title: this.data.currStep == 1 ? '人才入驻': this.data.currStep == 2 ? '发布服务': '服务预览'
         }) 
     },
     //选中推荐图片 切换事件
@@ -860,6 +897,9 @@ Page({
         this.setData({
             currStep: currstep
         }) 
+        wx.setNavigationBarTitle({
+            title: this.data.currStep == 1 ? '人才入驻': this.data.currStep == 2 ? '发布服务': '服务预览'
+        }) 
     },
     //切换图片
     changeSwiper(e) {
@@ -886,7 +926,6 @@ Page({
         wx.setClipboardData({
             data: content,
             success (res) {
-                console.log(res);
             }
         })
     },
@@ -904,7 +943,7 @@ Page({
         wx.requestSubscribeMessage({
             tmplIds: ['cv5hTnU_ABBjp8spFDvQacYttU2ZC3guvvJAoGKC8bA','0mfM9FVKOJzkD-tbXC9M1d5d5pfouIhjxDMBUzYogFI'], // 此处可填写多个模板 ID，但低版本微信不兼容只能授权一个
             success:res=> {
-                console.log(res) //'accept'表示用户接受；'reject'表示用户拒绝；'ban'表示已被后台封禁
+                 //'accept'表示用户接受；'reject'表示用户拒绝；'ban'表示已被后台封禁
                 REST.post({
                     url: this.data.prodId ? API.modifyProd : API.createProd,
                     data: this.data.prod,
@@ -929,19 +968,52 @@ Page({
                         console.error(res)
                     },
                     complete(res) {
-                        console.log("初始化作品详情:", that.data.prodDetail)
                     }
                 })
 
             },
             fail:res=>{
-                console.log(res)
             },
             complete:res=>{
-                console.log(res)
             },
     
         })
 
     },
+    //加载岗位对应的默认图片
+    getDefaultImage(){
+        this.setData({
+            imagepreview:[]
+        })
+        REST.noVerfiyget({
+            url: API.getDefaultImage,
+            data: {
+                cateCode: this.data.jobCateCode,
+            },
+            success:(res)=> {
+                
+                if(res.length){
+                    let imagepreview=[]
+                    for(let item of res){
+                        imagepreview.push({
+                            url:item.fullPath,
+                            selected:false,
+                        })
+                    }
+                    this.setData({
+                        imagepreview
+                    })
+                }else{
+                    this.setData({
+                        imagepreview:[{url:'https://howwork-1301749332.cos.ap-beijing.myqcloud.com/production/2020-11-11/wxebd3588df98ae1a7.o6zAJs6MrGfeTqciNsKbK7FuwdHM.flmAXVrv6v2P7868499f3fb7dc3d1ad33360836e1ca2.png',selected:false}],
+                    })
+                }        
+            },
+            failed(res) {
+                console.error(res)
+            },
+            complete(res) {
+            }
+        })
+    }
 })

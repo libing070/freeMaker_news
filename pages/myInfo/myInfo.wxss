@@ -85,7 +85,7 @@ page {
     width: 40rpx;
     padding-left: 40rpx;
 }
-
+.employerInfo .item .dialog,
 .basic .item  .dialog{
     width: calc( 100% - 180rpx);
     position: relative;
@@ -137,6 +137,56 @@ page {
     width: 100%;
 }
 
+
+.employerInfo{
+    margin-top: 40rpx;
+    margin-left: 40rpx;
+    margin-right: 40rpx;
+    background-color: white;
+    border-radius: 8rpx;
+}
+.employerInfo .item{
+    position: relative;
+    margin: 0 32rpx;
+    border-bottom: 1rpx solid #E6E6E6;
+    height:120rpx;
+}
+
+.employerInfo .item .title{
+    font-weight: bold;
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    margin: auto;
+    width: 180rpx;
+    height: 120rpx;
+    line-height: 120rpx;
+    font-family: PingFangSC-Medium;
+    font-size: 32rpx;
+    color: #0C2032;
+}
+.employerInfo .item .input{
+    top: 0;
+    bottom: 0;
+    right: 60rpx;
+    margin: auto;
+    position: absolute;
+    text-align: right;
+    color: #8392A0
+}
+
+.employerInfo .item .icon{
+    top: 0;
+    bottom: 0;
+    right:0;
+    margin: auto;
+    position: absolute;
+    height: 40rpx;
+    width: 40rpx;
+    padding-left: 40rpx;
+}
+
 .tool-bar{
     position: fixed;
     bottom: 0;
@@ -175,7 +225,7 @@ page {
     right: 0;
     bottom: 0;
     position: fixed;
-    z-index: 2;
+    z-index: 10000;
 }
 
 .main {

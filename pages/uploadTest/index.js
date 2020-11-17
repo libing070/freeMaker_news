@@ -127,7 +127,6 @@ Page({
                                 canvasId: 'attendCanvasId',
                                 success: function success(rest) {
                                   //  that.uploadCanvasImg(res.tempFilePath);
-                                  console.log(rest.tempFilePath);
                                     that.setData({
                                         imageList: that.data.imageList.concat(rest.tempFilePath)
                                     },()=>{

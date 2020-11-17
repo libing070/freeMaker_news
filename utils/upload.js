@@ -1,13 +1,14 @@
     /**
      * 网络请求 
      * @param folder String    [必填]  上传目录  'demand' , 'employer_profile_photo' ,'freelancer_file_photo' ,'production' ,'profile_photo'
+     * @param cropImagePath Object [非必填]  cropImagePath 裁剪的图片路径
      * @param _callback Object [必填]  回调函数 返回上传后的文件全路径
      */
 
 const app = getApp()
 var CosAuth = require('./lib/cos-auth');
 
-var uploadFile = function (folder ,_callback) {
+var uploadFile = function (folder ,_callback,cropImagePath) {
     let cloudImagepath=""
     // 请求用到的参数
     // var prefix = 'https://cos.' + config.Region + '.myqcloud.com/' + config.Bucket + '/'; // 这个是后缀式，签名也要指定 Pathname: '/' + config.Bucket + '/'
@@ -116,15 +117,20 @@ var uploadFile = function (folder ,_callback) {
         });
     };
 
-    // 选择文件
-    wx.chooseImage({
-        count: 1, // 默认9
-        sizeType: ['compressed'], // 可以指定是原图还是压缩图，这里默认用原图
-        sourceType: ['album', 'camera'], // 可以指定来源是相册还是相机，默认二者都有
-        success: function (res) {
-            uploadFile(res.tempFiles[0].path);
-        }
-    })
+    if(cropImagePath){
+        uploadFile(cropImagePath);
+    }else{
+        // 选择文件
+        wx.chooseImage({
+            count: 1, // 默认9
+            sizeType: ['compressed'], // 可以指定是原图还是压缩图，这里默认用原图
+            sourceType: ['album', 'camera'], // 可以指定来源是相册还是相机，默认二者都有
+            success: function (res) {
+                uploadFile(res.tempFiles[0].path);
+            }
+        })
+    }
+
 };
 
 module.exports = uploadFile;

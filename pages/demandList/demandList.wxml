@@ -1,0 +1,46 @@
+<!--pages/demandList/demandList.wxml-->
+<view class="demand-list" style="padding-bottom:{{safeBottom}}px">
+    <view class="filter">
+        <view class="typeBox">
+            <scroll-view scroll-left="{{scrollLeft}}" class="typeTabs" scroll-x>
+                <block wx:for="{{types}}" wx:key="index">
+                    <view class="type {{selectedType == item.value.cateName ? 'sel' : ''}}" data-jobcateid="{{item.value.id}}"  data-i="{{item.value.cateName}}" catchtap="tapTypeTab">{{item.value.cateName}}</view>
+                </block>
+            </scroll-view>
+        </view>
+    </view>
+    <view class="no-data"></view>
+    <view class="list-container">
+        <view class="list" wx:for="{{products}}" wx:key="index" catchtap="tapToExtDemandDetails" data-code="{{item.code}}">
+            <view class="left">
+                <view class="title">项目预算</view>
+                <view class="price" wx:if="{{item.budgetType == 0}}">
+                    <text class="value">{{item.budget}}</text><text class="unit">元/次</text>
+                    <view class="unit">时薪</view>
+                </view>
+                <view class="price" wx:elif="{{item.budgetType == 1}}">
+                    <text class="value">{{item.budget}}</text><text class="unit">元</text>
+                    <view class="unit">一口价</view>
+                </view>
+                <view class="price" wx:elif="{{item.budgetType == 2}}"><text class="unit">薪资面议</text></view>
+            </view>
+            <view class="right">
+                <view class="title">{{item.summarize}}</view>
+                <view class="mark-type">
+                    <scroll-view class="menu" scroll-x="true">
+                        <view class="item" wx:for="{{[item.jobCateIdName]}}" wx:key="index">
+                            <text class="name">{{item}}</text>
+                        </view>
+                    </scroll-view>
+                </view>
+                <view class="time">期望交付时间: {{item.expectDeliveryTime}}</view>
+                <view class="auth"><image class="icon" src="/images/common/icon_auth.png"></image><text class="text">需求经平台认证</text></view>
+
+            </view>
+        </view>
+        <view class="loading-box" wx:if="{{ loadmoreShowing }}" style="margin:30rpx 0" >
+            <van-loading size="22px" color="#c9c9c9" type="spinner">努力加载中...</van-loading>
+        </view>
+    </view>
+
+</view>

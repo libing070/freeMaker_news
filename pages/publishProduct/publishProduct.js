@@ -112,9 +112,9 @@ Page({
     //编辑器内容改变时触发
     bindEditorInput(e) {
         let description = this.deleteHtmlTag(e.detail.html);
-        if (description.length > 300) {
+        if (description.length >500) {
             wx.showToast({
-                title: '请输入300字以内',
+                title: '请输入500字以内',
                 icon: 'none',
                 duration: 2000
             });
@@ -124,7 +124,6 @@ Page({
             total: description.length,
             'prod.summarize': description,
         });
-        console.log(this.data.description)
         this.watchInputSelectStatus();
     },
     //删除html标签
@@ -177,7 +176,6 @@ Page({
     //删除图片
     deletePhotos(e) {
         let currIndex = e.currentTarget.dataset.index;
-        console.log(currIndex);
         this.data.prod.images.splice(currIndex, 1);
         this.setData({
             'prod.images': this.data.prod.images,
@@ -201,7 +199,6 @@ Page({
     },
     //显示隐藏
     shadeShowing(e) {
-        console.log(111);
         if (e.currentTarget.dataset.id != "shadeMain") {
             this.setData({
                 shadeShowing: !this.data.shadeShowing
@@ -319,7 +316,6 @@ Page({
                 this.data.prod.skills.push({jobSkillId:selectJobSkillId})
             }
         }
-        console.log(this.data.prod.skills)
         this.setData({
             [`markList[${id}].select`]: !this.data.markList[id].select,
             'prod.skills':this.data.prod.skills
@@ -332,12 +328,11 @@ Page({
         wx.requestSubscribeMessage({
             tmplIds: ['cv5hTnU_ABBjp8spFDvQacYttU2ZC3guvvJAoGKC8bA','0mfM9FVKOJzkD-tbXC9M1d5d5pfouIhjxDMBUzYogFI'], // 此处可填写多个模板 ID，但低版本微信不兼容只能授权一个
             success:res=> {
-                console.log(res) //'accept'表示用户接受；'reject'表示用户拒绝；'ban'表示已被后台封禁
+                //'accept'表示用户接受；'reject'表示用户拒绝；'ban'表示已被后台封禁
                 REST.post({
                     url: this.data.prodId ? API.modifyProd : API.createProd,
                     data: this.data.prod,
                     success(res) {
-                        console.log(res);
                         app.globalData.selectedTab = 2
                         wx.switchTab({
                             url: '/pages/mine/mine',
@@ -354,16 +349,13 @@ Page({
                         console.error(res)
                     },
                     complete(res) {
-                        console.log("初始化作品详情:", that.data.prodDetail)
                     }
                 })
 
             },
             fail:res=>{
-                console.log(res)
             },
             complete:res=>{
-                console.log(res)
             },
     
         })
@@ -403,7 +395,6 @@ Page({
         REST.noVerfiyget({
             url: API.loadTreeData,
             success: res => {
-                console.log(res);
                 this.filterTreeData(res);
                 this.setData({
                     treeData: res
@@ -444,7 +435,6 @@ Page({
                 selectFromatObject[level1.jobCateId] = level2
             }
         }
-        console.log(selectFromatObject)
 
         let demandColumns = [{
                 values: level1List,
@@ -488,7 +478,6 @@ Page({
             value,
             index
         } = event.detail;
-        console.log(`当前值：${value}, 当前索引：${index}`);
 
         this.setData({
             shadeShowing: false,
@@ -559,7 +548,6 @@ Page({
                 console.error(res)
             },
             complete(res) {
-                console.log("初始化作品详情:", that.data.prodDetail)
             }
         })
     },
@@ -625,7 +613,6 @@ Page({
                 console.error(res)
             },
             complete(res) {
-                console.log("加载岗位的技能:", that.data.markList)
             }
         })
     }

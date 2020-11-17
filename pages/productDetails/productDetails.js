@@ -32,7 +32,18 @@ Page({
         evaluationInfo: {},
         evaluationDetailInfos: [],
         evaluationOrderInfos: [],
-        currentPage:1
+        currentPage:1,
+
+        stars: [0, 1, 2, 3, 4],
+        normalSrc: '/images/common/star/icon-normal.png',   
+        half_0_1_point5_src:"/images/common/star/icon-half-0.5-1.5.png",
+        half_2_point5_src:"/images/common/star/icon-half-2.5.png",
+        half_3_point5_src:"/images/common/star/icon-half-3.5.png",
+        half_4_point5_src: '/images/common/star/icon-half-4.5.png',
+        selected_1_2_src: '/images/common/star/icon-selected-1-2.png',
+        selected_3_src: '/images/common/star/icon-selected-3.png',
+        selected_4_src: '/images/common/star/icon-selected-4.png',
+        selected_5_src: '/images/common/star/icon-selected-5.png',
     },
 
     /**
@@ -45,7 +56,6 @@ Page({
             one_1: this.data.num,
             two_1: 5 - this.data.num
         })
-        console.log(this.data.code);
         this.loadData()
         this.loadOtherProudcts()
     },
@@ -118,7 +128,6 @@ Page({
             data:{ id : this.data.productionId },
             success: res => {
 
-                console.log(res);
 
                 this.setData({
                     data:res
@@ -141,11 +150,12 @@ Page({
         let freelancerInfo = this.data.data.freelancerInfo
         if (freelancerInfo.provinceCode != null && freelancerInfo.cityCode != null && freelancerInfo.districtCode != null) {
             let areaName = ''
-            if (freelancerInfo.provinceCode != '110000' && freelancerInfo.provinceCode != '120000' && freelancerInfo.provinceCode != '500000' && freelancerInfo.provinceCode != '310000' ) {
-                areaName += area.default.province_list[Number(freelancerInfo.provinceCode)] + ' '
-            }
+            // if (freelancerInfo.provinceCode != '110000' && freelancerInfo.provinceCode != '120000' && freelancerInfo.provinceCode != '500000' && freelancerInfo.provinceCode != '310000' ) {
+            //     areaName += area.default.province_list[Number(freelancerInfo.provinceCode)] + ','
+            // }
+            areaName += area.default.province_list[Number(freelancerInfo.provinceCode)] + ','
 
-            areaName += area.default.city_list[Number(freelancerInfo.cityCode)] + ' ' + area.default.county_list[Number(freelancerInfo.districtCode)]
+            areaName += area.default.city_list[Number(freelancerInfo.cityCode)] + ',' + area.default.county_list[Number(freelancerInfo.districtCode)]
 
             this.setData({
                 [`data.freelancerInfo.areaName`]: areaName 
@@ -160,7 +170,37 @@ Page({
                 freelancerId : this.data.data.freelancerId
             },
             success: res => {
-                console.log(res);
+                let keys=[
+                    {id:'responseSpeed',value:res.responseSpeed},
+                    {id:'communicateCapacity',value:res.communicateCapacity},
+                    {id:'completionTime',value:res.completionTime},
+                    {id:'accomplishQuality',value:res.accomplishQuality},
+                    {id:'recommendScore', value:res.recommendScore}
+                    ]
+
+                for(let i = 0;i < keys.length;i++){
+                    if(keys[i].value <= 0.5){
+                        this.setData({[`${keys[i].id}key`]:keys[i].value,[`${keys[i].id}half`] :this.data.half_0_1_point5_src,[`${keys[i].id}selected`] :this.data.selected_1_2_src})
+                    }else if(keys[i].value <=1){
+                        this.setData({[`${keys[i].id}key`]:keys[i].value,[`${keys[i].id}selected`] :this.data.selected_1_2_src,[`${keys[i].id}half`] :this.data.half_0_1_point5_src})
+                    }else if(keys[i].value <= 1.5){
+                        this.setData({[`${keys[i].id}key`]:keys[i].value,[`${keys[i].id}half`] :this.data.half_0_1_point5_src,[`${keys[i].id}selected`] :this.data.selected_1_2_src})
+                    }else if(keys[i].value <=2){
+                        this.setData({[`${keys[i].id}key`]:keys[i].value,[`${keys[i].id}selected`] :this.data.selected_1_2_src,[`${keys[i].id}half`] :this.data.half_0_1_point5_src})
+                    }else if(keys[i].value <= 2.5){
+                        this.setData({[`${keys[i].id}key`]:keys[i].value,[`${keys[i].id}half`] :this.data.half_2_point5_src,[`${keys[i].id}selected`] :this.data.selected_3_src})
+                    }else if(keys[i].value <= 3){
+                        this.setData({[`${keys[i].id}key`]:keys[i].value,[`${keys[i].id}selected`] :this.data.selected_3_src,[`${keys[i].id}half`] :this.data.half_2_point5_src})
+                    }else if(keys[i].value <= 3.5){
+                        this.setData({[`${keys[i].id}key`]:keys[i].value,[`${keys[i].id}half`] :this.data.half_3_point5_src,[`${keys[i].id}selected`] :this.data.selected_4_src})
+                    }else if(keys[i].value <= 4){
+                        this.setData({[`${keys[i].id}key`]:keys[i].value,[`${keys[i].id}selected`] :this.data.selected_4_src,[`${keys[i].id}half`] :this.data.half_3_point5_src})
+                    }else if(keys[i].value <= 4.5){
+                        this.setData({[`${keys[i].id}key`]:keys[i].value,[`${keys[i].id}half`] :this.data.half_4_point5_src,[`${keys[i].id}selected`] :this.data.selected_5_src})
+                    }else if(keys[i].value <= 5){
+                        this.setData({[`${keys[i].id}key`]:keys[i].value,[`${keys[i].id}selected`] :this.data.selected_5_src,[`${keys[i].id}half`] :this.data.half_4_point5_src})
+                    }
+                }
                 this.setData({
                     evaluationInfo:res
                 })
@@ -182,12 +222,52 @@ Page({
             data:{ 
                 jobCateId : this.data.data.jobCateId,
                 freelancerId : this.data.data.freelancerId,
-                recent: 3
+                currentPage:1,
+                pageSize:3,
+                storeSort:0 ,//10降序 ，20 升序
+                timeSort:0 ,//10降序 ，20 升序
             },
             success: res => {
-                console.log(res);
+                let keys = res.data
+                
+                for(let i = 0;i < keys.length;i++){
+                    keys[i].i = i
+
+                    if(keys[i].totalScore <= 0.5){
+                        keys[i].half = this.data.half_0_1_point5_src
+                        keys[i].selected=this.data.selected_1_2_src
+                    }else if(keys[i].totalScore <=1){
+                        keys[i].half = this.data.half_0_1_point5_src
+                        keys[i].selected=this.data.selected_1_2_src
+                    }else if(keys[i].totalScore <= 1.5){
+                        keys[i].half = this.data.half_0_1_point5_src
+                        keys[i].selected=this.data.selected_1_2_src
+                    }else if(keys[i].totalScore <=2){
+                        keys[i].half = this.data.half_0_1_point5_src
+                        keys[i].selected=this.data.selected_1_2_src
+                    }else if(keys[i].totalScore <= 2.5){
+                        keys[i].half = this.data.half_2_point5_src
+                        keys[i].selected=this.data.selected_3_src
+                    }else if(keys[i].totalScore <= 3){
+                        keys[i].half = this.data.half_2_point5_src
+                        keys[i].selected=this.data.selected_3_src
+                    }else if(keys[i].totalScore <= 3.5){
+                        keys[i].half = this.data.half_3_point5_src
+                        keys[i].selected=this.data.selected_4_src
+                    }else if(keys[i].totalScore <= 4){
+                        keys[i].half = this.data.half_3_point5_src
+                        keys[i].selected=this.data.selected_4_src
+                    }else if(keys[i].totalScore <= 4.5){
+                        keys[i].half = this.data.half_4_point5_src
+                        keys[i].selected=this.data.selected_5_src
+                    }else if(keys[i].totalScore <= 5){
+                        keys[i].half = this.data.half_4_point5_src
+                        keys[i].selected=this.data.selected_5_src
+                    }
+                }
+
                 this.setData({
-                    evaluationOrderInfos:res
+                    evaluationOrderInfos:keys
                 })
 
             },
@@ -214,7 +294,6 @@ Page({
                     otherProductdata:res
                 })
 
-                console.log(this.data.otherProductdata);
             },
             failed: res => {
                 wx.showToast({
@@ -274,6 +353,22 @@ Page({
             urls,
         })
     },
+    // 点击图片
+    tapEvaluateBanner(e) {
+        let current =  e.currentTarget.dataset.item
+        let index =  e.currentTarget.dataset.index
+
+        let urls = []
+        for (let item of this.data.evaluationOrderInfos[index].images) {
+            urls.push(item.fullPath)
+        }
+
+        wx.previewImage({
+            current,
+            urls,
+        })
+    },
+
 
     //显示隐藏
     shadeShowing(e) {
@@ -296,8 +391,6 @@ Page({
                     freelancerId : this.data.data.freelancerId
                 },
                 success: res => {
-                    console.log('综合评价详情：');
-                    console.log(res);
                     res.forEach(item => {
                         item.description = util.deleteHtmlTag(item.description)
                     })
@@ -319,6 +412,12 @@ Page({
 
     },
 
+    //跳转到全部评价页面
+    tapEvaluateList(e){
+        wx.navigateTo({
+          url: '/pages/evaluateList/evaluateList?jobCateId='+this.data.data.jobCateId +"&freelancerId="+this.data.data.freelancerId,
+        })
+    },
     // mark: 授权成功
     authSuccess(login) {
         if(login){
@@ -369,7 +468,7 @@ Page({
         wx.requestSubscribeMessage({
             tmplIds: ['cv5hTnU_ABBjp8spFDvQacYttU2ZC3guvvJAoGKC8bA','0mfM9FVKOJzkD-tbXC9M1d5d5pfouIhjxDMBUzYogFI'], // 此处可填写多个模板 ID，但低版本微信不兼容只能授权一个
             success:res=> {
-                console.log(res) //'accept'表示用户接受；'reject'表示用户拒绝；'ban'表示已被后台封禁
+                //'accept'表示用户接受；'reject'表示用户拒绝；'ban'表示已被后台封禁
                 wx.navigateTo({
                     url: '/pages/publishOrder/publishOrder?type=1&freelancerId='+id
                     +"&freelancerName="+name
@@ -386,10 +485,8 @@ Page({
 
             },
             fail:res=>{
-                console.log(res)
             },
             complete:res=>{
-                console.log(res)
             },
     
         })
@@ -402,7 +499,6 @@ Page({
         wx.setClipboardData({
             data: content,
             success (res) {
-                console.log(res);
             }
         })
     },

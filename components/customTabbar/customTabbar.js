@@ -72,7 +72,7 @@ Component({
                 shadeShowing:isClickPlus
             })
 
-            this.isExistProduct()
+            this.publishStatus()
         },
         changeTag(idx) {
 
@@ -128,7 +128,8 @@ Component({
                 return
             }
             wx.navigateTo({
-                url: '/pages/publishDemand/publishDemand?type=0', //type: 0 发布需求 ,1 编辑需求
+                url: this.data.hasCompany?'/pages/publishDemand/publishDemand?type=0':'/pages/employerMovein/employerMovein',
+              //  url: '/pages/publishDemand/publishDemand?type=0', //type: 0 发布需求 ,1 编辑需求
             })
         },
         //发布需求
@@ -151,14 +152,19 @@ Component({
             })
         },
         //是否发布过作品 （审核通过的作品）
-        isExistProduct(){
+        publishStatus(){
             REST.get({
-                url: API.hasProductionById,
+                url: API.publishStatus,
                 success: (data) => {
                     this.setData({
-                        productName:data ? '发布服务': '人才入驻',
-                        productNameChild1:data ? '发布更多技能': '发布技能',
-                        currStep:data ? 2:1
+                        productName:data.hasProduction ? '发布服务': '人才入驻',
+                        productNameChild1:data.hasProduction ? '发布更多技能': '发布技能',
+                        currStep:data.hasProduction ? 2:1,
+
+                        demandName:data.hasCompany ? '发布需求': '企业入驻',
+                        demandNameChild1:data.hasCompany ? '我要找人才': '入驻平台',
+                        demandNameChild2:data.hasCompany ? '解决需求': '发布需求',
+                        hasCompany:data.hasCompany 
                     })
                 },
                 failed: (resp) => {}

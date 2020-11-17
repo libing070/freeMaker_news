@@ -5,6 +5,10 @@
     "usingComponents": {
         "custom-tabbar": "/components/customTabbar/customTabbar",
         "home-cell": "/components/homeCell/homeCell",
-        "auth-phone": "/components/authPhone/authPhone"
+        "auth-phone": "/components/authPhone/authPhone",
+        "van-loading": "/miniprogram_npm/@vant/weapp/loading/index",
+        "auth-modal": "/components/authModal/authModal",
+        "auth-button": "/components/authButton/authButton"
+
     }
 }

@@ -1,7 +1,19 @@
 <!--pages/test/test.wxml-->
-<view wx:if="" style="height:100rpx;width:200rpx;line-height:100rpx;text-align:center" catchtap="upload">上传</view>
+<!-- <view wx:if="" style="height:100rpx;width:200rpx;line-height:100rpx;text-align:center" catchtap="upload">上传</view>
 
 <view class="btn"  bindtap="openMessage"  data-tmplids="cv5hTnU_ABBjp8spFDvQacYttU2ZC3guvvJAoGKC8bA">岗位匹配提醒</view>
 <view class="btn"  bindtap="openMessage"  data-tmplids="CAwk0-nW2lZqcrC67SzF1YQiKqLaOANGkno6gxRjdKA">订单支付成功通知</view>
 <view class="btn"  bindtap="openMessage"  data-tmplids="0mfM9FVKOJzkD-tbXC9M1d5d5pfouIhjxDMBUzYogFI">订单状态通知</view>
-<view class="btn"  bindtap="openMessage"  data-tmplids="xwR8tbRVyVuZ6AlMF6Q7wtxzQNYV_SbiVkq2eMMpwBk">新订单通知</view>
+<view class="btn"  bindtap="openMessage"  data-tmplids="xwR8tbRVyVuZ6AlMF6Q7wtxzQNYV_SbiVkq2eMMpwBk">新订单通知</view> -->
+
+<!--index.wxml-->
+
+<view class="box" id="box">
+    <image  class="star-image"  wx:for="{{stars}}" src="{{key > item ?(key-item == 0.5?half:selected) : normalSrc}}">
+        <view class="item" style="left:0rpx" data-key="{{item+0.5}}" bindtouchmove='changeScore' bindtap="selectLeft"></view>
+        <view class="item" style="left:25px;" data-key="{{item+1}}" bindtouchmove='changeScore' bindtap="selectRight"></view>
+    </image>
+</view>
+
+
+

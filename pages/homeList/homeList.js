@@ -27,6 +27,7 @@ Page({
         types: [],
         cateName:'',
         currentPage:1,
+        loadmoreShowing:false
     },
 
     /**
@@ -117,7 +118,6 @@ Page({
         REST.noVerfiyget({
             url: '/v1/jobTree/treeData',
             success: res => {
-                console.log(res);
                 if(this.data.domaintype == 'allchilds'){//为你推荐 所有岗位
 
                     let childs=[]
@@ -145,7 +145,6 @@ Page({
                                 cateDomain:res[i].value.id 
                              })
                              this.loadProducts()
-                             console.log(this.data.types);
                         }
                     }
                 }
@@ -170,7 +169,6 @@ Page({
                 if(childs.length > 0){
                     for(var n=0; n < childs.length;n++){
                         if(childs[n].value.cateName == cateName){
-                            console.log(childs);
                             this.setData({
                                 selectedType:cateName || '全部',
                                 catePost:cateName?childs[n].value.id : '' ,
@@ -178,7 +176,6 @@ Page({
                                 parentCateName:treeData[i].value.cateName,
                                 cateDomain:treeData[i].value.id 
                             })
-                            console.log(this.data.types);
 
                             this.loadProducts()
 
@@ -205,7 +202,10 @@ Page({
             currentPage: 1,
             pageSize:10
         })
-
+        wx.pageScrollTo({
+            scrollTop: 0,
+            duration:100
+        })
          this.loadProducts()
         
 
@@ -240,6 +240,9 @@ Page({
     },
     //根据岗位获取作品
     loadProducts(){
+        this.setData({
+            loadmoreShowing: true
+        })
         let url='',data={}
         if(this.data.selectedType == '全部'){
             url=API.getByCateDomain //领域下数据
@@ -260,7 +263,6 @@ Page({
             url: url,
             data:data,
             success: res => {
-                console.log(res);
 
                 if(res.totalPages >= this.data.currentPage){ //有数据了
                     this.noMoreProduct = false
@@ -277,7 +279,6 @@ Page({
                         products: this.data.products.concat(res.data)
                     })
                 }
-                console.log(this.data.products);
 
                 this.setData({
                     selectedType:this.data.selectedType
@@ -290,6 +291,11 @@ Page({
                     duration: 2000
                 });
             },
+            complete:res => {
+                this.setData({
+                    loadmoreShowing: false
+                })
+            }
         })  
     }
 })

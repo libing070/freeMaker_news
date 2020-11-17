@@ -18,7 +18,7 @@
         <view class="user-box">
             <view class="user">
                 <view class="avatarBox">
-                    <image class="avatar" src="{{fn.formatHeadimg(item.freelancerInfo.headImg)}}"></image>
+                    <image class="avatar" mode="aspectFill" src="{{fn.formatHeadimg(item.freelancerInfo.headImg)}}"></image>
                 </view>
                 <view>
                     <view class="name-user">{{item.freelancerInfo.name}}</view>

@@ -1,0 +1,10 @@
+{
+    "navigationBarTitleText": "服务列表",
+    "enablePullDownRefresh": true,
+    "backgroundTextStyle": "dark",
+    "usingComponents": {
+        "auth-modal": "/components/authModal/authModal",
+        "auth-button": "/components/authButton/authButton",
+        "auth-phone": "/components/authPhone/authPhone"
+    }
+}

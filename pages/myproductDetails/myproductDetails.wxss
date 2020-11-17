@@ -221,7 +221,7 @@ page {
 }
  .price-detail .res{
     margin-left: 40rpx;
-    margin-top: 40rpx;
+    margin-top: 20rpx;
     font-family: PingFangSC-Regular;
     font-size: 28rpx;
     color: #3F5161;

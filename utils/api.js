@@ -12,6 +12,8 @@ module.exports = {
     ,updatePhone:"/v1/miniApp/updatePhone"
     ,updateAll:'/v1/userApi/updateAll'
     ,getCurrentInfo:'/v1/userApi/getCurrentInfo'
+    ,referralCode:"/v1/freelancer/referralCode"
+    ,myRecord:"/v1/freelancer/myRecord"
     //订单
     ,getOrderDetail: "/v1/orderApi/getOrderInfoById"
     ,updateOrderStatus: "/v1/orderApi/updateOrderStatus"
@@ -32,7 +34,8 @@ module.exports = {
     ,getByCatePostOther: "/v1/productionListApi/getByCatePostOther"
     ,getByLoginUser:"/v1/productionViewApi/getByLoginUser"
     ,getReviewNotPassInfo:"/v1/productionViewApi/getReviewNotPassInfo"
-    ,hasProductionById:"/v1/productionApi/hasProductionById"
+    ,publishStatus:"/v1/productionApi/publishStatus"
+    ,getDefaultImage:"/v1/JobDefaultImage/getDefaultImage"
     //需求
     ,getDemandListByEmployerId: "/v1/demandApi/getPageByEmployerId"
     ,updateDemandStatus: "/v1/demandApi/updateStatus"
@@ -42,6 +45,10 @@ module.exports = {
     ,updateDemand: "/v1/demandApi/updateByCode"
     ,getByFreelancer: "/v1/productionListApi/getByFreelancer"
     ,getRecommendProductionInfoByDemandId:"/v1/demandApi/getRecommendProductionInfoByDemandId"
+    ,getDemandCenterPage:"/v1/demandCenterApi/getDemandCenterPage"
+    ,getDemandCenterDtlByCode:"/v1/demandCenterApi/getDemandCenterDtlByCode"
+    ,recommend:"/v1/demandProductionRelationApi/recommend"
+    ,findRecommend:"/v1/demandProductionRelationApi/findRecommend"
     // 评价信息
     ,findByCateAndFreelancer:"/v1/evaluation/findByCateAndFreelancer"
     ,findOverallEvaluationByCateAndFreelancer:"/v1/evaluation/findOverallEvaluationByCateAndFreelancer"

@@ -1,0 +1,223 @@
+/* pages/evaluateList/evaluateList.wxss */
+page {
+    background-color: white;
+}
+.menu{
+    top: 0;
+    position: fixed;
+    height: 94rpx;
+    background-color: white;
+    width: 100vw;
+    z-index: 100;
+
+}
+.menu .tabbar{
+    position: absolute;
+    top:0;
+    bottom: 0;
+    margin: auto;
+    height: 32rpx;
+    width: 264rpx;
+    right: 40rpx;
+
+}
+.menu .tabbar .item{
+    font-family: PingFangSC-Regular;
+    font-size: 24rpx;
+    color: #8392A0;
+}
+.menu .tabbar .item.sel{
+    color: #3F5161;
+}
+.menu .tabbar .item:nth-child(1){
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+}
+
+.menu .tabbar .item:nth-child(2){
+    position: absolute;
+    right: 0;
+    top: 0;
+    bottom: 0;
+}
+.menu .tabbar .line{
+    background-color: #8392A0;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    margin: auto;
+    width: 1px;
+    height: 20rpx;
+}
+
+.wrap{
+    position: relative;
+    margin-top: 94rpx;
+    padding: 0 40rpx;
+}
+
+.evaluate-box{
+    position: relative;
+    margin-top: 20rpx;
+    margin-bottom: 30rpx;
+}
+.evaluate-box .u{
+    position: relative;
+    display: flex;
+    padding-top: 40rpx;
+    margin-bottom: 20rpx;
+
+}
+.evaluate-box .u .avatarBox {
+    width: 64rpx;
+    height: 64rpx;
+    position: relative;
+    margin-right: 10px;
+    flex-shrink: 0;
+}
+
+.evaluate-box .u .avatarBox .avatar {
+    border-radius: 50%;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    border: 4rpx solid #FFBA20;
+}
+
+.evaluate-box .u .name-user {
+    font-family: DINAlternate-Bold;
+    font-size: 28rpx;
+    color: #3D4347;
+    font-weight: 500;
+}
+
+.evaluate-box .u .name-tag {
+    font-family: DINAlternate-Bold;
+    font-size: 24rpx;
+    color: #8392A0;
+    margin-top: 4rpx;
+}
+
+.evaluate-box .u .star-box{
+    position: absolute;
+    width: 100px;
+    margin: auto;
+    right: 96rpx;
+    height: 12px;
+    display: flex;
+    bottom: 15rpx;
+    flex-direction: row;
+    justify-content: space-around;
+
+}
+.evaluate-box .u .star-box .star-image {
+    position: relative;
+    width: 12px;
+    height: 12px;
+    src: "/images/common/star/icon-normal.png";
+
+}
+.evaluate-box .u .star-box .item {
+    position: absolute;
+    top: 0;
+    width: 6px;
+    height: 12px;
+}
+
+.evaluate-box .u .total-score{
+    position: absolute;
+    bottom: 20rpx;
+    right: 0;
+    margin: auto;
+    height: 40rpx;
+}
+.evaluate-box .u .total-score .n1{
+    font-family: DINAlternate-Bold;
+    font-size: 48rpx;
+    color: #0C2032;
+}
+.evaluate-box .u .total-score .n2{
+    font-family: DINAlternate-Bold;
+    font-size: 36rpx;
+    color: #000E14;
+}
+.evaluate-box .u .total-score .n3{
+    font-family: PingFangSC-Regular;
+    font-size: 24rpx;
+    color: #0C2032;
+    padding-left: 4rpx;
+    padding-right: 4rpx;
+}
+.evaluate-box .evaluate-news{
+    position: relative;
+}
+.evaluate-box .evaluate-news .content{
+    width: 100%;
+    font-family: PingFangSC-Regular;
+    font-size: 28rpx;
+    color: #3F5161;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    word-break: break-all;
+    /* line-height: 22px; */
+}
+/* 展开收缩 */
+.evaluate-box .evaluate-news .content.ellipsis{
+    -webkit-line-clamp:4; 
+  }
+.evaluate-box .evaluate-news .content.unellipsis{
+    -webkit-line-clamp:0;  /*全部显示*/
+}  
+.evaluate-box .evaluate-news .btn{
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    height: 40rpx;
+    background-color: white;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    transition: transform 0.25s;
+    z-index: 10;
+
+
+}
+.evaluate-box .evaluate-news .btn .point{
+    margin-right: 40rpx;
+}
+.evaluate-box .evaluate-news .btn .text{
+    font-family: PingFangSC-Regular;
+    font-size: 28rpx;
+    color: #FFBA20;
+}
+.evaluate-box .evaluate-news .btn .icon{
+    margin-left: 15rpx;
+    width: 16px;
+    height: 9.4px;
+}
+.evaluate-box .evaluate-news .btn .icon.scale{
+    transform: scale(1, -1);
+
+}
+.evaluate-images{
+    position: relative;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    flex-wrap:wrap;
+    margin-top: 16rpx;
+}
+.evaluate-images .image{
+    width: 210rpx;
+    border-radius: 8rpx;
+    height: 210rpx;
+    margin-right: 15rpx;
+    margin-bottom: 15rpx;
+}

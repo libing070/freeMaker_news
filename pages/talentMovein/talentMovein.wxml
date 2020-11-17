@@ -25,7 +25,7 @@
             <image wx:else class="bg" src="/images/common/bg_1yellow@2x.png"/>
             <view class="desc">
                 <text class="tag {{currStep < 2 ? '' : 'curr'}}">2</text>
-                <text class="name {{currStep < 2 ? '' : 'curr'}}">添加技能作品</text>
+                <text class="name {{currStep < 2 ? '' : 'curr'}}">添加服务技能</text>
             </view>
         </view>
         <view class="child step-3">
@@ -79,7 +79,7 @@
                   <image class="icon" src="/images/common/icon_edit@2x.png"></image>
               </view>
               <view class="textarea" wx:if="{{currStep == 1}}">
-                  <textarea bindinput="bindDescInput" value="{{desc}}" auto-height placeholder="添加一段自我介绍，让更多的人了解你！"></textarea>
+                  <textarea maxlength="300" cursor-spacing="100" bindinput="bindDescInput" value="{{desc}}" auto-height="{{currStep == 1}}" placeholder="添加一段自我介绍，让更多的人了解你！"></textarea>
 
               </view>
 
@@ -92,10 +92,9 @@
     </view>
     <!--填写技能作品-->
     <view class="movein-second"style="display:{{ currStep == 2 ? 'block' : 'none'}}">
- 
         <view class="content-wrapper">
-            <view class="names"><image class="icon-important" src="/images/common/icon-important.png"></image><text class="t">技能类型</text></view>
-            <view class="choose-val" catchtap="shadeShowing" data-type="demand" style="color:{{ demandType == '全部类型' ? '#8392A0' : ' #0C2032'}}">{{demandType}}<image class="arrow" wx:if="{{skillType == '全部类型'}}" src="/images/common/icon-arrow.png"></image></view>
+            <view class="names"><image class="icon-important" src="/images/common/icon-important.png"></image><text class="t">服务类型</text></view>
+            <view class="choose-val" catchtap="shadeShowing" data-jobcatecode="{{jobCateCode}}" data-type="demand" style="color:{{ demandType == '选一个擅长的领域吧' ? '#8392A0' : ' #0C2032'}}">{{demandType}}<image class="arrow" wx:if="{{skillType == '选一个擅长的领域吧'}}" src="/images/common/icon-arrow.png"></image></view>
         </view>
 
         <view class="mark-type" wx:if="{{markList.length}}">
@@ -107,15 +106,15 @@
         </view>
 
         <view class="editor-wrap">
-            <view class="names"><image class="icon-important" src="/images/common/icon-important.png"></image><text class="t">技能描述</text></view>
+            <view class="names"><image class="icon-important" src="/images/common/icon-important.png"></image><text class="t">服务描述</text></view>
             <view class="input-wrapper">
-                <textarea wx:if="{{currStep == 2}}" id="editor" class="editor" value="{{prod.summarize}}" placeholder="请描述您的技能，尽可能清晰具体哦"  bindinput="bindEditorInput"> </textarea>
-                <view class="number">{{total}}/300</view>
+                <textarea  maxlength="500" wx:if="{{currStep == 2}}" id="editor" class="editor" value="{{prod.summarize}}" placeholder="通过简洁清晰的服务描述，表达出自己的专业能力，有利于吸引更多的雇主跟您交易哦～～"  bindinput="bindEditorInput"> </textarea>
+                <view class="number">{{total}}/500</view>
             </view>
         </view>
 
         <view class="images-wrap">
-            <view class="names"><image class="icon-important" src="/images/common/icon-important.png"></image><text class="t">作品图片</text></view> 
+            <view class="names"><image class="icon-important" src="/images/common/icon-important.png"></image><text class="t">服务案例展示图</text></view> 
             <!-- <view class="radio-box" wx:if="">
                 <view class="box" catchtap="tapChooseImageRadio" data-index="1">
                     <image class="icon" src="{{chooseImageRadioIndex == 1 ? '/images/common/icon_status_sel.png' : '/images/common/icon_status_nor.png'}}" />
@@ -139,7 +138,7 @@
                 </view> -->
                 <view class="box dotted-box" catchtap="shadeShowing" data-type="imagepreview" wx:if="{{prod.images.length < 8}}">
                     <image src="/images/common/icon_upload_works@2x.png" class="upload-icon"/>
-                    <text class="upload-text">添加作品图片</text>
+                    <text class="upload-text">添加图片</text>
                 </view>
             </view>
         </view>
@@ -165,14 +164,14 @@
                     <image class="icon-important" src="/images/common/icon-important.png"></image>
                     <text class="t">{{choosePriceRadioIndex == 0 ? '服务定价（元/小时）': choosePriceRadioIndex == 1 ? '服务定价（元）' : ''}}</text>
                 </view> 
-                <input class="input" type="number" placeholder-style='text-align:right'maxlength="10" placeholder="请输入服务定价" bindinput="bindhourlywageInput" value="{{prod.hourlyWage}}" placeholder-style="color: rgba(131,146,160,0.5)"/>
+                <input class="input" type="number" cursor-spacing="100" placeholder-style='text-align:right'maxlength="10" placeholder="合理的定价有利于交易哦～～" bindinput="bindhourlywageInput" value="{{prod.hourlyWage}}" placeholder-style="color: rgba(131,146,160,0.5)"/>
         </view>
         <view class="title-wrap">
                 <view class="names">
                     <image class="icon-important" src="/images/common/icon-important.png"></image>
-                    <text class="t">作品名称</text>
+                    <text class="t">服务名称</text>
                 </view> 
-                <input class="input" type="text" placeholder-style='text-align:right'maxlength="100" placeholder="请为作品添加一个名称" bindinput="bindTitleInput" value="{{prod.title}}" placeholder-style="color: rgba(131,146,160,0.5)"/>
+                <input class="input" type="text" cursor-spacing="100" placeholder-style='text-align:right'maxlength="100" placeholder="给自己的服务起个名字吧～～" bindinput="bindTitleInput" value="{{prod.title}}" placeholder-style="color: rgba(131,146,160,0.5)"/>
         </view>
         <view class="tool-bar" style="z-index:9999;padding-bottom: {{ safeBottom }}px;">
                 <view class="layout-1-1">
@@ -214,33 +213,49 @@
 
             <view class="user">
                 <view class="avatarBox" >
-                    <image class="avatar" src="{{headImgs.fullPath ? headImgs.fullPath :'/images/common/default-head.png'}}"></image>
+                    <image class="avatar" mode="aspectFill"  src="{{headImgs.fullPath ? headImgs.fullPath :'/images/common/default-head.png'}}"></image>
                 </view>
                 <view>
                     <view class="name-user">{{prevViewfreelancerInfo.name}}</view>
                     <view  class="name-tag>">{{fn.formatDemandType(demandType,1)}}</view>
                 </view>
                 <image wx:if="{{prevViewfreelancerInfo.accountCode}}" class="arrow wechat" src="/images/common/icon_wechat.png" data-type="callWechat" catchtap="shadeShowing"></image>
-                <image class="arrow phone" src="/images/common/icon_phone@2x.png"  data-content="{{prevViewfreelancerInfo.phone}}" catchtap="freeTell" data-type="callPhone"></image>
+                <image class="arrow phone"  src="/images/common/icon_phone@2x.png"  data-content="{{prevViewfreelancerInfo.phone}}" catchtap="freeTell" data-type="callPhone"></image>
             </view>
             <view class="cell-group">
                 <view class="field">地域</view>
                 <view class="message">{{fn.formatCurrrArea(currrArea)}}</view>
             </view>
+            <view class="cell-group">
+                <view class="field">语言</view>
+                <view class="message">{{prevViewfreelancerInfo.language == 10 ? '中文' : prevViewfreelancerInfo.language == 20 ? '英文':'未知'}}</view>
+            </view>
             <view class="cell-group" wx:if="{{prevViewfreelancerInfo.skillSummarize}}" style="padding-bottom: 40rpx;border-bottom: 0.1px solid #E6E6E6;">
                 <view class="field">个人介绍</view>
-                <textarea wx:if="{{currStep ==3}}" style="padding-left:40rpx;{{isIosSystem ? 'margin-top:-10rpx;margin-left:-10rpx':''}}" disabled  auto-height class="message" value="{{prevViewfreelancerInfo.skillSummarize}}"></textarea>
+                <textarea maxlength="300" wx:if="{{currStep ==3}}" style="padding-left:40rpx;{{isIosSystem ? 'margin-top:-10rpx;margin-left:-10rpx':''}}" disabled  auto-height class="message" value="{{prevViewfreelancerInfo.skillSummarize}}"></textarea>
 
             </view>
             <view class="skill-desc" style="padding-bottom: 40rpx;border-bottom: 0.1px solid #E6E6E6;">
                 <view class="head">
-                    <view class="left">技能描述</view>
+                    <view class="left">服务描述</view>
                 </view>
-                <textarea  wx:if="{{currStep ==3}}"  style="width:100%;{{isIosSystem ? 'margin-left:-10rpx':''}}" disabled  auto-height class="content" value="{{prod.summarize}}"></textarea>
+                <textarea  maxlength="500" wx:if="{{currStep ==3}}"  style="width:100%;{{isIosSystem ? 'margin-left:-10rpx':''}}" disabled  auto-height class="content" value="{{prod.summarize}}"></textarea>
             </view> 
             <view class="price-detail">
                 <view class="title">薪资计算方式</view>
-                <view class="res">{{prod.budgetType == 0 ? '时薪 ('+prod.hourlyWage+'元/小时）' : prod.budgetType == 1 ? '一口价 ('+prod.hourlyWage+'元）' : '面议'}}</view>
+                <view class="res" wx:if="{{prod.budgetType == 0}}">
+                    <text style="font-family: PingFangSC-Regular;font-size: 28rpx;color: #8392A0;">时薪：¥</text>
+                    <text style="font-family: DINAlternate-Bold;font-size: 52rpx;color: #0C2032;padding:0 6rpx;">{{prod.hourlyWage}}</text>
+                    <text style="font-family: PingFangSC-Regular;font-size: 28rpx;color: #8392A0;">元/小时</text>
+                </view>
+                <view class="res" wx:elif="{{prod.budgetType == 1}}">
+                    <text style="font-family: PingFangSC-Regular;font-size: 28rpx;color: #8392A0;">一口价：¥</text>
+                    <text style="font-family: DINAlternate-Bold;font-size: 52rpx;color: #0C2032;;padding:0 6rpx;">{{prod.hourlyWage}}</text>
+                    <text style="font-family: PingFangSC-Regular;font-size: 28rpx;color: #8392A0;">元</text>
+                </view>
+                <view class="res" wx:elif="{{prod.budgetType == 2}}">
+                    <text style="font-family: DINAlternate-Bold;font-size: 52rpx;color: #8392A0;">面议</text>
+                </view>
 
             </view>
             <view style="height:{{ ( 50 + safeBottom ) * 2 }}rpx"></view>
@@ -298,7 +313,7 @@
         <view wx:elif="{{currPicker == 'demand'}}">
             <van-picker   
             show-toolbar
-            title="请选择技能类型"
+            title="请选择服务类型"
             columns="{{ demandColumns }}"
             value-key="jobCateName"
             bind:cancel="onCancel"

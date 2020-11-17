@@ -5,7 +5,7 @@
     </view>
     <view class="input-wrapper">
         <editor id="editor" class="editor" placeholder="请描述您的技能，尽可能清晰具体哦～"  bindinput="bindEditorInput" bindready="onEditorReady"> </editor>
-        <view class="number">{{total}}/300</view>
+        <view class="number">{{total}}/500</view>
     </view>
     <view class="images-box">
         <view class="box" wx:for="{{prod.images}}" wx:key="index">
@@ -48,7 +48,7 @@
     <view class="main"  data-id="shadeMain" catchtap="shadeShowing" style="padding-bottom: {{safeBottom}}px;">
         <van-picker   
             show-toolbar
-            title="请选择技能类型"
+            title="请选择服务类型"
             columns="{{ demandColumns }}"
             value-key="jobCateName"
             bind:cancel="onCancel"

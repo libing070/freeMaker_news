@@ -1,0 +1,9 @@
+{
+  "navigationBarTitleText": "全部评价",
+  "enablePullDownRefresh": true,
+  "backgroundTextStyle": "dark",
+  "usingComponents": {
+      "van-loading": "/miniprogram_npm/@vant/weapp/loading/index"
+
+  }
+}

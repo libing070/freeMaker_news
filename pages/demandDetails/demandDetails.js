@@ -40,9 +40,37 @@ Page({
      * 生命周期函数--监听页面显示
      */
     onShow: function () {
+        this.loginSuccess()
 
     },
+    // mark: 授权成功
+    authSuccess(login) {
+        if(login){
+            this.setData({
+                showAuthPhone:true //打开获取手机号自定义弹窗
+            })
+        }
+    },
+    // mark: 登录成功 （获取手机号成功）
+    loginSuccess(login){
+        this.setData({
+            user: app.user,
+        })
+        if (login) {
+            this.setData({
+                showAuthModal:false,
+                showAuthPhone:false
+            })
+            this.getDemandDetail()
+        }
 
+    },
+    //mark: 重新登录
+    Relogin(){
+        this.setData({
+         showAuthModal:true
+        })
+    },
     /**
      * 生命周期函数--监听页面隐藏
      */
@@ -136,7 +164,6 @@ Page({
                 that.setData({
                     demandDetail: res
                 }) 
-                console.log("需求详情加载完毕",res)
             },
             failed(res) {
                 console.error(res)

@@ -1,0 +1,9 @@
+{
+    "navigationBarTitleText": "需求列表",
+    "enablePullDownRefresh": true,
+    "backgroundTextStyle": "dark",
+    "usingComponents": {
+        "van-loading": "/miniprogram_npm/@vant/weapp/loading/index"
+
+    }
+}

@@ -95,19 +95,22 @@ page {
 }
 
 .input-wrapper .editor{
-    padding-top: 40rpx;
+    padding: 20rpx;
+    padding-bottom: 40rpx;
     height: 440rpx;
     opacity: 0.8;
-    width: 90%;
-    margin: auto;
     font-family: PingFangSC-Regular;
     font-size: 32rpx;
     color: #0C2032;
+    border: 1px solid #DBE1E6;
+    border-radius: 8rpx;
+    margin: 0 40rpx;
+    width: calc(100% - 120rpx);
 }
 .input-wrapper .number{
     position: absolute;
-    bottom: 0rpx;
-    right: 40rpx;
+    bottom: 10rpx;
+    right: 60rpx;
     font-family: PingFangSC-Regular;
     font-size: 24rpx;
     color: #8392A0;
@@ -203,6 +206,92 @@ page {
     color: #3D4347;
     margin:0 8rpx;
 }
+
+.price-wrap{
+    position: relative;
+    margin:40rpx;
+    margin-bottom: 0;
+    margin-top: 56rpx;
+  
+  }
+  .price-wrap .names{
+    height: 40rpx;
+    line-height: 40rpx;
+    font-size: 32rpx;
+    color: #0C2032;
+    position: relative;
+  }
+  .price-wrap .names .icon-important{
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    margin:auto;
+    width:30rpx;
+    height:30rpx;
+  }
+  .price-wrap .names .t{
+    margin-left:35rpx;
+  }
+  .price-wrap .radio-box{
+    margin-top: 40rpx;
+    position: relative;
+    height: 40rpx;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    padding-bottom: 40rpx;
+  }
+  .price-wrap .radio-box .box{
+    height: 40rpx;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    margin-right: 72rpx;
+    font-family: PingFangSC-Regular;
+    font-size: 28rpx;
+    color: #0D1335;
+  
+  }
+  .price-wrap .radio-box .box .icon{
+     margin-right:12rpx;
+     height: 32rpx;
+     width: 32rpx;
+  }
+  
+  .bargaining-wrap{
+    position: relative;
+    margin:0 40rpx;
+    margin-top: 16rpx;
+  
+  }
+  .bargaining-wrap .names{
+    height: 40rpx;
+    line-height: 40rpx;
+    font-size: 32rpx;
+    color: #0C2032;
+    position: relative;
+  }
+  .bargaining-wrap .names .icon-important{
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    margin:auto;
+    width:30rpx;
+    height:30rpx;
+  }
+  .bargaining-wrap .names .t{
+    margin-left:35rpx;
+  }
+  .bargaining-wrap .input{
+      margin:24rpx 0;
+      height: 88rpx;
+      border: 2rpx solid #DBE1E6;
+      border-radius: 8rpx;
+      padding-left: 24rpx;
+  }
+
+  
 .shade {
     background-color: rgba(0, 0, 0, 0.5);
     top: 0;
@@ -210,7 +299,7 @@ page {
     right: 0;
     bottom: 0;
     position: fixed;
-    z-index: 2;
+    z-index: 10000;
 }
 
 .main {

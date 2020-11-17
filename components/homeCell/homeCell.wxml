@@ -23,7 +23,7 @@
     </view>
     <view class="user" catchtap="tapToWorksDetail" data-code="{{obj.code}}" data-id="{{obj.id}}">
         <view class="avatarBox">
-            <image class="avatar" src="{{obj.freelancerInfo.headImg ? obj.freelancerInfo.headImg :'/images/common/default-head.png'}}"></image>
+            <image class="avatar" mode="aspectFill"  src="{{obj.freelancerInfo.headImg ? obj.freelancerInfo.headImg :'/images/common/default-head.png'}}"></image>
         </view>
         <view>
             <view class="name-user">{{obj.freelancerInfo.name}}</view>

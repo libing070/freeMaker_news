@@ -190,7 +190,6 @@ Page({
                 console.error(res)
             },
             complete(res) {
-                console.log("初始化作品详情:", that.data.prodDetail)
             }
         })
     },
@@ -201,8 +200,6 @@ Page({
             currrAreaCode: [provincCode,cityCode,districtCode],
 
         })
-        console.log(this.data.currrArea);
-        console.log(this.data.currrAreaCode);
 
     },
     //审核未通过原因
@@ -242,13 +239,11 @@ Page({
                 console.error(res)
             },
             complete(res) {
-                console.log("初始化作品详情:", that.data.prodDetail)
             }
         })
     },
     //显示隐藏
     shadeShowing(e) {
-        console.log(e.currentTarget.dataset.type)
         if (e.currentTarget.dataset.id != "shadeMain") {
             this.setData({
                 shadeShowing: !this.data.shadeShowing,
@@ -265,7 +260,6 @@ Page({
         wx.setClipboardData({
             data: content,
             success (res) {
-                console.log(res);
             }
         })
     },

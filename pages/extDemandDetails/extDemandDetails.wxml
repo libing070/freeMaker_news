@@ -1,0 +1,64 @@
+<!--pages/extDemandDetails/extDemandDetails.wxml-->
+<view class="details" style="padding-bottom:{{56 + safeBottom}}px">
+    <view class="info">
+        <view class="auth"><image class="icon" src="/images/common/icon_auth.png"></image><text class="text">需求经平台认证</text></view>
+        <view class="title">{{title}}</view>
+        <view class="mark-type">
+            <scroll-view class="menu" scroll-x="true">
+                <view class="item" wx:for="{{markList}}" wx:key="index">
+                    <text class="name">{{item}}</text>
+                </view>
+            </scroll-view>
+        </view>
+        <!-- <view class="price" wx:if="{{budgetType == 0}}"><text class="value">{{price}}</text><text class="unit">元/次</text></view>
+        <view class="price" wx:elif="{{budgetType == 1}}"><text class="unit">一口价</text><text class="value">{{price}}</text><text class="unit">元</text></view>
+        <view class="price" wx:elif="{{budgetType == 2}}"><text class="unit">薪资面议</text></view> -->
+        <view class="line"></view>
+        <view class="demand-title">需求描述</view>
+        <textarea maxlength="500" class="demand-value" style="{{isIosSystem ? 'margin-left:-10rpx':''}}" disabled  auto-height value="{{description}}"></textarea>
+        <view class="time-title">期望交付时间</view>
+        <view class="time-value">{{expectDeliveryTime}}</view>
+
+        <view class="price-title">预算</view>
+        <view class="price-value" wx:if="{{budgetType == 0}}">
+            <text class="unit">时薪：¥</text>
+            <text class="value" style="font-family: DINAlternate-Bold;font-size:56rpx;padding:0 6rpx;color:#0C2032">{{price}}</text>
+            <text class="unit">元/次</text>
+        </view>
+        <view class="price-value" wx:elif="{{budgetType == 1}}">
+            <text class="unit">一口价：¥</text>
+            <text class="value"style="font-family: DINAlternate-Bold;font-size:56rpx;padding:0 6rpx;color:#0C2032">{{price}}</text>
+            <text class="unit">元</text>
+        </view>
+        <view class="price-value" wx:elif="{{budgetType == 2}}">
+            <text class="unit">面议</text>
+        </view> 
+        <view class="pay-title">交付方式</view>
+        <view class="pay-value">{{deliveryTypeName}}</view>
+    </view>
+    <view class="employer">
+        <view class="title">Employer</view>
+        <view class="user">
+            <image class="head" mode="aspectFill" src="{{employerInfo.headImg ? employerInfo.headImg :'/images/common/default-head.png'}}"></image>
+            <view class="nickname">{{employerInfo.name}}</view>
+            <image class="call" data-content="{{employerInfo.phone}}" catchtap="freeTell" src="/images/common/icon_phone@2x.png"></image>
+        </view>
+        <view class="company-title">企业信息</view>
+        <view class="company-name">{{companyName ? companyName :''}}</view>
+    </view>
+    <view class="tool-bar" style="padding-bottom: {{ safeBottom }}px">
+        <view class="layout-1-1" >
+            <button class="left {{poster ? 'cancle':''}}" style="padding:0" catchtap="tapShare" open-type="share">分享</button>
+            <view class="right {{ (employerId == userEmployerId)|| orderReceived ? '':'ok'}}" catchtap="tapApplyOrder">申请接单</view>
+        </view>
+    </view>
+
+    <canvas  wx:if="{{canvasSize}}" canvas-id="poster" style="{{canvasSize}};display:{{poster ? 'none' :'block'}}"></canvas>
+    <!-- <view wx:if="{{poster}}" class="shade" data-hide catchtap="dismiss">
+        <view data-hide>
+            <image class="poster" src="{{poster}}" mode="widthFix"></image>
+        </view>
+    </view> -->
+</view>
+<auth-modal show="{{showAuthModal}}"></auth-modal>
+<auth-phone show="{{showAuthPhone}}"></auth-phone>

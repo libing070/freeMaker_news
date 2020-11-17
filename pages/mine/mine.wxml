@@ -8,7 +8,7 @@
     <view class="user">
         <auth-button wx:if="{{!user}}" bindloginCallbackEvent="loginCallback"></auth-button>
         <view class="avatarBox" catchtap="tapMyInfo">
-            <image class="avatar" src="{{ user ? user.avatarUrl:'/images/common/default-head.png'}}"></image>
+            <image class="avatar" mode="aspectFill"src="{{ user ? user.avatarUrl:'/images/common/default-head.png'}}"></image>
         </view>
         <view class="name-box" catchtap="tapMyInfo">
             <view class="name-user">{{user ? user.nickName : '一键登录'}}<image wx:if="{{user}}" class="icon-edit" style="width:30rpx;height:30rpx;padding-left:8rpx" src="/images/common/icon_edit@2x.png"></image></view>
@@ -27,6 +27,15 @@
                 </view>
             </view>
         </view>
+
+        <view class="share" catchtap="tapShare">
+            <image class="icon" src="/images/mine/icon-poster.png"></image>
+            <view class="name">我的专属海报</view>
+            <view class="share-box">
+                <text class="n">去分享</text>
+                <image class="arrow" src="/images/common/icon-arrow.png"></image>
+            </view>
+        </view>
     </view>
     <view class="tabs tabs-sticky" style="top:{{44 + safeTop}}px">
         <block wx:for="{{tabs}}" wx:key="index">
@@ -39,34 +48,61 @@
             <view  catchtap="tapdemandTab" data-tab="20" class="level {{selectedDemandTab == 20 ? 'sel' : ''}}">启用中{{demandCount.opened}}</view>
             <view  catchtap="tapdemandTab" data-tab="40" class="level {{selectedDemandTab == 40 ? 'sel' : ''}}">已停用·{{demandCount.closed}}</view>
         </view>
-        <view class=" my-demand-list" style="height:{{item.status == 20? '360rpx' : '286rpx'}}" wx:for="{{demandList}}" wx:key="index" catchtap="tapToDemandDetails" data-demand-code="{{item.code}}">
-            <view class="title">
-                <view class="name">{{item.summarize}}</view>
-                <view class="tag {{item.status==20?'yellow':''}}">{{item.statusName}}</view>
-            </view>
-            <view class="tags">{{item.jobCateIdName}}</view>
-            <view class="item date">
-                <text class="key">交付时间：</text>
-                <text class="value">{{item.expectDeliveryTime}}</text>
-            </view>
-            <view class="item remuneration">
-                <text class="key">需求预算：</text>
-                <text class="value">{{item.budget}}元</text>
-            </view>
-            <view wx:if="{{item.status == 20}}" class="see-btn">查看进度</view>
-            <!-- <view class="border-line" wx:if=""></view>
-            <view class="btn-box" wx:if="">
-                <view class="reset" wx:if="{{item.status==40}}" catchtap="updateDemandStatus" data-status="20" data-code="{{item.code}}">重新启用</view>
-                <view class="edit" catchtap="tapEditDemand" data-demand-code="{{item.code}}">编辑</view>
-                <view class="status">
-                    <view class="name {{item.status==20?'yellow':''}}">{{item.statusName}}</view>
-                    <image class="allow-icon" src="{{status==20?'/images/mine/icon_mine_enter_yellow@2x.png':'/images/mine/icon_mine_enter_gray@2x.png'}}"></image>
+        <block wx:if="{{demandList.length}}" >
+            <view class="my-demand-list" style="height:{{item.status == 20? '420rpx' : '366rpx'}}" wx:for="{{demandList}}" wx:key="index" catchtap="tapToDemandDetails" data-demand-code="{{item.code}}">
+                <image class="demand-status" mode="heightFix" src="/images/mine/icon-demand-status{{item.demandStatus}}.png"></image>
+                <view class="title">
+                    <view class="name">{{item.summarize}}</view>
+                    <view class="tag {{item.status==20?'yellow':''}}">{{item.statusName}}</view>
                 </view>
-            </view> -->
+                <view class="tags">{{item.jobCateIdName}}</view>
+                <view class="item date">
+                    <text class="key">交付时间：</text>
+                    <text class="value">{{item.expectDeliveryTime}}</text>
+                </view>
+                <view class="item remuneration">
+                    <view class="p-u-price" wx:if="{{item.budgetType == 0}}">
+                        <view class="unit" style="font-family: PingFangSC-Regular;font-size: 24rpx;color: #8392A0;">时薪：</view>
+                        <view class="unit" style="font-family: PingFangSC-Regular;font-size: 24rpx;">¥</view>
+                        <view class="value" style="padding-left:4rpx;padding-right:4rpx">{{item.budget}}</view>
+                        <view class="unit" wx:if="{{item.budget}}" style="font-family: PingFangSC-Regular;font-size: 24rpx;color: #0C2032;">元/小时</view>
+                    </view>
+                    <view class="p-u-price"  wx:elif="{{item.budgetType == 1}}">
+                        <view class="unit" style="font-family: PingFangSC-Regular;font-size: 24rpx;color: #8392A0;">一口价：</view>
+                        <view class="unit" style="font-family: PingFangSC-Regular;font-size: 24rpx;">¥</view>
+                        <view class="value" style="padding-left:4rpx;padding-right:4rpx" wx:if="{{item.budget}}">{{item.budget}}</view>
+                        <view class="unit" wx:if="{{item.budget}}" style="font-family: PingFangSC-Regular;font-size: 24rpx;color: #0C2032;">元</view>
+                    </view>
+                    <view class="p-u-price"  wx:elif="{{item.budgetType == 2}}">
+                        <view class="unit"  style="font-family: PingFangSC-Regular;font-size: 24rpx;color: #0C2032;">面议</view>
+                    </view>
+                  
+                </view>
+                <view wx:if="{{item.status == 20}}" class="see-btn">查看进度</view>
+                <!-- <view class="border-line" wx:if=""></view>
+                <view class="btn-box" wx:if="">
+                    <view class="reset" wx:if="{{item.status==40}}" catchtap="updateDemandStatus" data-status="20" data-code="{{item.code}}">重新启用</view>
+                    <view class="edit" catchtap="tapEditDemand" data-demand-code="{{item.code}}">编辑</view>
+                    <view class="status">
+                        <view class="name {{item.status==20?'yellow':''}}">{{item.statusName}}</view>
+                        <image class="allow-icon" src="{{status==20?'/images/mine/icon_mine_enter_yellow@2x.png':'/images/mine/icon_mine_enter_gray@2x.png'}}"></image>
+                    </view>
+                </view> -->
+            </view>
+        </block>
+        <block wx:else>
+            <view class="no-data">
+                <image class="icon" src="/images/common/no-demand.png"></image>
+                <view class="desc">暂时没有新发布的需求</view>
+                <view class="btn" catchtap="tapNoData" data-index="0">{{company ? '发布新需求' : '发布需求入驻'}}</view>
+            </view>
+        </block>
+        <view class="loading-box" wx:if="{{ loadmoreShowing }}" style="margin:30rpx 0" >
+            <van-loading size="22px" color="#c9c9c9" type="spinner">努力加载中...</van-loading>
         </view>
     </view>
     <view class="order-container" wx:if="{{selectedTab == 1}}">
-        <view class="order-list" wx:if="{{1}}">
+        <view class="order-list">
             <view class="dropdown-menu sticky" style="top:{{44 + 44 + 2 + safeTop}}px">
                 <view class="menu">
                     <view class="menu-item" catchtap="dropdownShowing1">
@@ -95,83 +131,105 @@
                     </view>
                 </view>
             </view>
-            <view class="demand-order-list" wx:for="{{orderList}}" wx:key="index" catchtap="tapToOrderDetails" data-order-id="{{item.id}}">
-                <view class="title">
-                    <view class="name">{{item.summarize}}</view>
-                    <view class="tag">{{item.jobCateName}}</view>
+            <block wx:if="{{orderList.length}}">
+                <view  class="demand-order-list" wx:for="{{orderList}}" wx:key="index" catchtap="tapToOrderDetails" data-order-id="{{item.id}}">
+                    <view class="title">
+                        <view class="name">{{item.summarize}}</view>
+                        <view class="tag">{{item.jobCateName}}</view>
 
+                    </view>
+                    <view class="item date">
+                        <text class="key">期望交付日期：</text>
+                        <text class="value">{{item.expectDeliveryTime}}</text>
+                    </view>
+                    <view class="item remuneration">
+                        <text class="key">预计酬劳：</text>
+                        <text class="value">{{item.actOrderMny}}元</text>
+                    </view>
+                    <view class="border-line"></view>
+                    <view class="btn-box">
+                        <!-- <view class="contact">
+                            <image class="wechart-icon" src="/images/mine/icon_contact_wechat@2x.png"></image>
+                            <view class="name">联系对方</view>
+                        </view> -->
+                        <view class="status">
+                            <view wx:if="{{item.status==10 || item.status==50 || item.status==80 || item.status==90  }}" class="name yellow">{{item.statusName}}</view>
+                            <view wx:elif="{{item.status==30 || item.status==70 || item.status==100 || item.status==61 || item.status==81 }}" class="name red">{{item.status==61 ? '待验收' : item.statusName}}</view>
+                            <view wx:else class="name">{{item.statusName}}</view>
+
+                            <!-- <image class="allow-icon" src="{{index%2==0?'/images/mine/icon_mine_enter_yellow@2x.png':'/images/mine/icon_mine_enter_gray@2x.png'}}"></image> -->
+                        </view>
+                    </view>
                 </view>
-                <view class="item date">
-                    <text class="key">期望交付日期：</text>
-                    <text class="value">{{item.expectDeliveryTime}}</text>
+            </block>
+            <block wx:else>
+                <view class="no-data" >
+                    <image class="icon" src="/images/common/no-orders.png"></image>
+                    <view class="desc">暂时没有订单</view>
+                    <view class="btn" catchtap="tapNoData" data-index="1">去下单</view>
                 </view>
-                <view class="item remuneration">
-                    <text class="key">预计酬劳：</text>
-                    <text class="value">{{item.actOrderMny}}元</text>
+            </block>
+            <view class="loading-box" wx:if="{{ loadmoreShowing }}" style="margin:30rpx 0" >
+                <van-loading size="22px" color="#c9c9c9" type="spinner">努力加载中...</van-loading>
+            </view>
+        </view>
+        
+    </view>
+    <view class="product-container" wx:if="{{selectedTab == 2}}">
+        <block wx:if="{{productionList.length}}">
+            <view class="product-list" wx:for="{{productionList}}" wx:key="index" catchtap="tapToProductDetails" data-prod-id="{{item.id}}">
+                <view class="top">
+                    <image class="photo" src="{{item.images[0].fullPath}}" mode="aspectFill"></image>
+                    <view class="p-u">
+                        <view class="title">{{item.title}}</view>
+                        <view class="mark-type">
+                            <scroll-view class="menu" scroll-x="true">
+                                <view class="item" catchtap="tapTohomeList">
+                                    <text class="name">{{item.domainCate.cateName}} - {{item.postCate.cateName}}</text>
+                                </view>
+                            </scroll-view>  
+                        </view>
+                    
+                        <view class="p-u-price" wx:if="{{item.budgetType == 0}}">
+                            <view class="unit" style="font-family: PingFangSC-Regular;font-size: 24rpx;color: #8392A0;">时薪：</view>
+                            <view class="unit" style="font-family: PingFangSC-Regular;font-size: 24rpx;">¥</view>
+                            <view class="value" style="padding-left:4rpx;padding-right:4rpx">{{item.hourlyWage}}</view>
+                            <view class="unit" wx:if="{{item.hourlyWage}}" style="font-family: PingFangSC-Regular;font-size: 24rpx;color: #0C2032;">元/小时</view>
+                        </view>
+                        <view class="p-u-price"  wx:elif="{{item.budgetType == 1}}">
+                            <view class="unit" style="font-family: PingFangSC-Regular;font-size: 24rpx;color: #8392A0;">一口价：</view>
+                            <view class="unit" style="font-family: PingFangSC-Regular;font-size: 24rpx;">¥</view>
+                            <view class="value" style="padding-left:4rpx;padding-right:4rpx" wx:if="{{item.hourlyWage}}">{{item.hourlyWage}}</view>
+                            <view class="unit" wx:if="{{item.hourlyWage}}" style="font-family: PingFangSC-Regular;font-size: 24rpx;color: #0C2032;">元</view>
+                        </view>
+                        <view class="p-u-price"  wx:elif="{{item.budgetType == 2}}">
+                            <view class="unit"  style="font-family: PingFangSC-Regular;font-size: 24rpx;color: #0C2032;">面议</view>
+                        </view>
+
+
+                    </view>
                 </view>
                 <view class="border-line"></view>
                 <view class="btn-box">
-                    <!-- <view class="contact">
-                        <image class="wechart-icon" src="/images/mine/icon_contact_wechat@2x.png"></image>
-                        <view class="name">联系对方</view>
-                    </view> -->
+                    <!-- <view class="edit"  data-prod-id="{{item.id}}">编辑</view> -->
                     <view class="status">
-                        <view wx:if="{{item.status==10 || item.status==50 || item.status==80 || item.status==90  }}" class="name yellow">{{item.statusName}}</view>
-                        <view wx:elif="{{item.status==30 || item.status==70 || item.status==100 || item.status==61 || item.status==81 }}" class="name red">{{item.status==61 ? '待验收' : item.statusName}}</view>
-                        <view wx:else class="name">{{item.statusName}}</view>
-
+                        <view class="name {{item.status==20 || item.status==40?'yellow':item.status==30? 'red': ''}}">{{item.statusName}}</view>
                         <!-- <image class="allow-icon" src="{{index%2==0?'/images/mine/icon_mine_enter_yellow@2x.png':'/images/mine/icon_mine_enter_gray@2x.png'}}"></image> -->
                     </view>
                 </view>
-            </view>
-        </view>
-        <view class="no-data" wx:else>
-            <image class="icon" src="/images/common/icon-insert.png"></image>
-            <view class="desc">您当前还没有任务，只有发布作品才可以接单哦，快来发布您的第一个作品吧</view>
-        </view>
-    </view>
-    <view class="product-container" wx:if="{{selectedTab == 2}}">
-        <view class="product-list" wx:for="{{productionList}}" wx:key="index" catchtap="tapToProductDetails" data-prod-id="{{item.id}}">
-            <view class="top">
-                <image class="photo" src="{{item.images[0].fullPath}}" mode="aspectFill"></image>
-                <view class="p-u">
-                    <view class="title">{{item.title}}</view>
-                    <view class="mark-type">
-                        <scroll-view class="menu" scroll-x="true">
-                            <view class="item" catchtap="tapTohomeList">
-                                <text class="name">{{item.domainCate.cateName}} - {{item.postCate.cateName}}</text>
-                            </view>
-                        </scroll-view>  
-                    </view>
                 
-                    <view class="p-u-price" wx:if="{{item.budgetType == 0}}">
-                        <view class="unit" style="font-family: PingFangSC-Regular;font-size: 24rpx;color: #8392A0;">时薪：</view>
-                        <view class="unit" style="font-family: PingFangSC-Regular;font-size: 24rpx;">¥</view>
-                        <view class="value" style="padding-left:4rpx;padding-right:4rpx">{{item.hourlyWage}}</view>
-                        <view class="unit" wx:if="{{item.hourlyWage}}" style="font-family: PingFangSC-Regular;font-size: 24rpx;color: #0C2032;">元/小时</view>
-                    </view>
-                    <view class="p-u-price"  wx:elif="{{item.budgetType == 1}}">
-                        <view class="unit" style="font-family: PingFangSC-Regular;font-size: 24rpx;color: #8392A0;">一口价：</view>
-                        <view class="unit" style="font-family: PingFangSC-Regular;font-size: 24rpx;">¥</view>
-                        <view class="value" style="padding-left:4rpx;padding-right:4rpx" wx:if="{{item.hourlyWage}}">{{item.hourlyWage}}</view>
-                        <view class="unit" wx:if="{{item.hourlyWage}}" style="font-family: PingFangSC-Regular;font-size: 24rpx;color: #0C2032;">元</view>
-                    </view>
-                    <view class="p-u-price"  wx:elif="{{item.budgetType == 2}}">
-                        <view class="unit"  style="font-family: PingFangSC-Regular;font-size: 24rpx;color: #0C2032;">面议</view>
-                    </view>
-
-
-                </view>
             </view>
-            <view class="border-line"></view>
-            <view class="btn-box">
-                <view class="edit" catchtap="tapEdit" data-prod-id="{{item.id}}">编辑</view>
-                <view class="status">
-                    <view class="name {{item.status==20 || item.status==40?'yellow':item.status==30? 'red': ''}}">{{item.statusName}}</view>
-                    <!-- <image class="allow-icon" src="{{index%2==0?'/images/mine/icon_mine_enter_yellow@2x.png':'/images/mine/icon_mine_enter_gray@2x.png'}}"></image> -->
-                </view>
+            <view class="loading-box" wx:if="{{ loadmoreShowing }}" style="margin:30rpx 0;" >
+                    <van-loading size="22px" color="#c9c9c9" type="spinner">努力加载中...</van-loading>
             </view>
-        </view>
+        </block>
+        <block wx:else>
+            <view class="no-data" style="margin-top:114px">
+                <image class="icon" src="/images/common/no-products.png"></image>
+                <view class="desc">快去上传作品，展示自己吧～</view>
+                <view class="btn" catchtap="tapNoData" data-index="2">发布作品</view>
+            </view>
+        </block>
     </view>
 
 </view>

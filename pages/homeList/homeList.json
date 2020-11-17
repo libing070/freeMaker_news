@@ -3,6 +3,7 @@
     "enablePullDownRefresh": true,
     "backgroundTextStyle": "dark",
     "usingComponents": {
-        "home-cell": "/components/homeCell/homeCell"
+        "home-cell": "/components/homeCell/homeCell",
+        "van-loading": "/miniprogram_npm/@vant/weapp/loading/index"
     }
 }

@@ -1,4 +1,15 @@
 <!--pages/worksDetail/worksDetail.wxml-->
+<wxs module="fn">
+    module.exports = {
+        substring140: function(value) {
+            return ((value+"").length >140) ? (value.substring(0,140) + "..."):value
+        },
+        formatScoreSplit: function(score,index) {
+            var res = ((score+"").split("."))[index]
+            return res
+        }
+    }
+</wxs>
 <view class="detail">
     <view class="top">
         <view class="swiper-box">
@@ -29,9 +40,9 @@
         <text class="tag">{{data.domainCate.cateName}}</text>
     </view>
 
-    <view class="user" data-item="1" catchtap="shadeShowing">
+    <view class="user" data-item="1">
         <view class="avatarBox" >
-            <image class="avatar" src="{{data.freelancerInfo.headImg ? data.freelancerInfo.headImg :'/images/common/default-head.png'}}"></image>
+            <image class="avatar" mode="aspectFill" src="{{data.freelancerInfo.headImg ? data.freelancerInfo.headImg :'/images/common/default-head.png'}}"></image>
         </view>
         <view>
             <view class="name-user">{{data.freelancerInfo.name}}</view>
@@ -40,47 +51,117 @@
        <image wx:if="{{data.freelancerInfo.accountCode}}" class="arrow wechat" src="/images/common/icon_wechat.png" data-item="0" catchtap="shadeShowing"></image>
        <image class="arrow phone" src="/images/common/icon_phone@2x.png"  data-content="{{data.freelancerInfo.phone}}" catchtap="freeTell"></image>
     </view>
-
+    <view class="cell-group">
+        <view class="field">地域</view>
+        <view class="message">{{data.freelancerInfo.areaName ? data.freelancerInfo.areaName:'暂无'}}</view>
+    </view>
+    <view class="cell-group">
+        <view class="field">语言</view>
+        <view class="message">{{data.freelancerInfo.language == 10 ? '中文' : data.freelancerInfo.language == 20 ? '英文':'未知'}}</view>
+    </view>
+    <view class="cell-group" wx:if="{{data.freelancerInfo.skillSummarize}}" style="padding-bottom: 40rpx;border-bottom: 0.1px solid #E6E6E6;">
+        <view class="field">个人介绍</view>
+        <textarea maxlength="300"  style="padding-left:40rpx;{{isIosSystem ? 'margin-top:-10rpx;margin-left:-10rpx':''}}" disabled  auto-height class="message" value="{{data.freelancerInfo.skillSummarize}}"></textarea>
+    </view>
     <view class="skill-desc">
         <view class="head">
             <view class="left">技能描述</view>
-            <view class="right" catchtap="shadeShowing"  data-item="2">
+            <!-- <view class="right" catchtap="shadeShowing"  data-item="2">
                 <text class="more">展开全部</text>
                 <image class="triangle" src="/images/common/icon-triangle2.png"></image> 
-            </view>
+            </view> -->
         </view>
-        <textarea auto-height disabled style="width:100%;{{isIosSystem ? 'margin-left:-10rpx':''}}" class="content" value="{{data.summarize}}">
+        <textarea maxlength="500" auto-height disabled style="width:100%;{{isIosSystem ? 'margin-left:-10rpx':''}}" class="content" value="{{data.summarize}}">
         </textarea>
     </view>
 
     <view class="evaluation">
         <view class="head">
-            <view class="left">综合评价</view>
-            <view class="right" catchtap="shadeShowing"  data-item="3" wx:if="{{evaluationOrderInfos.length}}">
+            <view class="left"><text style="font-weight: bold;">综合评价</text><text style="font-family: PingFangSC-Regular;font-size: 24rpx;color: #0C2032;">（{{evaluationInfo.evaluationCount ? evaluationInfo.evaluationCount : 0}}人已评）</text></view>
+            <view class="right" catchtap="tapEvaluateList"  data-item="3" wx:if="{{evaluationOrderInfos.length}}">
                  <text class="more">全部评价</text>
-                <image class="triangle" src="/images/common/icon-triangle2.png"></image> 
+                <image class="triangle" src="/images/common/icon-arrow.png"></image> 
             </view>
         </view>
         <view class="rate"  wx:if="{{evaluationOrderInfos.length}}">
             <view class="grade">
-                <view class="number"><text style="font-size:60rpx;color: #0C2032;">{{evaluationInfo.totalScore}}</text><text style="font-size:28rpx;color:#0C2032">分</text></view>
-                <view class="desc" style="font-size: 28rpx;color: #3F5161;">{{evaluationInfo.totalScoreMark}}</view>
+                <view class="number">
+                    <text style="font-size:60rpx;color: #0C2032;font-family: DINAlternate-Bold;">{{fn.formatScoreSplit(evaluationInfo.totalScore,0)}}</text>
+                    <text style="font-size:40rpx;color:#0C2032;font-family: DINAlternate-Bold;">.{{fn.formatScoreSplit(evaluationInfo.totalScore,1)}}</text>
+                    <text style="font-size:28rpx;color:#0C2032;padding-left:4rpx;vertical-align: text-top;">分</text>
+                </view>
+                <view class="desc" style="font-family: PingFangSC-Regular;font-size: 12px;color: #3F5161;margin-top:8rpx">{{evaluationInfo.totalEvaluationDesc}}</view>
             </view>
             <view class="progress">
                 <view class="pro-item">
-                    <view class="name">过程质量</view>
-                    <view class="line"><view class="l-width" style="{{'width:' + evaluationInfo.processScoreWidth + '%'}}"></view></view>
-                    <view class="num">{{evaluationInfo.processScore}}</view>
+                    <view class="name">响应速度</view>
+                    <view class="star-box">
+                        <image  class="star-image"  wx:for="{{stars}}" wx:key="index" src="{{responseSpeedkey > item ?(responseSpeedkey-item <= 0.5?responseSpeedhalf:responseSpeedselected) : normalSrc}}">
+                            <view class="item" style="left:0rpx"></view>
+                            <view class="item" style="left:6px;"></view>
+                        </image>
+                    </view>
+                    <view class="num">
+                        <text class="n1">{{fn.formatScoreSplit(evaluationInfo.responseSpeed,0)}}</text>
+                        <text class="n2">.{{fn.formatScoreSplit(evaluationInfo.responseSpeed,1)}}</text>
+                        <text class="n3">分</text>
+                    </view>
                 </view>
                 <view class="pro-item">
-                    <view class="name">结果质量</view>
-                    <view class="line"><view class="l-width" style="{{'width:' + evaluationInfo.resultScoreWidth + '%'}}"></view></view>
-                    <view class="num">{{evaluationInfo.resultScore}}</view>
+                    <view class="name">沟通能力</view>
+                    <view class="star-box">
+                        <image  class="star-image"  wx:for="{{stars}}" wx:key="index" src="{{communicateCapacitykey > item ?(communicateCapacitykey-item <= 0.5?communicateCapacityhalf:communicateCapacityselected) : normalSrc}}">
+                            <view class="item" style="left:0rpx"></view>
+                            <view class="item" style="left:6px;"></view>
+                        </image>
+                    </view>
+                    <view class="num">
+                        <text class="n1">{{fn.formatScoreSplit(evaluationInfo.communicateCapacity,0)}}</text>
+                        <text class="n2">.{{fn.formatScoreSplit(evaluationInfo.communicateCapacity,1)}}</text>
+                        <text class="n3">分</text>
+                    </view>
                 </view>
                 <view class="pro-item">
-                    <view class="name">推荐意向</view>
-                    <view class="line"><view class="l-width" style="{{'width:' + evaluationInfo.recommendScoreWidth + '%'}}"></view></view>
-                    <view class="num">{{evaluationInfo.recommendScore}}</view>
+                    <view class="name">完成时间</view>
+                    <view class="star-box">
+                        <image  class="star-image"  wx:for="{{stars}}" wx:key="index" src="{{completionTimekey > item ?(completionTimekey-item <= 0.5?completionTimehalf:completionTimeselected) : normalSrc}}">
+                            <view class="item" style="left:0rpx"></view>
+                            <view class="item" style="left:6px;"></view>
+                        </image>
+                    </view>
+                    <view class="num">
+                        <text class="n1">{{fn.formatScoreSplit(evaluationInfo.completionTime,0)}}</text>
+                        <text class="n2">.{{fn.formatScoreSplit(evaluationInfo.completionTime,1)}}</text>
+                        <text class="n3">分</text>
+                    </view>
+                </view>
+                <view class="pro-item">
+                    <view class="name">完成质量</view>
+                    <view class="star-box">
+                        <image  class="star-image"  wx:for="{{stars}}" wx:key="index" src="{{accomplishQualitykey > item ?(accomplishQualitykey-item <= 0.5?accomplishQualityhalf:accomplishQualityselected) : normalSrc}}">
+                            <view class="item" style="left:0rpx"></view>
+                            <view class="item" style="left:6px;"></view>
+                        </image>
+                    </view>
+                    <view class="num">
+                        <text class="n1">{{fn.formatScoreSplit(evaluationInfo.accomplishQuality,0)}}</text>
+                        <text class="n2">.{{fn.formatScoreSplit(evaluationInfo.accomplishQuality,1)}}</text>
+                        <text class="n3">分</text>
+                    </view>
+                </view>
+                <view class="pro-item">
+                    <view class="name">推荐意愿</view>
+                    <view class="star-box">
+                        <image  class="star-image"  wx:for="{{stars}}" wx:key="index" src="{{recommendScorekey > item ?(recommendScorekey-item <= 0.5?recommendScorehalf:recommendScoreselected) : normalSrc}}">
+                            <view class="item" style="left:0rpx"></view>
+                            <view class="item" style="left:6px;"></view>
+                        </image>
+                    </view>
+                    <view class="num">
+                        <text class="n1">{{fn.formatScoreSplit(evaluationInfo.recommendScore,0)}}</text>
+                        <text class="n2">.{{fn.formatScoreSplit(evaluationInfo.recommendScore,1)}}</text>
+                        <text class="n3">分</text>
+                    </view>
                 </view>
             </view>
         </view>
@@ -103,14 +184,25 @@
                 </view>
                 <view class="uu">
                     <view class="avatarBox">
-                        <image class="avatar" src="/images/common/default-head.png"></image>
+                        <image class="avatar" src="{{item.employerInfo.headImg ?item.employerInfo.headImg :'/images/common/default-head.png' }}"></image>
                     </view>
                     <view>
                         <view class="name-user">{{item.employerInfo.name}}</view>
                         <view  class="name-tag>">{{item.createTime}}</view>
                     </view>
-                    <view class="score">
-                        <view class="star-box">
+                    <view class="star-box">
+                        <image  class="star-image"  wx:for="{{stars}}" wx:key="index"  wx:for-item="_item" src="{{item.totalScore > _item ?(item.totalScore-_item <= 0.5?item.half:item.selected) : normalSrc}}">
+                            <view class="item" style="left:0rpx"></view>
+                            <view class="item" style="left:6px;"></view>
+                        </image>
+                    </view>
+                    <view class="total-score">
+                        <text class="n1">{{fn.formatScoreSplit(item.totalScore,0)}}</text>
+                        <text class="n2">.{{fn.formatScoreSplit(item.totalScore,1)}}</text>
+                        <text class="n3">分</text>
+                    </view>
+
+                        <!-- <view class="star-box">
                             <view class="star">
                                 <block wx:for="{{item.totalScore}}" wx:key="item">
                                     <image class="img" src='/images/common/icon-starSel.png'></image>
@@ -120,9 +212,16 @@
                                 </block>
                             </view>
                             <view class="val">{{item.totalScore}}<text style="font-size:24rpx;color: #3D4347;">分</text></view>
-                        </view>
-                    </view>
+                        </view> -->
                 </view>
+                <view class="evaluate-news">
+                    <textarea disabled auto-height maxlength="300"  value="{{item.description ? item.description :'该雇主还没有留下评价。' }}" id="evaluate-news-{{index}}" class="content  {{item.ellipsis?'ellipsis':'unellipsis'}}">   
+                    </textarea>
+                </view>
+                <view class="evaluate-images">
+                    <image  data-item="{{_item.fullPath}}"  wx:for-item="_item" data-index="{{item.i}}" catchtap="tapEvaluateBanner"  class="image" lazy-load="true" wx:for="{{item.images}}" wx:key="_index" src="{{_item.fullPath}}" mode="aspectFill" ></image>
+                </view>
+
             </view>
         </view>
     </view>
@@ -160,7 +259,7 @@
     <view style="height:{{ ( 50 + safeBottom ) * 2 }}rpx"></view>
 </view>
 
-<view class="tool-bar" style="padding-bottom: {{ safeBottom }}px">
+<view class="tool-bar" style="z-index:9999;padding-bottom: {{ safeBottom }}px">
     <!-- <view class="money">
         <text class="unit" wx:if="{{data.budgetType != 2}}" style="font-size: 32rpx;color: #3D4347;">¥</text>
         {{data.budgetType == 2 ? '': data.hourlyWage}}
@@ -235,7 +334,7 @@
                 <view class="head">
                     <view class="left">技能描述</view>
                 </view>
-                <textarea auto-height disabled style="width:100%;{{isIosSystem ? 'margin-left:-10rpx':''}}" class="shade-skill-content" value="{{data.summarize}}"></textarea>
+                <textarea maxlength="500" auto-height disabled style="width:100%;{{isIosSystem ? 'margin-left:-10rpx':''}}" class="shade-skill-content"  value="{{data.summarize}}"></textarea>
             </view>
         </view>
         <view wx:if="{{ currShadeItem == 3}}">
@@ -246,7 +345,7 @@
                 <view class="evaluate-box" wx:for="{{evaluationDetailInfos}}" wx:key="index">
                     <view class="u" style="border-top:{{ index == 0 ? 'none' : '0.1px solid #E6E6E6'}}">
                         <view class="avatarBox">
-                            <image class="avatar" src="/images/common/default-head.png"></image>
+                            <image class="avatar" src="{{item.employerInfo.headImg ?item.employerInfo.headImg :'/images/common/default-head.png' }}"></image>
                         </view>
                         <view>
                             <view class="name-user">{{item.employerInfo.name}}</view>

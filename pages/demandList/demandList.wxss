@@ -1,0 +1,162 @@
+/* pages/demandList/demandList.wxss */
+
+page {
+  background-color: #F7F8FC;
+}
+.filter {
+    width: 100vw;
+    position: fixed;
+    top: 0;
+    z-index: 2;
+
+}
+.filter .typeBox {
+    height: 80rpx;
+    margin-bottom: 8rpx;
+    padding: 0 20rpx;
+    overflow: hidden;
+    background-color: white;
+    border-bottom: 1px solid #e6e6e6;
+}
+
+.filter .typeTabs {
+    height: 88rpx;
+    white-space: nowrap;
+}
+
+.filter .typeTabs .type {
+    color: #8392A0;
+    font-size: 30rpx;
+    height: 88rpx;
+    margin: 0 35rpx;
+    padding-top: 16rpx;
+    display: inline-block;
+}
+
+.filter .typeTabs .type.sel {
+    font-family: PingFangSC-Medium;
+    color: #0C2032;
+    font-weight: bold;
+    position: relative;
+}
+
+.filter .typeTabs .type.sel::after {
+    content: "";
+    background: #0C2032;
+    border-radius: 4rpx;
+    width: 60rpx;
+    height: 6rpx;
+    left: 0;
+    right: 0;
+    bottom: 30rpx;
+    position: absolute;
+    margin: auto;
+}
+.no-data{
+    height: 80rpx;
+
+}
+.list{
+    position: relative;
+    margin: 24rpx 40rpx;
+    border-radius: 8rpx;
+    background-color: rgba(255, 255, 255, 0.87);
+    display: flex;
+    flex-direction: row;
+
+}
+.list .left{
+    width: 224rpx;
+    padding-top: 36rpx;
+    padding-left: 32rpx;
+}
+.list .left .title{
+    font-family: PingFangSC-Regular;
+    font-size: 24rpx;
+    color: #8392A0;
+    margin-top: 10rpx;
+    margin-bottom: 12rpx;
+}
+.list .left .price{
+    margin-top: 16rpx;
+    font-family: DINAlternate-Bold;
+    color: #FFBA20;
+}
+.list .left .price .value{
+    font-size: 56rpx;
+    font-weight: bold;
+}
+.list .left .price .unit{
+    font-size: 24rpx;
+}
+
+.list .right{
+    position: relative;
+    padding-top: 36rpx;
+    width: calc(100% - 224rpx);
+}
+.list .right .title{
+    font-family: PingFangSC-Medium;
+    font-size: 36rpx;
+    font-weight: bold;
+    color: #0C2032;
+    margin-bottom: 20rpx;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    overflow: hidden;
+    word-break: break-all;
+    padding-right: 20rpx;
+}
+
+.list .right .mark-type{
+    margin-top: 20rpx;
+    margin-bottom: 20rpx;
+    padding-right: 20rpx;
+}
+.list .right .mark-type .menu{
+    position: relative;
+    white-space: nowrap;
+    height: 48rpx;
+
+}
+.list .right .mark-type .menu .item{
+    background: #f4f4f4;
+    border-radius: 8rpx;
+    display: inline-flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    margin-right: 16rpx;
+    padding:8rpx 24rpx;
+    line-height: 48rrpx;
+}
+.list .right .mark-type .menu .item .name{
+    font-family: PingFangSC-Regular;
+    font-size: 24rpx;
+    color: #8392A0;
+}
+.list .right .time{
+    font-family: PingFangSC-Regular;
+    font-size: 28rpx;
+    color: #8392A0;
+    margin-bottom: 20rpx;
+}
+.list .right .auth{
+    display: flex;
+    flex-direction: row;
+    height: 40rpx;
+    align-items: center;
+    margin-bottom: 24rpx;
+}
+.list .right .auth .icon{
+    width: 25.6rpx;
+    height: 28.6rpx;
+    margin-right: 6rpx;
+}
+.list .right .auth .text{
+    font-family: PingFangSC-Regular;
+    font-size: 24rpx;
+    color: #6F96BA;
+    letter-spacing: -0.3px;
+}

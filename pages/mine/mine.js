@@ -11,8 +11,9 @@ Page({
         isClickPlus:false,//点击的是否是加号按钮
         safeTop: 0,
         selectedTab: 0,
+        currentPage:1,
         pageType: '',
-        tabs: ['我的需求', '我的订单', '我的作品'],
+        tabs: ['我的需求', '我的订单', '我的服务'],
         safeBottom: app.safeBottom,
         selectedDemandTab: 0,
         dropdownShowing1: false,
@@ -97,15 +98,13 @@ Page({
             }
         ],
         totalIncome: 0,
-        orderList: [],
-        demandList: [],
-        productionList: [],
         demandCount: {
             total: 0,
             opened: 0,
             closed: 0
         },
-        orderTypeIndex: 10 //全部
+        orderTypeIndex: 10, //全部
+        loadmoreShowing:false
     },
 
     /**
@@ -133,7 +132,8 @@ Page({
      */
     onShow: function () {
         this.setData({
-            selectedTab: app.globalData.selectedTab || 0
+            selectedTab: app.globalData.selectedTab || 0,
+            currentPage:1,
         })
         // 监听屏幕滚动 关键位置
         this.scrollChangeNavigationBar = 44
@@ -158,14 +158,45 @@ Page({
      * 页面相关事件处理函数--监听用户下拉动作
      */
     onPullDownRefresh: function () {
+        this.setData({
+            currentPage:1
+        })
+        let tab = this.data.selectedTab
+        if (tab == 0) {
+            this.getDemandListByEmployerId()
+        } else if (tab == 1) {
+            this.getOrderList()
+        } else if (tab == 2) {
+            this.getProductionListByFreelancerId()
+        }
 
+        wx.stopPullDownRefresh({
+            success:(e)=>{
+            },
+            fail:(e)=>{
+            },
+            complete:(e)=>{
+            },
+        }) 
     },
 
     /**
      * 页面上拉触底事件的处理函数
      */
     onReachBottom: function () {
+        if (this.noMoreProduct) {
+            return
+        }
 
+        this.data.currentPage += 1
+        let tab = this.data.selectedTab
+        if (tab == 0) {
+            this.getDemandListByEmployerId()
+        } else if (tab == 1) {
+            this.getOrderList()
+        } else if (tab == 2) {
+            this.getProductionListByFreelancerId()
+        }
     },
 
     /**
@@ -185,6 +216,7 @@ Page({
 
                 this.setData({
                     user:app.user,
+                    company:res.employerInfo.company,
                 })
 
                 wx.setStorageSync('user', app.user)
@@ -194,7 +226,6 @@ Page({
                 console.error(res)
             },
             complete(res) {
-                console.log("个人信息拉去完成", res)
             }
         })
     },
@@ -273,23 +304,26 @@ Page({
         }
 
         if(app.user){
-            
             this.getCurrentInfo()         
             this.getIncome()
-            this.getDemandGroupCount()
-            this.getDemandListByEmployerId()
-            this.getOrderList()
+            if (this.data.selectedTab == 0) {
+                this.getDemandListByEmployerId()
+                this.getDemandGroupCount()
+            } else if (this.data.selectedTab  == 1) {
+                this.getOrderList()
+            } else if (this.data.selectedTab  == 2) {
+                this.getProductionListByFreelancerId()
+            }
+
         }
     },
 
     Relogin(){
-       console.log("重新登录");
        this.setData({
         showAuthModal:true
        })
     },
     pageType(e) {
-        console.log(e.detail.pageType);
         this.setData({
             pageType: e.detail.pageType
         })
@@ -308,6 +342,8 @@ Page({
             selectedTab: tab,
             dropdownShowing1: false,
             dropdownShowing2: false,
+            currentPage:1,
+           
         })
         if (tab == 0) {
             this.getDemandListByEmployerId()
@@ -330,6 +366,7 @@ Page({
         let tab = e.currentTarget.dataset.tab
         this.setData({
             selectedDemandTab: tab,
+            currentPage:1
         })
         this.getDemandListByEmployerId()
     },
@@ -388,6 +425,7 @@ Page({
             options1: optionss,
             dropdownShowing1: !this.data.dropdownShowing1,
             options1Text: options1Text,
+            currentPage:1,
         })
         this.getOrderList()
     },
@@ -408,7 +446,8 @@ Page({
         this.setData({
             options2: optionss,
             dropdownShowing2: !this.data.dropdownShowing2,
-            options2Text: options2Text
+            options2Text: options2Text,
+            currentPage:1,
         })
         this.getOrderList()
     },
@@ -432,73 +471,141 @@ Page({
                 console.error(res)
             },
             complete(res) {
-                console.log("初始化累计收入完成:", that.data.totalIncome)
             }
         })
     },
     getOrderList() {
+        this.setData({
+            loadmoreShowing: true
+        })
         let that = this
         REST.get({
             url: API.getOrderListByStakeholder,
             data: {
-                currentPage: 1,
+                currentPage: this.data.currentPage,
                 pageSize: 10,
                 orderType: this.data.orderTypeIndex,
                 status: this.data.status
             },
-            success(res) {
-                that.setData({
-                    orderList: res.data
+            success:(res)=> {
+                if(!res.data) return
+                if(res.totalPages >= this.data.currentPage){ //有数据了
+                    this.noMoreProduct = false
+                }else{
+                    this.noMoreProduct = true
+                }
+                if (this.data.currentPage == 1) {
+                    this.setData({
+                        orderList:res.data
+                    })
+
+                } else {
+                    this.setData({
+                        orderList: this.data.orderList.concat(res.data)
+                    })
+                }
+
+                this.setData({
+                    selectedTab: this.data.selectedTab
                 })
             },
             failed(res) {
                 console.error(res)
             },
-            complete(res) {
-                console.log("初始化订单列表完成:", that.data.orderList)
+            complete:res => {
+                this.setData({
+                    loadmoreShowing: false
+                })
             }
         })
     },
     getDemandListByEmployerId() {
+        this.setData({
+            loadmoreShowing: true
+        })
         let that = this
         REST.get({
             url: API.getDemandListByEmployerId,
             data: {
-                currentPage: 1,
+                currentPage: this.data.currentPage,
                 pageSize: 10,
                 status: this.data.selectedDemandTab
             },
-            success(res) {
-                that.setData({
-                    demandList: res.data
+            success:(res)=> {
+                if(!res.data) return
+                if(res.totalPages >= this.data.currentPage){ //有数据了
+                    this.noMoreProduct = false
+                }else{
+                    this.noMoreProduct = true
+                }
+                if (this.data.currentPage == 1) {
+                    this.setData({
+                        demandList:res.data
+                    })
+
+                } else {
+                    this.setData({
+                        demandList: this.data.demandList.concat(res.data)
+                    })
+                }
+
+                this.setData({
+                    selectedTab: this.data.selectedTab
                 })
             },
             failed(res) {
                 console.error(res)
             },
-            complete(res) {
-                console.log("初始化订单列表完成:", that.data.demandList)
+            complete:(res) =>{
+                this.setData({
+                    loadmoreShowing: false
+                })
+                
             }
         })
     },
     getProductionListByFreelancerId() {
+        this.setData({
+            loadmoreShowing: true
+        })
         let that = this
         REST.get({
             url: API.getByLoginUser,
             data: {
-                currentPage: 1,
+                currentPage: this.data.currentPage,
                 pageSize: 10
             },
-            success(res) {
-                that.setData({
-                    productionList: res.data
+            success:(res)=> {
+                if(!res.data) return
+                if(res.totalPages >= this.data.currentPage){ //有数据了
+                    this.noMoreProduct = false
+                }else{
+                    this.noMoreProduct = true
+                }
+                if (this.data.currentPage == 1) {
+                    this.setData({
+                        productionList:res.data
+                    })
+
+                } else {
+                    this.setData({
+                        productionList: this.data.productionList.concat(res.data)
+                    })
+                }
+
+                this.setData({
+                    selectedTab: this.data.selectedTab
                 })
+
             },
             failed(res) {
                 console.error(res)
             },
-            complete(res) {
-                console.log("初始化订单列表完成:", that.data.demandList)
+            complete:(res) =>{
+                this.setData({
+                    loadmoreShowing: false
+                })
+                
             }
         })
     },
@@ -537,9 +644,9 @@ Page({
         })
     },
     tapEdit(e) {
-        wx.navigateTo({
-            url: '/pages/publishProduct/publishProduct?prodId='+e.currentTarget.dataset.prodId,
-        })
+        // wx.navigateTo({
+        //     url: '/pages/publishProduct/publishProduct?prodId='+e.currentTarget.dataset.prodId,
+        // })
     },
     //跳转我的个人信息页面
     tapMyInfo(){
@@ -551,5 +658,52 @@ Page({
         wx.navigateTo({
             url: '/pages/myInfo/myInfo?headImg='+app.user.avatarUrl + '&name='+app.user.nickName
         })
+    },
+    //无数据跳转页面
+    tapNoData(e){
+        // 未登录
+        if (!app.user) {
+            this.setData({
+                showAuthModal: true
+            })
+            return
+        }
+        let index = e.currentTarget.dataset.index
+        app.globalData.selectedTab = index
+
+        if(index == 0){//跳转发布需求页面
+            if(this.data.company){
+                wx.navigateTo({
+                    url: '/pages/publishDemand/publishDemand?type=0', //type: 0 发布需求 ,1 编辑需求
+                })
+            }else{
+                wx.navigateTo({
+                    url: '/pages/employerMovein/employerMovein',
+                })
+            }
+            
+        }else if(index == 1){//跳转到首页
+            wx.switchTab({
+                url: '/pages/home/home'
+            })
+        }else if(index == 2){//跳转发布作品页面
+            wx.navigateTo({
+                url: '/pages/talentMovein/talentMovein?currStep=1'
+             })
+        }
+
+    },
+    //分享专属海报
+    tapShare(e){
+        // 未登录
+        if (!app.user) {
+            this.setData({
+                showAuthModal: true
+            })
+            return
+        }
+        wx.navigateTo({
+            url: '/pages/invite/invite',
+         })
     }
 })

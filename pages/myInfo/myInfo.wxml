@@ -7,7 +7,7 @@
     }
 </wxs>
 
-<view class="my-info">
+<view class="my-info" style="padding-bottom: {{ 80 + safeBottom }}px">
     <view class="basic">
         <view class="item head">
             <view class="title">头像</view>
@@ -48,15 +48,29 @@
                 <image class="icon" src="/images/common/icon_edit@2x.png"></image>
             </view>
             <view class="textarea">
-                <textarea bindinput="bindDescInput" value="{{desc}}" auto-height placeholder="添加一段自我介绍，让更多的人了解你！" />
+                <textarea maxlength="300" cursor-spacing="100" bindinput="bindDescInput" value="{{desc}}" auto-height placeholder="添加一段自我介绍，让更多的人了解你！" />
 
             </view>
 
         </view>
     </view>
+    <!-- <view class="employerInfo">
+        <view class="item" style="border:none">
+            <view class="title">公司名称</view>
+            <input class="input"  placeholder-style='text-align:right' maxlength="20" placeholder="请输入公司名称" bindinput="bindCompanyNameInput" value="{{company}}" placeholder-style="color: #8392A0"/> 
+            <image class="icon" src="/images/common/icon_edit@2x.png"></image>
+        </view>
+        <view class="item">
+            <view class="title">职务</view>
+            <input class="input"  placeholder-style='text-align:right' maxlength="20" placeholder="请输入您的职务" bindinput="bindJobInput" value="{{jobTitle}}" placeholder-style="color: #8392A0"/> 
+            <image class="icon" src="/images/common/icon_edit@2x.png"></image>
+            <cover-view class="dialog" wx:if="{{!company}}" catchtap="tapHasCompany"></cover-view>
+
+        </view>
+    </view> -->
 </view>
 
-<view class="tool-bar" style="padding-bottom: {{ safeBottom }}px">
+<view class="tool-bar" style="z-index:9999;padding-bottom: {{ safeBottom }}px">
     <view class="layout-1 ok" bindtap="tapSaveInfo">保存</view>
 </view>
 

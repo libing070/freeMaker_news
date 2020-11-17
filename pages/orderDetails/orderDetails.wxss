@@ -335,36 +335,47 @@ page {
 
 .evaluate-box .u .score{
     position: absolute;
-    right: 20rpx;
+    right: 0;
     top: 0;
     bottom: 0;
     margin:auto;
-    height: 40rpx;
+    height: 12px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
 }
 .evaluate-box .u .score .star-box{
     position: relative;
+    width: 100px;
+    margin: auto;
+    height: 12px;
     display: flex;
     flex-direction: row;
-    justify-content: flex-start;
-    align-items: center;
+    justify-content: space-around;
 
 }
-.evaluate-box .u .score .star-box .star{
+.evaluate-box .u .score .star-box .star-image {
     position: relative;
+    width: 12px;
+    height: 12px;
+    src: "/images/common/star/icon-normal.png";
+  
 }
-.evaluate-box .u .score .star-box .star .img{
-    width: 24rpx;
-    height: 24rpx;
-    margin-right: 12rpx;
-    display: inline-block;
+.evaluate-box .u .score .star-box .item {
+    position: absolute;
+    top: 0;
+    width: 6px;
+    height: 12px;
 }
-.evaluate-box .u .score .star-box .val{
+.evaluate-box .u .score  .val{
     margin-left: 10rpx;
     font-family: DINAlternate-Bold;
     font-size: 48rpx;
     color: #0C2032;
 }
 .evaluate-box .evaluate-news{
+    width: 100%;
     padding-bottom:20rpx;
     color: #7D7D7D;
     font-size: 28rpx;
@@ -784,6 +795,7 @@ page {
     font-family: PingFangSC-Regular;
     font-size: 24rpx;
     color: #8392A0;
+    width: 100rpx;
 }
 .main .shade-pay .payment .box .b2 .value{
     font-family: PingFangSC-Regular;
@@ -830,7 +842,7 @@ page {
     position: absolute;
     top: 0;
     bottom: 0;
-    right: 32rpx;
+    right: 16rpx;
     margin: auto;
     width: 188rpx;
     height: 56rpx;
@@ -908,6 +920,125 @@ page {
     font-size: 36rpx;
     color: #0C2032;
 }
+
+.main .shade-appraise .appraise-v2{
+    position: relative;
+    width: 210px;
+    margin: auto;
+    margin-top: 40rpx;
+    height: 30px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+ 
+}
+ .main .shade-appraise .appraise-v2 .star-image {
+    position: relative;
+    width: 30px;
+    height: 30px;
+    src: "/images/common/star/icon-normal.png";
+  
+}
+.main .shade-appraise .appraise-v2 .item {
+    position: absolute;
+    top: 0;
+    width: 15px;
+    height: 30px;
+}
+.main .shade-appraise  .appraise-v2-msg{
+    position: relative;
+    margin: 0 40rpx;   
+    margin-top: 34rpx; 
+    margin-bottom: 54rpx;
+    height: 40rpx;
+}
+.main .shade-appraise  .appraise-v2-msg .line{
+    height: 1px;
+    background-color: #DBE1E6;
+    width: 100%;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    margin: auto;
+}
+
+.main .shade-appraise  .appraise-v2-msg .msg{
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    width: 124rpx;
+    background: white;
+    margin: auto;
+    font-family: PingFangSC-Regular;
+    font-size: 28rpx;
+    color: rgba(12,32,50,.5);
+    text-align: center;
+}
+
+.main .shade-appraise .appraise-v2-childs{
+    position: relative;
+    display: flex;
+    height: 40rpx;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    margin: 46rpx 40rpx;
+}
+.main .shade-appraise .appraise-v2-childs .name{
+    font-family: PingFangSC-Regular;
+    font-size: 28rpx;
+    color: #0C2032;
+    margin-right: 32rpx;
+}
+.main .shade-appraise .appraise-v2-childs .star{
+    position: relative;
+    width: 200px;
+    /* margin: auto; */
+    height: 36px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+ 
+}
+ .main .shade-appraise .appraise-v2-childs .star .star-image {
+    position: relative;
+    padding: 6px;
+    width: 24px;
+    height: 24px;
+    src: "/images/common/star/icon-normal.png";
+  
+}
+.main .shade-appraise .appraise-v2-childs .star .item {
+    position: absolute;
+    /* top: 0;
+    width: 10px;
+    height: 20px; */
+    top: 0px;
+    height: 36px;
+}
+.main .shade-appraise .appraise-v2-childs .star .item:nth-child(1) {
+    width: 18px;
+}
+.main .shade-appraise .appraise-v2-childs .star .item:nth-child(2) {
+    width: 18px;
+}
+.main .shade-appraise .appraise-v2-childs .msg{
+    position: absolute;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    height: 40rpx;
+    margin: auto;
+    font-family: PingFangSC-Regular;
+    font-size: 24rpx;
+    color: #8392A0;
+}
+
+
+
+
 
 .main .shade-appraise .appraise{
     margin-top: 56rpx;
